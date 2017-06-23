@@ -8,7 +8,7 @@
         <meta name="keywords" content="Aims Safis Case Console System,Incidents Management System">
         <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
 
-       <title>AimsAfis</title>
+       <title> Ubulwembu  </title>
 
         <!-- CSS -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -17,7 +17,7 @@
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('css/generics.css') }}" rel="stylesheet">
     </head>
-    <body id="skin-blur-kiwi-login">
+    <body class="logos-back-img">
 
     @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -88,8 +88,11 @@
                 <small><a class="box-switcher" data-switch="box-login" href="">Already have an Account?</a></small>
             </form>
         </section>
+        <div style="float:auto; text-align:center;">
 
-        <!-- Javascript Libraries -->
+       		     <img  src="{{ asset('/img/zzzz.png') }}">
+       		     </div>
+        <!-- Javascript Libraries logod
         <!-- jQuery -->
         <script src="{{ asset('js/jquery.min.js') }}"></script> <!-- jQuery Library -->
 

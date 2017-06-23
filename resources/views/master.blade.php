@@ -10,7 +10,7 @@
         <meta name="keywords" content="Aims Safis Case Console System,Incidents Management System">
         <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
 
-        <title>Aims Afis</title>
+        <title> Ubulwembu  </title>
 
         <!-- CSS -->
         <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -28,7 +28,7 @@
         <link href="{{ asset('/css/buttons.dataTables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/HoldOn.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
-   
+
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
 
@@ -40,13 +40,13 @@
         <!-- jQuery Library -->
         <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
-      
+
 
 
 
         <script>
-        
-        
+
+
         var placeSearch, autocomplete;
         var componentForm = {
             street_number: 'short_name',
@@ -60,7 +60,7 @@
 
         </script>
 
-     
+
 
     </head>
     <body id="skin-blur-blue">
@@ -116,7 +116,7 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ asset('/img/simple.png') }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ asset('/img/Site Badge 3.png') }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">
@@ -233,7 +233,7 @@
                            {{-- <li><a href="{{ url('list-poi-users') }}"><span class="badge badge-r">{{ count($noPOIUsers,0) }}</span>POI</a></li>--}}
                             @endif
 
-                        
+
                             @if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')
                               <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li>
                              @endif
@@ -297,9 +297,9 @@
         <!-- Bootstrap -->
         <script src="{{ asset('/js/bootstrap.min.js') }}"></script>
 
-  
 
-       
+
+
         <!--  Form Related -->
         <script src="{{ asset('/js/icheck.js') }}"></script> <!-- Custom Checkbox + Radio -->
 
@@ -372,12 +372,12 @@
         <script src="{{ asset('js/calendar.min.js') }}"></script> <!-- Calendar -->
 
         <script src="{{ asset('js/raphael.js') }}"> </script>
-        
-        
 
 
 
-        <!-- D3.js 
+
+
+        <!-- D3.js
         <script src="{{ asset('js/d3/plugins.js') }}"></script>
         <script src="{{ asset('js/d3/script.js') }}"></script>
         <script src="{{ asset('js/d3/libs/coffee-script.js') }}"></script>
@@ -421,9 +421,9 @@
                   lat: position.coords.latitude,
                   lng: position.coords.longitude
                 };
-     
-        
-                
+
+
+
                 var circle = new google.maps.Circle({
                   center: geolocation,
                   radius: position.coords.accuracy
@@ -437,12 +437,12 @@
 
 
      function initAutocomplete() {
-          
+
             autocomplete = new google.maps.places.Autocomplete(
               (document.getElementById('autocomplete')),
                 {types: ['geocode']});
 
-      
+
             autocomplete.addListener('place_changed', fillInAddress);
 
 
@@ -451,7 +451,7 @@
               (document.getElementById('autocomplete_work')),
                 {types: ['geocode']});
 
-      
+
             autocomplete_work.addListener('place_changed', fillInWorkAddress);
 
 
@@ -459,10 +459,10 @@
               (document.getElementById('autocomplete_res')),
                 {types: ['geocode']});
 
-      
+
             autocomplete_res.addListener('place_changed', fillInResAddress);
-    
-    
+
+
 
      }
 
@@ -471,7 +471,7 @@
             var place_work = autocomplete_work.getPlace();
 
             if($('.latitude_work').length != 0) {
-              
+
                 document.getElementsByClassName("latitude_work")[0].value  = place_work.geometry.location.lat();
                 document.getElementsByClassName("longitude_work")[0].value = place_work.geometry.location.lng();
 
@@ -486,7 +486,7 @@
 
             if($('.latitude_res').length != 0) {
 
-                   
+
                 document.getElementsByClassName("latitude_res")[0].value  = place_res.geometry.location.lat();
                 document.getElementsByClassName("longitude_res")[0].value = place_res.geometry.location.lng();
 
@@ -540,18 +540,18 @@
                         document.getElementById(component).disabled = false;
 
                      }
-                  
+
                 }
 
-               
+
                 for (var i = 0; i < place.address_components.length; i++) {
                   var addressType = place.address_components[i].types[0];
-                 
+
                   if (componentForm[addressType]) {
 
                     if($('.' + addressType).length != 0) {
 
-                        var val = place.address_components[i][componentForm[addressType]];         
+                        var val = place.address_components[i][componentForm[addressType]];
                         document.getElementsByClassName(addressType)[0].value = val;
 
                     }

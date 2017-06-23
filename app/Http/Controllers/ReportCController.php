@@ -514,7 +514,7 @@ categories.name as category, categories.id as category_id,`sub_categories`.name 
 
 		 $not     = \Input::get('note');
 
- 
+
 
 
 
@@ -530,8 +530,7 @@ categories.name as category, categories.id as category_id,`sub_categories`.name 
 
 	  } else {
           $use_id  = UserNew::select('id')->where('api_key','=',$api_key)->first();
-		  $cases  =  CaseReport::where('id','=',$case_id )->first();
-
+		      $cases  =  CaseReport::where('id','=',$case_id )->first();
           $cases->status = 2;
           $cases->save() ;
 
@@ -554,9 +553,9 @@ categories.name as category, categories.id as category_id,`sub_categories`.name 
         $caseActivity->addressbook = 0;
         $caseActivity->note        = "New Case Noted Added by ".$author->name ." ".$author->surname;
         $caseActivity->save();
-       
 
-       $CaseEscalator = CaseEscalator::where('case_id' , '=' , $case_id)->first() ; 
+
+       $CaseEscalator = CaseEscalator::where('case_id' , '=' , $case_id)->first() ;
        $CaseEscalator->delete() ;
 
         foreach ($caseOwners as $caseOwner) {
@@ -576,10 +575,10 @@ categories.name as category, categories.id as category_id,`sub_categories`.name 
                 $message->to($user->email)->subject("Siyaleader Notification - New Case Note: ");
 
             });
-			
-			
-			
-  
+
+
+
+
         }
 
 		$response['msg'] = "case  secefully  update";
