@@ -1914,20 +1914,13 @@ a.list-group-item.active > .badge,
     }
 
     #skin-blur-kiwi-login {
-      
+
         background-image: url(../img/body/kiwi.jpg);
     }
 
 
     .logos-back-img {
-      background: rgba(232,232,232,1);
-  background: -moz-linear-gradient(-45deg, rgba(232,232,232,1) 0%, rgba(217,217,217,1) 35%, rgba(222,222,222,1) 47%, rgba(222,222,222,1) 92%);
-  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(232,232,232,1)), color-stop(35%, rgba(217,217,217,1)), color-stop(47%, rgba(222,222,222,1)), color-stop(92%, rgba(222,222,222,1)));
-  background: -webkit-linear-gradient(-45deg, rgba(232,232,232,1) 0%, rgba(217,217,217,1) 35%, rgba(222,222,222,1) 47%, rgba(222,222,222,1) 92%);
-  background: -o-linear-gradient(-45deg, rgba(232,232,232,1) 0%, rgba(217,217,217,1) 35%, rgba(222,222,222,1) 47%, rgba(222,222,222,1) 92%);
-  background: -ms-linear-gradient(-45deg, rgba(232,232,232,1) 0%, rgba(217,217,217,1) 35%, rgba(222,222,222,1) 47%, rgba(222,222,222,1) 92%);
-  background: linear-gradient(135deg, rgba(232,232,232,1) 0%, rgba(217,217,217,1) 35%, rgba(222,222,222,1) 47%, rgba(222,222,222,1) 92%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e8e8e8', endColorstr='#dedede', GradientType=1 );
+    background-image: url(../img/body/piVms8T.jpg);
     }
 
 
