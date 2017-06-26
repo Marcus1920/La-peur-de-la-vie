@@ -26,8 +26,8 @@ class DepartmentRequest extends Request
     {
         return [
 
-            'name'     =>'required|unique:departments',
-            'acronym'  =>'required|unique:departments',
+            'name'     =>'required',
+            'acronym'  =>'required',
 
         ];
     }

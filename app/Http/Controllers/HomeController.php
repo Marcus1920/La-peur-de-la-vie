@@ -60,7 +60,7 @@ class HomeController extends Controller
                         ->where('cases_statuses.name', '=', 'Pending')->get();
 
         break;
-    case $user==2:
+                      case $user==2:
 
 
 	                    $numberReferredCases = \DB::table('cases')

@@ -25,7 +25,7 @@ class PositionsRequest extends Request
     {
         return [
 
-            'name'     =>'required|unique:positions',
+            'name'     =>'required',
 
         ];
     }
