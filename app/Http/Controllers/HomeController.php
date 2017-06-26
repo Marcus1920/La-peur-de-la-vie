@@ -20,13 +20,19 @@ class HomeController extends Controller
     {
 
 
+
+
+	 $user  =  \Auth::user()->role  ;
+
         if (\Auth::check())
         {
 
-            if (\Auth::user()->role == 1) {
+   switch ($user) {
 
 
-                $numberReferredCases = \DB::table('cases')
+    case   $user==1:
+
+		  $numberReferredCases = \DB::table('cases')
                     ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
                     ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
                     ->join('cases_sources', 'cases.source', '=', 'cases_sources.id')
@@ -53,16 +59,11 @@ class HomeController extends Controller
                         ->join('cases_sources', 'cases.source', '=', 'cases_sources.id')
                         ->where('cases_statuses.name', '=', 'Pending')->get();
 
-
-            }
-            else {
-
+        break;
+    case $user==2:
 
 
-                if (\Auth::user()->role == 2) {
-
-
-                        $numberReferredCases = \DB::table('cases')
+	                    $numberReferredCases = \DB::table('cases')
                                         ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
                                         ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
                                         ->where('cases_statuses.name','<>','Pending Closure')
@@ -97,13 +98,14 @@ class HomeController extends Controller
                                                 ->get();
 
 
+        break;
 
 
-                }
-                else {
+
+    default:
 
 
-                        $numberReferredCases = \DB::table('cases')
+       $numberReferredCases = \DB::table('cases')
                                                 ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
                                                 ->where('cases.status','<>','Pending Closure')
                                                 ->where('cases.status','<>','Resolved')
@@ -124,14 +126,14 @@ class HomeController extends Controller
                                                 ->where('cases_owners.user','=',\Auth::user()->id)
                                                 ->groupBy('cases.id')
                                                 ->get();
-
-
-                }
-
+}
 
 
 
-            }
+
+
+
+
 
 
         $userViewAllocatateReferredCasesPermission   = \DB::table('group_permissions')
