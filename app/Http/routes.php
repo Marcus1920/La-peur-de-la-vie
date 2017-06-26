@@ -44,7 +44,7 @@ $this->post('dologin', 'Auth\LoginController@doLogin');
 $this->post('dosignup', 'Auth\LoginController@dosignup');
 
 Route::group(array('prefix' => 'api/v1'), function() {
-  
+
   Route::post('logi', 'UserController@login');
   Route::post('pedingcases', 'ReportController@Pendingcases');
   Route::post('allocatecase','ReportController@Allocatercase');
@@ -479,7 +479,7 @@ Route::post('addCategory', ['middleware' => 'resetLastActive', 'uses' => 'Catego
 |
 */
 Route::get('list-sub-categories/{category}', ['middleware' => 'auth', function ($category) {
-    $catObj = Category::find($category);
+    $catObj = CaseType::find($category);
     $deptName = Department::find($catObj->department);
     return view('subcategories.list', compact('catObj', 'deptName'));
 }]);

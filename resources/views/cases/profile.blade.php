@@ -36,7 +36,7 @@
 						<li><a href="#7a" data-toggle="tab">Case Attachments</a>
 						</li>
 					</ul>
-					
+
 					<hr class="whiter m-t-20">
 					<hr class="whiter m-b-20">
 
@@ -46,7 +46,7 @@
 				<div class="row">
 					<div class="col-md-2">
 						<div class="btn-group-vertical">
-						<a id="editCaseDiv" class="btn btn-xs btn-alt hidden" data-toggle="modal" onclick="launchCaseReportModal()" data-target=".modalCaseReport">Edit Case</a>
+						<a id="editCaseDiv" data-toggle="modal" onclick data-target=".modalCaseReport"></a>
 						@if(isset($userAllocateCasesPermission) && $userAllocateCasesPermission->permission_id =='22')
                         <a class="btn btn-lg btn-alt" style="margin-top: 20%;" data-toggle="modal" onClick="launchReferModal('Allocate');" data-target=".modalReferCase">Allocate Case</a>
 						@endif
