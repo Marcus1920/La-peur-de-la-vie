@@ -25,7 +25,7 @@ class AffiliationRequest extends Request
     {
        return [
 
-            'name'     =>'required|unique:affiliations',
+            'name'     =>'required',
 
         ];
     }
