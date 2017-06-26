@@ -32,7 +32,7 @@ class HomeController extends Controller
 
     case   $user==1:
 
-		  $numberReferredCases = \DB::table('cases')
+		        $numberReferredCases = \DB::table('cases')
                     ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
                     ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
                     ->join('cases_sources', 'cases.source', '=', 'cases_sources.id')
@@ -61,6 +61,326 @@ class HomeController extends Controller
 
         break;
                       case $user==2:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+
+
+
+
+
+
+
+		 case $user==3:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+		 case $user==4:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+		 case $user==5:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+		 case $user==6:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+		 case $user==7:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+
+		 case $user==8:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+		 case $user==9:
+
+
+	                    $numberReferredCases = \DB::table('cases')
+                                        ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                        ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                        ->where('cases_statuses.name','<>','Pending Closure')
+                                        ->where('cases_statuses.name','<>','Resolved')
+                                        ->where('cases_statuses.name','<>','Pending')
+                                        ->where('cases.user','=',\Auth::user()->id )
+                                        ->groupBy('cases.id')
+                                        ->get();
+
+                        $numberPendingClosureCases = \DB::table('cases')
+                                                    ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                    ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                    ->where('cases_statuses.name','=','Pending Closure')
+                                                    ->where('cases.user','=',\Auth::user()->id)
+                                                    ->groupBy('cases.id')
+                                                    ->get();
+
+                        $numberResolvedCases = \DB::table('cases')
+                                                ->join('cases_owners', 'cases.id', '=', 'cases_owners.case_id')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+
+                                                ->where('cases_statuses.name','=','Resolved')
+
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->groupBy('cases.id')
+                                                ->get();
+
+                        $numberPendingCases = \DB::table('cases')
+                                                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                                                ->where('cases.user','=',\Auth::user()->id)
+                                                ->where('cases_statuses.name','=','Pending')
+                                                ->get();
+
+
+        break;
+		 case $user==10:
 
 
 	                    $numberReferredCases = \DB::table('cases')
