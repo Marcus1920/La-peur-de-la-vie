@@ -1,9 +1,6 @@
 <?php
-
-include 'config.php'qwewe;
-
+include 'config.php';
 ?>
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -42,11 +39,6 @@ include 'config.php'qwewe;
                 <table cellpadding=0 cellspacing=0 style="width:100%;border-collapse: collapse; border: 0px solid #1c1c1c;">
                     <tr style="opacity:1">
 
-                        <td bgcolor="#1c1c1c" valign=middle align=center width=115 style="min-width:115px" title="Select a port ... "  >
-                            <a href="#" onclick="switchMenu();this.blur()"><i class="fa fa-anchor fa-fw" style="color:#ffffff"></i></a>
-                        </td>
-
-
                         <td bgcolor="#1c1c1c" valign=middle align=center width=115 style="min-width:115px">
                             <a href="#" onclick="switchMainMenu();this.blur()"><i class="fa fa-navicon fa-fw" style="color:#ffffff" title="Toggle main menu ... " ></i></a>
                         </td>
@@ -57,9 +49,9 @@ include 'config.php'qwewe;
                             <a href="#" onclick="this.blur();animateMarker(document.all.searchBox.value)"><i class="fa fa-search fa-fw" style="color:#ffffff" title="Click to search"></i></a>
                         </td>
 
-                        <!--  <td bgcolor="#1c1c1c" valign=middle align=center width=30 style="min-width:30px">
-                              <a href="#" onclick="repositionMarkers();this.blur()"><i class="fa fa-compress fa-fw" style="color:#ffffff" title="Reset Dragged and Spidered Markers" ></i></a>
-                          </td>-->
+                        <td bgcolor="#1c1c1c" valign=middle align=center width=30 style="min-width:30px">
+                            <a href="#" onclick="repositionMarkers();this.blur()"><i class="fa fa-compress fa-fw" style="color:#ffffff" title="Reset Dragged and Spidered Markers" ></i></a>
+                        </td>
                         <td bgcolor="#1c1c1c" valign=middle align=center width=30 style="min-width:30px">
                             <a href="#" onclick="closeInfoBoxes();this.blur()"><i class="fa fa-info fa-fw" style="color:#ffffff" title="Close all Info Boxes" ></i></a>
                         </td>
@@ -104,64 +96,20 @@ include 'config.php'qwewe;
     </tr>
 
     <script language="javascript">
-
         //  height=560
         var mapWindowHeight = window.innerHeight - 31;
         document.write("<tr height=" + mapWindowHeight + ">");
         document.write("<td height=" + mapWindowHeight + ">");
-        document.write("<input id='pac-input' class='' style='width:355px' type='text' placeholder='Location Search Box'>");
+        document.write("<input id='pac-input' class='' style='width:300px' type='text' placeholder='Location Search Box'>");
         document.write("<div id='mapcontainer' style='height:100%;width:100%'>");
-
         $(document).ready(function(){
-
-            var userID   = $("#userID",window.parent.document).val();
+            var userID = $("#userID",window.parent.document).val();
             $("#userID").val(userID);
-
         });
-
         function initialize() {
-
-
-            var portID   = $("#portID",window.parent.document).val();
-            var portSlug = "";
-            switch(portID) {
-                case '1':
-                    portSlug = "SA:5";
-                    break;
-                case '2':
-                    portSlug = "CT:14";
-                    break;
-                case '3':
-                    portSlug = "DBN:13";
-                    break;
-                case '4':
-                    portSlug = "SA:6";
-                    break;
-                case '5':
-                    portSlug = "EL:14";
-                    break;
-                case '6':
-                    portSlug = "MOS:16";
-                    break;
-                case '7':
-                    portSlug = "NG:14";
-                    break;
-                case '8':
-                    portSlug = "PE:14";
-                    break;
-                case '9':
-                    portSlug = "RB:13";
-                    break;
-                case '10':
-                    portSlug = "SAL:12";
-                    break;
-                default:
-                    portSlug = "SA:5";
-            }
-
-            mapSA = new google.maps.LatLng(-29.881651, 30.989003);
+            mapSA = new google.maps.LatLng(-31.438941, 25.111680);
             var options = {
-                zoom: 14,
+                zoom: 6,
                 center: mapSA,
                 mapTypeControl: true,
                 panControl: true,
@@ -171,35 +119,24 @@ include 'config.php'qwewe;
                 overviewMapControl: true,
                 navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL },
                 mapTypeId: google.maps.MapTypeId.HYBRID
-
             };
-
             map = new google.maps.Map(document.getElementById('mapcontainer'), options);
-
-            switchToPort(portSlug);
-
             var eightMileOverlayBounds = new google.maps.LatLngBounds(
                 new google.maps.LatLng(-30.008609, 30.931000),
                 new google.maps.LatLng(-29.759365, 31.234000));
-
-
-
+            // Create the search box and link it to the UI element.
             var input     = document.getElementById('pac-input');
             var searchBox = new google.maps.places.SearchBox(input);
-            map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-
-
-
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+            // Bias the SearchBox results towards current map's viewport.
             map.addListener('bounds_changed', function() {
                 searchBox.setBounds(map.getBounds());
             });
-
             var markers = [];
-
+            // Listen for the event fired when the user selects a prediction and retrieve
+            // more details for that place.
             searchBox.addListener('places_changed', function() {
-
                 var places = searchBox.getPlaces();
-
                 var componentForm = {
                     street_number: 'short_name',
                     route: 'long_name',
@@ -209,66 +146,40 @@ include 'config.php'qwewe;
                     postal_code: 'short_name'
                 };
 
-
                 var places_array = {};
 
                 for (var i = 0; i < places[0].address_components.length; i++) {
                     var addressType = places[0].address_components[i].types[0];
-
                     if (componentForm[addressType]) {
-
                         var val = places[0].address_components[i][componentForm[addressType]];
-
                         if(addressType =="street_number") {
-
                             $("#newCaseCapture").contents().find("#street_number").val(val);
-
-
                         }
                         if(addressType =="locality") {
-
                             $("#newCaseCapture").contents().find("#locality").val(val);
-
-
                         }
                         if(addressType =="administrative_area_level_1") {
-
                             $("#newCaseCapture").contents().find("#administrative_area_level_1").val(val);
-
-
                         }
                         if(addressType =="postal_code") {
-
                             $("#newCaseCapture").contents().find("#postal_code").val(val);
-
-
                         }
-
                         if(addressType =="country") {
-
                             $("#newCaseCapture").contents().find("#country").val(val);
-
-
                         }
-
                         places_array[addressType] = val;
-
                     }
                 }
-
                 $.cookie("cookieplaces", JSON.stringify(places_array));
-
                 if (places.length == 0) {
                     return;
                 }
-
-
+                // Clear out the old markers.
                 markers.forEach(function(marker) {
                     marker.setMap(null);
                 });
                 markers = [];
-
-
+                // For each place, get the icon, name and location.
                 var bounds = new google.maps.LatLngBounds();
                 places.forEach(function(place) {
                     if (!place.geometry) {
@@ -280,59 +191,58 @@ include 'config.php'qwewe;
                         size: new google.maps.Size(71, 71),
                         origin: new google.maps.Point(0, 0),
                         anchor: new google.maps.Point(17, 34),
-                        scaledSize: new google.maps.Size(25, 5)
+                        scaledSize: new google.maps.Size(25, 25)
                     };
-
-
+                    // Create a marker for each place.
                     markers.push(new google.maps.Marker({
                         map: map,
                         icon: icon,
                         title: place.name,
                         position: place.geometry.location
                     }));
-
                     if (place.geometry.viewport) {
-
+                        // Only geocodes have viewport.
                         bounds.union(place.geometry.viewport);
                     } else {
                         bounds.extend(place.geometry.location);
                     }
                 });
                 map.fitBounds(bounds);
-
-                map.panToBounds(bounds);
-
             });
-
+            //eightMileOverlay = new google.maps.GroundOverlay('images/8milezone.png', eightMileOverlayBounds);
+            //eightMileOverlay.setMap(null);
+            // START of Durban's 8 mile radius
+            /*
+                dbnEightMilePolly = new google.maps.Polygon({
+                    paths: dbnEightMilePollyCoords,
+                    strokeColor: '#5858a7',
+                    strokeOpacity: 0.6,
+                    strokeWeight: 1,
+                    fillColor: '#5858a7',
+                    fillOpacity: 0.4
+                });
+                dbnEightMilePolly.setMap(map);
+            */
+            // END of Durban's 8 mile radius
             var imageBounds = new google.maps.LatLngBounds(
                 new google.maps.LatLng(-29.898100, 30.993350),
                 new google.maps.LatLng(-29.860934, 31.056900));
-
             allLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_all.png', imageBounds);
             allLocalityOverlay.setMap(null);
             yellowLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_yellow.png', imageBounds);
             yellowLocalityOverlay.setMap(null);
-
             pinkLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_pink.png', imageBounds);
             pinkLocalityOverlay.setMap(null);
-
             purpleLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_purple.png', imageBounds);
             purpleLocalityOverlay.setMap(null);
-
             orangeLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_orange.png', imageBounds);
             orangeLocalityOverlay.setMap(null);
-
             blueLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_blue.png', imageBounds);
             blueLocalityOverlay.setMap(null);
             greenLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_green.png', imageBounds);
             greenLocalityOverlay.setMap(null);
-
             var oms = new OverlappingMarkerSpiderfier(map, { markersWontMove: true, keepSpiderfied:true, circleSpiralSwitchover:20 });
-
-
             <?php
-
-
             $sql          = "
                         SELECT
                             *
@@ -343,149 +253,75 @@ include 'config.php'qwewe;
                             AND `gps_lng` != ''
                         ORDER BY `id` ASC
                     ";
-
-
             $result       = mysqli_query($connectionID, $sql) or die ("Couldn't query cases DB ... ...");
-
-
-
-            error_log(print_r($result,TRUE));
-
-
-
             while($row = mysqli_fetch_row($result)) {
-
-
-
-
             $ID             = $row[0];
-            error_log(print_r("ID:".$ID,TRUE));
-            $GPS            = $row[11].",".$row[12];
-            error_log(print_r("GPS:".$GPS,TRUE));
+            $GPS            = $row[14].",".$row[15];
             $ProvinceID     = $row[4];
-
-
             if (is_null($ProvinceID)) {
-
                 $Province = 0;
             }
             else {
-
                 $ProvinceSql    = " SELECT `name` FROM `provinces` WHERE `id` = {$ProvinceID} ";
                 $ProvinceResult = mysqli_query($connectionID, $ProvinceSql) or die ("Couldn't query case provinces table ... ...");
                 $rowD           = mysqli_fetch_row($ProvinceResult);
                 $Province       = $rowD[0];
-
             }
-
-            error_log(print_r("Province:".$Province,TRUE));
-
-
             $DistrictID     = $row[5];
-
             if (is_null($DistrictID)) {
-
                 $District = 0;
             }
             else {
-
                 $DistrictSql    = " SELECT `name` FROM `districts` WHERE `id` = {$DistrictID} ";
                 $DistrictResult = mysqli_query($connectionID, $DistrictSql) or die ("Couldn't query case districts table ... ...");
                 $rowD           = mysqli_fetch_row($DistrictResult);
                 $District       = $rowD[0];
             }
-
-            error_log(print_r("District:".$District,TRUE));
-
-
-
-
             $Port         = 'Durban';
             $PrecinctID   = $row[6];
-
             if (is_null($PrecinctID)) {
-
                 $Precinct = 0;
             }
             else {
-
                 $PrecinctSql  = " SELECT `name` FROM `municipalities` WHERE `id` = {$PrecinctID} ";
                 $PrecinctResult    = mysqli_query($connectionID, $PrecinctSql) or die ("Couldn't query case municipalities table ... ...");
                 $rowD           = mysqli_fetch_row($PrecinctResult);
                 $Precinct       = $rowD[0];
             }
-
-            error_log(print_r("Municipality:".$Precinct,TRUE));
-
-
-
-            $Submitted    = $row[25];
-            $StatusID     = $row[10];
-
-
-
-
+            $Submitted    = $row[28];
+            $StatusID     = $row[13];
             if (is_null($StatusID)) {
-
                 $Status = 1;
-
-                error_log(print_r("Status ID:".$Status,TRUE));
-
             }
             else {
-
                 $StatusSql       = "  SELECT `name` FROM `cases_statuses` WHERE `id` = {$StatusID} ";
                 $StatusResult    = mysqli_query($connectionID, $StatusSql) or die ("Couldn't query case statuses table ... ...");
                 $rowD            = mysqli_fetch_row($StatusResult);
                 $Status          = $rowD[0];
             }
-
-            error_log(print_r("Status:".$Status,TRUE));
-
-            $CategoryID   = $row[29];
+            $CategoryID   = $row[32];
             $CatSql       = "  SELECT `name` FROM `cases_types` WHERE `id` = {$CategoryID} ";
             $CatResult    = mysqli_query($connectionID, $CatSql) or die ("Couldn't query case categories table ... ...");
-
             if($rowCat = mysqli_fetch_row($CatResult)){
-
                 $Category = $rowCat[0];
             }
             else {
-
                 $Category = 0;
             }
-
-
-            error_log(print_r("Case Type:".$Category,TRUE));
-
-
-            $SubCategoryID   = $row[30];
+            //error_log(print_r($Precinct,TRUE));
+            $SubCategoryID   = $row[33];
             $SubCatSql       = "  SELECT `name` FROM `cases_sub_types` WHERE `id` = {$SubCategoryID} ";
             $SubCatResult    = mysqli_query($connectionID, $SubCatSql) or die ("Couldn't query case categories table ... ...");
-
             if($rowCat = mysqli_fetch_row($SubCatResult)){
-
                 $SubCategory = $rowCat[0];
             }
             else {
-
                 $SubCategory = 0;
             }
-
-            error_log(print_r("Case Sub Type:".$SubCategory,TRUE));
-
-            $PhotoURL      = "http://154.0.164.72:8080/siyaleader-durban-port/public/".$row[16];
-            error_log(print_r("PhotoURL :".$PhotoURL,TRUE));
-
-            $ReporterID    = $row[15];
-            error_log(print_r("Reporter ID :".$ReporterID,TRUE));
-            $isAddressbook = $row[14];
-            error_log(print_r("Addressbook :".$isAddressbook,TRUE));
-
-
-
+            $PhotoURL      = "http://41.216.130.6:8080/siyaleader-aims-mobileApp-api/public/".$row[16];
+            $ReporterID    = $row[18];
+            $isAddressbook = $row[17];
             if ($isAddressbook == 0) {
-
                 $reporterSql  = "  SELECT
                         `id`,
                         `name`,
@@ -495,14 +331,9 @@ include 'config.php'qwewe;
                     FROM
                             `users`
                     WHERE
-
                         `id` = '$ReporterID'
                 ";
-
             } else {
-
-
-
                 $reporterSql  = "  SELECT
                         `id`,
                         `first_name`,
@@ -512,67 +343,37 @@ include 'config.php'qwewe;
                     FROM
                             `addressbook`
                     WHERE
-
                         `id` = '$ReporterID'
             ";
-
-
-
             }
-
-
-
             $reporterResult    = mysqli_query($connectionID, $reporterSql) or die ("Couldn't query case users table ... ...");
-
             if($rowU = mysqli_fetch_row($reporterResult)){
-
                 $Reporter   = $rowU[1]." ".$rowU[2];
-                error_log(print_r("Reporter :".$Reporter,TRUE));
                 $Mobile     = $rowU[4];
-                error_log(print_r("Mobile :".$Mobile,TRUE));
                 $PositionId = ($isAddressbook == 0)?$rowU[3] : 1;
-                $posSql     = "  SELECT `name` FROM `positions` WHERE `id` = {$PositionId} ";
+                $posSql         = "  SELECT `name` FROM `positions` WHERE `id` = {$PositionId} ";
                 $positionResult = mysqli_query($connectionID, $posSql) or die ("Couldn't query case users table ... ...");
-
                 if($rowPos = mysqli_fetch_row($positionResult)){
-
                     $Position     = $rowPos[0];
                 }
                 else {
                     $Position     = 0;
                 }
-                error_log(print_r("Position :".$Position,TRUE));
-
-
             }
             else {
-
                 $Reporter = 0;
                 $Mobile   = 0;
             }
-
-
-            $PriorityID     = $row[9];
+            $PriorityID     = $row[12];
             $PrioritySql    = " SELECT `name` FROM `cases_priorities` WHERE `id` = {$PriorityID} ";
             $PriorityResult = mysqli_query($connectionID, $PrioritySql) or die ("Couldn't query case priorities table ... ...");
-
             if($rowD = mysqli_fetch_row($PriorityResult)){
-
                 $Priority = $rowD[0];
             }
             else {
-
                 $Priority = 0;
             }
-
-            error_log(print_r("Priority :".$Priority,TRUE));
-
-
-
             $Description  =  $row[1];
-
-            error_log(print_r("Description :".$Description,TRUE));
-
             $lastSql      = "
                             SELECT
                                  `created_at`
@@ -583,107 +384,58 @@ include 'config.php'qwewe;
                             ORDER BY
                                 `created_at` DESC limit 0,1
                         ";
-
-
             $lastActResult = mysqli_query($connectionID, $lastSql) or die ("Couldn't query case activities table ... ...");
-
-
             if($rowLast = mysqli_fetch_row($lastActResult)){
-
                 $LastActivity = $rowLast[0];
-
             }
             else {
                 $LastActivity = "";
             }
-
-            error_log(print_r("LastActivity :".$LastActivity,TRUE));
-
-
-
-
             if ($Status == "Pending") {
-
                 $catStatus   = "Pen";
                 $imageStatus = "_pen.png";
             }
-
             if ($Status == "Allocated") {
-
                 $catStatus   = "All";
                 $imageStatus = "_all.png";
             }
-
             if ($Status == "Referred") {
-
                 $catStatus   = "Ref";
                 $imageStatus = "_ref.png";
             }
-
             if ($Status == "Actioned") {
-
                 $catStatus   = "Act";
                 $imageStatus = "_act.png";
             }
-
             if ($Status == "Pending Closure")  {
-
                 $catStatus   = "Clo";
                 $imageStatus = "_clo.png";
             }
-
             if ($Status == "Resolved")  {
-
                 $catStatus   = "Res";
                 $imageStatus = "_res.png";
             }
-
-            $imageCategory          = "mc";
-            echo "var infoBoxBorder = '#ffff00';";
-
             if ($Category == "Criminal")  {
-
                 $imageCategory          = "mc";
                 echo "var infoBoxBorder = '#ffff00';";
             }
-
             if ($Category == "Disciplinary")  {
-
                 $imageCategory          = "me";
                 echo "var infoBoxBorder = '#ff33a6';";
             }
-
             if ($Category == "Litigation")  {
-
                 $imageCategory          = "ma";
                 echo "var infoBoxBorder = '#ff33a6';";
             }
-
-
             if ($Category == "Other")  {
-
                 $imageCategory          = "tr";
                 echo "var infoBoxBorder = '#fe940b';";
             }
-
-
-
             $imageName = "" .$imageCategory. "" .$imageStatus. "";
-
-            error_log(print_r("Image Name :".$imageName,TRUE));
-
             echo 'var image = "markers/' .$imageName. '";';
-
-
-
-
             ?>
-
-
-
             var co_ords_<?php echo $ID; ?> = new google.maps.LatLng(<?php echo $GPS; ?>);
             co_ords.push(co_ords_<?php echo $ID; ?>);
-
             var boxContent = "<div style='width:250px;height:200px;overflow-y:auto;overflow-x:hidden'>";
             boxContent += "<table border=0 style='color:#ffd40e;width:235px' cellpadding=2 cellspacing=0>";
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Case No :</B></td><td align='left'><?php echo $ID; ?></td></tr>";
@@ -692,14 +444,10 @@ include 'config.php'qwewe;
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Priority :</B></td><td align='left'><?php echo $Priority; ?></td></tr>"; // prob_priority coll
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Case Type :</B></td><td align='left'><?php echo $Category; ?></td></tr>"; // prob_category coll
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Case Sub Type :</B></td><td align='left'><?php echo $SubCategory; ?></td></tr>"; // status coll
-
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Status :</B></td><td align='left'><?php echo $Status; ?></td></tr>"; // status coll
-
-
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Province :</B></td><td align='left'><?php echo $Province; ?></td></tr>"; // Province coll
             boxContent += "<tr><td align='left' valign='top' nowrap><B>District :</B></td><td align='left'><?php echo $District; ?></td></tr>"; // Province coll
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Municipality :</B></td><td align='left'><?php echo $Precinct; ?></td></tr>";  // Municipality coll
-
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Reporter :</B></td><td align='left'><?php echo $Reporter; ?></td></tr>";  // ccg_nam + ccg_sur
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Position :</B></td><td align='left'><?php echo $Position; ?></td></tr>";  // ccg_pos
             boxContent += "<tr><td align='left' valign='top' nowrap><B>Contact No :</B></td><td align='left'><?php echo $Mobile; ?></td></tr>";  // ccg_mob
@@ -714,14 +462,10 @@ include 'config.php'qwewe;
             boxContent += "<td align='center' valign='bottom'><a href='#' onclick='alert(\"Work in progress ... Watch this space ...\")'><img src='images/icon_refer.png' title='Refer Case' ></a></td>";
             boxContent += "<td align='center' valign='bottom'><a href='#' onclick='showPhoto(\"<?php echo $PhotoURL; ?>\",\"" + infoBoxBorder +"\");killMenu();killLayerMenu()'><img id='photoIcon' src='images/icon_photo.png' title='View Photo'></a></td>";
             boxContent += "<td align='center' valign='bottom'><a href='#' onclick='parent.postMessage(\"<?php echo $ID; ?>\",\"*\");killMenu();killLayerMenu();'><img src='images/icon_interact.png' title='Case Interaction'></a></td>";
-
             boxContent += "</table>";
-
-
             var boxText = document.createElement("div");
             boxText.style.cssText = "border:2px solid " + infoBoxBorder + ";  margin-top: 0px; background: #1c1c1c; padding: 3px; box-shadow:4px 4px 4px #000000";
             boxText.innerHTML = boxContent;
-
             var infoBoxOptions = {
                 content: boxText
                 ,disableAutoPan: false
@@ -739,34 +483,23 @@ include 'config.php'qwewe;
                 ,pane: "floatPane"
                 ,enableEventPropagation: false
             };
-
             var ib_<?php echo $ID; ?> = new InfoBox(infoBoxOptions);
-
             infoBoxArray.push(ib_<?php echo $ID; ?>);
-
             marker_<?php echo $ID; ?> = new google.maps.Marker({ position: co_ords_<?php echo $ID; ?>, map: map, icon: image, title:"Case Number: <?php echo $ID; ?>",draggable:true });
             markers.push(marker_<?php echo $ID; ?>);
             oms.addMarker(marker_<?php echo $ID; ?>);
-
             <?php echo $imageCategory; ?>Array.push(marker_<?php echo $ID; ?>);
-
             <?php echo $imageCategory . $catStatus; ?>Array.push(marker_<?php echo $ID; ?>);
-
             google.maps.event.addListener(marker_<?php echo $ID; ?>, 'click', function() {  ib_<?php echo $ID; ?>.open(map, marker_<?php echo $ID; ?>);  });
-
             <?php
             }//End While Loop
             ?>
-
             mcOptions = { gridSize: 50, maxZoom: 15,imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m' };
             markerCluster = new MarkerClusterer(map, markers, mcOptions);
             shipCluster = new MarkerClusterer(map, shipMarkers, mcOptions);
             google.maps.event.addListener(map,'zoom_changed', function ()  {  resetMarkerVisibility();  markerCluster = new MarkerClusterer(map, markers, mcOptions);   });
 //google.maps.event.addListener(map,'zoom_changed', function ()  {  resetMarkerVisibility();  markerCluster = new MarkerClusterer(map, shipMarkers, mcOptions);   });
-
-
             function createZoneArray () {
-
                 document.getElementById('zoneGPSarray').style.display = "flex";
                 var eightMileCoords = "";
                 var cleanLatLng = "";
@@ -783,7 +516,6 @@ include 'config.php'qwewe;
                     zoneArrayMarkers.push(zoneNewMarker);
                     document.getElementById('zoneGPSarray').value += "new google.maps.LatLng("+eightMileCoords+"),\n";
                 });
-
                 zoneListener = google.maps.event.addListener(eightMileOverlay,'click', function(event)
                 {
                     eightMileCoords = "";
@@ -796,11 +528,9 @@ include 'config.php'qwewe;
                     document.getElementById('zoneGPSarray').value += "new google.maps.LatLng("+eightMileCoords+"),\n";
                 });
             }
-
             window.addEventListener("keydown", zoneKeysPressed, false);
             window.addEventListener("keyup", keysReleased, false);
             var keys = [];
-
             function zoneKeysPressed (e) {
                 keys[e.keyCode] = true;
                 if (keys[17] && keys[16] && keys[90]) {
@@ -811,11 +541,9 @@ include 'config.php'qwewe;
                 }
                 e.preventDefault();
             }
-
             function keysReleased(e) {
                 keys[e.keyCode] = false;
             }
-
             function toggleZoneSelector () {
                 if(selectZoneArray == 0)
                 {
@@ -837,30 +565,18 @@ include 'config.php'qwewe;
                     selectZoneArray = 0;
                 }
             }
-
 // end of zoneMaker Module
-
 //var kmzLayer = new google.maps.KmlLayer('http://41.216.130.6:8080/siyaleader/doc.kml');
 //kmzLayer.setMap(map);
-
-
 //map = new google.maps.Map(document.getElementById('mapcontainer'), options);
-
-
         }
         //End of Initialize Function
-
         google.maps.event.addDomListener(window, 'load', initialize);
-
-
-
     </script>
     </div>
     </td>
     </tr>
 </table>
-
-
 <div id="markerLegend" class="markLegend" style="opacity:0.9;z-index:2;width:187px;height:433px;display:flex">
     <IMG SRC="images/marker_legend.png" WIDTH=187 HEIGHT=433 BORDER=0 onclick="switchMarkerLegend()">
 </div>
@@ -874,7 +590,6 @@ include 'config.php'qwewe;
 <div id="siyaleader" style="valign:top; z-index:3;position:fixed;bottom:28px;left:1px;width:77px;height:32px;display:block">
     <IMG SRC="images/siyaleader_google.png" WIDTH=77 height=32 BORDER=0 style="opacity: 1;">
 </div>
-
 <div id="poStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:488px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -906,7 +621,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="prStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:511px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -938,7 +652,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="trStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:534px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -970,7 +683,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="srStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:557px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1002,7 +714,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="maStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:580px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1034,7 +745,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="mcStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:104;position:fixed;top:31px;left:603px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1066,7 +776,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="hkStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:107;position:fixed;top:31px;left:626px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1098,7 +807,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="enStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:649px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1130,7 +838,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="heStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:672px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1162,7 +869,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="mmStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:106;position:fixed;top:31px;left:695px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1194,7 +900,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="meStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:105;position:fixed;top:31px;left:718px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1226,7 +931,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="seStatusSelect" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:108;position:fixed;top:31px;left:741px;display:none">
     <table border=0 cellpadding=0 cellspacing=0 style="background:#1c1c1c;color:#ffffff;margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:6px solid #1C1C1C;border-bottom:6px solid #1C1C1C;border-right:6px solid #1C1C1C">
         <td align=center>
@@ -1258,8 +962,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
-
 <div id="mainMenu" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:150;position:fixed;top:31px;left:115px;display:none">
     <table bgcolor="#1c1c1c" cellpadding=0 style="font: 11pt 'Arial';color: #ffffff;border-collapse: collapse; border: 6px solid #1c1c1c;">
         <td align=center>
@@ -1284,8 +986,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
-
 <div id="portsMenu" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:150;position:fixed;top:31px;left:0px;display:none">
     <table bgcolor="#1c1c1c" cellpadding=0 style="font: 11pt 'Arial';color: #FFFFFF;border-collapse: collapse; border: 6px solid #1c1c1c;">
         <td align=center>
@@ -1298,10 +998,6 @@ include 'config.php'qwewe;
                 </tr>
                 <tr onclick="hidePhoto();switchToPort('DBN:13');switchMenu()" style="color:#ffffff;cursor:pointer" onmouseover="this.style.background='#ffffff';this.style.color='#1c1c1c'" onmouseout="this.style.background='#1c1c1c';this.style.color='#ffffff'">
                     <td valign=top>&nbsp;Durban&nbsp;</td>
-                </tr>
-
-                <tr onclick="hidePhoto();switchToPort(' SA:6');switchMenu()" style="color:#ffffff;cursor:pointer" onmouseover="this.style.background='#ffffff';this.style.color='#1c1c1c'" onmouseout="this.style.background='#1c1c1c';this.style.color='#ffffff'">
-                    <td valign=top>&nbsp;Johannesburg &nbsp;</td>
                 </tr>
                 <tr onclick="hidePhoto();switchToPort('EL:14');switchMenu()" style="color:#ffffff;cursor:pointer" onmouseover="this.style.background='#ffffff';this.style.color='#1c1c1c'" onmouseout="this.style.background='#1c1c1c';this.style.color='#ffffff'">
                     <td valign=top>&nbsp;East London&nbsp;</td>
@@ -1329,12 +1025,10 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="layerMenu" class="animated flipInY" style="opacity:0.9;box-shadow:6px 6px 6px #000000;z-index:130;position:fixed;top:31px;left:360px;display:none">
     <table bgcolor="#1c1c1c" cellpadding=0 style="font: 11pt 'Arial';color: #ffffff;border-collapse: collapse; border: 6px solid #1c1c1c;">
         <td align=center>
             <table border=0 cellpadding=0 cellspacing=0 style="border-collapse: collapse; border: 1px solid #ffffff">
-
                 <tr onclick="switchAssetOverlay('yellow')" style="color:#ffffff;cursor:pointer" onmouseover="this.style.background='#ffffff';this.style.color='#1c1c1c'" onmouseout="this.style.background='#1c1c1c';this.style.color='#ffffff'">
                     <td valign=top align=center width=16><span id="yellowSpan">&#9744;</span></td>
                     <td valign=top>&nbsp;Dry Bulk&nbsp;</td>
@@ -1368,8 +1062,7 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
-<div id="caseCapture" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;right:10px;top:55px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
+<div id="caseCapture" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;right:10px;top:31px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
     <input id="userID" type="hidden"/>
     <table border=0 cellpadding=0 cellspacing=0>
         <tr>
@@ -1385,9 +1078,7 @@ include 'config.php'qwewe;
             </td>
         </tr>
     </table>
-
 </div>
-
 <div id="caseCaptureSuccess" class="animated zoomInLeft" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;right:230px;top:31px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
     <table border=0 cellpadding=6 cellspacing=0 style="font: 12pt 'Arial';color: #ffffff;border-collapse:collapse;border:1px solid #ffffff;width:200px">
         <td valign=middle align=center>
@@ -1395,7 +1086,6 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <div id="ruSure" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;width:212px;right:230px;top:31px;background:#1c1c1c;align:center;z-index:12;display:none;box-shadow:4px 4px 4px #000000">
     <table border=0 cellpadding=3 cellspacing=0 style="width:100%;font: 12pt 'Arial';color: #ffffff;border-collapse:collapse;border:1px solid #ffffff">
         <tr>
@@ -1412,7 +1102,6 @@ include 'config.php'qwewe;
         </tr>
     </table>
 </div>
-
 <div id="casePhoto" class="photoFrame" style="align:center;z-index:11;display:flex">
     <table id="photoContainer" border=0 cellpadding=0 cellspacing=0 style="margin-top:0px;margin-bottom:0px;border-collapse:collapse;border-style:solid;border-top:0px solid #1C1C1C;border-left:0px solid #1C1C1C;border-bottom:0px solid #1C1C1C;border-right:0px solid #1C1C1C">
         <tr>
@@ -1425,23 +1114,17 @@ include 'config.php'qwewe;
                     <td width=20>&nbsp;</td>
                     <td align=center valign=middle><a href="#" onclick="hidePhoto()"><IMG SRC="images/closeXB.png" BORDER=0></a></td>
                     <td width=20>&nbsp;</td>
-
                     <!--    <td width=20><a href="#" onclick="rotatePhoto()"><img src="images/rotate_photo.png" title="Rotate Photo 90&#176;"></a></td>  -->
-
                 </table>
             </td>
         </tr>
     </table>
 </div>
-
 <table ID="weatherFrame" class="weatherFrame" border=0 cellpadding=0 cellspacing=0 style="align:center;z-index:100;display:flex;background:#1c1c1c">
     <tr>
         <td colspan=3>
-
             <IFRAME id="wunderGround" SRC="blank.html" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:800px;height:400px;"></IFRAME>
-
             <!--    <IFRAME id="wunderGround" SRC="http://www.wunderground.com/cgi-bin/findweather/getForecast?query=zmw:00000.1.68588&bannertypeclick=wu_travel_ship1" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:800px;height:400px;"></IFRAME>  -->
-
         </td>
     </tr><tr>
         <td width=300>
@@ -1455,9 +1138,7 @@ include 'config.php'qwewe;
         </td>
     </tr>
 </table>
-
 <IFRAME ID="cmcFrame" class="cmcFrame" SRC="blank.html"  MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=no HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="position:absolute;align:center;width:80%;height:80%;z-index:1500;display:flex;background:#1c1c1c"></IFRAME>
-
 <div id="closeFrameX" class="closeFrameX" border=0 cellpadding=0 cellspacing=0 style="border-top:0px;margin-top:0;position:absolute;align:center;top:43px;left:7px;20px;height:20px;z-index:1501;display:flex">
     <table width=20 border=0 cellpadding=0 cellspacing=0>
         <td align=center valign=top>
@@ -1465,11 +1146,7 @@ include 'config.php'qwewe;
         </td>
     </table>
 </div>
-
 <textarea id='zoneGPSarray' class="formField" style='width:300px;height:45px;position:fixed;top:0px;right:0px;display:none'></textarea>
-
 <!-- <IFRAME id="updateSocket" SRC="socket.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:500px;height:400px;position:fixed;top:0px;right:0px;display:flex"></IFRAME> -->
-
-
 </body>
 </html>
