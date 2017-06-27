@@ -1522,9 +1522,9 @@ class UserController extends Controller
         $user->api_key                     = uniqid();
         $user->created_by                  = \Auth::user()->id;
 
-        if ($request['affiliation']) {
+        if (!empty($request['affiliation'])) {
 
-            $user->affiliation       = $request['affiliation'];
+            $user->affiliation  = $request['affiliation'];
 
         }
          else {
@@ -3578,9 +3578,11 @@ class UserController extends Controller
         $user->api_key                     = uniqid();
         $user->created_by                  = \Auth::user()->id;
 
-        if ($request['affiliation']) {
 
-            $user->affiliation       = $request['affiliation'];
+
+        if (!empty($request['affiliation'])) {
+
+            $user->affiliation = $request['affiliation'];
 
         }
          else {
@@ -3590,11 +3592,14 @@ class UserController extends Controller
          }
 
 
+
         $user->updated_by    = \Auth::user()->id;
         $user->updated_at    =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
         $userStatusObj       = UserStatus::where('name','=','active')->first();
         $user->active        = $userStatusObj->id;
-        $user->save();
+
+
+        //$user->save();
 
          $data = array(
                     'name'      =>  $user->name

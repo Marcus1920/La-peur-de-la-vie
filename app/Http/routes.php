@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Province;
 use App\District;
 use App\Municipality;

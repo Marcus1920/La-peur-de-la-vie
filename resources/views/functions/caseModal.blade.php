@@ -3867,6 +3867,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                $("#modalEditUser #company").val(data[0].company);
                $("#modalEditUser #affiliation").val(data[0].affiliation);
 
+
             }
             else {
                $("#modalEditUser #name").val('');
