@@ -226,6 +226,8 @@
      $("#modalEditUser #municipality").removeAttr("disabled");
      $("#modalEditUser #district").removeAttr("disabled");
 
+
+
    })
 
 
