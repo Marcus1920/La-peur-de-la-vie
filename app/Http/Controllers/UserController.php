@@ -3599,7 +3599,7 @@ class UserController extends Controller
         $user->active        = $userStatusObj->id;
 
 
-        //$user->save();
+        $user->save();
 
          $data = array(
                     'name'      =>  $user->name
