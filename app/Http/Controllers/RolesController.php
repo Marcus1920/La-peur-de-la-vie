@@ -20,7 +20,7 @@ class RolesController extends Controller
         $roles = UserRole::select(array('id','name','created_at'));
         return \Datatables::of($roles)
                             ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateRoleModal({{$id}});" data-target=".modalEditRole">Edit</a>
-                                                    <a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchPermissions({{$id}});" data-target=".modalAddRolePermissions">Assign Permissions</a>
+                                                    <a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchPermissions({{$id}});" data-target=".modalAddRolePermissions">Permissions</a>
 
                                 ')
                             ->make(true);

@@ -43,7 +43,6 @@
 @include('roles.edit')
 @include('roles.add')
 @include('roles.permissions')
-@include('roles.addGroupPermission')
 
 @endsection
 
@@ -116,13 +115,14 @@
             "autoWidth": false,
             "processing": true,
             "serverSide": true,
-            "dom": '<"toolbar">frtip',
+            //"dom": '<"toolbar">frtip',
+            "dom": 'frtip',
             "order" :[[1,"desc"]],
             "ajax": "{!! url('/permissions-list/" + id +"')!!}",
              "columns": [
             {data: function(d){
 
-                  return "<input class='checkbox-custom chk'  onClick='activateToolBar();' name='checkbox-1' value=" + d.id + " type='checkbox'>";
+                  return "<input class='checkbox-custom chk'  onClick='activateToolBar();' name='chk_assigned[]' value=" + d.id + " title='"+(d.id+" - "+d.name+"("+d.perm_id+")")+"' type='checkbox'>";
 
             }},
             {data: 'name', name: 'name'},
@@ -146,8 +146,8 @@
 
 
 
-
-
+$("#inGID").val(id);
+			launchGroupPermissions(id);
 
 
 
@@ -188,14 +188,13 @@
     });
   }
 
-
 });
  
 
  var oPoiTable;
 
-function launchGroupPermissions() {
-
+function launchGroupPermissions(id) {
+console.log("launchGroupPermissions");
 
       if ( $.fn.dataTable.isDataTable( '#allPermissionsTable' ) ) {
             oPoiTable.destroy();
@@ -206,15 +205,15 @@ function launchGroupPermissions() {
        oPoiTable     = $('#allPermissionsTable').DataTable({
                 "processing": true,
                 "serverSide": true,
-                "bPaginate":false,
+                "bPaginate":true,
                 "dom": 'rtip',
-                "ajax": "{!! url('/permissions-list')!!}",
+				 "ajax": "{!! url('/permissions-list/" + id +"?filter=unassigned')!!}",
                 "order" :[[0,"desc"]],
                  "columns": [
 
                     {data: function(d){
 
-                      return "<input class='checkbox-custom chk' name='checkbox-1[]' value=" + d.id + " type='checkbox'>";
+                      return "<input class='checkbox-custom chk' name='chk_unassigned[]' value=" + d.id + " title='"+(d.id+" - "+d.name)+"' type='checkbox'>";
 
                     }},
                     {data: 'name', name: 'permissions.name'}

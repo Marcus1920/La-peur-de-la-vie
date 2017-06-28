@@ -1072,7 +1072,7 @@ Route::get('list-permissions', ['middleware' => 'resetLastActive', function () {
     return view('permissions.list');
 }]);
 
-Route::get('permissions-list', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@index']);
+//Route::get('permissions-list', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@index']);
 
 
 Route::get('permissions/{id}', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@edit']);
@@ -1081,7 +1081,7 @@ Route::get('permissions/{id}', ['middleware' => 'resetLastActive', 'uses' => 'Pe
 Route::post('updatePermission', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@update']);
 
 
-Route::get('permissions-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@list_permissions']);
+Route::get('permissions-list/{id?}', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@listPermissions']);
 
 
 Route::get('getPermissions', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@show']);
@@ -1090,6 +1090,7 @@ Route::post('addGroupPermission', ['middleware' => 'resetLastActive', 'uses' => 
 
 Route::post('removeGroupPermission', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@removeGroupPermission']);
 
+Route::post('updateGroupPermissions', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@updateGroupPermissions']);
 
 Route::get('list-permissions-per-group/{group}', ['middleware' => 'resetLastActive', function ($group) {
     //$deptObj = Department::find($department);

@@ -7,7 +7,9 @@
                 <h4 class="modal-title">Group Permissions</h4>
             </div>
             <div class="modal-body">
-
+{!! Form::open( ['url'=>url("updateGroupPermissions")] ) !!}
+    {!! Form::hidden("gid", null, array( 'class'=>"form-control input-sm", 'id'=>"inGID" )) !!}
+    <h3>Assigned</h3>
             <!-- Responsive Table -->
             <div class="block-area" id="responsiveTable">
                 <div id="MeetingAttendeeNotification"></div>
@@ -23,7 +25,26 @@
                     </table>
                 </div>
             </div>
+                <h3>Un-assigned</h3>
+            <!-- Responsive Table -->
+            <div class="block-area" id="responsiveTable">
+                <div id="MeetingAttendeeNotification"></div>
+                <div class="table-responsive overflow">
+                    <table class="table tile table-striped" id="allPermissionsTable">
+                        <thead>
+                        <tr>
+                            <th><a id='selecctallpermissions' data-value='0'>select/All</a></th>
+                            <th>name</th>
 
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+{{--{!! Form::button( "Update" , array( 'class'=>"btn btn-sm", 'id'=>"btnUpdatePerms" )) !!}--}}
+{!! Form::submit( "Update" , array( 'class'=>"btn btn-sm", 'id'=>"btnUpdatePerms" )) !!}
+{{--{!! Form::button( "Update & Close" , array( 'class'=>"btn btn-sm", 'id'=>"btnUpdate2Perms" )) !!}--}}
+{!! Form::close() !!}
             </div>
             <div class="modal-footer">
 

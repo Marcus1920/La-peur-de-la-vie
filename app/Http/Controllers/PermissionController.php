@@ -69,7 +69,48 @@ class PermissionController extends Controller
         return [$permission];
     }
 
-
+		/*function listPermissions($filter = "", $gid = 0, $uid = 0) {
+			$txtDebug = __CLASS__ . "->" . __FUNCTION__ . "(\$filter,\$gid,\$uid) \$gid - {$gid}, \$uid - {$uid}, \$filter - {$filter}";*/
+		function listPermissions($gid = 0) {
+			$txtDebug = __CLASS__ . "->" . __FUNCTION__ . "(\$gid) \$gid - {$gid}";
+			$filter = array_key_exists("filter", $_REQUEST) ? $_REQUEST['filter'] : "assigned";
+			$txtDebug .= PHP_EOL."  \$filter - {$filter}, Request - ".print_r($_REQUEST, 1);
+			$data = \DB::table("permissions");
+			$list = json_encode( json_decode( "{}" ) );
+			if ($gid == 0) $list = $this->index();
+			else {
+				if ( in_array($filter, array("", "all", "assigned")) ) {
+				//if ( in_array($filter, array("", "1")) ) {
+					$data = \DB::table('group_permissions AS gp')
+						->where('group_id','=',$gid)
+						->join('permissions','permissions.id','=','gp.permission_id')
+						->select( \DB::raw("gp.id, permissions.name, permissions.id AS perm_id") )
+					;
+				} else if ( in_array($filter, array("unassigned")) ) {
+					$assigned = \DB::table('permissions AS perms')->select(\DB::raw("perms.id"))->get("id");
+					$txtDebug .= PHP_EOL."  \$assigned - ".print_r($assigned, 1);
+					$data = \DB::table('permissions AS perms')
+						/*->whereNotIn('perms.id', function($query) {
+							$txtDebug = __CLASS__ . "->" . __FUNCTION__ . "(\$query) \$gid - , \$query - ".print_r($query->get()->toArray());
+							//die("<pre>{$txtDebug}</pre>");
+							$gid = 0;
+							//\DB::select("group_permissions AS gp");//->where("gp.group_id", $gid);
+							//\DB::table("group_permissions AS gp")->select("id");//->where("gp.group_id", $gid);
+							return array(1,2,3,4,5);
+							//return $query->select("permission_id")->from("group_permissions AS gp")->where("gp.group_id", $gid);
+						})*/
+						//->whereNotIn("perms.id", $assigned)
+							->whereRaw("perms.id NOT IN (SELECT permission_id FROM group_permissions AS gp WHERE gp.group_id = {$gid})")
+						//->join('permissions','permissions.id','=','gp.permission_id')
+						->select( \DB::raw("perms.id, perms.name") )
+					;
+				}
+				$txtDebug .= PHP_EOL."  \$data - ".print_r($data->get(), 1);
+				$list = \Datatables::of($data)->make(true);
+			}
+			//die("<pre>{$txtDebug}</pre>");
+			return $list;
+		}
 
     function list_permissions($id)
     {
@@ -204,6 +245,41 @@ class PermissionController extends Controller
 
     }
 
+    public function updateGroupPermissions(Request $req) {
+	    $txtDebug = __CLASS__ . "->" . __FUNCTION__ . "(\$req) \$req - ".print_r($req->all(), 1);
+	    $gid = array_key_exists("gid", $req->all()) ? $req->all()['gid'] : 0;
+	    $assign = array_key_exists("chk_unassigned", $req->all()) ? $req->all()['chk_unassigned'] : array();
+	    $unassign = array_key_exists("chk_assigned", $req->all()) ? $req->all()['chk_assigned'] : array();
+			$txtDebug .= PHP_EOL."  \$gid - ".print_r($gid, 1);
+			$txtDebug .= PHP_EOL."  \$assign - ".print_r($assign, 1);
+			$txtDebug .= PHP_EOL."  \$unassign - ".print_r($unassign, 1);
+			$txtDebug .= PHP_EOL."  Assigning";
+			foreach ($assign AS $i=>$id) {
+				$txtDebug .= PHP_EOL."    \$i - ".print_r($id, 1);
+				$perm = GroupPermission::where("group_id",$gid)->where("permission_id", $id);
+				$txtDebug .= ", count - ".($perm ? $perm->get()->count() : 0);
+				//$txtDebug .= ", sql - ".print_r($perm->toSql(), 1);
+				//$txtDebug .= ", binding - ".print_r($perm->getBindings(), 1);
+				if ($perm->get()->count() == 0) {
+					//GroupPermission::create(array('id'=>null, 'group_id'=>$gid, 'permission_id'=>$id));
+					$newperm = GroupPermission::create();
+					$newperm->forceFill(array('group_id'=>$gid, 'permission_id'=>$id, 'created_by'=>\Auth::user()->id, 'updated_by'=>\Auth::user()->id));
+					$newperm->save();
+				}
+			}
+			$txtDebug .= PHP_EOL."  UnAssigning";
+	    foreach ($unassign AS $i=>$id) {
+		    $txtDebug .= PHP_EOL."    \$i - ".print_r($id, 1);
+		    $perm = GroupPermission::where("id", $id);//->where("group_id",$gid);//->where("permission_id", $id);
+		    //$perm = GroupPermission::where("group_id",$gid)->where("permission_id", $id);
+		    $txtDebug .= ", count - ".($perm ? $perm->get()->count() : 0);
+		    //$txtDebug .= ", sql - ".print_r($perm->toSql(), 1);
+		    //$txtDebug .= ", binding - ".print_r($perm->getBindings(), 1);
+		    if ($perm->get()->count() > 0) $perm->delete();
+	    }
+	    return redirect()->back();
+	    die("<pre>{$txtDebug}</pre>");
+    }
 
 
 
