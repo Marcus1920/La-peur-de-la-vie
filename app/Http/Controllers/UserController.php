@@ -3580,10 +3580,12 @@ class UserController extends Controller
 
 
 
-        if (!empty($request['affiliation'])) {
+        if ($request['affiliation'] != "Select/All") {
 
-            $user->affiliation = $request['affiliation'];
 
+          $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
+
+          $user->affiliation = $Affiliation_id->id;
         }
          else {
 
@@ -3599,7 +3601,7 @@ class UserController extends Controller
         $user->active        = $userStatusObj->id;
 
 
-        //$user->save();
+        $user->save();
 
          $data = array(
                     'name'      =>  $user->name
