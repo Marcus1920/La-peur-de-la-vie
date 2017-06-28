@@ -217,15 +217,13 @@
                   {{--{!! Form::select('affiliation',$selectAffiliations,0,['class' => 'form-control input-sm' ,'id' => 'affiliation']) !!}--}}
 
 
-                    {{--{!! Form::text('affiliation',NULL,['class' => 'form-control input-sm','id' => 'affiliation']) !!}--}}
                     <select class="form-control" name="affiliation" id="affiliation">
 
-                        @foreach($selectAffiliations as $affiliationss)
+                        @foreach($selectAffiliations as $affiliationss )
 
-                            <option value={{$affiliationss}}>{{$affiliationss}}</option>
+                            <option  value="{{ $affiliationss}}">{{ $affiliationss}}</option>
 
-                        @endforeach
-
+                     @endforeach
 
                     </select>
 
