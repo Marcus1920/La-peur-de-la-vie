@@ -172,10 +172,10 @@
                 @endif
                 @if(isset($userViewAdministrationPermission) && $userViewAdministrationPermission->permission_id =='14')
 
-                    <li {{ (Request::is('list-users') ? "class=active dropdown" : 'dropdown') }}>
+                    <li class="dropdown">
 
                         <a class="sa-side-ui" href="">
-                            <span class="menu-item">Administration</span>
+                            <span class="menu-item">Setting </span>
                         </a>
                         <ul class="list-unstyled menu-item">
 
