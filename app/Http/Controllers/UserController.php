@@ -3550,6 +3550,25 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request)
     {
 
+       $users_if  = null ;
+
+        if ($request['affiliation'] != "Select/All") {
+
+
+            $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
+
+            $users_if = $Affiliation_id->id;
+        }
+        else {
+
+      ///      $us$users_ifers->affiliation = 1;
+
+
+            $users_if = 1 ;
+
+        }
+
+
         $user                              = User::where('id',$request['userID'])->first();
         $sendSMS                           = $user->status;
         $role                              = UserRole::where('slug','=',$request['role'])->first();
@@ -3577,22 +3596,7 @@ class UserController extends Controller
         $user->area                        = $request['area'];
         $user->api_key                     = uniqid();
         $user->created_by                  = \Auth::user()->id;
-
-
-
-        if ($request['affiliation'] != "Select/All") {
-
-
-          $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
-
-          $user->affiliation = $Affiliation_id->id;
-        }
-         else {
-
-            $user->affiliation = 1;
-
-         }
-
+        $user->affiliation	               = $users_if ;
 
 
         $user->updated_by    = \Auth::user()->id;
