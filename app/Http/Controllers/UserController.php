@@ -3552,19 +3552,26 @@ class UserController extends Controller
 
        $users_if  = null ;
 
-        if ($request['affiliation'] != "Select/All") {
 
 
-            $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
+        if ($request['affiliation'] =="Select/All") {
 
-            $users_if = $Affiliation_id->id;
+            $users_if = 1 ;
         }
-        else {
+        elseif ($request['affiliation'] ==null) {
 
       ///      $us$users_ifers->affiliation = 1;
 
 
             $users_if = 1 ;
+
+        }
+
+        else{
+
+            $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
+
+            $users_if = $Affiliation_id->id;
 
         }
 
@@ -3596,7 +3603,7 @@ class UserController extends Controller
         $user->area                        = $request['area'];
         $user->api_key                     = uniqid();
         $user->created_by                  = \Auth::user()->id;
-        $user->affiliation	               = $users_if ;
+        $user->affiliation		           = $users_if;
 
 
         $user->updated_by    = \Auth::user()->id;

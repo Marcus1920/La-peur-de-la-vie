@@ -16,8 +16,16 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('css/generics.css') }}" rel="stylesheet">
+
+    <style>
+        body{
+
+            background-color: #0B628D;
+        }
+
+    </style>
     </head>
-    <body class="logos-back-img">
+    <body class="">
 
     @if (count($errors) > 0)
     <div class="alert alert-danger">
