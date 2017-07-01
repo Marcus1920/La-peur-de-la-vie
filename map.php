@@ -729,7 +729,7 @@ while($row = mysqli_fetch_row($result)) {
 
        
 
-        $PhotoURL      = "http://41.216.130.6:8080/siyaleader-aims-mobileApp-api/public/".$row[16];
+        $PhotoURL      = "http://154.0.164.72:8080/Ubulwembu/".$row[16];
         $ReporterID    = $row[18];
         $isAddressbook = $row[17];
 
