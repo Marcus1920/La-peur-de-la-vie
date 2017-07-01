@@ -116,7 +116,7 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ asset('/img/Site Badge 3.png') }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ asset('/img/SiteBadge3.png') }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">
@@ -172,10 +172,10 @@
                 @endif
                 @if(isset($userViewAdministrationPermission) && $userViewAdministrationPermission->permission_id =='14')
 
-                    <li {{ (Request::is('list-users') ? "class=active dropdown" : 'dropdown') }}>
+                    <li class="dropdown">
 
                         <a class="sa-side-ui" href="">
-                            <span class="menu-item">Administration</span>
+                            <span class="menu-item">Setting </span>
                         </a>
                         <ul class="list-unstyled menu-item">
 
