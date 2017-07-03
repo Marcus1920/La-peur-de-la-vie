@@ -1403,26 +1403,28 @@ class UserController extends Controller
     }
 
     public function construct_associate_objects($associate) {
-
-
+$txtDebug = __CLASS__.".".__FUNCTION__."()";
+	    $txtDebug .= PHP_EOL."  \$associate - ".print_r($associate,1);
         $numberAssoc = PoiAssociate::where('poi_id',$associate->associate_id)->get()->count();
 
 
         $response              = array();
         $poiObj                = Poi::find($associate->associate_id);
-        $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
+$txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
+//die("<pre>{$txtDebug}</pre>");
+        if ($poiObj) $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
         $userObj               = new \stdClass();
-        $userObj->id           = "m-".$poiObj->id;
-        $userObj->name         = $poiObj->name." ".$poiObj->surname;
-        $userObj->picture      = $poipicture->poi_picture_url;
+        if ($poiObj) $userObj->id           = "m-".$poiObj->id;
+        if ($poiObj) $userObj->name         = $poiObj->name." ".$poiObj->surname;
+        if ($poiObj && $poipicture) $userObj->picture      = $poipicture->poi_picture_url;
         $userObj->type         = $associate->association_type;
         $userObj->number_assoc = $numberAssoc;
 
         $userObj->loaded       = TRUE;
         $linkObj               = new \stdClass();
-        $linkObj->id           = $poiObj->id;
+        if ($poiObj) $linkObj->id           = $poiObj->id;
         $linkObj->from         = "m-". $associate->poi_id;
-        $linkObj->to           = "m-". $poiObj->id;
+        if ($poiObj) $linkObj->to           = "m-". $poiObj->id;
         $linkObj->type         = $associate->association_type;
         $response["nodeObj"]   = $userObj;
         $response["linkObj"]   = $linkObj;
