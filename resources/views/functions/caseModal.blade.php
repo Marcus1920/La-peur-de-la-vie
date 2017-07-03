@@ -2992,7 +2992,7 @@ $("#submitAssociatePoiForm").on("click",function(){
 
                      if (data[0].img_url) {
 
-                        var ImgUrl = "http://41.216.130.6:8080/siyaleader-aims-mobileApp-api/public/"+data[0].img_url;
+                        var ImgUrl = "http://154.0.164.72:8080/Ubulwembu/"+data[0].img_url;
                         $("#modalCase #CaseImageA").attr("href",ImgUrl);
 
                      }

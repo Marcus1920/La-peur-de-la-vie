@@ -6,12 +6,8 @@ $(document).ready(function(){
 
 	var iframe   = $('#newCaseCapture');
 
-
-
 	 iframe.on('load', function(){
 
-	 	//$("#newCaseCapture").contents().find("#GPS").val("colorfulborder");
-	 	
 	 });
 
 
@@ -474,13 +470,13 @@ function killLayerMenu ()
 	}
 
 function switchToPort (vars)
-	{
-		splitVars = vars.split(":");
-		var port = splitVars[0];
-		var zoom = splitVars[1];
-		eval("map.panTo(" + port + ")");
-		eval("map.setZoom(" + zoom + ")");
-	}
+{
+	splitVars = vars.split(":");
+	var port = splitVars[0];
+	var zoom = splitVars[1];
+	eval("map.panTo(" + port + ")");
+	eval("map.setZoom(" + zoom + ")");
+}
 
 function checkInput(ob)
 	{
@@ -723,14 +719,13 @@ function switchNewCaseMarker (source,element)
 	
 		if(newCaseMarkerStatus == 0)
 				{
-					document.getElementById('submitButton').disabled=false;
-					//switchToPort('DBN:13');
+					
+					$("#submitButton").removeAttr('disabled');
 					document.getElementById('addCase').src ="images/cancel_case.png";
 					document.getElementById('addCase').title = "Cancel new case creation ...";
-			//		setCaptureBorder('#FFD205');
-					document.getElementById("caseCapture").className = "animated flipInY";
-					document.getElementById("caseCapture").style.display = "flex";
-			//		document.getElementById('captureForm').reset();
+					$("#caseCapture").addClass('animated flipInY');
+					$("#caseCapture").css("display","flex")
+			
 
 				
 					var mapCenter = map.getCenter();
@@ -770,6 +765,27 @@ function switchNewCaseMarker (source,element)
 
 
 		        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				}
 		else	{
 					if(source == "icon")
@@ -855,7 +871,7 @@ function submitCaptureForm (map_center, map_zoom)
 		document.getElementById('caseCaptureSuccess').style.display         = "flex";
 		setTimeout("document.getElementById('caseCaptureSuccess').className = 'animated flipOutY'", 2000);
 		document.getElementById('caseCaptureSuccess').className             = "animated zoomInLeft";
-		document.getElementById('ruSure').style.display                     = "none";
+		$('#ruSure').css('display','none');
 		document.getElementById('ruSure').className                         ="animated bounceIn";
 
 		$.ajax({
@@ -872,7 +888,6 @@ function submitCaptureForm (map_center, map_zoom)
 
 
 	}
-
 
 function captureSuccess (newCaseId,newMarkerImage,newMarkerCoords,infoBoxBorder,imageCategory,boxContent)
 	{
@@ -927,17 +942,20 @@ function captureSuccess (newCaseId,newMarkerImage,newMarkerCoords,infoBoxBorder,
 function askConfirm (element,source){
 		element = "" + element + "";
 		source = "" + source + "";
-		document.getElementById('ruSure').style.zIndex = "12";
+		$("#ruSure").css('zIndex','12');
 		var theElement = document.getElementById(element);
 		var position = getPosition(theElement);
-		document.getElementById('RUS').innerHTML = 'ARE YOU SURE?';
-		document.getElementById('ruSure').className='animated bounceIn';
-		document.getElementById('submitButton').disabled = true;
+		$("#RUS").html('ARE YOU SURE?');
+		$("#ruSure").addClass('animated bounceIn');
+		$("#submitButton").attr('disabled','disabled');
+		
 		if(source == "icon")
 				{
-					document.getElementById('ruSure').style.top = (position.y - 6) + "px";;
-					document.getElementById('ruSure').style.left = (position.x - 100) + "px";
-					document.getElementById('ruSure').style.display='flex';
+					$('#ruSure').css('top',(position.y - 6) + "px");
+					$('#ruSure').css('left',(position.x - 100) + "px");
+					$('#ruSure').css('display','flex');
+					
+				
 				}
 		else	{
 					document.getElementById('ruSure').style.top = (position.y - 34) + "px";;
@@ -981,7 +999,6 @@ function ruSure (val) {
 					document.getElementById('addCase').title = "Add a new case ...";
 					setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
 					setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
-                    switchNewCaseMarker('icon',this.id);this.blur();
 				}
 		else	{
 					document.getElementById('submitButton').disabled = false;
@@ -990,20 +1007,6 @@ function ruSure (val) {
 					setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
 				}
 	}
-function cancelCaseCapture(val)
-{
-	if(val=="Cancel")
-	{
-        markerNew.setMap(null);
-        document.getElementById('caseCapture').style.right = "0";
-        document.getElementById("caseCapture").className = "animated hinge";
-        newCaseMarkerStatus = 0;
-        document.getElementById('addCase').src ="images/add_case.png";
-        document.getElementById('addCase').title = "Add a new case ...";
-        setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
-        setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
-	}
-}
 
 function setCaptureBorder (col)
 	{
