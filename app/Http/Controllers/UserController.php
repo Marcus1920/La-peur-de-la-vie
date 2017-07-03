@@ -2379,7 +2379,7 @@ class UserController extends Controller
 
     public function view_poi_associates($id) {
 
-
+$txtDebug = __CLASS__.".".__FUNCTION__."(\$id) \$id - {$id}";
     $poi = \DB::table('poi')
                         ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
                         ->where('poi.id','=',$id)
@@ -2431,7 +2431,8 @@ class UserController extends Controller
        $poi__associate_query = PoiAssociate::where('poi_id',$id)->count();
        $results = array();
 
-
+	    $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
+	    //die("<pre>{$txtDebug}</pre>");
       if($poi__associate_query > 0) {
 
 
@@ -2441,7 +2442,10 @@ class UserController extends Controller
 
                $assoc_pic_object                  = PoiPicture::where('poi_id',$associate->associate_id)->first();
                $assoc_poi_object                  = Poi::find($associate->associate_id);
-               $assoc_poi_object->poi_picture_url = $assoc_pic_object->poi_picture_url;
+	          $txtDebug .= PHP_EOL."  \$assoc_pic_object - ".print_r($assoc_pic_object,1);
+	          $txtDebug .= PHP_EOL."  \$assoc_poi_object - ".print_r($assoc_poi_object,1);
+	          //die("<pre>{$txtDebug}</pre>");
+               if ($assoc_poi_object) $assoc_poi_object->poi_picture_url = $assoc_pic_object->poi_picture_url;
 
                $sub_results = array();
 
@@ -2455,7 +2459,7 @@ class UserController extends Controller
 
                      $sub_assoc_pic_object                  = PoiPicture::where('poi_id',$sub_associate->associate_id)->first();
                      $sub_assoc_poi_object                  = Poi::find($sub_associate->associate_id);
-                     $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
+                     if ($sub_assoc_poi_object) $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
                       $sub_results[]                        = $sub_assoc_poi_object;
 
 
@@ -2463,7 +2467,7 @@ class UserController extends Controller
 
                }
 
-               $assoc_poi_object->sub_associate   = $sub_results;
+	          if ($assoc_poi_object) $assoc_poi_object->sub_associate   = $sub_results;
                $results[]                         = $assoc_poi_object;
 
 
@@ -2472,8 +2476,8 @@ class UserController extends Controller
           $poi->assoc = $results;
 
       }
-
-
+$txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
+	    //die("<pre>{$txtDebug}</pre>");
         return view('users.poiassociates')->with('poi',$poi);
 
 
