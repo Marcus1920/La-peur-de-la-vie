@@ -67,7 +67,7 @@ class AffiliationsController extends Controller
 
       if (sizeof($AffiliationPositionsObj) == 0) {
 
-          $affiliationPosition              = new AffiliationPositions();
+          $affiliationPosition              = AffiliationPositions::where('affiliation','=',$request['affiliationID'])->first();
           $affiliationPosition->affiliation = $request['affiliationID'];
           $affiliationPosition->positions    = $request['affiliationPositions'];
           $affiliationPosition->created_by  = \Auth::user()->id;
