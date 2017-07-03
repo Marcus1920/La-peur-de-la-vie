@@ -49,6 +49,7 @@
  <script>
   $(document).ready(function() {
 
+
   var oTable     = $('#affiliationsTable').DataTable({
                 "processing": true,
                 "serverSide": true,
