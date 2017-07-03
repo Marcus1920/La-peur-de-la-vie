@@ -3585,7 +3585,9 @@ class UserController extends Controller
         $user->name                        = $request['name'];
         $user->surname                     = $request['surname'];
         $user->id_number                   = $request['id_number'];
+        $user->cellphone                   =$request['cellphone'];
         $user->alt_cellphone               = $request['alt_cellphone'];
+        $user->email                       =$request['email'];
         $user->alt_email                   = $request['alt_email'];
         $user->active                      = $request['status'];
         $user->department                  = $request['department'];
