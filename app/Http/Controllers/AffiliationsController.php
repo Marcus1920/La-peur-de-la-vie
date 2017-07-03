@@ -60,7 +60,7 @@ class AffiliationsController extends Controller
 
 
      $AffiliationPositionsObj = AffiliationPositions::where('affiliation','=',$request['affiliationID'])
-                                                      ->where('position','=',$request['affiliationPositions'])
+                                                      ->where('positions','=',$request['affiliationPositions'])
                                                       ->first();
 
       \Log::info(sizeof($AffiliationPositionsObj));
@@ -69,7 +69,7 @@ class AffiliationsController extends Controller
 
           $affiliationPosition              = new AffiliationPositions();
           $affiliationPosition->affiliation = $request['affiliationID'];
-          $affiliationPosition->position    = $request['affiliationPositions'];
+          $affiliationPosition->positions    = $request['affiliationPositions'];
           $affiliationPosition->created_by  = \Auth::user()->id;
           $affiliationPosition->save();
           \Session::flash('success', 'well done! affiliation position has been successfully added!');
@@ -117,7 +117,7 @@ class AffiliationsController extends Controller
     {
 
        $affiliationPositions = AffiliationPositions::where('affiliation','=',$id)
-                                                        ->select('position')
+                                                        ->select('positions')
                                                         ->get();
 
         $positionsIds = array();
@@ -129,6 +129,12 @@ class AffiliationsController extends Controller
             $positionsIds[] = $affiliationPosition->position;
 
         }
+
+
+
+
+
+
 
         $affiliationPositions    = Position::whereIn('id', $positionsIds)
                                             ->select(array('id','name','created_at'));
