@@ -625,7 +625,7 @@ function initialize() {
     echo 'var image = "markers/' .$imageName. '";';
 	
 	
-	error_log(print_r("END =========================================",TRUE));
+	error_log(print_r("ENDING =========================================",TRUE));
 
 
 

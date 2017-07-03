@@ -101,10 +101,8 @@ class AffiliationsController extends Controller
 
    /* else {
 
-        ////  \Session::flash('error', 'oh snap! affiliation position already exist!');
-         //   return redirect()->back();
-		 
-		 echo "ok" ; 
+          \Session::flash('error', 'oh snap! affiliation position already exist!');
+          return redirect()->back();
 
 
       }*/
@@ -145,7 +143,6 @@ class AffiliationsController extends Controller
        $affiliationPositions = AffiliationPositions::where('affiliation','=',$id)
                                                         ->select('positions')
                                                         ->get();
-
         $positionsIds = array();
 
 
