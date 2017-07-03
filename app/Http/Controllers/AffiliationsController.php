@@ -65,23 +65,47 @@ class AffiliationsController extends Controller
 
       \Log::info(sizeof($AffiliationPositionsObj));
 
-      if (sizeof($AffiliationPositionsObj) == 0) {
 
-          $affiliationPosition              = AffiliationPositions::where('affiliation','=',$request['affiliationID'])->first();
-          $affiliationPosition->affiliation = $request['affiliationID'];
-          $affiliationPosition->positions    = $request['affiliationPositions'];
-          $affiliationPosition->created_by  = \Auth::user()->id;
-          $affiliationPosition->save();
-          \Session::flash('success', 'well done! affiliation position has been successfully added!');
-          return redirect()->back();
 
-      } else {
+          if (AffiliationPositions::where('affiliation', '=', $request['affiliationID'])->exists()) {
+
+
+              $affiliationPosition              = AffiliationPositions::where('affiliation','=',$request['affiliationID'])->first();
+
+              $affiliationPosition->affiliation = $request['affiliationID'];
+              $affiliationPosition->positions    = $request['affiliationPositions'];
+              $affiliationPosition->created_by  = \Auth::user()->id;
+              $affiliationPosition->save();
+              \Session::flash('success', 'well done! affiliation position has been successfully added!');
+              return redirect()->back();
+          }
+
+          else
+          {
+
+              $affiliationPosition              = new   AffiliationPositions();
+
+              $affiliationPosition->affiliation = $request['affiliationID'];
+              $affiliationPosition->positions    = $request['affiliationPositions'];
+              $affiliationPosition->created_by  = \Auth::user()->id;
+              $affiliationPosition->save();
+              \Session::flash('success', 'well done! affiliation position has been successfully added!');
+              return redirect()->back();
+
+          }
+
+
+
+
+
+
+   /* else {
 
           \Session::flash('error', 'oh snap! affiliation position already exist!');
           return redirect()->back();
 
 
-      }
+      }*/
 
 
 
@@ -119,30 +143,49 @@ class AffiliationsController extends Controller
        $affiliationPositions = AffiliationPositions::where('affiliation','=',$id)
                                                         ->select('positions')
                                                         ->get();
-
         $positionsIds = array();
 
-       if (sizeof($affiliationPositions) > 0) {
-
-        foreach ($affiliationPositions as $affiliationPosition) {
-
-            $positionsIds[] = $affiliationPosition->position;
-
-        }
 
 
 
 
 
 
+       if  (!$affiliationPositions->isEmpty()) {
 
-        $affiliationPositions    = Position::whereIn('id', $positionsIds)
-                                            ->select(array('id','name','created_at'));
-        return \Datatables::of($affiliationPositions)
-                            ->addColumn('actions','')
-                            ->make(true);
+           foreach ($affiliationPositions as $affiliationPosition) {
+
+               $positionsIds[] = $affiliationPosition->position;
+
+           }
+
+           $affiliationPositions    =Position::where('id',    '=' ,  $positionsIds)
+               ->select(array('id','name','created_at'));
+           return \Datatables::of($affiliationPositions)
+               ->addColumn('actions','')
+               ->make(true);
+
+
+       }else
+       {
+
+           foreach ($affiliationPositions as $affiliationPosition) {
+
+               $positionsIds[] = $affiliationPosition->position;
+
+           }
+
+
+           $affiliationPositions    = Position::where('id',    '=' ,  $positionsIds)
+               ->select(array('id','name','created_at'));
+           return \Datatables::of($affiliationPositions)
+               ->addColumn('actions','')
+               ->make(true);
+
 
        }
+
+
 
 
     }
