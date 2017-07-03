@@ -532,11 +532,11 @@ function switchNewCaseMarker (source,element)
 					var markDP = markerNew.getPosition().toString();
 					markDP = markDP.replace('(','');
 					markDP = markDP.replace(')','');
-
+					
 					iframeDoc.getElementById('GPS').value = markDP;
-
-					google.maps.event.addListener(markerNew, 'drag', function()
-						{
+					
+					google.maps.event.addListener(markerNew, 'drag', function() 
+						{ 
 							markDP = markerNew.getPosition().toString();
 							markDP = markDP.replace('(','');
 							markDP = markDP.replace(')','');
