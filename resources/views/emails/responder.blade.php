@@ -48,7 +48,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px; text-align: center; color:#2E363F;">
-                                                        Hi {{ $name }}
+                                                        Hi {{ $user['name'] }} {{ $user['surname'] }}
                                                     </td>
                                                 </tr>
                                                 <tr><!-- spacing bottom -->
@@ -70,7 +70,7 @@
 
                                                     <tr>
                                                         <td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#87919F; line-height: 24px;">
-                                                            {{ $caseID }}
+                                                            {{ $case['id'] }}
                                                         </td>
                                                     </tr>
                                                 <tr>
@@ -84,7 +84,7 @@
 
                                                     <tr>
                                                         <td width="100%" style="font-family:helvetica, Arial, sans-serif; font-size: 14px; text-align: left; color:#87919F; line-height: 24px;">
-                                                            {{ $caseDesc }}
+                                                            {{ $case['description'] }}
                                                         </td>
                                                     </tr>
                                                 <tr>
