@@ -1451,6 +1451,7 @@ die("<pre>{$txtDebug}</pre>");
 		    else if ($user && $user->alt_email) $responder_emails[] = $user->alt_email;
 	    }
 	    $txtDebug .= PHP_EOL."  \$responder_emails - ".print_r($responder_emails,1);
+		
 
 	    foreach ($responder_emails AS $email) {
 		    $txtDebug .= PHP_EOL."  where - ".print_r(\App\User::where("email", $email)->count(), 1);
@@ -1468,9 +1469,8 @@ die("<pre>{$txtDebug}</pre>");
 			    $msg->subject("Case Responder");
 		    } );
 	    }
+	   
 
-	    //die("<pre>{$txtDebug}</pre>");
-\Log::info($txtDebug);
         $response["message"] = "Case created successfully";
         $response["error"] = FALSE;
         $response["caseID"] = $newCase->id;
