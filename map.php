@@ -609,15 +609,57 @@ function initialize() {
         $catStatus   = "Res";
         $imageStatus = "_res.png";
     }
+	
+	
+	switch($Category){
+	
+	case "Crime":
+			$imageCategory          = "mc";
+			echo "var infoBoxBorder = '#ffff00';";
+	break;
+	
+	case "Dairy":
+			$imageCategory          = "me";
+			echo "var infoBoxBorder = '#ff33a6';";
+	break;
+	
+	case "Commercial":
+			$imageCategory          = "ma";
+			echo "var infoBoxBorder = '#ff33a6';";
+	break;
+	
+	case "Trucks":
+			$imageCategory          = "tr";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+	
+	case "Residential":
+			$imageCategory          = "hk";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+	
+	case "Yellow Equipment":
+			$imageCategory          = "mm";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+	
+	case "Environmental":
+			$imageCategory          = "he";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+	
+	
+	
+	default :
+			$imageCategory          = "tr";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+	
+	}
 
  
 
-        $imageCategory          = "mc";
-        echo "var infoBoxBorder = '#ffff00';";
- 
-
-
-
+     
     $imageName = "" .$imageCategory. "" .$imageStatus. "";
 	
 	error_log(print_r("imageName: ".$imageName,TRUE));
