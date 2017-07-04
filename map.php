@@ -6,7 +6,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Siyaleader Aims</title>
+    <title> Ubuluwembo  </title>
     <meta charset="utf-8" / http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <link rel="icon" type="image/ico" href="favicon.ico">
@@ -103,7 +103,7 @@
 var mapWindowHeight = window.innerHeight - 31;
 document.write("<tr height=" + mapWindowHeight + ">");
 document.write("<td height=" + mapWindowHeight + ">");
-document.write("<input id='pac-input' class='' style='width:300px' type='text' placeholder='Location Search Box'>");
+document.write("<input id='pac-input' class='' style='width:360px' type='text' placeholder='Location Search Box'>");
 document.write("<div id='mapcontainer' style='height:100%;width:100%'>");
 
 $(document).ready(function(){
@@ -141,7 +141,7 @@ function initialize() {
      // Create the search box and link it to the UI element.
     var input     = document.getElementById('pac-input');
     var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
 
 
     // Bias the SearchBox results towards current map's viewport.
@@ -625,7 +625,7 @@ function initialize() {
     echo 'var image = "markers/' .$imageName. '";';
 	
 	
-	error_log(print_r("ENDING =========================================",TRUE));
+	error_log(print_r("ENDING=========================================",TRUE));
 
 
 
@@ -640,7 +640,7 @@ co_ords.push(co_ords_<?php echo $ID; ?>);
 
 var boxContent = "<div style='width:250px;height:200px;overflow-y:auto;overflow-x:hidden'>";
 boxContent += "<table border=0 style='color:#ffd40e;width:235px' cellpadding=2 cellspacing=0>";
-boxContent += "<tr><td align='left' valign='top' nowrap><B>Case No :</B></td><td align='left'><?php echo $ID; ?></td></tr>";
+boxContent += "<tr><td align='F' valign='top' nowrap><B>Case No :</B></td><td align='left'><?php echo $ID; ?></td></tr>";
 boxContent += "<tr><td align='left' valign='top' nowrap><B>GPS :</B></td><td align='left'><?php echo $GPS; ?></td></tr>"; // GPS coll
 boxContent += "<tr><td align='left' valign='top' nowrap><B>Submitted :</B></td><td align='left'><?php echo $Submitted; ?></td></tr>"; // submit_date coll
 boxContent += "<tr><td align='left' valign='top' nowrap><B>Priority :</B></td><td align='left'><?php echo $Priority; ?></td></tr>"; // prob_priority coll
@@ -1318,7 +1318,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<div id="caseCapture" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;right:10px;top:31px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
+<div id="caseCapture" style="opacity:0.9;padding:10px;border-radius:3px;position:absolute;right:10px;top:55px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
     <input id="userID" type="hidden"/>
     <table border=0 cellpadding=0 cellspacing=0>
         <tr>

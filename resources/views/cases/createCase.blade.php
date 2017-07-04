@@ -257,6 +257,7 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
                        <a type="#" id='submitCreateCaseAgentForm' class="btn btn-sm">Create Case</a>
+					   {!! Form::submit() !!}
                     </div>
                 </div>
 

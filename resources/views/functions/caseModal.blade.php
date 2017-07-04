@@ -2483,7 +2483,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                       });
                   },
                   success : function(data){
-
+console.log("CreateCase success, data - ",data); 
                     if (data == 'ok') {
                       $(".token-input-token").remove();
                       $('#caseReportCaseForm')[0].reset();
@@ -2497,7 +2497,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                   },
 
                   error: function(data) {
-
+console.log("CreateCase error, data - ",data); 
                     HoldOn.close();
 
                     $("#error_cellphone").html("");
