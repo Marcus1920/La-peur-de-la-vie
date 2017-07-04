@@ -1185,7 +1185,8 @@ class CasesController extends Controller
      */
     public function captureCaseUpdate(CaseRequest $request)
     {
-
+	    $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequest \$request) \$request - ".print_r($request, 1);
+	    die("<pre>{$txtDebug}</pre>");
         $userRole = UserRole::where('name', '=', 'House Holder')->first();
         $user = New User();
         $user->role = $userRole->id;
@@ -1233,7 +1234,8 @@ class CasesController extends Controller
 
     public function captureCaseUpdateH(CaseRequestH $request)
     {
-
+	    $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequestH \$request) \$request - ".print_r($request, 1);
+	    die("<pre>{$txtDebug}</pre>");
         $casePriority = CasePriority::where('slug', '=', $request['priority'])->first();
         $houseHolderObj = User::find($request['hseHolderId']);
         $case = CaseReport::find($request['caseID']);
@@ -1261,7 +1263,7 @@ class CasesController extends Controller
      */
     public function create(CreateCaseRequest $request)
     {
-
+$txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseRequest \$request) \$request - ".print_r($request, 1);
         $case = CaseReport::find($request['caseID']);
         $newCase = New CaseReport();
         $newCase->created_at = $case->created_at;
@@ -1279,6 +1281,7 @@ class CasesController extends Controller
         $newCase->active = 1;
         $newCase->house_holder_id = $case->house_holder_id;
         $newCase->agent = $case->agent;
+die("<pre>{$txtDebug}</pre>");
         $newCase->save();
 
         $relatedCase = New CaseRelated();
@@ -1329,17 +1332,19 @@ class CasesController extends Controller
     function createCaseAgent(CreateCaseAgentRequest $request)
     {
 
-
-
+	    $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseAgentRequest \$request) \$request - ".print_r($request->all(), 1);
 
         $house_holder_id = 0;
+        if ($request['house_holder_id']) $house_holder_id = $request['house_holder_id'];
+        else if ($request['hseHolderId']) $house_holder_id = $request['hseHolderId'];
+	    $txtDebug .= PHP_EOL."  \$house_holder_id - {$house_holder_id}";
+	    //die("<pre>{$txtDebug}</pre>");
 
-
-        if (empty($request['house_holder_id'])) {
+        if (empty($house_holder_id)) {
 
             $userRole = UserRole::where('name', '=', 'Client')->first();
             $user = New User();
-            $user->role = $userRole->id;
+            $user->role = $userRole ? $userRole->id : 0;
             $user->name = $request['name'];
             $user->surname = $request['surname'];
             $user->cellphone = $request['cellphone'];
@@ -1381,7 +1386,7 @@ class CasesController extends Controller
 		$officer = $officerObj->name;
 	}
 
-
+	   // die("<pre>{$txtDebug}</pre>");
 
         $newCase = New CaseReport();
         $newCase->created_at = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
@@ -1389,8 +1394,8 @@ class CasesController extends Controller
         $newCase->reporter = \Auth::user()->id;
         $newCase->house_holder_id = $house_holder_id;
         $newCase->description = $request['description'];
-        $newCase->case_type = $case_type;
-        $newCase->case_sub_type = $case_sub_type;
+        $newCase->case_type = is_array($case_type) ? $case_type[0] : $case_type;
+        $newCase->case_sub_type = is_array($case_sub_type) ? $case_sub_type[0] : $case_sub_type;
         $newCase->saps_case_number = $request['saps_case_number'];
         $newCase->saps_station = $request['saps_station'];
         $newCase->investigation_officer = $officer;
@@ -1433,6 +1438,40 @@ class CasesController extends Controller
             $createDir = \File::makeDirectory($destinationFolder, 0777, true);
         }
 
+	    $typeid = $request->all()['case_sub_type'][0];
+	    $responders = array();
+	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('first_responder AS uid')->first()->uid;
+	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('second_responder AS uid')->first()->uid;
+	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('third_responder AS uid')->first()->uid;
+	    $txtDebug .= PHP_EOL."  \$responders - ".print_r($responders,1);
+	    $responder_emails = array();
+	    foreach ($responders AS $uid) {
+		    $user = User::where("id", $uid)->first();
+		    if ($user && $user->email) $responder_emails[] = $user->email;
+		    else if ($user && $user->alt_email) $responder_emails[] = $user->alt_email;
+	    }
+	    $txtDebug .= PHP_EOL."  \$responder_emails - ".print_r($responder_emails,1);
+
+	    foreach ($responder_emails AS $email) {
+		    $txtDebug .= PHP_EOL."  where - ".print_r(\App\User::where("email", $email)->count(), 1);
+		    $user = \App\User::where("email", $email)->count() > 0 ? \App\User::where("email", $email)->first()->toArray() : array();
+		    //$user = \App\User::where("email", $email)->get()->count() > 0 ? \App\User::where("email", $email)->first()->toArray() : array();
+		    //if ($user->count() > 0) $user = $user->first()->toArray();
+		    $case = \App\User::where("email", $email)->count() > 0 ? \App\User::where("email", $email)->first()->toArray() : array();
+
+		    $txtDebug .= PHP_EOL."  \$user - ".print_r($user,1);
+		    if (count($user) > 0) \Mail::send( "emails.responder", array('user'=>$user, 'case'=>$newCase), function( $msg ) use ($email) {
+			    $msg->from( env("MAIL_USERNAME", "inertialFATE@gmail.com") );
+			    ///$msg->to("inertialFATE@gmail.com");
+			    $msg->to($email);
+			    //$msg->cc("paulsartorius@gmail.com");
+			    $msg->subject("Case Responder");
+		    } );
+	    }
+	    $caseNote->forceDelete();
+	    $caseOwner->forceDelete();
+	    $newCase->forceDelete();
+	    //die("<pre>{$txtDebug}</pre>");
 
         $response["message"] = "Case created successfully";
         $response["error"] = FALSE;
