@@ -1438,7 +1438,7 @@ die("<pre>{$txtDebug}</pre>");
             $createDir = \File::makeDirectory($destinationFolder, 0777, true);
         }
 
-	    $typeid = $request->all()['case_sub_type'][0];
+	    $typeid = $request->all()['case_sub_type'];
 	    $responders = array();
 	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('first_responder AS uid')->first()->uid;
 	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('second_responder AS uid')->first()->uid;
@@ -1468,9 +1468,6 @@ die("<pre>{$txtDebug}</pre>");
 			    $msg->subject("Case Responder");
 		    } );
 	    }
-	    $caseNote->forceDelete();
-	    $caseOwner->forceDelete();
-	    $newCase->forceDelete();
 	    //die("<pre>{$txtDebug}</pre>");
 
         $response["message"] = "Case created successfully";
