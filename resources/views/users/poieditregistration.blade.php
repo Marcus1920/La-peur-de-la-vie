@@ -112,7 +112,7 @@
                         <div class="col-md-4">
 
                             {!! Form::label('Surname', 'Surname', array('class' => '')) !!}
-                            {!! Form::text('surname',$poi->surname,['class' => 'form-control input-sm m-b-10','id' => 'surname','required']) !!}
+                            {!! Form::text('surname',$poi->surname,['class' => 'form-control input-sm m-b-10','id' => 'surname']) !!}
 
                         </div>
                         <div class="col-md-4">
@@ -171,14 +171,14 @@
 
                               <div class="col-md-4">
                                   {!! Form::label('Email Address', 'Email Address', array('class' => '')) !!}
-                                  {!! Form::text('email',$poi->email,['class' => 'form-control input-sm m-b-10','id' => 'email', 'required']) !!}
+                                  {!! Form::text('email',$poi->email,['class' => 'form-control input-sm m-b-10','id' => 'email']) !!}
 
                               </div>
 
                                 <div class="col-md-4">
 
                                   {!! Form::label('Tax Number', 'Tax Number', array('class' => '')) !!}
-                                  {!! Form::text('tax_number',$poi->tax_number,['class' => 'form-control input-sm m-b-10','id' => 'tax_number','required']) !!}
+                                  {!! Form::text('tax_number',$poi->tax_number,['class' => 'form-control input-sm m-b-10','id' => 'tax_number']) !!}
 
                               </div>
                           </div>

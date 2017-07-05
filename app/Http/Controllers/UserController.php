@@ -1751,11 +1751,12 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
-               $fileExt      = 'jpg';
+                $target_file  = $target_file_directory.$file_name;
+                $resized_file = $target_file_directory.$file_name;
+                $wmax         = 400;
+                $hmax         = 400;
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
 
@@ -2566,7 +2567,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -2675,7 +2677,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
                               if(!is_dir($target_file_directory)) {
 
-                                  mkdir($target_file_directory);
+
+                                  File::makeDirectory($target_file_directory, 0777, true,true);
 
                               }
 
@@ -2685,7 +2688,9 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                  $resized_file = $target_file_directory.$file_name_scar;
                                  $wmax         = 600;
                                  $hmax         = 480;
-                                 $fileExt      = 'jpg';
+                                 $kaboom       = explode(".", $file_name);
+                                 $fileExt      = end($kaboom);
+
 
                                  if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i][$key],$img_url)) {
 
@@ -2713,7 +2718,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
                             if(!is_dir($target_file_directory)) {
 
-                                mkdir($target_file_directory);
+                                File::makeDirectory($target_file_directory, 0777, true,true);
 
                             }
 
@@ -2725,7 +2730,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                $resized_file = $target_file_directory.$file_name;
                                $wmax         = 600;
                                $hmax         = 480;
-                               $fileExt      = 'jpg';
+                               $kaboom       = explode(".", $file_name);
+                               $fileExt      = end($kaboom);
 
                                if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
 
@@ -2817,7 +2823,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
                               if(!is_dir($target_file_directory)) {
 
-                                  mkdir($target_file_directory);
+                                  File::makeDirectory($target_file_directory, 0777, true,true);
 
                               }
 
@@ -2828,7 +2834,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                  $resized_file = $target_file_directory.$file_name_tatoo;
                                  $wmax         = 600;
                                  $hmax         = 480;
-                                 $fileExt      = 'jpg';
+                                  $kaboom       = explode(".", $file_name);
+                                  $fileExt      = end($kaboom);
 
                                  if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i][$key],$img_url)) {
 
@@ -2857,7 +2864,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
                             if(!is_dir($target_file_directory)) {
 
-                                mkdir($target_file_directory);
+                                File::makeDirectory($target_file_directory, 0777, true,true);
 
                             }
 
@@ -2869,7 +2876,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                $resized_file = $target_file_directory.$file_name;
                                $wmax         = 600;
                                $hmax         = 480;
-                               $fileExt      = 'jpg';
+                                $kaboom       = explode(".", $file_name);
+                                $fileExt      = end($kaboom);
 
                                if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
 
@@ -2952,7 +2960,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
                               if(!is_dir($target_file_directory)) {
 
-                                  mkdir($target_file_directory);
+                                  File::makeDirectory($target_file_directory, 0777, true,true);
 
                               }
 
@@ -2963,7 +2971,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                  $resized_file = $target_file_directory.$file_name_tatoo;
                                  $wmax         = 600;
                                  $hmax         = 480;
-                                 $fileExt      = 'jpg';
+                                  $kaboom       = explode(".", $file_name);
+                                  $fileExt      = end($kaboom);
 
                                  if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i][$key],$img_url)) {
 
@@ -2992,7 +3001,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
                             if(!is_dir($target_file_directory)) {
 
-                                mkdir($target_file_directory);
+                                File::makeDirectory($target_file_directory, 0777, true,true);
 
                             }
 
@@ -3004,7 +3013,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                $resized_file = $target_file_directory.$file_name;
                                $wmax         = 600;
                                $hmax         = 480;
-                               $fileExt      = 'jpg';
+                                $kaboom       = explode(".", $file_name);
+                                $fileExt      = end($kaboom);
 
                                if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i],$img_url)) {
 
@@ -3055,7 +3065,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
