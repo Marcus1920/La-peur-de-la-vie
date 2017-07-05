@@ -25,8 +25,8 @@ class PoiRequest extends Request
     {
         return [
 
-            'name'                  =>'required',
-            'surname'               =>'required',
+          //  'name'                  =>'required',
+            //'surname'               =>'required',
 //            'gender'                =>'required|not_in:0',
 //            'weight'                =>'required|numeric',
 //            'email'                 =>'email',
