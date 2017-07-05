@@ -36,7 +36,7 @@ class PoiRequest extends Request
 //          'language'              =>'required|not_in:0',
 //          'position'              =>'required|not_in:0',
 //            'poi_profile_file'      =>'mimes:jpeg',
-            'profile_pic_note'     =>'required',
+           // 'profile_pic_note'     =>'required',
 //            'tax_number'          =>'required|numeric',
 
 //            'has_driver_licence'    =>'required|not_in:0'
