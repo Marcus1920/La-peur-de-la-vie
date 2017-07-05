@@ -9,4 +9,5 @@ Homestead.yaml
 /public/images/poi/
 .idea/
 /public/config.php
+config.php
 
