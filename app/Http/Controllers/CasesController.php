@@ -917,13 +917,13 @@ class CasesController extends Controller
 
         $email = (sizeof($user) <= 0) ? $userAddressbook->email : $user->email;
 
-        \Mail::send('emails.caseClosed', $data, function ($message) use ($email) {
+       /* \Mail::send('emails.caseClosed', $data, function ($message) use ($email) {
 
             $message->from('info@siyaleader.net', 'Siyaleader');
             $message->to($email)->subject("Siyaleader Notification - Case Closed: ");
 
         });
-
+*/
         return "ok";
 
     }
@@ -1469,6 +1469,7 @@ die("<pre>{$txtDebug}</pre>");
 			    $msg->subject("Case Responder");
 		    } );
 	    }
+	   
 
         $response["message"] = "Case created successfully";
         $response["error"] = FALSE;
