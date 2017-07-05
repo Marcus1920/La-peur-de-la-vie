@@ -2522,6 +2522,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         $poi->religion           = $request['religion'];
         $poi->qualification_type = $request['qualification_type'];
         $poi->notice_period      = $request['notice_period'];
+        $poi->tax_number         = $request['tax_number'];
 
 
         $position             = Position::where('slug','=',$request['position'])->first();
