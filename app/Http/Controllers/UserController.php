@@ -2505,8 +2505,6 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
     public function edit_poi_save(Request $request) {
 
 
-
-
         $poi                     = Poi::find($request['poiID']);
         $poi->name               = $request['name'];
         $poi->surname            = $request['surname'];
@@ -2536,7 +2534,6 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         }
 
         if($request['poiID'] <>"" && $request['id_pic_note'] ) {
-
 
           $poipicture = PoiPicture::where("poi_id",$request['poiID'])->where("poi_picture_type",4)->first();
           $poipicture->notes          = $request['id_pic_note'];
