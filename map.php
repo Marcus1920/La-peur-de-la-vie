@@ -42,7 +42,7 @@
                         <tr style="opacity:1">
                           
                             <td bgcolor="#1c1c1c" valign=middle align=center width=115 style="min-width:115px">
-                                <a href="#" onclick="switchMainMenu();this.blur()"><i class="fa fa-navicon fa-fw" style="color:#ffffff" title="Toggle main menu ... " ></i></a>
+                              <!-- <a href="#" onclick="switchMainMenu();this.blur()"><i class="fa fa-navicon fa-fw" style="color:#ffffff" title="Toggle main menu ... " ></i></a> -->
                             </td>
                             <td bgcolor="#1c1c1c" valign=middle align="right" nowrap width=110 style="min-width:110px">
                                 <input maxlength="10" type=text id="searchBox" name="searchBox" title="Search by case number" onkeyup="checkInput(this)" onkeydown="javascript:if (event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) { animateMarker(document.all.searchBox.value); } };" style="text-align:center;width:100px;font-size:10pt;background:#000000;color:#ffffff;border-style:solid;border-color:#ffffff;border-width:1px">
@@ -779,6 +779,8 @@ function createZoneArray () {
             document.getElementById('zoneGPSarray').value += "new google.maps.LatLng("+eightMileCoords+"),\n";
         });
 
+
+
     zoneListener = google.maps.event.addListener(eightMileOverlay,'click', function(event)
     {
         eightMileCoords = "";
@@ -1360,14 +1362,23 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<div id="caseCapture" style="opacity:0.9;padding:10px;border-radius:3px;position:absolute;right:10px;top:55px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
+<div id="caseCapture" style="opacity:0.9;padding: 10px;border-radius:3px;position:absolute;right:10px;top:55px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
     <input id="userID" type="hidden"/>
     <table border=0 cellpadding=0 cellspacing=0>
         <tr>
             <td colspan=2>
                 <iframe id="newCaseCapture" src="case_capture.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:338px;height:600px"></iframe>
             </td>
-        </tr><tr>
+        </tr>
+
+        <tr>
+            <td colspan=2>
+
+                </br>
+            </td>
+        </tr>
+
+        <tr>
         <td align=left>
             <input id="askConfirmButton" style="font-size:12pt;width:90px;height:25px;border:0;background:#ffffff;color:#ff0000" type="button" value="Cancel" onclick="askConfirm(this.id);this.blur()">
         </td>
@@ -1457,7 +1468,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<textarea id='zoneGPSarray' class="formField" style='width:300px;height:45px;position:fixed;top:0px;right:0px;display:none'></textarea>
+<textarea id='zoneGPSarray' class="formField" style='width:300px;height:45px;position:fixed;top:0px;right:0px;display:none'>
+
+
+</textarea>
 
 <!-- <IFRAME id="updateSocket" SRC="socket.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:500px;height:400px;position:fixed;top:0px;right:0px;display:flex"></IFRAME> -->
 
