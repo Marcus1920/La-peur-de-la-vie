@@ -1469,6 +1469,11 @@ die("<pre>{$txtDebug}</pre>");
 			    $msg->subject("Case Responder");
 		    } );
 	    }
+<<<<<<<
+	   
+=======
+
+>>>>>>>
 
         $response["message"] = "Case created successfully";
         $response["error"] = FALSE;
