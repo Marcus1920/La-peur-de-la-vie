@@ -42,6 +42,7 @@ use App\CaseReport;
 use App\CasePoi;
 use App\PoiVehicle;
 use App\PoiTraining;
+use File;
 
 
 
@@ -1671,7 +1672,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0775, true,true);
 
             }
 
