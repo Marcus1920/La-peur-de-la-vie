@@ -112,7 +112,7 @@
                         <div class="col-md-4">
 
                             {!! Form::label('Surname', 'Surname', array('class' => '')) !!}
-                            {!! Form::text('surname',$poi->surname,['class' => 'form-control input-sm m-b-10','id' => 'surname','required']) !!}
+                            {!! Form::text('surname',$poi->surname,['class' => 'form-control input-sm m-b-10','id' => 'surname']) !!}
 
                         </div>
                         <div class="col-md-4">
@@ -171,14 +171,14 @@
 
                               <div class="col-md-4">
                                   {!! Form::label('Email Address', 'Email Address', array('class' => '')) !!}
-                                  {!! Form::text('email',$poi->email,['class' => 'form-control input-sm m-b-10','id' => 'email', 'required']) !!}
+                                  {!! Form::text('email',$poi->email,['class' => 'form-control input-sm m-b-10','id' => 'email']) !!}
 
                               </div>
 
                                 <div class="col-md-4">
 
                                   {!! Form::label('Tax Number', 'Tax Number', array('class' => '')) !!}
-                                  {!! Form::text('tax_number',$poi->tax_number,['class' => 'form-control input-sm m-b-10','id' => 'tax_number','required']) !!}
+                                  {!! Form::text('tax_number',$poi->tax_number,['class' => 'form-control input-sm m-b-10','id' => 'tax_number']) !!}
 
                               </div>
                           </div>
@@ -1503,7 +1503,7 @@
 
     });
 
-  })
+  });
 
 
 function delete_row(node){
@@ -1525,75 +1525,72 @@ $(".has_vehicle").change(function() {
   function generate_vehicle_html(val) {
 
 
-    var generate_vehicle_html = "";
+      var generate_vehicle_html = "";
 
 
-    if(val == 2) {
-
-           
-            generate_vehicle_html += "<div class='row driver_line'>";
-
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle Make", "Vehicle Make") !!}';
-            generate_vehicle_html += "<input name='vehicle_make[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle Color", "Vehicle Color") !!}';
-            generate_vehicle_html += "<input name='vehicle_color[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle VIN", "Vehicle VIN") !!}';
-            generate_vehicle_html += "<input name='vehicle_vin[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html += "<div class='row driver_line'>";
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle Number Plate", "Vehicle Number Plate") !!}';
-            generate_vehicle_html += "<input name='vehicle_plate[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html +="<div class='row'>";
-            generate_vehicle_html +="<div class='col-md-6'>";
-            generate_vehicle_html +="<div class='fileupload fileupload-new doc_upload_image' data-provides='fileupload'>";
-            generate_vehicle_html +="<div class='fileupload-preview thumbnail form-control'></div>"; 
-            generate_vehicle_html +="<div>";
-            generate_vehicle_html +="<span class='btn btn-file btn-alt btn-sm'>";
-            generate_vehicle_html += "<span class='fileupload-new'>Select image</span>";
-            generate_vehicle_html += "<span class='fileupload-exists'>Change</span>";
-            generate_vehicle_html += '{!! Form::file("poi_vehicle_file") !!}';
-            generate_vehicle_html += "</span>";
-            generate_vehicle_html += '<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>';
-            generate_vehicle_html += '</div>';
-            generate_vehicle_html += '</div>';
-            generate_vehicle_html += '</div>';
-
-            generate_vehicle_html += '</div>';
+      if (val == 2) {
 
 
-     
-            generate_vehicle_html += "<div class='row driver_line'>";            
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle", "Vehicle") !!}';
-            generate_vehicle_html += '{!! Form::select("has_vehicle",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10 has_vehicle" ,"id" => "has_vehicle","onChange" => "generate_vehicle_html(this.value)"]) !!}';
-            generate_vehicle_html += "</div>";
-            generate_vehicle_html += "</div>";
+          generate_vehicle_html += "<div class='row driver_line'>";
+
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle Make", "Vehicle Make") !!}';
+          generate_vehicle_html += "<input name='vehicle_make[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle Color", "Vehicle Color") !!}';
+          generate_vehicle_html += "<input name='vehicle_color[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle VIN", "Vehicle VIN") !!}';
+          generate_vehicle_html += "<input name='vehicle_vin[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='row driver_line'>";
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle Number Plate", "Vehicle Number Plate") !!}';
+          generate_vehicle_html += "<input name='vehicle_plate[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='row'>";
+          generate_vehicle_html += "<div class='col-md-6'>";
+          generate_vehicle_html += "<div class='fileupload fileupload-new doc_upload_image' data-provides='fileupload'>";
+          generate_vehicle_html += "<div class='fileupload-preview thumbnail form-control'></div>";
+          generate_vehicle_html += "<div>";
+          generate_vehicle_html += "<span class='btn btn-file btn-alt btn-sm'>";
+          generate_vehicle_html += "<span class='fileupload-new'>Select image</span>";
+          generate_vehicle_html += "<span class='fileupload-exists'>Change</span>";
+          generate_vehicle_html += '{!! Form::file("poi_vehicle_file") !!}';
+          generate_vehicle_html += "</span>";
+          generate_vehicle_html += '<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>';
+          generate_vehicle_html += '</div>';
+          generate_vehicle_html += '</div>';
+          generate_vehicle_html += '</div>';
+
+          generate_vehicle_html += '</div>';
 
 
-        
-            $("#vehicles_container").append(generate_vehicle_html);
-
-            $('.date-only').datetimepicker({
-                    pickTime: false
-            });
-
-           
+          generate_vehicle_html += "<div class='row driver_line'>";
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle", "Vehicle") !!}';
+          generate_vehicle_html += '{!! Form::select("has_vehicle",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10 has_vehicle" ,"id" => "has_vehicle","onChange" => "generate_vehicle_html(this.value)"]) !!}';
+          generate_vehicle_html += "</div>";
+          generate_vehicle_html += "</div>";
 
 
-}
+          $("#vehicles_container").append(generate_vehicle_html);
+
+          $('.date-only').datetimepicker({
+              pickTime: false
+          });
+
+
+      }
+  }
 
 
 function generate_driver_licence_html(val) {
