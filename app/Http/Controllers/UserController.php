@@ -1670,12 +1670,11 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             $img_url               = "images/poi/profile/$poi->id/".$file_name;
             $target_file_directory = "images/poi/profile/$poi->id/";
 
-            if(!is_dir($target_file_directory)) {
+            if (!file_exists($target_file_directory)) {
 
-                File::makeDirectory($target_file_directory, 0775, true,true);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
-
 
             if(is_dir($target_file_directory)) {
 
@@ -1744,7 +1743,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -1797,7 +1796,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -1849,12 +1848,12 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             $img_url               = "images/poi/ID/$poi->id/".$file_name;
             $target_file_directory = "images/poi/ID/$poi->id/";
 
-            if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+             if (!file_exists($target_file_directory)) {
 
-            }
+                 File::makeDirectory($target_file_directory, 0777, true,true);
 
+             }
 
             if(is_dir($target_file_directory)) {
 
@@ -1899,7 +1898,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory,0777,true);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
