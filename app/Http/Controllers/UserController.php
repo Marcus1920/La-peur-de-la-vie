@@ -1593,9 +1593,6 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
         $poi->religion           = $request['religion'];
         $poi->qualification_type = $request['qualification_type'];
         $poi->notice_period      = $request['notice_period'];
-
-
-
         $position             = Position::where('slug','=',$request['position'])->first();
         $poi->position        = (sizeof($position) > 0)?$position->id:0;
 
@@ -1809,7 +1806,8 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $fileExt      = 'jpg';
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
 
@@ -1863,7 +1861,8 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $fileExt      = 'jpg';
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
 
@@ -1911,7 +1910,8 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $fileExt      = 'jpg';
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"],$img_url)) {
 
@@ -2515,12 +2515,33 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         $poi->dependants         = $request['dependants'];
         $poi->birth_place        = $request['birth_place'];
         $poi->nationality        = $request['nationality'];
-        $poi->passport_number    = $request['passport_number'];
         $poi->email              = $request['email'];
         $poi->religion           = $request['religion'];
         $poi->qualification_type = $request['qualification_type'];
         $poi->notice_period      = $request['notice_period'];
         $poi->tax_number         = $request['tax_number'];
+
+
+        switch ($request['document_type']) {
+            case '1':
+                $poi->id_number       = $request['id_number'];
+                $poi->doc_expiry_date = $request['doc_expiry_date'];
+
+                break;
+
+            case '2':
+
+                $poi->passport_number          = $request['passport_number'];
+                $poi->doc_expiry_date          = $request['doc_expiry_date'];
+                $poi->work_permit              = $request['work_permit'];
+                $poi->work_permit_expiry_date  = $request['work_permit_expiry_date'];
+                $poi->yellow_fever             = $request['yellow_fever'];
+                $poi->yellow_fever_expiry_date = $request['yellow_fever_expiry_date'];
+
+                break;
+
+
+        }
 
 
         $position             = Position::where('slug','=',$request['position'])->first();
