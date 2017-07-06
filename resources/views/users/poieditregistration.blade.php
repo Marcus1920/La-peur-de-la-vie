@@ -1166,10 +1166,9 @@
 
                                @foreach ($poi->criminal_records as $criminal)
 
-
                              
-                                <div class="row">';
-                                    <div class="col-md-4">';
+                                <div class="row">
+                                    <div class="col-md-4">
                                         {!! Form::label("Crime Description", "Crime Description") !!}
                                         {!! Form::textarea("crime_description[]", $criminal->description, ["class" => "form-control input-sm m-b-10","id" => "crime_description","size" => "30x5"]) !!}
                                     </div> 
@@ -1242,9 +1241,76 @@
                 </div>
 
 
+                <div class="tab-pane" id="bankingdetails">
+
+                    <div class="">
+
+                        <h3 class="block-title">BANKING DETAILS</h3><br>
+
+                        <div id="banking_details_container">
+
+                            @if(isset($poi->banking_details))
+
+                                @foreach ($poi->banking_details as $bankingDetail)
+
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Bank Name", "Bank Name") !!}
+                                            {!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],$bankingDetail->id,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail"]) !!}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Branch Number", "Branch Number") !!}
+                                            <input name='branch_number[]' type='text' class='form-control input-sm m-b-10' value="{{ $bankingDetail->branch_code }}" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Account Number", "Account Number") !!}
+                                            <input name='account_number[]' type='text' class='form-control input-sm m-b-10' value="{{ $bankingDetail->account_number }}" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Other Banking Details", "Other Banking Details") !!}
+                                            {!! Form::select("other_banking_detail",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail","onChange" => "generate_banking_details_html(this.value)"]) !!}
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            @else
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+
+                                        {!! Form::label('Banking Details', 'Banking Details', array('class' => '')) !!}
+                                        {!! Form::select('has_banking_detail',['0' => 'Please Select','1' => 'No','2' => 'Yes'],0,['class' => 'form-control input-sm m-b-10' ,'id' => 'has_banking_detail']) !!}
+
+                                    </div>
+                                </div>
+                                <div id="banking_details_container">
+
+                                </div>
+
+                            @endif
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
 
 
             </div>
+
+
+
+
 
 
 
@@ -1399,6 +1465,14 @@
    
     
     });
+
+    $("#has_banking_detail").change(function() {
+
+           var selectedValue =$(this).val();
+           generate_banking_details_html(selectedValue);
+
+
+       });
 
     $("#addWorkAddress").click(function() {
 
@@ -1963,6 +2037,51 @@ function generate_criminal_record_html(val) {
 
 
 }
+
+   function generate_banking_details_html(val) {
+
+
+       var work_address_html = "";
+
+       if(val == 2) {
+
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Bank Name", "Bank Name") !!}';
+           work_address_html+='{!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],0,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail"]) !!}';
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Branch Number", "Branch Number") !!}';
+           work_address_html+="<input name='branch_number[]' type='text' class='form-control input-sm m-b-10' >";
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Account Number", "Account Number") !!}';
+           work_address_html+="<input name='account_number[]' type='text' class='form-control input-sm m-b-10' >";
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Other Banking Details", "Other Banking Details") !!}';
+           work_address_html+='{!! Form::select("other_banking_detail",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail","onChange" => "generate_banking_details_html(this.value)"]) !!}';
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+
+       }
+
+       $("#banking_details_container").append(work_address_html);
+
+       $('.date-only').datetimepicker({
+           pickTime: false
+       });
+
+
+
+
+   }
 
 </script>
 @endsection

@@ -2375,6 +2375,16 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
        }
 
+
+        //Determine if POI has banking details
+        $poiBankingRecord = PoiBankDetail::where('poi_id',$id)->count();
+        if($poiBankingRecord > 0) {
+
+            $bankingDetails         = PoiBankDetail::where('poi_id',$id)->get();
+            $poi->banking_details   = $bankingDetails;
+
+        }
+
         return view('users.poieditregistration')->with('poi',$poi);
 
     }
