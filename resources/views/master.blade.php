@@ -235,7 +235,7 @@
 
 
                             @if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')
-                              <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li>
+                        {{--  <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li> --}}
                              @endif
 
                         </ul>

@@ -1,4 +1,11 @@
-<!DOCTYPE html>
+@extends('master')
+
+@section('content')
+
+
+
+
+        <!DOCTYPE html>
 <html lang="en">
     <head>
 
@@ -51,27 +58,7 @@ body{
         {{--</a>--}}
     {{--</header>--}}
     <body id="skin-blur-blue">
-    <header id="header" class="media">
-        <a class="logo pull-left" href="{{ url('/home') }}">
-            <img class=""  src="{{ asset('/images/dashboard_logo.png') }}" width="60%" alt="">
-        </a>
 
-        <div class="media-body">
-            <div class="media" id="top-menu">
-
-
-                <div id="time" class="pull-right">
-                    <span id="hours"></span>
-                    :
-                    <span id="min"></span>
-                    :
-                    <span id="sec"></span>
-                </div>
-
-
-            </div>
-        </div>
-    </header>
 
 
     {{--<div class="topnav" id="myTopnav">--}}
@@ -179,3 +166,22 @@ body{
         </center>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
     </body>+-
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@endsection
