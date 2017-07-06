@@ -3444,6 +3444,33 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         }
 
 
+        if(!is_null($request['account_number'])) {
+
+            $existing_bankind_details = PoiBankDetail::where('poi_id',$poi->id)->get();
+
+            if (sizeof($existing_bankind_details) > 0) {
+
+                foreach ($existing_bankind_details as $banking_record) {
+
+                    $object = PoiBankDetail::find($banking_record->id);
+                    $object->delete();
+                }
+
+            }
+
+            for ($i=0; $i < sizeof($request['account_number']) ; $i++) {
+
+                $PoiBankDetail                 = new PoiBankDetail();
+                $PoiBankDetail->poi_id         = $poi->id;
+                $PoiBankDetail->account_number = $request['account_number'][$i];
+                $PoiBankDetail->branch_code    = $request['branch_number'][$i];
+                $PoiBankDetail->bank_id        = $request['banking_name'][$i];
+                $PoiBankDetail->created_by     = \Auth::user()->id;
+                $PoiBankDetail->save();
+            }
+        }
+
+
 
 
 
