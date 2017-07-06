@@ -155,7 +155,7 @@ $("#province").change(function(){
 
 function resetControllers ()
 	{
-		
+
 		$("#zoneGPSarray").val("");
 		$("#zoneGPSarray").val("0.8");
 		$("#weatherSlide").val("0.8");
@@ -361,7 +361,7 @@ function resetRadios ()
 	{
 		for(i=0;i<statusArray.length;i++)
 			{
-				
+
 				$("#mc" + statusArray[i]).attr('checked', 'checked');
 				$("#me" + statusArray[i]).attr('checked', 'checked');
 				$("#mm" + statusArray[i]).attr('checked', 'checked');
@@ -504,13 +504,13 @@ function toggleAllMarkers ()
 					hideStatusSelects();
 					for(i=0;i<catArray.length;i++)
 						{
-							
+
 							$("#" + catArray[i]).attr('checked', 'checked');
  							eval(catArray[i] + "Status = 1");
 						}
 					for(i=0;i<statusArray.length;i++)
 						{
-													
+
 								$("#po" + statusArray[i]).attr('checked', 'checked');
 								$("#pr" + statusArray[i]).attr('checked', 'checked');
 								$("#sr" + statusArray[i]).attr('checked', 'checked');
@@ -529,7 +529,7 @@ function toggleAllMarkers ()
 					hideStatusSelects();
 					for(i=0;i<catArray.length;i++)
 						{
-							
+
 							$("#" + catArray[i]).attr('checked', 'false');
  							eval(catArray[i] + "Status = 0");
 						}
@@ -538,7 +538,7 @@ function toggleAllMarkers ()
 							$("#po" + statusArray[i]).attr('checked', 'false');
 							$("#pr" + statusArray[i]).attr('checked', 'false');
 							$("#sr" + statusArray[i]).attr('checked', 'false');
-							$("#ma" + statusArray[i]).attr('checked', 'false');						
+							$("#ma" + statusArray[i]).attr('checked', 'false');
 							$("#mc" + statusArray[i]).attr('checked', 'false');
 							$("#me" + statusArray[i]).attr('checked', 'false');
 							$("#mm" + statusArray[i]).attr('checked', 'false');
@@ -716,18 +716,18 @@ function animateMarker (caseID)
 
 function switchNewCaseMarker (source,element)
 	{
-	
+
 		if(newCaseMarkerStatus == 0)
 				{
-					
+
 					$("#submitButton").removeAttr('disabled');
 					document.getElementById('addCase').src ="images/cancel_case.png";
 					document.getElementById('addCase').title = "Cancel new case creation ...";
 					$("#caseCapture").addClass('animated flipInY');
 					$("#caseCapture").css("display","flex")
-			
 
-				
+
+
 					var mapCenter = map.getCenter();
 					markerNew = new google.maps.Marker({ zindex:10000, position: mapCenter, icon: newCaseImage, draggable:true, title:'Drag marker to the case location ...', map: map });
 					newCaseMarkerStatus = 1;
@@ -752,14 +752,14 @@ function switchNewCaseMarker (source,element)
 		       var addressJson = JSON.parse($.cookie("cookieplaces"));
 
 		        $(addressJson).each(function (i, item) {
-		            
+
 		            $("#newCaseCapture").contents().find("#street_number").val(item.street_number);
 		            $("#newCaseCapture").contents().find("#route").val(item.route);
 		            $("#newCaseCapture").contents().find("#locality").val(item.locality);
 		            $("#newCaseCapture").contents().find("#administrative_area_level_1").val(item.administrative_area_level_1);
 		            $("#newCaseCapture").contents().find("#postal_code").val(item.postal_code);
 		            $("#newCaseCapture").contents().find("#country").val(item.country);
-		            
+
 
 
 
@@ -800,7 +800,7 @@ function submitCaptureForm (map_center, map_zoom)
 {
 
 
-		
+
 		var GPS                         = $("#newCaseCapture").contents().find("#captureForm #GPS").val();
 		var name                        = $("#newCaseCapture").contents().find("#captureForm #name").val();
 		var surname                     = $("#newCaseCapture").contents().find("#captureForm #surname").val();
@@ -830,7 +830,7 @@ function submitCaptureForm (map_center, map_zoom)
 		var token              = $('input[name="_token"]').val();
 
         var formData = {
-							
+
 							GPS:GPS,
 							name:name,
 							repID:repID,
@@ -948,14 +948,14 @@ function askConfirm (element,source){
 		$("#RUS").html('ARE YOU SURE?');
 		$("#ruSure").addClass('animated bounceIn');
 		$("#submitButton").attr('disabled','disabled');
-		
+
 		if(source == "icon")
 				{
 					$('#ruSure').css('top',(position.y - 6) + "px");
 					$('#ruSure').css('left',(position.x - 100) + "px");
 					$('#ruSure').css('display','flex');
-					
-				
+
+
 				}
 		else	{
 					document.getElementById('ruSure').style.top = (position.y - 34) + "px";;
@@ -977,7 +977,7 @@ function getPosition(element) {
 }
 
 function ruSure (val) {
-	
+
 		if(val == "Yes")
           {
 
@@ -988,10 +988,10 @@ function ruSure (val) {
 
 					markerNew.setMap(null);
 					$("#newCaseCapture").contents().find("#captureForm")[0].reset();
-					
+
 					$("#newCaseCapture").contents().find("#captureContainer").css({'display':'block','overflow-y':'auto','overflow-x':'hidden','border-collapse':'collapse','border':'1px solid #FFFFFF'});
 
-					
+
 					document.getElementById('caseCapture').style.right = "0";
 					document.getElementById("caseCapture").className = "animated hinge";
 					newCaseMarkerStatus = 0;
@@ -999,6 +999,7 @@ function ruSure (val) {
 					document.getElementById('addCase').title = "Add a new case ...";
 					setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
 					setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
+					switchNewCaseMarker('icon',this.id);this.blur();
 				}
 		else	{
 					document.getElementById('submitButton').disabled = false;

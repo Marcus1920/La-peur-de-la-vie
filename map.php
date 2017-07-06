@@ -28,7 +28,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
 
-   
+
 
 </head>
 <body bgcolor="#1c1c1c" onload="resetControllers();" TEXT="#C0C0C0" LINK="#ffffff" VLINK="#ffffff" ALINK="#ffffff" style="margin:0;overflow:hidden;margin-bottom:0;margin-left:0;margin-right:0;margin-top:0">
@@ -40,7 +40,7 @@
                 <div style="z-index:5000">
                     <table cellpadding=0 cellspacing=0 style="width:100%;border-collapse: collapse; border: 0px solid #1c1c1c;">
                         <tr style="opacity:1">
-                          
+
                             <td bgcolor="#1c1c1c" valign=middle align=center width=115 style="min-width:115px">
                               <!-- <a href="#" onclick="switchMainMenu();this.blur()"><i class="fa fa-navicon fa-fw" style="color:#ffffff" title="Toggle main menu ... " ></i></a> -->
                             </td>
@@ -50,7 +50,7 @@
                             <td bgcolor="#1c1c1c" valign=middle align=center width=25 style="min-width:25px">
                                 <a href="#" onclick="this.blur();animateMarker(document.all.searchBox.value)"><i class="fa fa-search fa-fw" style="color:#ffffff" title="Click to search"></i></a>
                             </td>
-                           
+
                             <td bgcolor="#1c1c1c" valign=middle align=center width=30 style="min-width:30px">
                                 <a href="#" onclick="repositionMarkers();this.blur()"><i class="fa fa-compress fa-fw" style="color:#ffffff" title="Reset Dragged and Spidered Markers" ></i></a>
                             </td>
@@ -61,8 +61,8 @@
                                 <table border=0 cellpadding=0 cellspacing=0>
                                     <td align=left>
                                         <table cellpadding=1 cellspacing=0 border=1 style="border-collapse:collapse;border:1px solid #FFFFFF">
-                                            
-                                            <!-- <td title="Toggle Port Ops Centre Markers" style="background:#e0e1e0"><input type="checkbox" title="Toggle port ops centre" onclick="switchMarkers('po');" checked="" id="poCheckBox"></td>                                          
+
+                                            <!-- <td title="Toggle Port Ops Centre Markers" style="background:#e0e1e0"><input type="checkbox" title="Toggle port ops centre" onclick="switchMarkers('po');" checked="" id="poCheckBox"></td>
                                             <td title="Toggle Property Markers" style="background:#999999"><input type="checkbox" title="Toggle property" onclick="switchMarkers('pr');" checked="" id="prCheckBox"></td> -->
                                             <td title="Toggle Other" style="background:#000000"><input type="checkbox" title="Toggle Other" onclick="switchMarkers('tr');" checked="" id="trCheckBox"></td>
                                            <!--  <td title="Toggle Safety / Risk / Fire Management  Markers" style="background:#ff0000"><input type="checkbox" title="Toggle safety / risk / fire" onclick="switchMarkers('sr');" checked="" id="srCheckBox"></td> -->
@@ -72,9 +72,9 @@
                                           <td title="Toggle Environment Markers" style="background:#009000"><input type="checkbox" title="Toggle environment" onclick="switchMarkers('en');" checked="" id="enCheckBox"></td>
                                           <td title="Toggle Health Markers" style="background:#0df1ff"><input type="checkbox" title="Toggle health" onclick="switchMarkers('he');" checked="" id="heCheckBox"></td>
                                           <td title="Toggle Marine Maintanence Markers" style="background:#333dc7"><input type="checkbox" title="Toggle marine maintenance" onclick="switchMarkers('mm');" checked="" id="mmCheckBox"></td> -->
-                                            <td title="Toggle Disciplinary Markers" style="background:#ff33a6"><input type="checkbox" title="Toggle Disciplinary" onclick="switchMarkers('me');" checked="" id="meCheckBox"></td> 
+                                            <td title="Toggle Disciplinary Markers" style="background:#ff33a6"><input type="checkbox" title="Toggle Disciplinary" onclick="switchMarkers('me');" checked="" id="meCheckBox"></td>
                                            <!--  <td title="Toggle Security Markers" style="background:#8a1ec7"><input type="checkbox" title="Toggle security" onclick="switchMarkers('se');" checked="" id="seCheckBox"></td> -->
-                                                                                
+
 
 
                                         </table>
@@ -86,7 +86,7 @@
                                     </td>
                                 </table>
                             </td>
-                           
+
                             <td bgcolor="#1c1c1c" valign=middle align=right width=25 style="min-width:25px">
                                 <a href="#" id="newCaseIcon" onclick="document.getElementById('RUS').innerHTML = 'ARE YOU SURE?';switchNewCaseMarker('icon',this.id);this.blur()"><i id="addCase" class="fa fa-plus-square-o fa-lg fa-fw" style="color:#ffffff" title="Add a new case ..." ></i></a>
                             </td>
@@ -166,9 +166,9 @@ function initialize() {
         };
 
 
- 
+
         var places_array = {};
-     
+
         for (var i = 0; i < places[0].address_components.length; i++) {
           var addressType = places[0].address_components[i].types[0];
 
@@ -256,6 +256,7 @@ function initialize() {
             }
           });
           map.fitBounds(bounds);
+          addCase=switchNewCaseMarker('icon',this.id);this.blur();
         });
 
 
@@ -321,8 +322,8 @@ function initialize() {
                             AND `gps_lng` != ''
                         ORDER BY `id` ASC
                     ";
-					
-				
+
+
 
 
     $result       = mysqli_query($connectionID, $sql) or die ("Couldn't query cases DB ... ...");
@@ -347,7 +348,7 @@ function initialize() {
         $rowD           = mysqli_fetch_row($ProvinceResult);
         $Province       = $rowD[0];
     }
-	
+
 	error_log(print_r("PROVINCE: ".$Province,TRUE));
 
 
@@ -363,7 +364,7 @@ function initialize() {
         $rowD           = mysqli_fetch_row($DistrictResult);
         $District       = $rowD[0];
     }
-	
+
 	error_log(print_r("DISTRCT: ".$District,TRUE));
 
 
@@ -383,16 +384,16 @@ function initialize() {
         $rowD           = mysqli_fetch_row($PrecinctResult);
         $Precinct       = $rowD[0];
     }
-	
+
 	error_log(print_r("Precinct: ".$Precinct,TRUE));
 
 
 
     $Submitted    = $row[28];
-	
+
 	error_log(print_r("Submitted: ".$Submitted,TRUE));
     $StatusID     = $row[14];
-	
+
 	error_log(print_r("StatusID: ".$StatusID,TRUE));
 
 
@@ -407,7 +408,7 @@ function initialize() {
         $rowD            = mysqli_fetch_row($StatusResult);
         $Status          = $rowD[0];
     }
-	
+
 	error_log(print_r("Status: ".$Status,TRUE));
 
     $CategoryID   = $row[33];
@@ -423,15 +424,15 @@ function initialize() {
 
         $Category = 0;
     }
-	
+
 	error_log(print_r("Category: ".$Category,TRUE));
 
 
     $SubCategoryID   = $row[34];
-	
+
 	error_log(print_r("SubCategoryID: ".$SubCategoryID,TRUE));
-	
-	
+
+
     $SubCatSql       = "  SELECT `name` FROM `cases_sub_types` WHERE `id` = {$SubCategoryID} ";
     $SubCatResult    = mysqli_query($connectionID, $SubCatSql) or die ("Couldn't query case categories table ... ...");
 
@@ -443,7 +444,7 @@ function initialize() {
 
         $SubCategory = 0;
     }
-	
+
 	error_log(print_r("SubCategory: ".$SubCategory,TRUE));
 
     $PhotoURL      = "http://41.216.130.6:8080/siyaleader-aims-mobileApp-api/public/".$row[16];
@@ -511,7 +512,7 @@ function initialize() {
         else {
             $Position     = 0;
         }
-		
+
 		error_log(print_r("Position: ".$Position,TRUE));
 
 
@@ -536,12 +537,12 @@ function initialize() {
 
         $Priority = 0;
     }
-	
+
 	error_log(print_r("Priority: ".$Priority,TRUE));
-	
+
 
     $Description  =  $row[1];
-	
+
 	error_log(print_r("Description: ".$Description,TRUE));
 
     $lastSql      = "
@@ -567,8 +568,8 @@ function initialize() {
     else {
         $LastActivity = "";
     }
-	
-	
+
+
 	error_log(print_r("LastActivity: ".$LastActivity,TRUE));
 
 
@@ -609,64 +610,64 @@ function initialize() {
         $catStatus   = "Res";
         $imageStatus = "_res.png";
     }
-	
-	
+
+
 	switch($Category){
-	
+
 	case "Crime":
 			$imageCategory          = "mc";
 			echo "var infoBoxBorder = '#ffff00';";
 	break;
-	
+
 	case "Dairy":
 			$imageCategory          = "me";
 			echo "var infoBoxBorder = '#ff33a6';";
 	break;
-	
+
 	case "Commercial":
 			$imageCategory          = "ma";
 			echo "var infoBoxBorder = '#ff33a6';";
 	break;
-	
+
 	case "Trucks":
 			$imageCategory          = "tr";
 			echo "var infoBoxBorder = '#fe940b';";
 	break;
-	
+
 	case "Residential":
 			$imageCategory          = "hk";
 			echo "var infoBoxBorder = '#fe940b';";
 	break;
-	
+
 	case "Yellow Equipment":
 			$imageCategory          = "mm";
 			echo "var infoBoxBorder = '#fe940b';";
 	break;
-	
+
 	case "Environmental":
 			$imageCategory          = "he";
 			echo "var infoBoxBorder = '#fe940b';";
 	break;
-	
-	
-	
+
+
+
 	default :
 			$imageCategory          = "tr";
 			echo "var infoBoxBorder = '#fe940b';";
 	break;
-	
+
 	}
 
- 
 
-     
+
+
     $imageName = "" .$imageCategory. "" .$imageStatus. "";
-	
+
 	error_log(print_r("imageName: ".$imageName,TRUE));
 
     echo 'var image = "markers/' .$imageName. '";';
-	
-	
+
+
 	error_log(print_r("ENDING=========================================",TRUE));
 
 
