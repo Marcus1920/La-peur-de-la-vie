@@ -328,6 +328,9 @@
         <script src="{{ asset('/bower_components/noty/js/noty/packaged/jquery.noty.packaged.js') }}"></script>
 
          <!-- DataTables JavaScript -->
+
+
+        <script src="{{ asset('/bower_components/datatables/media/js/datatables-plugins/pagination/scrolling.js') }}"></script>
         <script src="{{ asset('/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
 
