@@ -13,7 +13,7 @@
 
 <?php
 
-$selectUsers    =  App\User::where('active','=',1)->get();
+$selectUsers    =  App\User::where('active','=',1)->orderBy('name','ASC')->get();
 $user = \Auth::user()->role;
 
 ?>

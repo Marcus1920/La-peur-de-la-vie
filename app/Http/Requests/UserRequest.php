@@ -21,6 +21,14 @@ class UserRequest extends Request
      *
      * @return array
      */
+
+    public function validateMobile($attribute, $value, $parameters)
+    {
+        // Mobile number can start with plus sign and should start with number
+        // and can have minus sign and should be between 9 to 12 character long.
+        return preg_match("/^\+?\d[0-9-]{9,12}/", $value);
+    }
+//'description'=>'required|regex:/^[A-Za-z \t]*$/i|min:3|unique:courses',
     public function rules()
     {
         return [
@@ -34,7 +42,7 @@ class UserRequest extends Request
             'position'          => 'required|not_in:0',
             'affiliation'       => 'required|not_in:0',
 
-            'cellphone'         => 'required|digits:10|unique:users,cellphone',
+            'cellphone'         => 'required',
             'email'             => 'required|email|unique:users,email',
 
             'id_number'         => 'required|unique:users,id_number|digits:13',

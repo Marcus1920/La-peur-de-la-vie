@@ -70,7 +70,7 @@
             <div class="form-group">
                 {!! Form::label('ID No', 'ID No', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
-                  {!! Form::text('id_number',NULL,['class' => 'form-control input-sm','id' => 'id_number']) !!}
+                  {!! Form::text('id_number',NULL,['class' => 'form-control input-sm','id' => 'id_number'  ]) !!}
                   @if ($errors->has('id_number')) <p class="help-block red">* {{ $errors->first('id_number') }}</p> @endif
                 </div>
             </div>
@@ -80,7 +80,7 @@
             <div class="form-group">
                 {!! Form::label('Cell Number', 'Cell Number', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
-                  {!! Form::text('cellphone',NULL,['class' => 'form-control input-sm','id' => 'cellphone']) !!}
+                  {!! Form::text('cellphone',NULL,['class' => 'form-control input-sm','id' => 'cellphone' ,'placeholder'=> ' +27 612 11 000']) !!}
                   @if ($errors->has('cellphone')) <p class="help-block red">* {{ $errors->first('cellphone') }}</p> @endif
               </div>
             </div>
@@ -88,7 +88,7 @@
             <div class="form-group">
                 {!! Form::label('Alternative Cell Number', 'Alternative Cell Number', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
-                  {!! Form::text('alt_cellphone',NULL,['class' => 'form-control input-sm','id' => 'alt_cellphone']) !!}
+                  {!! Form::text('alt_cellphone',NULL,['class' => 'form-control input-sm','id' => 'alt_cellphone' ,'placeholder'=> ' +27 612 364 457']) !!}
                   @if ($errors->has('alt_cellphone')) <p class="help-block red">* {{ $errors->first('alt_cellphone') }}</p> @endif
               </div>
             </div>
@@ -96,7 +96,7 @@
             <div class="form-group">
                 {!! Form::label('Email', 'Email', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
-                  {!! Form::text('email',NULL,['class' => 'form-control input-sm','email']) !!}
+                  {!! Form::text('email',NULL,['class' => 'form-control input-sm','email' ,'placeholder'=> '  infor@yahoo.net']) !!}
                   @if ($errors->has('email')) <p class="help-block red">* {{ $errors->first('email') }}</p> @endif
               </div>
             </div>
