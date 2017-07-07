@@ -40,6 +40,8 @@
 <style media="screen">
 body{
 
+background-color: #0B628D;
+
 
 }
 
@@ -55,7 +57,7 @@ body{
             {{--<img class="" src="{{ asset('/images/dashboard_logo.png') }}" width="60%" alt="">--}}
         {{--</a>--}}
     {{--</header>--}}
-    <body id="skin-blur-blue">
+    <body>
 
 
 
