@@ -2375,6 +2375,16 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
        }
 
+
+        //Determine if POI has banking details
+        $poiBankingRecord = PoiBankDetail::where('poi_id',$id)->count();
+        if($poiBankingRecord > 0) {
+
+            $bankingDetails         = PoiBankDetail::where('poi_id',$id)->get();
+            $poi->banking_details   = $bankingDetails;
+
+        }
+
         return view('users.poieditregistration')->with('poi',$poi);
 
     }
@@ -3431,6 +3441,33 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                 $PoiCriminalRecord->save();
 
           }
+        }
+
+
+        if(!is_null($request['account_number'])) {
+
+            $existing_bankind_details = PoiBankDetail::where('poi_id',$poi->id)->get();
+
+            if (sizeof($existing_bankind_details) > 0) {
+
+                foreach ($existing_bankind_details as $banking_record) {
+
+                    $object = PoiBankDetail::find($banking_record->id);
+                    $object->delete();
+                }
+
+            }
+
+            for ($i=0; $i < sizeof($request['account_number']) ; $i++) {
+
+                $PoiBankDetail                 = new PoiBankDetail();
+                $PoiBankDetail->poi_id         = $poi->id;
+                $PoiBankDetail->account_number = $request['account_number'][$i];
+                $PoiBankDetail->branch_code    = $request['branch_number'][$i];
+                $PoiBankDetail->bank_id        = $request['banking_name'][$i];
+                $PoiBankDetail->created_by     = \Auth::user()->id;
+                $PoiBankDetail->save();
+            }
         }
 
 
