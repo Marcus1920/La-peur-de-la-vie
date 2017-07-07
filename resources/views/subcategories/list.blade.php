@@ -185,14 +185,19 @@
 
     }
 
-    function launchSubCatResponders(id)
-    {
+  function launchSubCatResponders(id)
+  {
 
 
       $(".modal-body #subCatID").val(id);
-      var prepopulateFirst  = new Array();
-      var prepopulateSecond = new Array();
-      var prepopulateThird  = new Array();
+      var prepopulateFirst   = new Array();
+      var prepopulateSecond  = new Array();
+      var prepopulateThird   = new Array();
+      var prepopulateFourth  = new Array();
+      var first_responder_interval_time,
+          second_responder_interval_time,
+          third_responder_interval_time,
+          fourth_responder_interval_time;
 
       $.ajax({
           type    :"GET",
@@ -200,57 +205,124 @@
           url     :"{!! url('/getSubResponders/"+ id + "')!!}",
           success :function(data) {
 
+              console.log(data);
+
               if(data.length > 0)
               {
 
-                 for (var j = 0; j < data.length; j++) {
-                            if (typeof data[j].firstResponder !== 'undefined')
-                            {
-                              prepopulateFirst.push({ id: data[j].id, name: data[j].firstResponder });
-                            }
-                            if (typeof data[j].secondResponder !== 'undefined')
-                            {
-                              prepopulateSecond.push({ id: data[j].id, name: data[j].secondResponder });
-                            }
+                  for (var j = 0; j < data.length; j++) {
+                      if (typeof data[j].firstResponder !== 'undefined')
+                      {
+                          prepopulateFirst.push({ id: data[j].id, name: data[j].firstResponder });
+                      }
+                      if (typeof data[j].secondResponder !== 'undefined')
+                      {
+                          prepopulateSecond.push({ id: data[j].id, name: data[j].secondResponder });
+                      }
 
-                            if (typeof data[j].thirdResponder !== 'undefined')
-                            {
-                              prepopulateThird.push({ id: data[j].id, name: data[j].thirdResponder });
-                            }
-
-                 }
-
-                if(data[0].firstResponder !== null)
-                {
+                      if (typeof data[j].thirdResponder !== 'undefined')
+                      {
+                          prepopulateThird.push({ id: data[j].id, name: data[j].thirdResponder });
+                      }
 
 
-                  $("#firstResponder").prev(".token-input-list").remove();
+                      if (typeof data[j].fourthResponder !== 'undefined')
+                      {
+                          prepopulateFourth.push({ id: data[j].id, name: data[j].fourthResponder });
+                      }
 
-                  $("#firstResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate:prepopulateFirst });
-                }
-                else {
-                  $("#firstResponder").tokenInput("{!! url('/getResponder') !!}");
-                }
-
-                if(data[0].secondResponder !== null)
-                {
-                  $("#secondResponder").prev(".token-input-list").remove();
-                  $("#secondResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate: prepopulateSecond });
-                }
-                else {
+                  }
 
 
-                  $("#secondResponder").tokenInput("{!! url('/getResponder') !!}",{});
-                }
 
-                if(data[0].thirdResponder !== null)
-                {
-                  $("#thirdResponder").prev(".token-input-list").remove();
-                  $("#thirdResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate:prepopulateThird });
-                }
-                else {
-                  $("#thirdResponder").tokenInput("{!! url('/getResponder') !!}",{});
-                }
+                  for (var j = 0; j < data.length; j++) {
+
+                      if(data[j].firstResponder !== null)
+                      {
+
+                          $("#firstResponder").prev(".token-input-list").remove();
+
+                          $("#firstResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate:prepopulateFirst });
+
+                          if(data[j].first_responder_interval_time){
+
+                              first_responder_interval_time = data[j].first_responder_interval_time;
+
+                          }
+
+
+
+                      }
+                      else {
+                          $("#firstResponder").tokenInput("{!! url('/getResponder') !!}");
+                      }
+
+                      if(data[j].secondResponder !== null)
+                      {
+
+                          $("#secondResponder").prev(".token-input-list").remove();
+                          $("#secondResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate: prepopulateSecond });
+
+                          if(data[j].second_responder_interval_time){
+
+                              second_responder_interval_time = data[j].second_responder_interval_time;
+                          }
+
+                      }
+                      else {
+
+
+                          $("#secondResponder").tokenInput("{!! url('/getResponder') !!}",{});
+                      }
+
+
+                      if(data[j].thirdResponder !== null)
+                      {
+                          $("#thirdResponder").prev(".token-input-list").remove();
+                          $("#thirdResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate:prepopulateThird });
+
+
+                          if(data[j].third_responder_interval_time !== undefined){
+
+                              third_responder_interval_time = data[j].third_responder_interval_time;
+
+                          }
+                      }
+                      else {
+                          $("#thirdResponder").tokenInput("{!! url('/getResponder') !!}",{});
+                      }
+
+
+                      if(data[j].fourthResponder !== null)
+                      {
+                          $("#fourthResponder").prev(".token-input-list").remove();
+                          $("#fourthResponder").tokenInput("{!! url('/getResponder') !!}",{ prePopulate:prepopulateFourth });
+
+                          if(data[j].fourth_responder_interval_time !== undefined){
+
+                              fourth_responder_interval_time = data[j].fourth_responder_interval_time;
+
+                          }
+                      }
+                      else {
+
+                          $("#fourthResponder").tokenInput("{!! url('/getResponder') !!}",{});
+                      }
+
+
+
+                  }
+
+
+                  $("#first_responder_interval_time").val(first_responder_interval_time);
+                  $("#second_responder_interval_time").val(second_responder_interval_time);
+                  $("#third_responder_interval_time").val(third_responder_interval_time);
+                  $("#fourth_responder_interval_time").val(fourth_responder_interval_time);
+
+
+
+
+
 
               }
               else {
@@ -258,29 +330,39 @@
 
                   if($("#firstResponder").prev(".token-input-list").html())
                   {
-                    $("#firstResponder").tokenInput("clear");
+                      $("#firstResponder").tokenInput("clear");
                   }
                   else
                   {
-                    $("#firstResponder").tokenInput("{!! url('/getResponder') !!}");
+                      $("#firstResponder").tokenInput("{!! url('/getResponder') !!}");
                   }
 
                   if($("#secondResponder").prev(".token-input-list").html())
                   {
-                    $("#secondResponder").tokenInput("clear");
+                      $("#secondResponder").tokenInput("clear");
                   }
                   else
                   {
-                    $("#secondResponder").tokenInput("{!! url('/getResponder') !!}");
+                      $("#secondResponder").tokenInput("{!! url('/getResponder') !!}");
                   }
 
                   if($("#thirdResponder").prev(".token-input-list").html())
                   {
-                    $("#thirdResponder").tokenInput("clear");
+                      $("#thirdResponder").tokenInput("clear");
                   }
                   else
                   {
-                    $("#thirdResponder").tokenInput("{!! url('/getResponder') !!}");
+                      $("#thirdResponder").tokenInput("{!! url('/getResponder') !!}");
+                  }
+
+
+                  if($("#fourthResponder").prev(".token-input-list").html())
+                  {
+                      $("#fourthResponder").tokenInput("clear");
+                  }
+                  else
+                  {
+                      $("#fourthResponder").tokenInput("{!! url('/getResponder') !!}");
                   }
 
 
@@ -289,7 +371,8 @@
           }
       });
 
-    }
+  }
+
 
 
     function launchWorkFlow(id)
