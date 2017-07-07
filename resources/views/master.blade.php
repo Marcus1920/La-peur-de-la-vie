@@ -60,10 +60,18 @@
 
         </script>
 
+    <style>
+
+         body {
+
+              background-color: #0B628D;
+         }
+
+        </style>
 
 
     </head>
-    <body id="skin-blur-blue">
+    <body>
 
         <header id="header" class="media">
             <a href="" id="menu-toggle"></a>
