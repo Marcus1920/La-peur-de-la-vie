@@ -637,6 +637,8 @@ Route::get('getSubResponders/{id}', ['middleware' => 'resetLastActive', 'uses' =
 Route::post('addSubCategoryResponder', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@storeSubResponder']);
 Route::get('caseResponders-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@index']);
 Route::get('getResponders/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@responder']);
+Route::post('addCategoryResponder', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@storeResponder']);
+
 
 
 /*

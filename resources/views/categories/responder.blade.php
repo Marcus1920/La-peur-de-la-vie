@@ -10,9 +10,8 @@
             </div>
             <div class="modal-body">
                 {!! Form::open(['url' => 'addCategoryResponder', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CategoryResponderForm" ]) !!}
-                {!! Form::hidden('deptID','') !!}
-                {!! Form::hidden('catID','') !!}
-                {!! Form::hidden('subCatID',NULL,['id' => 'subCatID']) !!}
+                {!! Form::hidden('deptID',$deptObj->id) !!}
+                {!! Form::hidden('catID',0,['id' =>'catID']) !!}
                 {!! Form::hidden('id',Auth::user()->id) !!}
 
                 <div class="form-group">

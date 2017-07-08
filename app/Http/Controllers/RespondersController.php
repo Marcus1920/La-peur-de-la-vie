@@ -118,7 +118,7 @@ class RespondersController extends Controller
         $case_responder                   = new CaseResponder();
         $case_responder->department       = $request['deptID'];
         $case_responder->case_type        = $request['catID'];
-        $case_responder->case_sub_type    = $request['subCatID'];
+        $case_responder->case_sub_type    = ($request['subCatID'])?$request['subCatID']:0;
         $case_responder->responder_type   = $responder_type;
         $case_responder->responder        = $responder;
         $case_responder->responder        = $responder;
@@ -151,6 +151,28 @@ class RespondersController extends Controller
 
     }
 
+    public function store_cat_responder($responders,$request,$responder_type,$interval_time) {
+
+        $responders = explode(',',$responders);
+
+        foreach ($responders as $responder) {
+
+            if(!empty($responder)) {
+
+                $data = $this->case_responders->responder_cat_exist($request['catID'],$responder);
+
+                if(!$data){
+
+                    $this->save_responder($responder,$request,$responder_type,$interval_time);
+                }
+
+            }
+
+        }
+
+
+    }
+
 
     public function storeSubResponder(Request $request)
     {
@@ -161,6 +183,22 @@ class RespondersController extends Controller
         $this->store_responder($request['secondResponder'],$request,2,$request['second_responder_interval_time']);
         $this->store_responder($request['thirdResponder'],$request,3,$request['third_responder_interval_time']);
         $this->store_responder($request['fourthResponder'],$request,4,$request['fourth_responder_interval_time']);
+
+        \Session::flash('success','Responders have been successfully added!');
+        return redirect()->back();
+
+    }
+
+
+    public function storeResponder(Request $request)
+    {
+
+        $responders = $this->case_responders->get_responders_by_case_type($request['catID'],0);
+        $this->delete_responders($responders);
+        $this->store_cat_responder($request['firstResponder'],$request,1,$request['first_responder_interval_time']);
+        $this->store_cat_responder($request['secondResponder'],$request,2,$request['second_responder_interval_time']);
+        $this->store_cat_responder($request['thirdResponder'],$request,3,$request['third_responder_interval_time']);
+        $this->store_cat_responder($request['fourthResponder'],$request,4,$request['fourth_responder_interval_time']);
 
         \Session::flash('success','Responders have been successfully added!');
         return redirect()->back();

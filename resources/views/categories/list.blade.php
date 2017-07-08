@@ -109,8 +109,8 @@
   function launchCatResponders(id)
   {
 
+      $(".modal-body #catID").val(id);
 
-      $(".modal-body #subCatID").val(id);
       var prepopulateFirst   = new Array();
       var prepopulateSecond  = new Array();
       var prepopulateThird   = new Array();
