@@ -37,15 +37,26 @@ use App\Poi;
 use App\PoiAssociate;
 use App\CaseNote;
 use App\InvestigationOfficer;
+use App\services\CaseOwnerService;
+use App\services\CaseResponderService;
+use App\services\CaseActivityService;
+
 
 
 class CasesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+
+    protected $case_responders;
+    protected $case_owners;
+    protected $case_activities;
+
+    public function __construct(CaseResponderService $responder_service,CaseOwnerService $case_owner_service,CaseActivityService $case_activity_service) {
+
+        $this->case_responders   = $responder_service;
+        $this->case_owners       = $case_owner_service;
+        $this->case_activities   = $case_activity_service;
+
+    }
 
 
 
@@ -1386,8 +1397,6 @@ die("<pre>{$txtDebug}</pre>");
 		$officer = $officerObj->name;
 	}
 
-	   // die("<pre>{$txtDebug}</pre>");
-
         $newCase = New CaseReport();
         $newCase->created_at = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
         $newCase->user = \Auth::user()->id;
@@ -1419,14 +1428,44 @@ die("<pre>{$txtDebug}</pre>");
         $newCase->save();
 
 
-        $caseOwner = new CaseOwner();
-        $caseOwner->user = \Auth::user()->id;
-        $caseOwner->case_id = $newCase->id;
-        $caseOwner->type = 0;
-        $caseOwner->active = 1;
-        $caseOwner->save();
 
-	$caseNote          = new CaseNote();
+        $create_case_owner_data = array(
+            "case_id"      => $newCase->id,
+            "user"         => $newCase->user,
+            "type"         => 1,
+            "addressbook"  => 0
+        );
+
+        $user = User::find(\Auth::user()->id);
+        $this->case_owners->create_case_owner($create_case_owner_data);
+        $this->case_responders->send_com($user,$newCase);
+
+        $first_responders   = $this->case_responders->get_responders_by_sub_case_type($newCase->case_sub_type,1);
+
+        if(empty($first_responders)){
+
+            $first_responders   = $this->case_responders->get_responders_by_case_type($newCase->case_type,1);
+
+        }
+
+
+        foreach ($first_responders as $first_responder){
+
+            $create_case_owner_data = array(
+                "case_id"      => $newCase->id,
+                "user"         => $first_responder->responder,
+                "type"         => 1,
+                "addressbook"  => 0
+            );
+
+            $this->case_owners->create_case_owner($create_case_owner_data);
+
+        }
+
+        $this->case_responders->send_comms_to_first_responders($newCase,$first_responders);
+
+
+	    $caseNote          = new CaseNote();
         $caseNote->note    = $request['investigation_note'];;
         $caseNote->user    = \Auth::user()->id;
         $caseNote->case_id = $newCase->id;
@@ -1437,38 +1476,6 @@ die("<pre>{$txtDebug}</pre>");
         if (!\File::exists($destinationFolder)) {
             $createDir = \File::makeDirectory($destinationFolder, 0777, true);
         }
-
-	    $typeid = $request->all()['case_sub_type'];
-	    $responders = array();
-	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('first_responder AS uid')->first()->uid;
-	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('second_responder AS uid')->first()->uid;
-	    $responders[]  = CaseResponder::where("sub_category",'=',$typeid)->select('third_responder AS uid')->first()->uid;
-	    $txtDebug .= PHP_EOL."  \$responders - ".print_r($responders,1);
-	    $responder_emails = array();
-	    foreach ($responders AS $uid) {
-		    $user = User::where("id", $uid)->first();
-		    if ($user && $user->email) $responder_emails[] = $user->email;
-		    else if ($user && $user->alt_email) $responder_emails[] = $user->alt_email;
-	    }
-	    $txtDebug .= PHP_EOL."  \$responder_emails - ".print_r($responder_emails,1);
-		
-
-	    foreach ($responder_emails AS $email) {
-		    $txtDebug .= PHP_EOL."  where - ".print_r(\App\User::where("email", $email)->count(), 1);
-		    $user = \App\User::where("email", $email)->count() > 0 ? \App\User::where("email", $email)->first()->toArray() : array();
-		    //$user = \App\User::where("email", $email)->get()->count() > 0 ? \App\User::where("email", $email)->first()->toArray() : array();
-		    //if ($user->count() > 0) $user = $user->first()->toArray();
-		    $case = \App\User::where("email", $email)->count() > 0 ? \App\User::where("email", $email)->first()->toArray() : array();
-
-		    $txtDebug .= PHP_EOL."  \$user - ".print_r($user,1);
-		    if (count($user) > 0) \Mail::send( "emails.responder", array('user'=>$user, 'case'=>$newCase), function( $msg ) use ($email) {
-			    $msg->from( env("MAIL_USERNAME", "inertialFATE@gmail.com") );
-			    ///$msg->to("inertialFATE@gmail.com");
-			    $msg->to($email);
-			    //$msg->cc("paulsartorius@gmail.com");
-			    $msg->subject("Case Responder");
-		    } );
-	    }
 
 
         $response["message"] = "Case created successfully";

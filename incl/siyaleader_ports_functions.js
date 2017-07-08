@@ -720,7 +720,7 @@ function switchNewCaseMarker (source,element)
 		if(newCaseMarkerStatus == 0)
 				{
 
-					$("#submitButton").removeAttr('disabled');
+					$("#submitButton").removeAttr('disabled')=false;
 					document.getElementById('addCase').src ="images/cancel_case.png";
 					document.getElementById('addCase').title = "Cancel new case creation ...";
 					$("#caseCapture").addClass('animated flipInY');
@@ -765,25 +765,6 @@ function switchNewCaseMarker (source,element)
 
 
 		        });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 				}
@@ -953,14 +934,18 @@ function askConfirm (element,source){
 				{
 					$('#ruSure').css('top',(position.y - 6) + "px");
 					$('#ruSure').css('left',(position.x - 100) + "px");
-					$('#ruSure').css('display','flex');
+					$('#ruSure').css('display','flex'); 
+					
+					
+				  switchNewCaseMarker('icon',this.id);this.blur();
 
 
 				}
 		else	{
-					document.getElementById('ruSure').style.top = (position.y - 34) + "px";;
+					 /*document.getElementById('ruSure').style.top = (position.y - 34) + "px";;
 					document.getElementById('ruSure').style.left = (position.x - 69) + "px";
-					document.getElementById('ruSure').style.display='flex';
+					document.getElementById('ruSure').style.display='flex'; */
+					
 				}
 }
 
@@ -992,13 +977,13 @@ function ruSure (val) {
 					$("#newCaseCapture").contents().find("#captureContainer").css({'display':'block','overflow-y':'auto','overflow-x':'hidden','border-collapse':'collapse','border':'1px solid #FFFFFF'});
 
 
-					document.getElementById('caseCapture').style.right = "0";
-					document.getElementById("caseCapture").className = "animated hinge";
-					newCaseMarkerStatus = 0;
-					document.getElementById('addCase').src ="images/add_case.png";
-					document.getElementById('addCase').title = "Add a new case ...";
-					setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
-					setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
+					    document.getElementById('caseCapture').style.right = "0";
+			            document.getElementById("caseCapture").className = "animated hinge";
+					    newCaseMarkerStatus = 0;
+					    document.getElementById('addCase').src ="images/add_case.png";
+					    document.getElementById('addCase').title = "Add a new case ...";
+					    setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
+			            setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
 					switchNewCaseMarker('icon',this.id);this.blur();
 				}
 		else	{
