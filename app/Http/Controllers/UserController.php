@@ -1632,7 +1632,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
       }
 
-    $email ;
+
 
      if ($request['email']==null)
      {
@@ -3626,18 +3626,11 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-        if ($request['affiliation'] =="Select/All") {
+        if ($request['affiliation'] ==null) {
 
-            $users_if = 1 ;
+           // $users_if   = 1;
         }
-        elseif ($request['affiliation'] ==null) {
 
-      ///      $us$users_ifers->affiliation = 1;
-
-
-            $users_if = 1 ;
-
-        }
 
         else{
 
@@ -3645,11 +3638,11 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
             $users_if = $Affiliation_id->id;
 
+
         }
 
 
         $user                              = User::where('id',$request['userID'])->first();
-        $sendSMS                           = $user->status;
         $role                              = UserRole::where('slug','=',$request['role'])->first();
         $user->role                        = $role->id;
         $title                             = Title::where('slug','=',$request['title'])->first();
@@ -3679,60 +3672,12 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         $user->created_by                  = \Auth::user()->id;
         $user->affiliation		           = $users_if;
 
-
         $user->updated_by    = \Auth::user()->id;
         $user->updated_at    =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
         $userStatusObj       = UserStatus::where('name','=','active')->first();
-        $user->active        = $userStatusObj->id;
-
+    //    $user->active        = $userStatusObj->id;
 
         $user->save();
-
-         $data = array(
-                    'name'      =>  $user->name
-
-          );
-
-         $cellphone = $user->cellphone;
-         $language  = Language::find($user->language);
-
-
-        if ( $sendSMS == 2) {
-
-
-
-          switch ($language->name) {
-            case 'English':
-               \Mail::send('emails.registrationConfirmationSMS',$data, function($message) use ($cellphone)
-                  {
-                        $message->from('info@siyaleader.net', 'Siyaleader');
-                        $message->to('cooluma@siyaleader.net')->subject("ACT: $cellphone" );
-
-                  });
-              break;
-
-              case 'IsiZulu':
-               \Mail::send('emails.registrationConfirmationSMSZulu',$data, function($message) use ($cellphone)
-                  {
-                        $message->from('info@siyaleader.net', 'Siyaleader');
-                        $message->to('cooluma@siyaleader.net')->subject("ACT: $cellphone" );
-
-                  });
-              break;
-
-            default:
-              \Mail::send('emails.registrationConfirmationSMS',$data, function($message) use ($cellphone)
-                {
-                      $message->from('info@siyaleader.net', 'Siyaleader');
-                      $message->to('cooluma@siyaleader.net')->subject("ACT: $cellphone" );
-
-                });
-              break;
-          }
-
-
-        }
-
 
         \Session::flash('success', 'well done! User '.$request['name'].' has been successfully updated!');
         return redirect()->back();
