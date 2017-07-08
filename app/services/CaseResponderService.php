@@ -7,27 +7,27 @@ use App\CaseResponder;
 class CaseResponderService
 {
 
+
     public function get_responders_by_sub_case_type($sub_case_type,$responder_type){
 
 
-        if($responder_type == 0) {
+    if($responder_type == 0) {
 
-            $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
-                ->where('case_sub_sub_type','=',0)
-                ->get();
-        } else {
+        $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
+            ->where('case_sub_sub_type','=',0)
+            ->get();
+    } else {
 
-            $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
-                ->where('case_sub_sub_type','=',0)->where('responder_type',$responder_type)
-                ->get();
+        $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
+            ->where('case_sub_sub_type','=',0)->where('responder_type',$responder_type)
+            ->get();
 
-
-        }
-
-        return $data;
 
     }
 
+    return $data;
+
+}
 
     public function get_responders_by_case_type($case_type,$responder_type){
 
@@ -35,20 +35,20 @@ class CaseResponderService
         if($responder_type == 0) {
 
             $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_type','=',$case_type)
-                ->where('case_type','=',0)
-                ->get();
+                      ->get();
         } else {
 
             $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_type','=',$case_type)
-                ->where('case_type','=',0)->where('responder_type',$responder_type)
-                ->get();
-
+                       ->where('responder_type',$responder_type)
+                       ->get();
 
         }
 
         return $data;
 
     }
+
+
 
     public function get_responders_by_sub_case_type_and_by_responder($user,$sub_case_type){
 
