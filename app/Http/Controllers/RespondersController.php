@@ -300,6 +300,142 @@ class RespondersController extends Controller
         return $response;
     }
 
+
+    public function responder($id){
+
+        $first_responders     = CaseResponder::with('responderTypeFunc')
+            ->with('user')
+            ->where("case_type",'=',$id)
+            ->where('responder_type',1)->get();
+
+
+        $second_responders    = CaseResponder::with('responderTypeFunc')
+            ->with('user')
+            ->where("case_type",'=',$id)
+            ->where('responder_type',2)->get();
+
+
+        $third_responders    = CaseResponder::with('responderTypeFunc')
+            ->with('user')
+            ->where("case_type",'=',$id)
+            ->where('responder_type',3)->get();
+
+
+        $fourth_responders    = CaseResponder::with('responderTypeFunc')
+            ->with('user')
+            ->where("case_type",'=',$id)
+            ->where('responder_type',4)->get();
+
+
+        $response            = array();
+
+
+        if (sizeof($first_responders) > 0) {
+
+
+            foreach ($first_responders as $first_responder) {
+
+                $user = \DB::table('users')
+                    ->where('id','=',$first_responder->user->id)
+                    ->select(\DB::raw(
+                        "
+                                    id,
+                                    (select CONCAT(name, ' ',surname) ) as firstResponder
+
+                                    "
+                    )
+                    )->first();
+
+                $user->first_responder_interval_time = $first_responder->interval_time;
+
+                $response[] = $user;
+
+            }
+
+
+        }
+
+        if (sizeof($second_responders) > 0) {
+
+
+            foreach ($second_responders as $second_responder) {
+
+                $user = \DB::table('users')
+                    ->where('id','=',$second_responder->user->id)
+                    ->select(\DB::raw(
+                        "
+                                id,
+                                (select CONCAT(name, ' ',surname) ) as secondResponder
+
+                                "
+                    )
+                    )->first();
+
+                $user->second_responder_interval_time = $second_responder->interval_time;
+
+                $response[] = $user;
+
+            }
+
+        }
+
+        if (sizeof($third_responders) > 0) {
+
+
+            foreach ($third_responders as $third_responder) {
+
+                $user = \DB::table('users')
+                    ->where('id','=',$third_responder->user->id)
+                    ->select(\DB::raw(
+                        "
+                                id,
+                                (select CONCAT(name, ' ',surname) ) as thirdResponder
+
+                                "
+                    )
+                    )->first();
+
+                $user->third_responder_interval_time = $third_responder->interval_time;
+
+                $response[] = $user;
+
+            }
+
+
+        }
+
+        if (sizeof($fourth_responders) > 0) {
+
+
+            foreach ($fourth_responders as $fourth_responder) {
+
+                $user = \DB::table('users')
+                    ->where('id','=',$fourth_responder->user->id)
+                    ->select(\DB::raw(
+                        "
+                                id,
+                                (select CONCAT(name, ' ',surname) ) as fourthResponder
+
+                                "
+                    )
+                    )->first();
+
+                $user->fourth_responder_interval_time = $fourth_responder->interval_time;
+
+                $response[] = $user;
+
+            }
+
+
+        }
+
+        return $response;
+
+
+
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
