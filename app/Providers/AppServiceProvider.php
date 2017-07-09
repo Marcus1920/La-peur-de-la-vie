@@ -160,7 +160,7 @@ class AppServiceProvider extends ServiceProvider
         {
             $affiliations          = Affiliation::orderBy('name','ASC')->get();
             $selectAffiliations    = array();
-            $selectAffiliations[0] = "Select/All";
+            $selectAffiliations[0] = "Select / All";
 
             foreach ($affiliations as $affiliation) {
 

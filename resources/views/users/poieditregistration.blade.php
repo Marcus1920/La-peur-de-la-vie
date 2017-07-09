@@ -112,7 +112,7 @@
                         <div class="col-md-4">
 
                             {!! Form::label('Surname', 'Surname', array('class' => '')) !!}
-                            {!! Form::text('surname',$poi->surname,['class' => 'form-control input-sm m-b-10','id' => 'surname','required']) !!}
+                            {!! Form::text('surname',$poi->surname,['class' => 'form-control input-sm m-b-10','id' => 'surname']) !!}
 
                         </div>
                         <div class="col-md-4">
@@ -171,14 +171,14 @@
 
                               <div class="col-md-4">
                                   {!! Form::label('Email Address', 'Email Address', array('class' => '')) !!}
-                                  {!! Form::text('email',$poi->email,['class' => 'form-control input-sm m-b-10','id' => 'email', 'required']) !!}
+                                  {!! Form::text('email',$poi->email,['class' => 'form-control input-sm m-b-10','id' => 'email']) !!}
 
                               </div>
 
                                 <div class="col-md-4">
 
                                   {!! Form::label('Tax Number', 'Tax Number', array('class' => '')) !!}
-                                  {!! Form::text('tax_number',$poi->tax_number,['class' => 'form-control input-sm m-b-10','id' => 'tax_number','required']) !!}
+                                  {!! Form::text('tax_number',$poi->tax_number,['class' => 'form-control input-sm m-b-10','id' => 'tax_number']) !!}
 
                               </div>
                           </div>
@@ -1166,10 +1166,9 @@
 
                                @foreach ($poi->criminal_records as $criminal)
 
-
                              
-                                <div class="row">';
-                                    <div class="col-md-4">';
+                                <div class="row">
+                                    <div class="col-md-4">
                                         {!! Form::label("Crime Description", "Crime Description") !!}
                                         {!! Form::textarea("crime_description[]", $criminal->description, ["class" => "form-control input-sm m-b-10","id" => "crime_description","size" => "30x5"]) !!}
                                     </div> 
@@ -1242,9 +1241,75 @@
                 </div>
 
 
+                <div class="tab-pane" id="bankingdetails">
+
+                    <div class="">
+
+                        <h3 class="block-title">BANKING DETAILS</h3><br>
+
+                        <div id="banking_details_container">
+
+                            @if(isset($poi->banking_details))
+
+                                @foreach ($poi->banking_details as $bankingDetail)
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Bank Name", "Bank Name") !!}
+                                            {!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],$bankingDetail->bank_id,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail"]) !!}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Branch Number", "Branch Number") !!}
+                                            <input name='branch_number[]' type='text' class='form-control input-sm m-b-10' value="{{ $bankingDetail->branch_code }}" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Account Number", "Account Number") !!}
+                                            <input name='account_number[]' type='text' class='form-control input-sm m-b-10' value="{{ $bankingDetail->account_number }}" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Other Banking Details", "Other Banking Details") !!}
+                                            {!! Form::select("other_banking_detail",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail","onChange" => "generate_banking_details_html(this.value)"]) !!}
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            @else
+
+                                <div class="row">
+
+                                    <div class="col-md-4">
+
+                                        {!! Form::label('Banking Details', 'Banking Details', array('class' => '')) !!}
+                                        {!! Form::select('has_banking_detail',['0' => 'Please Select','1' => 'No','2' => 'Yes'],0,['class' => 'form-control input-sm m-b-10' ,'id' => 'has_banking_detail']) !!}
+
+                                    </div>
+                                </div>
+                                <div id="banking_details_container">
+
+                                </div>
+
+                            @endif
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+
 
 
             </div>
+
+
+
+
 
 
 
@@ -1400,6 +1465,14 @@
     
     });
 
+    $("#has_banking_detail").change(function() {
+
+           var selectedValue =$(this).val();
+           generate_banking_details_html(selectedValue);
+
+
+       });
+
     $("#addWorkAddress").click(function() {
 
         var latitude,location,longitude;
@@ -1503,7 +1576,7 @@
 
     });
 
-  })
+  });
 
 
 function delete_row(node){
@@ -1525,75 +1598,72 @@ $(".has_vehicle").change(function() {
   function generate_vehicle_html(val) {
 
 
-    var generate_vehicle_html = "";
+      var generate_vehicle_html = "";
 
 
-    if(val == 2) {
-
-           
-            generate_vehicle_html += "<div class='row driver_line'>";
-
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle Make", "Vehicle Make") !!}';
-            generate_vehicle_html += "<input name='vehicle_make[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle Color", "Vehicle Color") !!}';
-            generate_vehicle_html += "<input name='vehicle_color[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle VIN", "Vehicle VIN") !!}';
-            generate_vehicle_html += "<input name='vehicle_vin[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html += "<div class='row driver_line'>";
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle Number Plate", "Vehicle Number Plate") !!}';
-            generate_vehicle_html += "<input name='vehicle_plate[]' type='text' class='form-control input-sm m-b-10'/>";
-            generate_vehicle_html += "</div>";
-            generate_vehicle_html += "</div>";
-
-            generate_vehicle_html +="<div class='row'>";
-            generate_vehicle_html +="<div class='col-md-6'>";
-            generate_vehicle_html +="<div class='fileupload fileupload-new doc_upload_image' data-provides='fileupload'>";
-            generate_vehicle_html +="<div class='fileupload-preview thumbnail form-control'></div>"; 
-            generate_vehicle_html +="<div>";
-            generate_vehicle_html +="<span class='btn btn-file btn-alt btn-sm'>";
-            generate_vehicle_html += "<span class='fileupload-new'>Select image</span>";
-            generate_vehicle_html += "<span class='fileupload-exists'>Change</span>";
-            generate_vehicle_html += '{!! Form::file("poi_vehicle_file") !!}';
-            generate_vehicle_html += "</span>";
-            generate_vehicle_html += '<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>';
-            generate_vehicle_html += '</div>';
-            generate_vehicle_html += '</div>';
-            generate_vehicle_html += '</div>';
-
-            generate_vehicle_html += '</div>';
+      if (val == 2) {
 
 
-     
-            generate_vehicle_html += "<div class='row driver_line'>";            
-            generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
-            generate_vehicle_html += '{!! Form::label("Vehicle", "Vehicle") !!}';
-            generate_vehicle_html += '{!! Form::select("has_vehicle",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10 has_vehicle" ,"id" => "has_vehicle","onChange" => "generate_vehicle_html(this.value)"]) !!}';
-            generate_vehicle_html += "</div>";
-            generate_vehicle_html += "</div>";
+          generate_vehicle_html += "<div class='row driver_line'>";
+
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle Make", "Vehicle Make") !!}';
+          generate_vehicle_html += "<input name='vehicle_make[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle Color", "Vehicle Color") !!}';
+          generate_vehicle_html += "<input name='vehicle_color[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle VIN", "Vehicle VIN") !!}';
+          generate_vehicle_html += "<input name='vehicle_vin[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='row driver_line'>";
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle Number Plate", "Vehicle Number Plate") !!}';
+          generate_vehicle_html += "<input name='vehicle_plate[]' type='text' class='form-control input-sm m-b-10'/>";
+          generate_vehicle_html += "</div>";
+          generate_vehicle_html += "</div>";
+
+          generate_vehicle_html += "<div class='row'>";
+          generate_vehicle_html += "<div class='col-md-6'>";
+          generate_vehicle_html += "<div class='fileupload fileupload-new doc_upload_image' data-provides='fileupload'>";
+          generate_vehicle_html += "<div class='fileupload-preview thumbnail form-control'></div>";
+          generate_vehicle_html += "<div>";
+          generate_vehicle_html += "<span class='btn btn-file btn-alt btn-sm'>";
+          generate_vehicle_html += "<span class='fileupload-new'>Select image</span>";
+          generate_vehicle_html += "<span class='fileupload-exists'>Change</span>";
+          generate_vehicle_html += '{!! Form::file("poi_vehicle_file") !!}';
+          generate_vehicle_html += "</span>";
+          generate_vehicle_html += '<a href="#" class="btn fileupload-exists btn-sm" data-dismiss="fileupload">Remove</a>';
+          generate_vehicle_html += '</div>';
+          generate_vehicle_html += '</div>';
+          generate_vehicle_html += '</div>';
+
+          generate_vehicle_html += '</div>';
 
 
-        
-            $("#vehicles_container").append(generate_vehicle_html);
-
-            $('.date-only').datetimepicker({
-                    pickTime: false
-            });
-
-           
+          generate_vehicle_html += "<div class='row driver_line'>";
+          generate_vehicle_html += "<div class='col-md-4 driverlicencenumber'>";
+          generate_vehicle_html += '{!! Form::label("Vehicle", "Vehicle") !!}';
+          generate_vehicle_html += '{!! Form::select("has_vehicle",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10 has_vehicle" ,"id" => "has_vehicle","onChange" => "generate_vehicle_html(this.value)"]) !!}';
+          generate_vehicle_html += "</div>";
+          generate_vehicle_html += "</div>";
 
 
-}
+          $("#vehicles_container").append(generate_vehicle_html);
+
+          $('.date-only').datetimepicker({
+              pickTime: false
+          });
+
+
+      }
+  }
 
 
 function generate_driver_licence_html(val) {
@@ -1966,6 +2036,53 @@ function generate_criminal_record_html(val) {
 
 
 }
+
+   function generate_banking_details_html(val) {
+
+
+       var work_address_html = "";
+
+       if(val == 2) {
+
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Bank Name", "Bank Name") !!}';
+           work_address_html+='{!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],0,["class" => "form-control input-sm m-b-10" ,"id" => "bankingId"]) !!}';
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Branch Number", "Branch Number") !!}';
+           work_address_html+="<input name='branch_number[]' type='text' class='form-control input-sm m-b-10' >";
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Account Number", "Account Number") !!}';
+           work_address_html+="<input name='account_number[]' type='text' class='form-control input-sm m-b-10' >";
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+           work_address_html+='<div class="row">';
+           work_address_html+='<div class="col-md-4">';
+           work_address_html+='{!! Form::label("Other Banking Details", "Other Banking Details") !!}';
+           work_address_html+='{!! Form::select("other_banking_detail",["0" => "Please Select","1" => "No","2" => "Yes"],0,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail","onChange" => "generate_banking_details_html(this.value)"]) !!}';
+           work_address_html+='</div>';
+           work_address_html+='</div>';
+
+       }
+
+       $("#banking_details_container").append(work_address_html);
+
+       $('.date-only').datetimepicker({
+           pickTime: false
+       });
+
+
+
+
+   }
 
 </script>
 @endsection

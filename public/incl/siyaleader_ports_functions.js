@@ -770,6 +770,27 @@ function switchNewCaseMarker (source,element)
 
 
 		        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 				}
 		else	{
 					if(source == "icon")
@@ -872,7 +893,6 @@ function submitCaptureForm (map_center, map_zoom)
 
 
 	}
-
 
 function captureSuccess (newCaseId,newMarkerImage,newMarkerCoords,infoBoxBorder,imageCategory,boxContent)
 	{
@@ -981,7 +1001,6 @@ function ruSure (val) {
 					document.getElementById('addCase').title = "Add a new case ...";
 					setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
 					setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
-                    switchNewCaseMarker('icon',this.id);this.blur();
 				}
 		else	{
 					document.getElementById('submitButton').disabled = false;
@@ -990,20 +1009,6 @@ function ruSure (val) {
 					setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
 				}
 	}
-function cancelCaseCapture(val)
-{
-	if(val=="Cancel")
-	{
-        markerNew.setMap(null);
-        document.getElementById('caseCapture').style.right = "0";
-        document.getElementById("caseCapture").className = "animated hinge";
-        newCaseMarkerStatus = 0;
-        document.getElementById('addCase').src ="images/add_case.png";
-        document.getElementById('addCase').title = "Add a new case ...";
-        setTimeout("document.getElementById('ruSure').style.zIndex = '10'", 1000);
-        setTimeout("document.getElementById('caseCapture').style.right = '10px'", 2000);
-	}
-}
 
 function setCaptureBorder (col)
 	{
@@ -1067,19 +1072,22 @@ localStorage.removeItem("lastname");
       }
 
 
+/*
  function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
-            /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
+            /!** @type {!HTMLInputElement} *!/(document.getElementById('autocomplete')),
             {types: ['geocode']});
 
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
       }
+*/
 
 function fillInAddress() {
+
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
 

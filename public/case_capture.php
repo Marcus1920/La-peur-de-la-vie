@@ -296,7 +296,7 @@ function toSentenceCase (val)
 				<select class="formField" id="case_type" name="case_type" style="text-align:center">
 					<option id="#ffffff" value=""> Please select Case Type
 					<?php
-					$catSql = "select * from cases_types order by name asc";
+					$catSql = "select * from case_types order by name asc";
 					$catResult = mysqli_query($connectionID, $catSql) or die ("Couldn't query categories DB ... ...");
 					while($row = mysqli_fetch_row($catResult))
 						{

@@ -90,7 +90,7 @@ class SubSubCategoriesController extends Controller
     {
         $subSubCategory             = SubSubCategory::where('id',$request['subsubCategoryID'])->first();
         $subSubCategory->name       = $request['name'];
-        $SubSubCategory->updated_by = \Auth::user()->id;
+        $subSubCategory->updated_by = \Auth::user()->id;
         $subSubCategory->save();
         \Session::flash('success', $request['name'].' has been successfully updated!');
         return redirect()->back();

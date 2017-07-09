@@ -42,6 +42,7 @@ use App\CaseReport;
 use App\CasePoi;
 use App\PoiVehicle;
 use App\PoiTraining;
+use File;
 
 
 
@@ -1403,26 +1404,28 @@ class UserController extends Controller
     }
 
     public function construct_associate_objects($associate) {
-
-
+$txtDebug = __CLASS__.".".__FUNCTION__."()";
+	    $txtDebug .= PHP_EOL."  \$associate - ".print_r($associate,1);
         $numberAssoc = PoiAssociate::where('poi_id',$associate->associate_id)->get()->count();
 
 
         $response              = array();
         $poiObj                = Poi::find($associate->associate_id);
-        $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
+$txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
+//die("<pre>{$txtDebug}</pre>");
+        if ($poiObj) $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
         $userObj               = new \stdClass();
-        $userObj->id           = "m-".$poiObj->id;
-        $userObj->name         = $poiObj->name." ".$poiObj->surname;
-        $userObj->picture      = $poipicture->poi_picture_url;
+        if ($poiObj) $userObj->id           = "m-".$poiObj->id;
+        if ($poiObj) $userObj->name         = $poiObj->name." ".$poiObj->surname;
+        if ($poiObj && $poipicture) $userObj->picture      = $poipicture->poi_picture_url;
         $userObj->type         = $associate->association_type;
         $userObj->number_assoc = $numberAssoc;
 
         $userObj->loaded       = TRUE;
         $linkObj               = new \stdClass();
-        $linkObj->id           = $poiObj->id;
+        if ($poiObj) $linkObj->id           = $poiObj->id;
         $linkObj->from         = "m-". $associate->poi_id;
-        $linkObj->to           = "m-". $poiObj->id;
+        if ($poiObj) $linkObj->to           = "m-". $poiObj->id;
         $linkObj->type         = $associate->association_type;
         $response["nodeObj"]   = $userObj;
         $response["linkObj"]   = $linkObj;
@@ -1590,9 +1593,6 @@ class UserController extends Controller
         $poi->religion           = $request['religion'];
         $poi->qualification_type = $request['qualification_type'];
         $poi->notice_period      = $request['notice_period'];
-
-
-
         $position             = Position::where('slug','=',$request['position'])->first();
         $poi->position        = (sizeof($position) > 0)?$position->id:0;
 
@@ -1632,7 +1632,7 @@ class UserController extends Controller
 
       }
 
-    $email ;
+
 
      if ($request['email']==null)
      {
@@ -1667,12 +1667,11 @@ class UserController extends Controller
             $img_url               = "images/poi/profile/$poi->id/".$file_name;
             $target_file_directory = "images/poi/profile/$poi->id/";
 
-            if(!is_dir($target_file_directory)) {
+            if (!file_exists($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
-
 
             if(is_dir($target_file_directory)) {
 
@@ -1741,7 +1740,7 @@ class UserController extends Controller
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -1749,11 +1748,12 @@ class UserController extends Controller
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
-               $fileExt      = 'jpg';
+                $target_file  = $target_file_directory.$file_name;
+                $resized_file = $target_file_directory.$file_name;
+                $wmax         = 400;
+                $hmax         = 400;
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
 
@@ -1794,7 +1794,7 @@ class UserController extends Controller
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -1806,7 +1806,8 @@ class UserController extends Controller
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $fileExt      = 'jpg';
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
 
@@ -1846,12 +1847,12 @@ class UserController extends Controller
             $img_url               = "images/poi/ID/$poi->id/".$file_name;
             $target_file_directory = "images/poi/ID/$poi->id/";
 
-            if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+             if (!file_exists($target_file_directory)) {
 
-            }
+                 File::makeDirectory($target_file_directory, 0777, true,true);
 
+             }
 
             if(is_dir($target_file_directory)) {
 
@@ -1860,7 +1861,8 @@ class UserController extends Controller
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $fileExt      = 'jpg';
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
 
@@ -1896,7 +1898,7 @@ class UserController extends Controller
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory,0777,true);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -1908,7 +1910,8 @@ class UserController extends Controller
                $resized_file = $target_file_directory.$file_name;
                $wmax         = 600;
                $hmax         = 480;
-               $fileExt      = 'jpg';
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
                if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"],$img_url)) {
 
@@ -2372,6 +2375,16 @@ class UserController extends Controller
 
        }
 
+
+        //Determine if POI has banking details
+        $poiBankingRecord = PoiBankDetail::where('poi_id',$id)->count();
+        if($poiBankingRecord > 0) {
+
+            $bankingDetails         = PoiBankDetail::where('poi_id',$id)->get();
+            $poi->banking_details   = $bankingDetails;
+
+        }
+
         return view('users.poieditregistration')->with('poi',$poi);
 
     }
@@ -2379,7 +2392,7 @@ class UserController extends Controller
 
     public function view_poi_associates($id) {
 
-
+$txtDebug = __CLASS__.".".__FUNCTION__."(\$id) \$id - {$id}";
     $poi = \DB::table('poi')
                         ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
                         ->where('poi.id','=',$id)
@@ -2431,7 +2444,8 @@ class UserController extends Controller
        $poi__associate_query = PoiAssociate::where('poi_id',$id)->count();
        $results = array();
 
-
+	    $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
+	    //die("<pre>{$txtDebug}</pre>");
       if($poi__associate_query > 0) {
 
 
@@ -2441,7 +2455,10 @@ class UserController extends Controller
 
                $assoc_pic_object                  = PoiPicture::where('poi_id',$associate->associate_id)->first();
                $assoc_poi_object                  = Poi::find($associate->associate_id);
-               $assoc_poi_object->poi_picture_url = $assoc_pic_object->poi_picture_url;
+	          $txtDebug .= PHP_EOL."  \$assoc_pic_object - ".print_r($assoc_pic_object,1);
+	          $txtDebug .= PHP_EOL."  \$assoc_poi_object - ".print_r($assoc_poi_object,1);
+	          //die("<pre>{$txtDebug}</pre>");
+               if ($assoc_poi_object) $assoc_poi_object->poi_picture_url = $assoc_pic_object->poi_picture_url;
 
                $sub_results = array();
 
@@ -2455,7 +2472,7 @@ class UserController extends Controller
 
                      $sub_assoc_pic_object                  = PoiPicture::where('poi_id',$sub_associate->associate_id)->first();
                      $sub_assoc_poi_object                  = Poi::find($sub_associate->associate_id);
-                     $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
+                     if ($sub_assoc_poi_object) $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
                       $sub_results[]                        = $sub_assoc_poi_object;
 
 
@@ -2463,7 +2480,7 @@ class UserController extends Controller
 
                }
 
-               $assoc_poi_object->sub_associate   = $sub_results;
+	          if ($assoc_poi_object) $assoc_poi_object->sub_associate   = $sub_results;
                $results[]                         = $assoc_poi_object;
 
 
@@ -2472,8 +2489,8 @@ class UserController extends Controller
           $poi->assoc = $results;
 
       }
-
-
+$txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
+	    //die("<pre>{$txtDebug}</pre>");
         return view('users.poiassociates')->with('poi',$poi);
 
 
@@ -2498,8 +2515,6 @@ class UserController extends Controller
     public function edit_poi_save(Request $request) {
 
 
-
-
         $poi                     = Poi::find($request['poiID']);
         $poi->name               = $request['name'];
         $poi->surname            = $request['surname'];
@@ -2510,11 +2525,33 @@ class UserController extends Controller
         $poi->dependants         = $request['dependants'];
         $poi->birth_place        = $request['birth_place'];
         $poi->nationality        = $request['nationality'];
-        $poi->passport_number    = $request['passport_number'];
         $poi->email              = $request['email'];
         $poi->religion           = $request['religion'];
         $poi->qualification_type = $request['qualification_type'];
         $poi->notice_period      = $request['notice_period'];
+        $poi->tax_number         = $request['tax_number'];
+
+
+        switch ($request['document_type']) {
+            case '1':
+                $poi->id_number       = $request['id_number'];
+                $poi->doc_expiry_date = $request['doc_expiry_date'];
+
+                break;
+
+            case '2':
+
+                $poi->passport_number          = $request['passport_number'];
+                $poi->doc_expiry_date          = $request['doc_expiry_date'];
+                $poi->work_permit              = $request['work_permit'];
+                $poi->work_permit_expiry_date  = $request['work_permit_expiry_date'];
+                $poi->yellow_fever             = $request['yellow_fever'];
+                $poi->yellow_fever_expiry_date = $request['yellow_fever_expiry_date'];
+
+                break;
+
+
+        }
 
 
         $position             = Position::where('slug','=',$request['position'])->first();
@@ -2528,7 +2565,6 @@ class UserController extends Controller
         }
 
         if($request['poiID'] <>"" && $request['id_pic_note'] ) {
-
 
           $poipicture = PoiPicture::where("poi_id",$request['poiID'])->where("poi_picture_type",4)->first();
           $poipicture->notes          = $request['id_pic_note'];
@@ -2560,7 +2596,8 @@ class UserController extends Controller
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -2669,7 +2706,8 @@ class UserController extends Controller
 
                               if(!is_dir($target_file_directory)) {
 
-                                  mkdir($target_file_directory);
+
+                                  File::makeDirectory($target_file_directory, 0777, true,true);
 
                               }
 
@@ -2679,7 +2717,9 @@ class UserController extends Controller
                                  $resized_file = $target_file_directory.$file_name_scar;
                                  $wmax         = 600;
                                  $hmax         = 480;
-                                 $fileExt      = 'jpg';
+                                 $kaboom       = explode(".", $file_name);
+                                 $fileExt      = end($kaboom);
+
 
                                  if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i][$key],$img_url)) {
 
@@ -2707,7 +2747,7 @@ class UserController extends Controller
 
                             if(!is_dir($target_file_directory)) {
 
-                                mkdir($target_file_directory);
+                                File::makeDirectory($target_file_directory, 0777, true,true);
 
                             }
 
@@ -2719,7 +2759,8 @@ class UserController extends Controller
                                $resized_file = $target_file_directory.$file_name;
                                $wmax         = 600;
                                $hmax         = 480;
-                               $fileExt      = 'jpg';
+                               $kaboom       = explode(".", $file_name);
+                               $fileExt      = end($kaboom);
 
                                if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
 
@@ -2811,7 +2852,7 @@ class UserController extends Controller
 
                               if(!is_dir($target_file_directory)) {
 
-                                  mkdir($target_file_directory);
+                                  File::makeDirectory($target_file_directory, 0777, true,true);
 
                               }
 
@@ -2822,7 +2863,8 @@ class UserController extends Controller
                                  $resized_file = $target_file_directory.$file_name_tatoo;
                                  $wmax         = 600;
                                  $hmax         = 480;
-                                 $fileExt      = 'jpg';
+                                  $kaboom       = explode(".", $file_name);
+                                  $fileExt      = end($kaboom);
 
                                  if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i][$key],$img_url)) {
 
@@ -2851,7 +2893,7 @@ class UserController extends Controller
 
                             if(!is_dir($target_file_directory)) {
 
-                                mkdir($target_file_directory);
+                                File::makeDirectory($target_file_directory, 0777, true,true);
 
                             }
 
@@ -2863,7 +2905,8 @@ class UserController extends Controller
                                $resized_file = $target_file_directory.$file_name;
                                $wmax         = 600;
                                $hmax         = 480;
-                               $fileExt      = 'jpg';
+                                $kaboom       = explode(".", $file_name);
+                                $fileExt      = end($kaboom);
 
                                if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
 
@@ -2946,7 +2989,7 @@ class UserController extends Controller
 
                               if(!is_dir($target_file_directory)) {
 
-                                  mkdir($target_file_directory);
+                                  File::makeDirectory($target_file_directory, 0777, true,true);
 
                               }
 
@@ -2957,7 +3000,8 @@ class UserController extends Controller
                                  $resized_file = $target_file_directory.$file_name_tatoo;
                                  $wmax         = 600;
                                  $hmax         = 480;
-                                 $fileExt      = 'jpg';
+                                  $kaboom       = explode(".", $file_name);
+                                  $fileExt      = end($kaboom);
 
                                  if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i][$key],$img_url)) {
 
@@ -2986,7 +3030,7 @@ class UserController extends Controller
 
                             if(!is_dir($target_file_directory)) {
 
-                                mkdir($target_file_directory);
+                                File::makeDirectory($target_file_directory, 0777, true,true);
 
                             }
 
@@ -2998,7 +3042,8 @@ class UserController extends Controller
                                $resized_file = $target_file_directory.$file_name;
                                $wmax         = 600;
                                $hmax         = 480;
-                               $fileExt      = 'jpg';
+                                $kaboom       = explode(".", $file_name);
+                                $fileExt      = end($kaboom);
 
                                if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i],$img_url)) {
 
@@ -3049,7 +3094,7 @@ class UserController extends Controller
 
             if(!is_dir($target_file_directory)) {
 
-                mkdir($target_file_directory);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
             }
 
@@ -3399,6 +3444,33 @@ class UserController extends Controller
         }
 
 
+        if(!is_null($request['account_number'])) {
+
+            $existing_bankind_details = PoiBankDetail::where('poi_id',$poi->id)->get();
+
+            if (sizeof($existing_bankind_details) > 0) {
+
+                foreach ($existing_bankind_details as $banking_record) {
+
+                    $object = PoiBankDetail::find($banking_record->id);
+                    $object->delete();
+                }
+
+            }
+
+            for ($i=0; $i < sizeof($request['account_number']) ; $i++) {
+
+                $PoiBankDetail                 = new PoiBankDetail();
+                $PoiBankDetail->poi_id         = $poi->id;
+                $PoiBankDetail->account_number = $request['account_number'][$i];
+                $PoiBankDetail->branch_code    = $request['branch_number'][$i];
+                $PoiBankDetail->bank_id        = $request['banking_name'][$i];
+                $PoiBankDetail->created_by     = \Auth::user()->id;
+                $PoiBankDetail->save();
+            }
+        }
+
+
 
 
 
@@ -3554,18 +3626,11 @@ class UserController extends Controller
 
 
 
-        if ($request['affiliation'] =="Select/All") {
+        if ($request['affiliation'] ==null) {
 
-            $users_if = 1 ;
+           // $users_if   = 1;
         }
-        elseif ($request['affiliation'] ==null) {
 
-      ///      $us$users_ifers->affiliation = 1;
-
-
-            $users_if = 1 ;
-
-        }
 
         else{
 
@@ -3573,11 +3638,11 @@ class UserController extends Controller
 
             $users_if = $Affiliation_id->id;
 
+
         }
 
 
         $user                              = User::where('id',$request['userID'])->first();
-        $sendSMS                           = $user->status;
         $role                              = UserRole::where('slug','=',$request['role'])->first();
         $user->role                        = $role->id;
         $title                             = Title::where('slug','=',$request['title'])->first();
@@ -3585,7 +3650,9 @@ class UserController extends Controller
         $user->name                        = $request['name'];
         $user->surname                     = $request['surname'];
         $user->id_number                   = $request['id_number'];
+        $user->cellphone                   =$request['cellphone'];
         $user->alt_cellphone               = $request['alt_cellphone'];
+        $user->email                       =$request['email'];
         $user->alt_email                   = $request['alt_email'];
         $user->active                      = $request['status'];
         $user->department                  = $request['department'];
@@ -3605,60 +3672,12 @@ class UserController extends Controller
         $user->created_by                  = \Auth::user()->id;
         $user->affiliation		           = $users_if;
 
-
         $user->updated_by    = \Auth::user()->id;
         $user->updated_at    =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
         $userStatusObj       = UserStatus::where('name','=','active')->first();
-        $user->active        = $userStatusObj->id;
-
+    //    $user->active        = $userStatusObj->id;
 
         $user->save();
-
-         $data = array(
-                    'name'      =>  $user->name
-
-          );
-
-         $cellphone = $user->cellphone;
-         $language  = Language::find($user->language);
-
-
-        if ( $sendSMS == 2) {
-
-
-
-          switch ($language->name) {
-            case 'English':
-               \Mail::send('emails.registrationConfirmationSMS',$data, function($message) use ($cellphone)
-                  {
-                        $message->from('info@siyaleader.net', 'Siyaleader');
-                        $message->to('cooluma@siyaleader.net')->subject("ACT: $cellphone" );
-
-                  });
-              break;
-
-              case 'IsiZulu':
-               \Mail::send('emails.registrationConfirmationSMSZulu',$data, function($message) use ($cellphone)
-                  {
-                        $message->from('info@siyaleader.net', 'Siyaleader');
-                        $message->to('cooluma@siyaleader.net')->subject("ACT: $cellphone" );
-
-                  });
-              break;
-
-            default:
-              \Mail::send('emails.registrationConfirmationSMS',$data, function($message) use ($cellphone)
-                {
-                      $message->from('info@siyaleader.net', 'Siyaleader');
-                      $message->to('cooluma@siyaleader.net')->subject("ACT: $cellphone" );
-
-                });
-              break;
-          }
-
-
-        }
-
 
         \Session::flash('success', 'well done! User '.$request['name'].' has been successfully updated!');
         return redirect()->back();

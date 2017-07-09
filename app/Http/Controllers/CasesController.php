@@ -37,15 +37,26 @@ use App\Poi;
 use App\PoiAssociate;
 use App\CaseNote;
 use App\InvestigationOfficer;
+use App\services\CaseOwnerService;
+use App\services\CaseResponderService;
+use App\services\CaseActivityService;
+
 
 
 class CasesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+
+    protected $case_responders;
+    protected $case_owners;
+    protected $case_activities;
+
+    public function __construct(CaseResponderService $responder_service,CaseOwnerService $case_owner_service,CaseActivityService $case_activity_service) {
+
+        $this->case_responders   = $responder_service;
+        $this->case_owners       = $case_owner_service;
+        $this->case_activities   = $case_activity_service;
+
+    }
 
 
 
@@ -917,13 +928,13 @@ class CasesController extends Controller
 
         $email = (sizeof($user) <= 0) ? $userAddressbook->email : $user->email;
 
-       /* \Mail::send('emails.caseClosed', $data, function ($message) use ($email) {
+        \Mail::send('emails.caseClosed', $data, function ($message) use ($email) {
 
             $message->from('info@siyaleader.net', 'Siyaleader');
             $message->to($email)->subject("Siyaleader Notification - Case Closed: ");
 
         });
-*/
+
         return "ok";
 
     }
@@ -1185,7 +1196,8 @@ class CasesController extends Controller
      */
     public function captureCaseUpdate(CaseRequest $request)
     {
-
+	    $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequest \$request) \$request - ".print_r($request, 1);
+	    die("<pre>{$txtDebug}</pre>");
         $userRole = UserRole::where('name', '=', 'House Holder')->first();
         $user = New User();
         $user->role = $userRole->id;
@@ -1233,7 +1245,8 @@ class CasesController extends Controller
 
     public function captureCaseUpdateH(CaseRequestH $request)
     {
-
+	    $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequestH \$request) \$request - ".print_r($request, 1);
+	    die("<pre>{$txtDebug}</pre>");
         $casePriority = CasePriority::where('slug', '=', $request['priority'])->first();
         $houseHolderObj = User::find($request['hseHolderId']);
         $case = CaseReport::find($request['caseID']);
@@ -1261,7 +1274,7 @@ class CasesController extends Controller
      */
     public function create(CreateCaseRequest $request)
     {
-
+$txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseRequest \$request) \$request - ".print_r($request, 1);
         $case = CaseReport::find($request['caseID']);
         $newCase = New CaseReport();
         $newCase->created_at = $case->created_at;
@@ -1279,6 +1292,7 @@ class CasesController extends Controller
         $newCase->active = 1;
         $newCase->house_holder_id = $case->house_holder_id;
         $newCase->agent = $case->agent;
+die("<pre>{$txtDebug}</pre>");
         $newCase->save();
 
         $relatedCase = New CaseRelated();
@@ -1329,17 +1343,19 @@ class CasesController extends Controller
     function createCaseAgent(CreateCaseAgentRequest $request)
     {
 
-
-
+	    $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseAgentRequest \$request) \$request - ".print_r($request->all(), 1);
 
         $house_holder_id = 0;
+        if ($request['house_holder_id']) $house_holder_id = $request['house_holder_id'];
+        else if ($request['hseHolderId']) $house_holder_id = $request['hseHolderId'];
+	    $txtDebug .= PHP_EOL."  \$house_holder_id - {$house_holder_id}";
+	    //die("<pre>{$txtDebug}</pre>");
 
-
-        if (empty($request['house_holder_id'])) {
+        if (empty($house_holder_id)) {
 
             $userRole = UserRole::where('name', '=', 'Client')->first();
             $user = New User();
-            $user->role = $userRole->id;
+            $user->role = $userRole ? $userRole->id : 0;
             $user->name = $request['name'];
             $user->surname = $request['surname'];
             $user->cellphone = $request['cellphone'];
@@ -1381,16 +1397,14 @@ class CasesController extends Controller
 		$officer = $officerObj->name;
 	}
 
-
-
         $newCase = New CaseReport();
         $newCase->created_at = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
         $newCase->user = \Auth::user()->id;
         $newCase->reporter = \Auth::user()->id;
         $newCase->house_holder_id = $house_holder_id;
         $newCase->description = $request['description'];
-        $newCase->case_type = $case_type;
-        $newCase->case_sub_type = $case_sub_type;
+        $newCase->case_type = is_array($case_type) ? $case_type[0] : $case_type;
+        $newCase->case_sub_type = is_array($case_sub_type) ? $case_sub_type[0] : $case_sub_type;
         $newCase->saps_case_number = $request['saps_case_number'];
         $newCase->saps_station = $request['saps_station'];
         $newCase->investigation_officer = $officer;
@@ -1414,14 +1428,43 @@ class CasesController extends Controller
         $newCase->save();
 
 
-        $caseOwner = new CaseOwner();
-        $caseOwner->user = \Auth::user()->id;
-        $caseOwner->case_id = $newCase->id;
-        $caseOwner->type = 0;
-        $caseOwner->active = 1;
-        $caseOwner->save();
 
-	$caseNote          = new CaseNote();
+        $create_case_owner_data = array(
+            "case_id"      => $newCase->id,
+            "user"         => $newCase->user,
+            "type"         => 1,
+            "addressbook"  => 0
+        );
+
+        $user = User::find(\Auth::user()->id);
+        $this->case_owners->create_case_owner($create_case_owner_data);
+        $this->case_responders->send_com($user,$newCase);
+
+        $first_responders   = $this->case_responders->get_responders_by_sub_case_type($newCase->case_sub_type,1);
+
+        if(empty($first_responders)){
+
+            $first_responders   = $this->case_responders->get_responders_by_case_type($newCase->case_type,1);
+
+        }
+
+        foreach ($first_responders as $first_responder){
+
+            $create_case_owner_data = array(
+                "case_id"      => $newCase->id,
+                "user"         => $first_responder->responder,
+                "type"         => 1,
+                "addressbook"  => 0
+            );
+
+            $this->case_owners->create_case_owner($create_case_owner_data);
+
+        }
+
+        $this->case_responders->send_comms_to_first_responders($newCase,$first_responders);
+
+
+	    $caseNote          = new CaseNote();
         $caseNote->note    = $request['investigation_note'];;
         $caseNote->user    = \Auth::user()->id;
         $caseNote->case_id = $newCase->id;

@@ -26,8 +26,8 @@
     width: 44px;
     height: 44px;
 }
-.sa-side-map { background-image: url(../img/icon/map.png); }
-.sa-side-home { background-image: url(../img/icon/home.png); }
+.sa-side-map { background-image: url(../img/icon/map-marker-24.png); }
+.sa-side-home { background-image: url(../img/icon/map-marker-24.png); }
 .sa-side-typography { background-image: url(../img/icon/typography.png); }
 .sa-side-widget { background-image: url(../img/icon/widgets.png); }
 .sa-side-table { background-image: url(../img/icon/table.png); }

@@ -24,12 +24,30 @@ class UpdateUserRequest extends Request
     public function rules()
     {
         return [
-            'role'          =>'required|not_in:0',
-            'title'         =>'required|not_in:0',
-            'name'          =>'required',
-            'surname'       =>'required',
-            'status'        =>'required|not_in:0',
-            'gender'        =>'required|not_in:0',
+            'role'              =>'required|not_in:0',
+            'title'             =>'required|not_in:0',
+            'name'              =>'required',
+            'surname'           =>'required',
+            'status'            =>'required|not_in:0',
+            'gender'            =>'required|not_in:0',
+            'affiliation'       => 'required|not_in:0',
+            'department'        => 'required|not_in:0',
+            'language'          => 'required|not_in:0',
+            'position'          => 'required|not_in:0',
+
+
+            'cellphone'         => 'required|digits:10',
+            'alt_cellphone'    => 'different:cellphone',
+
+            'email'             => 'required|different:alt_email',
+            'alt_email'        => 'different:email',
+
+
+            'id_number'         => 'required|digits:13',
+            'company'           => 'required',
+
+
+
         ];
     }
 }

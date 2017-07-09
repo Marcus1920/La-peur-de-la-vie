@@ -60,10 +60,18 @@
 
         </script>
 
+    <style>
+
+         body {
+
+              background-color: #0B628D;
+         }
+
+        </style>
 
 
     </head>
-    <body id="skin-blur-blue">
+    <body>
 
         <header id="header" class="media">
             <a href="" id="menu-toggle"></a>
@@ -235,7 +243,7 @@
 
 
                             @if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')
-                              <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li>
+                    {{--          <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li> --}}
                              @endif
 
                         </ul>
@@ -328,6 +336,9 @@
         <script src="{{ asset('/bower_components/noty/js/noty/packaged/jquery.noty.packaged.js') }}"></script>
 
          <!-- DataTables JavaScript -->
+
+
+        <script src="{{ asset('/bower_components/datatables/media/js/datatables-plugins/pagination/scrolling.js') }}"></script>
         <script src="{{ asset('/bower_components/datatables/media/js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js') }}"></script>
 

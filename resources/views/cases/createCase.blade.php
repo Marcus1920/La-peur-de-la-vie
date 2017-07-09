@@ -171,7 +171,7 @@
                     {!! Form::label('Investigation Officer', 'Investigation Officer', array('class' => 'col-md-3 control-label')) !!}
                     <div class="col-md-6">
                         <div class="input-group">
-				{!! Form::select('officers',$selectOfficers,0,['class' => 'form-control input-sm' ,'name' => 'case_type[]','id' => 'officers']) !!}
+				{!! Form::select('officers',$selectOfficers,0,['class' => 'form-control input-sm' ,'name' => 'officers','id' => 'officers']) !!}
 				<div class="input-group-addon" id="add_officer" title="Add New" style="cursor:pointer;">
 					<span class="glyphicon glyphicon-plus"></span>
 				</div>
@@ -257,6 +257,7 @@
                     <div class="col-md-3"></div>
                     <div class="col-md-8">
                        <a type="#" id='submitCreateCaseAgentForm' class="btn btn-sm">Create Case</a>
+
                     </div>
                 </div>
 

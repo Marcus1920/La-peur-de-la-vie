@@ -6,7 +6,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Siyaleader Aims</title>
+    <title> Ubuluwembo  </title>
     <meta charset="utf-8" / http-equiv="X-UA-Compatible" content="IE=edge" />
 
     <link rel="icon" type="image/ico" href="favicon.ico">
@@ -23,14 +23,12 @@
     <script type="text/javascript" src="js/jquery.tokeninput.js"></script>
     <script type="text/javascript" src="incl/infobox_packed.js"></script>
     <script type="text/javascript" src="incl/markerclusterer.js"></script>
-	<script type="text/javascript" src="incl/siyaleader_ports.js"></script>
     <script type="text/javascript" src="incl/siyaleader_ports_vars.js"></script>
     <script type="text/javascript" src="incl/siyaleader_ports_functions.js"></script>
-	<script type="text/javascript" src="incl/siyaleader_ports_functions__.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
 
-   
+
 
 </head>
 <body bgcolor="#1c1c1c" onload="resetControllers();" TEXT="#C0C0C0" LINK="#ffffff" VLINK="#ffffff" ALINK="#ffffff" style="margin:0;overflow:hidden;margin-bottom:0;margin-left:0;margin-right:0;margin-top:0">
@@ -42,9 +40,9 @@
                 <div style="z-index:5000">
                     <table cellpadding=0 cellspacing=0 style="width:100%;border-collapse: collapse; border: 0px solid #1c1c1c;">
                         <tr style="opacity:1">
-                          
+
                             <td bgcolor="#1c1c1c" valign=middle align=center width=115 style="min-width:115px">
-                                <a href="#" onclick="switchMainMenu();this.blur()"><i class="fa fa-navicon fa-fw" style="color:#ffffff" title="Toggle main menu ... " ></i></a>
+                              <!-- <a href="#" onclick="switchMainMenu();this.blur()"><i class="fa fa-navicon fa-fw" style="color:#ffffff" title="Toggle main menu ... " ></i></a> -->
                             </td>
                             <td bgcolor="#1c1c1c" valign=middle align="right" nowrap width=110 style="min-width:110px">
                                 <input maxlength="10" type=text id="searchBox" name="searchBox" title="Search by case number" onkeyup="checkInput(this)" onkeydown="javascript:if (event.which || event.keyCode){if ((event.which == 13) || (event.keyCode == 13)) { animateMarker(document.all.searchBox.value); } };" style="text-align:center;width:100px;font-size:10pt;background:#000000;color:#ffffff;border-style:solid;border-color:#ffffff;border-width:1px">
@@ -52,7 +50,7 @@
                             <td bgcolor="#1c1c1c" valign=middle align=center width=25 style="min-width:25px">
                                 <a href="#" onclick="this.blur();animateMarker(document.all.searchBox.value)"><i class="fa fa-search fa-fw" style="color:#ffffff" title="Click to search"></i></a>
                             </td>
-                           
+
                             <td bgcolor="#1c1c1c" valign=middle align=center width=30 style="min-width:30px">
                                 <a href="#" onclick="repositionMarkers();this.blur()"><i class="fa fa-compress fa-fw" style="color:#ffffff" title="Reset Dragged and Spidered Markers" ></i></a>
                             </td>
@@ -63,8 +61,8 @@
                                 <table border=0 cellpadding=0 cellspacing=0>
                                     <td align=left>
                                         <table cellpadding=1 cellspacing=0 border=1 style="border-collapse:collapse;border:1px solid #FFFFFF">
-                                            
-                                            <!-- <td title="Toggle Port Ops Centre Markers" style="background:#e0e1e0"><input type="checkbox" title="Toggle port ops centre" onclick="switchMarkers('po');" checked="" id="poCheckBox"></td>                                          
+
+                                            <!-- <td title="Toggle Port Ops Centre Markers" style="background:#e0e1e0"><input type="checkbox" title="Toggle port ops centre" onclick="switchMarkers('po');" checked="" id="poCheckBox"></td>
                                             <td title="Toggle Property Markers" style="background:#999999"><input type="checkbox" title="Toggle property" onclick="switchMarkers('pr');" checked="" id="prCheckBox"></td> -->
                                             <td title="Toggle Other" style="background:#000000"><input type="checkbox" title="Toggle Other" onclick="switchMarkers('tr');" checked="" id="trCheckBox"></td>
                                            <!--  <td title="Toggle Safety / Risk / Fire Management  Markers" style="background:#ff0000"><input type="checkbox" title="Toggle safety / risk / fire" onclick="switchMarkers('sr');" checked="" id="srCheckBox"></td> -->
@@ -74,9 +72,9 @@
                                           <td title="Toggle Environment Markers" style="background:#009000"><input type="checkbox" title="Toggle environment" onclick="switchMarkers('en');" checked="" id="enCheckBox"></td>
                                           <td title="Toggle Health Markers" style="background:#0df1ff"><input type="checkbox" title="Toggle health" onclick="switchMarkers('he');" checked="" id="heCheckBox"></td>
                                           <td title="Toggle Marine Maintanence Markers" style="background:#333dc7"><input type="checkbox" title="Toggle marine maintenance" onclick="switchMarkers('mm');" checked="" id="mmCheckBox"></td> -->
-                                            <td title="Toggle Disciplinary Markers" style="background:#ff33a6"><input type="checkbox" title="Toggle Disciplinary" onclick="switchMarkers('me');" checked="" id="meCheckBox"></td> 
+                                            <td title="Toggle Disciplinary Markers" style="background:#ff33a6"><input type="checkbox" title="Toggle Disciplinary" onclick="switchMarkers('me');" checked="" id="meCheckBox"></td>
                                            <!--  <td title="Toggle Security Markers" style="background:#8a1ec7"><input type="checkbox" title="Toggle security" onclick="switchMarkers('se');" checked="" id="seCheckBox"></td> -->
-                                                                                
+
 
 
                                         </table>
@@ -88,7 +86,7 @@
                                     </td>
                                 </table>
                             </td>
-                           
+
                             <td bgcolor="#1c1c1c" valign=middle align=right width=25 style="min-width:25px">
                                 <a href="#" id="newCaseIcon" onclick="document.getElementById('RUS').innerHTML = 'ARE YOU SURE?';switchNewCaseMarker('icon',this.id);this.blur()"><i id="addCase" class="fa fa-plus-square-o fa-lg fa-fw" style="color:#ffffff" title="Add a new case ..." ></i></a>
                             </td>
@@ -99,314 +97,13 @@
             </td>
         </tr>
 
-	<script language="javascript">	
-		var mapWindowHeight = window.innerHeight - 31;
-document.write("<tr height=" + mapWindowHeight + ">");
-document.write("<td height=" + mapWindowHeight + ">");
-document.write("<input id='pac-input' class='' style='width:355px' type='text' placeholder='Location Search Box'>");
-document.write("<div id='mapcontainer' style='height:100%;width:100%'>");
-
-$(document).ready(function(){
-
-
-   var userID = $("#userID",window.parent.document).val();
-   $("#userID").val(userID);
-
-
-});
-
-function initializer() {
-    mapSA = new google.maps.LatLng(-31.438941, 25.111680);
-    var options = {
-        zoom: 6,
-        center: mapSA,
-        mapTypeControl: true,
-        panControl: true,
-        zoomControl: true,
-        scaleControl: true,
-        streetViewControl:true,
-        overviewMapControl: true,
-        navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL },
-        mapTypeId: google.maps.MapTypeId.HYBRID
-    };
-
-    map = new google.maps.Map(document.getElementById('mapcontainer'), options);
-
-    var eightMileOverlayBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(-30.008609, 30.931000),
-    new google.maps.LatLng(-29.759365, 31.234000));
-
-     // Create the search box and link it to the UI element.
-    var input     = document.getElementById('pac-input');
-    var searchBox = new google.maps.places.SearchBox(input);
-    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
-
-
-    // Bias the SearchBox results towards current map's viewport.
-    map.addListener('bounds_changed', function() {
-      searchBox.setBounds(map.getBounds());
-    });
-	
-	var markers = [];
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-
-        var places = searchBox.getPlaces();
-
-        var componentForm = {
-            street_number: 'short_name',
-            route: 'long_name',
-            locality: 'long_name',
-            administrative_area_level_1: 'short_name',
-            country: 'long_name',
-            postal_code: 'short_name'
-        };
-
-        /*for (var component in componentForm) {
-          document.getElementById(component).value = '';
-          document.getElementById(component).disabled = false;
-        }
-*/
- 
-        var places_array = {};
-     
-        for (var i = 0; i < places[0].address_components.length; i++) {
-          var addressType = places[0].address_components[i].types[0];
-
-          if (componentForm[addressType]) {
-
-            var val = places[0].address_components[i][componentForm[addressType]];
-
-            if(addressType =="street_number") {
-
-               $("#newCaseCapture").contents().find("#street_number").val(val);
-
-
-            }
-            if(addressType =="locality") {
-
-               $("#newCaseCapture").contents().find("#locality").val(val);
-
-
-            }
-            if(addressType =="administrative_area_level_1") {
-
-               $("#newCaseCapture").contents().find("#administrative_area_level_1").val(val);
-
-
-            }
-            if(addressType =="postal_code") {
-
-               $("#newCaseCapture").contents().find("#postal_code").val(val);
-
-
-            }
-
-            if(addressType =="country") {
-
-               $("#newCaseCapture").contents().find("#country").val(val);
-
-
-            }
-
-            places_array[addressType] = val;
-
-          }
-        }
-
-        $.cookie("cookieplaces", JSON.stringify(places_array));
-
-          if (places.length == 0) {
-            return;
-          }
-
-          // Clear out the old markers.
-          markers.forEach(function(marker) {
-            marker.setMap(null);
-            markerNew.setMap(null);
-          });
-          markers = [];
-
-          // For each place, get the icon, name and location.
-          var bounds = new google.maps.LatLngBounds();
-          places.forEach(function(place) {
-            if (!place.geometry) {
-              console.log("Returned place contains no geometry");
-              return;
-            }
-            var icon = {
-              url: place.icon,
-              size: new google.maps.Size(71, 71),
-              origin: new google.maps.Point(0, 0),
-              anchor: new google.maps.Point(17, 34),
-              scaledSize: new google.maps.Size(25, 25)
-            };
-
-            // Create a marker for each place.
-            markers.push(new google.maps.Marker({
-              map: map,
-              icon: icon,
-              title: place.name,
-              position: place.geometry.location
-            }));
-
-            if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-            } else {
-              bounds.extend(place.geometry.location);
-            }
-          });
-          map.fitBounds(bounds);
-          addCase=switchNewCaseMarker('icon',this.id);this.blur();
-        });
-		
-		var imageBounds = new google.maps.LatLngBounds(
-    new google.maps.LatLng(-29.898100, 30.993350),
-    new google.maps.LatLng(-29.860934, 31.056900));
-
-    allLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_all.png', imageBounds);
-    allLocalityOverlay.setMap(null);
-    yellowLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_yellow.png', imageBounds);
-    yellowLocalityOverlay.setMap(null);
-
-    pinkLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_pink.png', imageBounds);
-    pinkLocalityOverlay.setMap(null);
-
-    purpleLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_purple.png', imageBounds);
-    purpleLocalityOverlay.setMap(null);
-
-    orangeLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_orange.png', imageBounds);
-    orangeLocalityOverlay.setMap(null);
-
-    blueLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_blue.png', imageBounds);
-    blueLocalityOverlay.setMap(null);
-    greenLocalityOverlay = new google.maps.GroundOverlay('images/locality_overlay_green.png', imageBounds);
-    greenLocalityOverlay.setMap(null);
-
-    var oms = new OverlappingMarkerSpiderfier(map, { markersWontMove: true, keepSpiderfied:true, circleSpiralSwitchover:20 });
-	<?php
-
-
-    $sql          = "
-                        SELECT
-                            *
-                        FROM
-                            `cases`
-                        WHERE
-                            `user` != ''
-                        
-                        ORDER BY `id` ASC
-                    ";
-
-
-    $result       = mysqli_query($connectionID, $sql) or die ("Couldn't query cases DB ... ...");
-	
-
-
-	?>
-
-	//Space for the php script
-	
-mcOptions = { gridSize: 50, maxZoom: 15,imagePath: 'https://cdn.rawgit.com/googlemaps/js-marker-clusterer/gh-pages/images/m' };
-markerCluster = new MarkerClusterer(map, markers, mcOptions);
-shipCluster = new MarkerClusterer(map, shipMarkers, mcOptions);
-google.maps.event.addListener(map,'zoom_changed', function ()  {  resetMarkerVisibility();  markerCluster = new MarkerClusterer(map, markers, mcOptions);   });
-//google.maps.event.addListener(map,'zoom_changed', function ()  {  resetMarkerVisibility();  markerCluster = new MarkerClusterer(map, shipMarkers, mcOptions);   });
-
-function createZoneArray () {
-
-    document.getElementById('zoneGPSarray').style.display = "flex";
-    var eightMileCoords = "";
-    var cleanLatLng = "";
-    var zoneMarker = "markers/zonemarker_green.png";
-    map.setOptions({ draggableCursor: 'crosshair' });
-    zoneListener = google.maps.event.addListener(map,'click', function(event)
-    {
-        eightMileCoords = "";
-        cleanLatLng = event.latLng.toString();
-        cleanLatLng = cleanLatLng.replace('(','');
-            cleanLatLng = cleanLatLng.replace(')','');
-            eightMileCoords += cleanLatLng;
-            zoneNewMarker = new google.maps.Marker({ zindex:10000, position:event.latLng, icon:zoneMarker, draggable:false, map:map });
-            zoneArrayMarkers.push(zoneNewMarker);
-            document.getElementById('zoneGPSarray').value += "new google.maps.LatLng("+eightMileCoords+"),\n";
-        });
-
-    zoneListener = google.maps.event.addListener(eightMileOverlay,'click', function(event)
-    {
-        eightMileCoords = "";
-        cleanLatLng = event.latLng.toString();
-        cleanLatLng = cleanLatLng.replace('(','');
-            cleanLatLng = cleanLatLng.replace(')','');
-            eightMileCoords += cleanLatLng;
-            zoneNewMarker = new google.maps.Marker({ zindex:10000, position:event.latLng, icon:zoneMarker, draggable:false, map:map });
-            zoneArrayMarkers.push(zoneNewMarker);
-            document.getElementById('zoneGPSarray').value += "new google.maps.LatLng("+eightMileCoords+"),\n";
-        });
-}
-
-window.addEventListener("keydown", zoneKeysPressed, false);
-window.addEventListener("keyup", keysReleased, false);
-var keys = [];
-
-function zoneKeysPressed (e) {
-    keys[e.keyCode] = true;
-    if (keys[17] && keys[16] && keys[90]) {
-        toggleZoneSelector();
-    }
-    else  {
-        return;
-    }
-    e.preventDefault();
-}
-
-function keysReleased(e) {
-    keys[e.keyCode] = false;
-}
-
-function toggleZoneSelector () {
-    if(selectZoneArray == 0)
-    {
-        createZoneArray();
-        selectZoneArray = 1;
-    }
-    else    {
-        cleanLatLng = "";
-        eightMileCoords = "";
-        document.getElementById('zoneGPSarray').value="";
-        document.getElementById('zoneGPSarray').style.display = "none";
-        for(var i = 0; i < zoneArrayMarkers.length; i++)
-        {
-            zoneArrayMarkers[i].setMap(null);
-        }
-        zoneArrayMarkers = [];
-        google.maps.event.removeListener(zoneListener);
-        map.setOptions({ draggableCursor: null });
-        selectZoneArray = 0;
-    }
-}
-
-// end of zoneMaker Module
-
-//var kmzLayer = new google.maps.KmlLayer('http://41.216.130.6:8080/siyaleader/doc.kml');
-//kmzLayer.setMap(map);
-
-
-//map = new google.maps.Map(document.getElementById('mapcontainer'), options);
-
-}
-google.maps.event.addDomListener(window, 'load', initializer);
-
-			</script>	
 <script language="javascript">
 
 //  height=560
 var mapWindowHeight = window.innerHeight - 31;
 document.write("<tr height=" + mapWindowHeight + ">");
 document.write("<td height=" + mapWindowHeight + ">");
-document.write("<input id='pac-input' class='' style='width:355px' type='text' placeholder='Location Search Box'>");
+document.write("<input id='pac-input' class='' style='width:360px' type='text' placeholder='Location Search Box'>");
 document.write("<div id='mapcontainer' style='height:100%;width:100%'>");
 
 $(document).ready(function(){
@@ -468,14 +165,10 @@ function initialize() {
             postal_code: 'short_name'
         };
 
-        /*for (var component in componentForm) {
-          document.getElementById(component).value = '';
-          document.getElementById(component).disabled = false;
-        }
-*/
- 
+
+
         var places_array = {};
-     
+
         for (var i = 0; i < places[0].address_components.length; i++) {
           var addressType = places[0].address_components[i].types[0];
 
@@ -529,7 +222,6 @@ function initialize() {
           // Clear out the old markers.
           markers.forEach(function(marker) {
             marker.setMap(null);
-            markerNew.setMap(null);
           });
           markers = [];
 
@@ -618,6 +310,7 @@ function initialize() {
 
 <?php
 
+	error_log(print_r("STARTING =========================================",TRUE));
 
     $sql          = "
                         SELECT
@@ -631,113 +324,140 @@ function initialize() {
                     ";
 
 
+
+
     $result       = mysqli_query($connectionID, $sql) or die ("Couldn't query cases DB ... ...");
 
-  
+
+    while($row = mysqli_fetch_row($result)) {
 
 
+    $ID             = $row[0];
+	error_log(print_r("ID: ".$ID,TRUE));
+    $GPS            = $row[15].",".$row[16];
+	error_log(print_r("GPS: ".$GPS,TRUE));
+    $ProvinceID     = $row[4];
+    if (is_null($ProvinceID) || empty($ProvinceID) ) {
 
-while($row = mysqli_fetch_row($result)) {
+        $Province = 0;
+    }
+    else {
 
-        $ID             = $row[0];
-        $GPS            = $row[14].",".$row[15];
-        $ProvinceID     = $row[4];
         $ProvinceSql    = " SELECT `name` FROM `provinces` WHERE `id` = {$ProvinceID} ";
         $ProvinceResult = mysqli_query($connectionID, $ProvinceSql) or die ("Couldn't query case provinces table ... ...");
+        $rowD           = mysqli_fetch_row($ProvinceResult);
+        $Province       = $rowD[0];
+    }
 
-        if($rowD = mysqli_fetch_row($ProvinceResult)){
-
-            $Province = $rowD[0];
-        }
-        else {
-
-            $Province = 0;
-        }
+	error_log(print_r("PROVINCE: ".$Province,TRUE));
 
 
-        $DistrictID     = $row[5];
+    $DistrictID     = $row[5];
+    if (is_null($DistrictID) || empty($DistrictID)) {
+
+        $District = 0;
+    }
+    else {
+
         $DistrictSql    = " SELECT `name` FROM `districts` WHERE `id` = {$DistrictID} ";
         $DistrictResult = mysqli_query($connectionID, $DistrictSql) or die ("Couldn't query case districts table ... ...");
+        $rowD           = mysqli_fetch_row($DistrictResult);
+        $District       = $rowD[0];
+    }
 
-        if($rowD = mysqli_fetch_row($DistrictResult)){
+	error_log(print_r("DISTRCT: ".$District,TRUE));
 
-            $District = $rowD[0];
-        }
-        else {
 
-            $District = 0;
-        }
 
-        $Port         = 'Durban';
-        $PrecinctID   = $row[6];
+
+    $Port         = 'Durban';
+    $PrecinctID   = $row[6];
+
+    if (is_null($PrecinctID) || empty($PrecinctID) ) {
+
+        $Precinct = 0;
+    }
+    else {
+
         $PrecinctSql  = " SELECT `name` FROM `municipalities` WHERE `id` = {$PrecinctID} ";
         $PrecinctResult    = mysqli_query($connectionID, $PrecinctSql) or die ("Couldn't query case municipalities table ... ...");
+        $rowD           = mysqli_fetch_row($PrecinctResult);
+        $Precinct       = $rowD[0];
+    }
 
-        if($rowP = mysqli_fetch_row($PrecinctResult)){
+	error_log(print_r("Precinct: ".$Precinct,TRUE));
 
-            $Precinct = $rowP[0];
-        }
-        else {
 
-            $Precinct = 0;
-        }
 
-        $Submitted    = $row[28];
-        $StatusID     = $row[13];
+    $Submitted    = $row[28];
 
-        $StatusSql       = "  SELECT `name` FROM `cases_statuses` WHERE `id` = {$StatusID} ";
+	error_log(print_r("Submitted: ".$Submitted,TRUE));
+    $StatusID     = $row[14];
+
+	error_log(print_r("StatusID: ".$StatusID,TRUE));
+
+
+    if (is_null($StatusID) || empty($StatusID)) {
+
+        $Status = 1;
+    }
+    else {
+
+        $StatusSql       = "SELECT `name` FROM `cases_statuses` WHERE `id` = {$StatusID} ";
         $StatusResult    = mysqli_query($connectionID, $StatusSql) or die ("Couldn't query case statuses table ... ...");
+        $rowD            = mysqli_fetch_row($StatusResult);
+        $Status          = $rowD[0];
+    }
 
-        if($rowStatus = mysqli_fetch_row($StatusResult)){
+	error_log(print_r("Status: ".$Status,TRUE));
 
-            $Status = $rowStatus[0];
-        }
-        else {
+    $CategoryID   = $row[33];
+	error_log(print_r("CategoryID: ".$CategoryID,TRUE));
+    $CatSql       = "  SELECT `name` FROM `cases_types` WHERE `id` = {$CategoryID} ";
+    $CatResult    = mysqli_query($connectionID, $CatSql) or die ("Couldn't query case categories table ... ...");
 
-            $Status = 0;
-        }
+    if($rowCat = mysqli_fetch_row($CatResult)){
 
-  
-        $CategoryID   = $row[32];
-        $CatSql       = "  SELECT `name` FROM `cases_types` WHERE `id` = {$CategoryID} ";
-        $CatResult    = mysqli_query($connectionID, $CatSql) or die ("Couldn't query case categories table ... ...");
+        $Category = $rowCat[0];
+    }
+    else {
 
-        if($rowCat = mysqli_fetch_row($CatResult)){
+        $Category = 0;
+    }
 
-            $Category = $rowCat[0];
-        }
-        else {
-
-            $Category = 0;
-        }
+	error_log(print_r("Category: ".$Category,TRUE));
 
 
-        $SubCategoryID   = $row[33];
-        $SubCatSql       = "  SELECT `name` FROM `cases_sub_types` WHERE `id` = {$SubCategoryID} ";
-        $SubCatResult    = mysqli_query($connectionID, $SubCatSql) or die ("Couldn't query case categories table ... ...");
+    $SubCategoryID   = $row[34];
 
-        if($rowCat = mysqli_fetch_row($SubCatResult)){
+	error_log(print_r("SubCategoryID: ".$SubCategoryID,TRUE));
 
-            $SubCategory = $rowCat[0];
-        }
-        else {
 
-            $SubCategory = 0;
-        }
+    $SubCatSql       = "  SELECT `name` FROM `cases_sub_types` WHERE `id` = {$SubCategoryID} ";
+    $SubCatResult    = mysqli_query($connectionID, $SubCatSql) or die ("Couldn't query case categories table ... ...");
 
-       
+    if($rowCat = mysqli_fetch_row($SubCatResult)){
 
-       
+        $SubCategory = $rowCat[0];
+    }
+    else {
 
-        $PhotoURL      = "http://154.0.164.72:8080/Ubulwembu/".$row[16];
-        $ReporterID    = $row[18];
-        $isAddressbook = $row[17];
+        $SubCategory = 0;
+    }
 
-      
+	error_log(print_r("SubCategory: ".$SubCategory,TRUE));
 
-        if ($isAddressbook == 0) {
+    $PhotoURL      = "http://41.216.130.6:8080/siyaleader-aims-mobileApp-api/public/".$row[16];
+    $ReporterID    = $row[19];
+	error_log(print_r("ReporterID: ".$ReporterID,TRUE));
+    $isAddressbook = $row[18];
+	error_log(print_r("isAddressbook: ".$isAddressbook,TRUE));
 
-            $reporterSql  = "  SELECT
+
+
+    if ($isAddressbook == 0) {
+
+        $reporterSql  = "  SELECT
                         `id`,
                         `name`,
                         `surname`,
@@ -750,11 +470,11 @@ while($row = mysqli_fetch_row($result)) {
                         `id` = '$ReporterID'
                 ";
 
-        } else {
+    } else {
 
 
 
-            $reporterSql  = "  SELECT
+        $reporterSql  = "  SELECT
                         `id`,
                         `first_name`,
                         `Surname`,
@@ -769,55 +489,63 @@ while($row = mysqli_fetch_row($result)) {
 
 
 
-        }
+    }
 
 
 
-        $reporterResult    = mysqli_query($connectionID, $reporterSql) or die ("Couldn't query case users table ... ...");
+    $reporterResult    = mysqli_query($connectionID, $reporterSql) or die ("Couldn't query case users table ... ...");
 
-        if($rowU = mysqli_fetch_row($reporterResult)){
+    if($rowU = mysqli_fetch_row($reporterResult)){
 
-            $Reporter   = $rowU[1]." ".$rowU[2];
-            $Mobile     = $rowU[4];
-            $PositionId = ($isAddressbook == 0)?$rowU[3] : 1;
-            $posSql         = "  SELECT `name` FROM `positions` WHERE `id` = {$PositionId} ";
-            $positionResult = mysqli_query($connectionID, $posSql) or die ("Couldn't query case users table ... ...");
+        $Reporter   = $rowU[1]." ".$rowU[2];
+		error_log(print_r("Reporter: ".$Reporter,TRUE));
+        $Mobile     = $rowU[4];
+		error_log(print_r("Mobile: ".$Mobile,TRUE));
+        $PositionId = ($isAddressbook == 0)?$rowU[3] : 1;
+        $posSql         = "  SELECT `name` FROM `positions` WHERE `id` = {$PositionId} ";
+        $positionResult = mysqli_query($connectionID, $posSql) or die ("Couldn't query case users table ... ...");
 
-            if($rowPos = mysqli_fetch_row($positionResult)){
+        if($rowPos = mysqli_fetch_row($positionResult)){
 
-                $Position     = $rowPos[0];
-            }
-            else {
-                $Position     = 0;
-            }
-
-
+            $Position     = $rowPos[0];
         }
         else {
-
-            $Reporter = 0;
-            $Mobile   = 0;
+            $Position     = 0;
         }
 
-
-        $PriorityID     = $row[12];
-        $PrioritySql    = " SELECT `name` FROM `cases_priorities` WHERE `id` = {$PriorityID} ";
-        $PriorityResult = mysqli_query($connectionID, $PrioritySql) or die ("Couldn't query case priorities table ... ...");
-
-        if($rowD = mysqli_fetch_row($PriorityResult)){
-
-            $Priority = $rowD[0];
-        }
-        else {
-
-            $Priority = 0;
-        }
+		error_log(print_r("Position: ".$Position,TRUE));
 
 
-        
-        $Description  =  $row[1];
+    }
+    else {
 
-        $lastSql      = "
+        $Reporter = 0;
+        $Mobile   = 0;
+    }
+
+
+    $PriorityID     = $row[13];
+	error_log(print_r("PriorityID: ".$PriorityID,TRUE));
+    $PrioritySql    = " SELECT `name` FROM `cases_priorities` WHERE `id` = {$PriorityID} ";
+    $PriorityResult = mysqli_query($connectionID, $PrioritySql) or die ("Couldn't query case priorities table ... ...");
+
+    if($rowD = mysqli_fetch_row($PriorityResult)){
+
+        $Priority = $rowD[0];
+    }
+    else {
+
+        $Priority = 0;
+    }
+
+	error_log(print_r("Priority: ".$Priority,TRUE));
+
+
+    $Description  =  $row[1];
+
+	error_log(print_r("Description: ".$Description,TRUE));
+
+    $lastSql      = "
                             SELECT
                                  `created_at`
                             FROM
@@ -829,92 +557,124 @@ while($row = mysqli_fetch_row($result)) {
                         ";
 
 
-        $lastActResult = mysqli_query($connectionID, $lastSql) or die ("Couldn't query case activities table ... ...");
+    $lastActResult = mysqli_query($connectionID, $lastSql) or die ("Couldn't query case activities table ... ...");
 
 
-        if($rowLast = mysqli_fetch_row($lastActResult)){
+    if($rowLast = mysqli_fetch_row($lastActResult)){
 
-            $LastActivity = $rowLast[0];
+        $LastActivity = $rowLast[0];
 
-        }
-        else {
-           $LastActivity = "";
-        }
-
-
-
-      
-        if ($Status == "Pending") {
-
-            $catStatus   = "Pen";
-            $imageStatus = "_pen.png";
-        }
-
-        if ($Status == "Allocated") {
-
-            $catStatus   = "All";
-            $imageStatus = "_all.png";
-        }
-
-        if ($Status == "Referred") {
-
-            $catStatus   = "Ref";
-            $imageStatus = "_ref.png";
-        }
-
-        if ($Status == "Actioned") {
-
-            $catStatus   = "Act";
-            $imageStatus = "_act.png";
-        }
-
-        if ($Status == "Pending Closure")  {
-
-            $catStatus   = "Clo";
-            $imageStatus = "_clo.png";
-        }
-
-        if ($Status == "Resolved")  {
-
-            $catStatus   = "Res";
-            $imageStatus = "_res.png";
-        }
-
-        if ($Category == "Criminal")  {
-
-             $imageCategory          = "mc";
-             echo "var infoBoxBorder = '#ffff00';";
-        }
-
-        if ($Category == "Disciplinary")  {
-
-            $imageCategory          = "me";
-            echo "var infoBoxBorder = '#ff33a6';";
-        }
-
-         if ($Category == "Litigation")  {
-
-            $imageCategory          = "ma";
-            echo "var infoBoxBorder = '#ff33a6';";
-        }
+    }
+    else {
+        $LastActivity = "";
+    }
 
 
-        if ($Category == "Other")  {
-
-            $imageCategory          = "tr";
-            echo "var infoBoxBorder = '#fe940b';";
-        }
-
-     
-    
-        $imageName = "" .$imageCategory. "" .$imageStatus. "";
-
-        echo 'var image = "markers/' .$imageName. '";';
+	error_log(print_r("LastActivity: ".$LastActivity,TRUE));
 
 
 
 
-?>
+    if ($Status == "Pending") {
+
+        $catStatus   = "Pen";
+        $imageStatus = "_pen.png";
+    }
+
+    if ($Status == "Allocated") {
+
+        $catStatus   = "All";
+        $imageStatus = "_all.png";
+    }
+
+    if ($Status == "Referred") {
+
+        $catStatus   = "Ref";
+        $imageStatus = "_ref.png";
+    }
+
+    if ($Status == "Actioned") {
+
+        $catStatus   = "Act";
+        $imageStatus = "_act.png";
+    }
+
+    if ($Status == "Pending Closure")  {
+
+        $catStatus   = "Clo";
+        $imageStatus = "_clo.png";
+    }
+
+    if ($Status == "Resolved")  {
+
+        $catStatus   = "Res";
+        $imageStatus = "_res.png";
+    }
+
+
+	switch($Category){
+
+	case "Crime":
+			$imageCategory          = "mc";
+			echo "var infoBoxBorder = '#ffff00';";
+	break;
+
+	case "Dairy":
+			$imageCategory          = "me";
+			echo "var infoBoxBorder = '#ff33a6';";
+	break;
+
+	case "Commercial":
+			$imageCategory          = "ma";
+			echo "var infoBoxBorder = '#ff33a6';";
+	break;
+
+	case "Trucks":
+			$imageCategory          = "tr";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+
+	case "Residential":
+			$imageCategory          = "hk";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+
+	case "Yellow Equipment":
+			$imageCategory          = "mm";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+
+	case "Environmental":
+			$imageCategory          = "he";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+
+
+
+	default :
+			$imageCategory          = "tr";
+			echo "var infoBoxBorder = '#fe940b';";
+	break;
+
+	}
+
+
+
+
+    $imageName = "" .$imageCategory. "" .$imageStatus. "";
+
+	error_log(print_r("imageName: ".$imageName,TRUE));
+
+    echo 'var image = "markers/' .$imageName. '";';
+
+
+	error_log(print_r("ENDING=========================================",TRUE));
+
+
+
+
+
+    ?>
 
 
 
@@ -923,7 +683,7 @@ co_ords.push(co_ords_<?php echo $ID; ?>);
 
 var boxContent = "<div style='width:250px;height:200px;overflow-y:auto;overflow-x:hidden'>";
 boxContent += "<table border=0 style='color:#ffd40e;width:235px' cellpadding=2 cellspacing=0>";
-boxContent += "<tr><td align='left' valign='top' nowrap><B>Case No :</B></td><td align='left'><?php echo $ID; ?></td></tr>";
+boxContent += "<tr><td align='F' valign='top' nowrap><B>Case No :</B></td><td align='left'><?php echo $ID; ?></td></tr>";
 boxContent += "<tr><td align='left' valign='top' nowrap><B>GPS :</B></td><td align='left'><?php echo $GPS; ?></td></tr>"; // GPS coll
 boxContent += "<tr><td align='left' valign='top' nowrap><B>Submitted :</B></td><td align='left'><?php echo $Submitted; ?></td></tr>"; // submit_date coll
 boxContent += "<tr><td align='left' valign='top' nowrap><B>Priority :</B></td><td align='left'><?php echo $Priority; ?></td></tr>"; // prob_priority coll
@@ -1019,6 +779,8 @@ function createZoneArray () {
             zoneArrayMarkers.push(zoneNewMarker);
             document.getElementById('zoneGPSarray').value += "new google.maps.LatLng("+eightMileCoords+"),\n";
         });
+
+
 
     zoneListener = google.maps.event.addListener(eightMileOverlay,'click', function(event)
     {
@@ -1601,16 +1363,25 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<div id="caseCapture" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;right:10px;top:58px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
+<div id="caseCapture" style="opacity:0.9;padding: 10px;border-radius:3px;position:absolute;right:10px;top:55px;background:#1c1c1c;align:center;z-index:11;display:none;box-shadow:4px 4px 4px #000000">
     <input id="userID" type="hidden"/>
     <table border=0 cellpadding=0 cellspacing=0>
         <tr>
             <td colspan=2>
                 <iframe id="newCaseCapture" src="case_capture.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:338px;height:600px"></iframe>
             </td>
-        </tr><tr>
+        </tr>
+
+        <tr>
+            <td colspan=2>
+
+                </br>
+            </td>
+        </tr>
+
+        <tr>
         <td align=left>
-            <input id="askConfirmButton" style="font-size:12pt;width:90px;height:25px;border:0;background:#ffffff;color:#ff0000" type="button" value="Cancel" onclick="cancelCaseCapture(this.value);this.blur()">
+            <input id="askConfirmButton" style="font-size:12pt;width:90px;height:25px;border:0;background:#ffffff;color:#ff0000" type="button" value="Cancel" onclick="askConfirm(this.id);this.blur()">
         </td>
         <td align=right>
             <input id="submitButton" style="font-size:12pt;width:90px;height:25px;border:0;background:#ffffff" type="button" value="Submit" onclick="submitCaptureForm(map.getCenter(),map.getZoom());this.blur()">
@@ -1628,7 +1399,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<div id="ruSure" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;width:212px;right:500px;top:31px;background:#1c1c1c;align:center;z-index:12;display:none;box-shadow:4px 4px 4px #000000">
+<div id="ruSure" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;width:212px;right:230px;top:31px;background:#1c1c1c;align:center;z-index:12;display:none;box-shadow:4px 4px 4px #000000">
     <table border=0 cellpadding=3 cellspacing=0 style="width:100%;font: 12pt 'Arial';color: #ffffff;border-collapse:collapse;border:1px solid #ffffff">
         <tr>
             <td valign=middle align=center colspan=2>
@@ -1698,7 +1469,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<textarea id='zoneGPSarray' class="formField" style='width:300px;height:45px;position:fixed;top:0px;right:0px;display:none'></textarea>
+<textarea id='zoneGPSarray' class="formField" style='width:300px;height:45px;position:fixed;top:0px;right:0px;display:none'>
+
+
+</textarea>
 
 <!-- <IFRAME id="updateSocket" SRC="socket.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="border-radius:3px;width:500px;height:400px;position:fixed;top:0px;right:0px;display:flex"></IFRAME> -->
 

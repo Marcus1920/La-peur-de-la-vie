@@ -1208,23 +1208,18 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
   });
 
    var pendingreferralCasesTable     = $('#pendingreferralCasesTable').DataTable({
-                "autoWidth": false,
-                "processing": true,
-                "serverSide": true,
-                "dom": 'T<"clear">lfrtip',
-                "order" :[[0,"desc"]],
-                "sAjaxSource": "{!! url('/pending-referral-cases-list/')!!}",
-                "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-                  oSettings.jqXHR = $.ajax( {
-                    "dataType": 'json',
-                    "type": "GET",
-                    "url": sSource,
-                    "data": aoData,
-                    "timeout": 40000,
-                    "error": handleAjaxError,
-                    "success": fnCallback
-                  } );
-                },
+        "autoWidth": false,
+
+       "processing": true,
+       "serverSide": true,
+       "dom": 'T<"clear">lfrtip',
+       "order" :[[0,"desc"]],
+       "ajax": "{!! url('/pending-referral-cases-list/')!!}","processing": true,
+       "serverSide": true,
+       "dom": 'T<"clear">lfrtip',
+       "order" :[[0,"desc"]],
+
+
 
                  "columns": [
                 {data: 'id', name: 'cases.id'},
@@ -1240,8 +1235,8 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
                ],
 
             "aoColumnDefs": [
-                { "bSearchable": false, "aTargets": [ 4] },
-                { "bSortable": false, "aTargets": [ 4 ] }
+                { "bSearchable": false, "aTargets": [ 1] },
+                { "bSortable": false, "aTargets": [ 1 ] }
             ]
 
   });
@@ -1340,7 +1335,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
                 "buttons": [
                     'copyHtml5',
                     'excelHtml5',
-                    'csvHtml5',{
+                       ,{
 
                       extend : 'pdfHtml5',
                       title  : 'Siyaleader_Report',
@@ -2483,7 +2478,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                       });
                   },
                   success : function(data){
-
+console.log("CreateCase success, data - ",data); 
                     if (data == 'ok') {
                       $(".token-input-token").remove();
                       $('#caseReportCaseForm')[0].reset();
@@ -2497,7 +2492,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                   },
 
                   error: function(data) {
-
+console.log("CreateCase error, data - ",data); 
                     HoldOn.close();
 
                     $("#error_cellphone").html("");

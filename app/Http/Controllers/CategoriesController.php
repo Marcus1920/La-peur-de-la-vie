@@ -25,7 +25,10 @@ class CategoriesController extends Controller
 
         $categories = CaseType::select(array('id','name','created_at'))->where('department','=',$id);
         return \Datatables::of($categories)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateCategoryModal({{$id}});" data-target=".modalEditCategory">Edit</a>')
+                            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal"  onClick="launchUpdateCategoryModal({{$id}});" data-target=".modalEditCategory">Edit</a>
+
+                                                    <a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchCatResponders({{$id}});" data-target=".modalResponder">Set Responders</a>
+                                                    ')
                             ->make(true);
     }
 
