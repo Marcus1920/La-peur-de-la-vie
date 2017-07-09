@@ -256,7 +256,6 @@ function initialize() {
             }
           });
           map.fitBounds(bounds);
-          addCase=switchNewCaseMarker('icon',this.id);this.blur();
         });
 
 

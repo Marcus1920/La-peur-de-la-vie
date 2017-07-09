@@ -39,7 +39,7 @@
                 {!! Form::label('Start Time', 'Start Time', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
                     <div class="input-icon datetime-pick time-only">
-                        <input data-format="hh:mm:ss" type="text" id='start_time' name='start_time' class="form-control input-sm" />
+                        <input data-format="hh:mm" type="text" id='start_time' name='start_time' class="form-control input-sm" />
                         <span class="add-on">
                             <i class="sa-plus"></i>
                         </span>
@@ -52,7 +52,7 @@
                 {!! Form::label('End Time', 'End Time', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
                         <div class="input-icon datetime-pick time-only">
-                        <input data-format="hh:mm:ss" type="text" id='end_time' name='end_time' class="form-control input-sm" />
+                        <input data-format="hh:mm" type="text" id='end_time' name='end_time' class="form-control input-sm" />
                         <span class="add-on">
                             <i class="sa-plus"></i>
                         </span>

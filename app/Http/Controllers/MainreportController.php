@@ -104,7 +104,7 @@ class MainreportController extends Controller
                      ->dimensions(1000, 500)
                      ->responsive(true)
 
-                    ->groupBy('priority',null,[1 => 'Normal', 2 => 'Urgent', 3 => 'Critical',4 => 'Test']);
+                    ->groupBy('priority',null,[0 => 'Normal', 1 => 'Urgent', 2 => 'Critical',3 => 'Test']);
              ///  ->labels(['One', 'Two', 'Three']);
 
 
