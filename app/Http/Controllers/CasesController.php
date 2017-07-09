@@ -1448,7 +1448,6 @@ die("<pre>{$txtDebug}</pre>");
 
         }
 
-
         foreach ($first_responders as $first_responder){
 
             $create_case_owner_data = array(
