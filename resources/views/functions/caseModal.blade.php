@@ -1493,6 +1493,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
           if( data == 'ok')
           {
             $('#addMeetingMinutesFileForm')[0].reset();
+            $('#modalAddMeetingFilesModal').modal('toggle');
             $('#modalAddMeetingMinutesFilesModal').modal('toggle');
             $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! your file has been successfully uploaded <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
             HoldOn.close();
