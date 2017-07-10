@@ -22,7 +22,7 @@ class HomeController extends Controller
 
 
 
-	 $user  =  \Auth::user()->role  ;
+	 $user  =  \Auth::user() ? \Auth::user()->role : 0;
 
         if (\Auth::check())
         {
