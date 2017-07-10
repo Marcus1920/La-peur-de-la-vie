@@ -1914,15 +1914,8 @@ a.list-group-item.active > .badge,
     }
 
     #skin-blur-kiwi-login {
-
-        background-image: url(../img/body/kiwi.jpg);
+        background-image: url(../img/body/lomninwall.jpg);
     }
-
-
-    .logos-back-img {
-    background-image: url(../img/body/piVms8T.jpg);
-    }
-
 
 
     #skin-blur-nexus {
@@ -2335,3 +2328,7 @@ div.dataTables_processing {
     display: none !important;
 
 }
+
+
+
+
