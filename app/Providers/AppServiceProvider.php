@@ -38,6 +38,9 @@ use App\Religion;
 use App\QualificationType;
 use App\TrainingType;
 use App\InvestigationOfficer;
+use App\TaskCategory;
+use App\TaskPriority;
+use App\TaskStatus;
 
 
 
@@ -458,6 +461,49 @@ class AppServiceProvider extends ServiceProvider
             }
 
              \View::share('selectUsersCreatedBy',$users);
+
+        }
+
+
+        if (\Schema::hasTable('task_priorities'))
+        {
+            $taskPriorities          = TaskPriority::orderBy('name','ASC')->get();
+            $selectTaskPriorities    = array();
+            $selectTaskPriorities[0] = "Choose a priority";
+
+            foreach ($taskPriorities as $taskPriority) {
+                $selectTaskPriorities[$taskPriority->id] = $taskPriority->name;
+            }
+
+            \View::share('selectTaskPriorities',$selectTaskPriorities);
+
+        }
+
+        if (\Schema::hasTable('task_statuses'))
+        {
+            $taskStatuses          = TaskStatus::orderBy('name','ASC')->get();
+            $selectTaskStatuses    = array();
+            $selectTaskStatuses[0] = "Select / All";
+
+            foreach ($taskStatuses as $taskStatus) {
+                $selectTaskStatuses[$taskStatus->id] = $taskStatus->name;
+            }
+
+            \View::share('selectTaskStatuses',$selectTaskStatuses);
+
+        }
+
+        if (\Schema::hasTable('task_categories'))
+        {
+            $taskCategories          = TaskCategory::orderBy('name','ASC')->get();
+            $selectTaskCategories    = array();
+            $selectTaskCategories[] = "Choose a category";
+
+            foreach ($taskCategories as $taskCategory) {
+                $selectTaskCategories[$taskCategory->id] = $taskCategory->name;
+            }
+
+            \View::share('selectTaskCategories',$selectTaskCategories);
 
         }
 
