@@ -71,7 +71,8 @@ class AppServiceProvider extends ServiceProvider
 
         }
 	
-	if (\Schema::hasTable('investigation_officers'))
+	//if (\Schema::hasTable('investigation_officers'))
+	if (class_exists(InvestigationOfficer::class))
         {
             $investigation_officers     = InvestigationOfficer::orderBy('name','ASC')->get();
             $selectOfficers    		= array();

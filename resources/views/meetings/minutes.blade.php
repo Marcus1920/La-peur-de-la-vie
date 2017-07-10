@@ -17,6 +17,7 @@
                                 <th>uploaded_by</th>
                                 <th>Description</th>
                                 <th>File</th>
+                                <th></th>
                           </tr>
                         </thead>
                     </table>
