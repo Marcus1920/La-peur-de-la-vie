@@ -143,9 +143,15 @@ return [
         /*
          * Application Service Providers...
          */
+        App\Providers\v1\CasesServiceProvider::class,
+        App\Providers\CaseTypeServiceProvider::class,
+        App\Providers\CaseOwnerServiceProvider::class,
         App\Providers\AppServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\TaskServiceProvider::class,
+        App\Providers\TaskActivityProvider::class,
+        App\Providers\TaskReminderServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
