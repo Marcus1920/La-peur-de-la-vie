@@ -3,7 +3,7 @@
         Options -MultiViews
     </IfModule>
 
-<IfModule mod_deflate.c>
+<IfModule mod_gzip.c>
 mod_gzip_on Yes
 mod_gzip_dechunk Yes
 mod_gzip_item_include file .(html?|txt|css|js|php|pl|json)$

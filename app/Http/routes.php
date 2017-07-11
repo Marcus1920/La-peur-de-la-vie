@@ -1118,8 +1118,19 @@ Route::get('poimap/{id}', ['middleware' => 'resetLastActive', 'uses' => 'UserCon
 Route::post('session/ajaxCheck', ['uses' => 'SessionController@ajaxCheck', 'as' => 'session.ajax.check']);
 
 Route::post('resetSession', ['uses' => 'SessionController@resetSession', 'as' => 'resetSession']);
+Route::get('list-forms/{id?}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@list_forms']);
+Route::get('forms-list', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@index']);
+Route::get('forms/{id}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@edit']);
+Route::post('addForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@store']);
+Route::post('updateForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@update']);
+Route::get('forms/database/tables', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTables']);
+Route::get('forms/database/tables/{name}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTable']);
+Route::get('forms/database/tables/{name}/{form_id}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTable']);
+Route::get('forms/database/data/{form_id}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getData']);
+Route::controller('list-formsdata', 'FormsDataController', array('getData'=>'formsdata.data','anyIndexx'=>"list-formss"));
 
-
+Route::get('forms/data/{id}/{form_id?}', ['middleware' => 'resetLastActive', 'uses' => 'FormsDataController@edit']);
+Route::post('updateFormData', ['middleware' => 'resetLastActive', 'uses' => 'FormsDataController@update']);
 
 /*
 |--------------------------------------------------------------------------
