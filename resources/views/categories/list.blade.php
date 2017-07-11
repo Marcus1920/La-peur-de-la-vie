@@ -109,6 +109,8 @@
   function launchCatResponders(id)
   {
 
+      $(".modal-body #catID").val(id);
+
 
       $(".modal-body #catID").val(id);
 

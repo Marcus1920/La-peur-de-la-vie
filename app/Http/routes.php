@@ -642,7 +642,10 @@ Route::get('caseResponders-list/{id}', ['middleware' => 'resetLastActive', 'uses
 Route::get('getResponders/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@responder']);
 Route::post('addCategoryResponder', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@storeResponder']);
 
+<<<<<<< lonmin
 
+=======
+>>>>>>> develop~16
 
 
 /*

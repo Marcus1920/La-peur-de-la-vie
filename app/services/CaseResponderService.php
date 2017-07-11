@@ -66,10 +66,35 @@ class CaseResponderService
     }
 
 <<<<<<< lonmin
+<<<<<<< lonmin
 
 
 =======
 >>>>>>> updates
+=======
+
+    public function get_responders_by_case_type($case_type,$responder_type){
+
+
+        if($responder_type == 0) {
+
+            $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_type','=',$case_type)
+                ->where('case_type','=',0)
+                ->get();
+        } else {
+
+            $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_type','=',$case_type)
+                ->where('case_type','=',0)->where('responder_type',$responder_type)
+                ->get();
+
+
+        }
+
+        return $data;
+
+    }
+
+>>>>>>> develop~16
     public function get_responders_by_sub_case_type_and_by_responder($user,$sub_case_type){
 
 
@@ -134,6 +159,9 @@ class CaseResponderService
     }
 
 <<<<<<< lonmin
+<<<<<<< lonmin
+=======
+>>>>>>> develop~16
     public function responder_cat_exist($case_type,$responder){
 
         $response      = true;
@@ -149,8 +177,11 @@ class CaseResponderService
     }
 
 
+<<<<<<< lonmin
 =======
 >>>>>>> updates
+=======
+>>>>>>> develop~16
 
     public function send_comms_to_first_responders($case,$first_responders){
 

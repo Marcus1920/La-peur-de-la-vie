@@ -120,6 +120,7 @@ class RespondersController extends Controller
         $case_responder->department       = $request['deptID'];
         $case_responder->case_type        = $request['catID'];
         $case_responder->case_sub_type    = ($request['subCatID'])?$request['subCatID']:0;
+<<<<<<< lonmin
         $case_responder->responder_type   = $responder_type;
         $case_responder->responder        = $responder;
         $case_responder->responder        = $responder;
@@ -159,6 +160,8 @@ class RespondersController extends Controller
         $case_responder->department       = $request['deptID'];
         $case_responder->case_type        = $request['catID'];
         $case_responder->case_sub_type    = $request['subCatID'];
+=======
+>>>>>>> develop~16
         $case_responder->responder_type   = $responder_type;
         $case_responder->responder        = $responder;
         $case_responder->responder        = $responder;
@@ -210,6 +213,28 @@ class RespondersController extends Controller
             }
 
 >>>>>>>
+        }
+
+
+    }
+
+    public function store_cat_responder($responders,$request,$responder_type,$interval_time) {
+
+        $responders = explode(',',$responders);
+
+        foreach ($responders as $responder) {
+
+            if(!empty($responder)) {
+
+                $data = $this->case_responders->responder_cat_exist($request['catID'],$responder);
+
+                if(!$data){
+
+                    $this->save_responder($responder,$request,$responder_type,$interval_time);
+                }
+
+            }
+
         }
 
 
