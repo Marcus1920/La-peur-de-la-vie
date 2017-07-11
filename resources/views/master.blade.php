@@ -28,9 +28,11 @@
         <link href="{{ asset('/css/buttons.dataTables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/HoldOn.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('/incl/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/Treant.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
+        <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
 
   <!-- DataTables CSS -->
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -589,6 +591,8 @@
         @include('functions.caseModal')
         @yield('footer')
 @include('partials.forms')
+@include('forms.data.form')
+@include('forms.data.view')
         @include('version')
         @include('partials.refresh')
         @include('partials.timeout')
