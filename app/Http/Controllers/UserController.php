@@ -3490,6 +3490,48 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
     }
 
+    public function getUsers()
+    {
+        $searchString   = \Input::get('q');
+        $users          = \DB::table('users')
+
+            ->join('users_roles','users.role','=','users_roles.id')
+            ->whereRaw(
+                "CONCAT(`users`.`name`, ' ', `users`.`surname`) LIKE '%{$searchString}%'")
+            ->select(
+                array
+
+                (
+                    'users.id as id',
+                    'users.name as name',
+                    'users_roles.name as role',
+                    'users.surname as surname',
+                    'users.username as username',
+
+
+
+
+                )
+            )
+
+            ->get();
+
+        $data = array();
+
+        foreach ($users as $user) {
+
+            $data[] = array(
+                "name"              => "{$user->name} > {$user->surname}",
+                "id"                => "{$user->id}",
+
+
+            );
+        }
+
+        return $data;
+    }
+
+
     /**
      * Display the specified resource.
      *
