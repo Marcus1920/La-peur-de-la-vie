@@ -28,9 +28,11 @@
         <link href="{{ asset('/css/buttons.dataTables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/HoldOn.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('/incl/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/Treant.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
+        <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
 
   <!-- DataTables CSS -->
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -246,6 +248,9 @@
                     {{--          <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li> --}}
                              @endif
 
+                             <li><a href="{{ url('list-forms') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms</a></li>
+                             <li><a href="{{ url('list-formsdata') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms Data</a></li>
+
                         </ul>
                     </li>
                   @endif
@@ -276,6 +281,17 @@
                                 <span class="menu-item">Poi</span>
                             </a>
                         </li>
+
+                    @endif
+
+                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+
+                    <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
+                        <a class="sa-side-list" href="{{ url('tasks') }}">
+                            <span class="menu-item">My Tasks</span>
+                        </a>
+                    </li>
+
                     @endif
 
                 </ul>
@@ -574,9 +590,20 @@
 
         @include('functions.caseModal')
         @yield('footer')
+@include('partials.forms')
+@include('forms.data.form')
+@include('forms.data.view')
         @include('version')
         @include('partials.refresh')
         @include('partials.timeout')
 
+<script>
+    var APP_DEBUG = {{ env("APP_DEBUG", 0) }};
+    console.log("APP_DEBUG: ",APP_DEBUG," > 2 - ",(APP_DEBUG > 2));
+</script>
+    <script>
+        $(document).ready(function() {
+		});
+    </script>
     </body>
 </html>

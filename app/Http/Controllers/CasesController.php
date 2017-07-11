@@ -1442,6 +1442,7 @@ die("<pre>{$txtDebug}</pre>");
 
         $first_responders   = $this->case_responders->get_responders_by_sub_case_type($newCase->case_sub_type,1);
 
+
         if(empty($first_responders)){
 
             $first_responders   = $this->case_responders->get_responders_by_case_type($newCase->case_type,1);
@@ -1483,6 +1484,37 @@ die("<pre>{$txtDebug}</pre>");
 
         return \Response::json($response, 201);
 
+    }
+
+    public function getCases()
+    {
+        $searchString   = \Input::get('q');
+        $cases          = \DB::table('cases')
+            ->whereRaw(
+                "CONCAT(`cases`.`id`, ' ', `cases`.`description`) LIKE '%{$searchString}%'")
+            ->select(
+                array
+
+                (
+                    'cases.id as id',
+                    'cases.description as description',
+                )
+            )
+
+            ->get();
+
+        $data = array();
+
+        foreach ($cases as $case) {
+
+            $data[] = array(
+
+                "id"     => "{$case->id}",
+                "name"   => "Case Number: {$case->id} >  Description: {$case->description}",
+            );
+        }
+
+        return $data;
     }
 
 

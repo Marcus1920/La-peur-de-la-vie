@@ -52,6 +52,12 @@
 						@endif
 
 
+						{{--@if(isset($userCreateCasesPermission) && $userCreateCasesPermission->permission_id =='21')--}}
+
+							{{--<a id="createCaseDiv" class="btn btn-xs btn-alt hidden" style="margin-top: 20%;" data-toggle="modal" onclick="launchCreateCaseModal()" data-target=".modalCreateCase">Create Case</a>--}}
+
+						{{--@endif--}}
+
 
 						@if(isset($userAcceptCasesPermission) && $userAcceptCasesPermission->permission_id =='23')
 

@@ -3,6 +3,7 @@
         Options -MultiViews
     </IfModule>
 
+<IfModule mod_gzip.c>
 mod_gzip_on Yes
 mod_gzip_dechunk Yes
 mod_gzip_item_include file .(html?|txt|css|js|php|pl|json)$
@@ -15,11 +16,12 @@ mod_gzip_item_exclude mime ^image/.*
 mod_gzip_item_exclude rspheader ^Content-Encoding:.*gzip.*
 
  mod_gzip_minimum_file_size    60000
-
+</IfModule>
 
 
 	
     RewriteEngine On
+	RewriteBase /work/siyaleader.com/Ubulwembu/public
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

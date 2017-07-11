@@ -142,6 +142,8 @@ Route::get('getCasePoisAssociates/{id}', ['middleware' => 'resetLastActive', 'us
 Route::get('getPoiCasesAssociates/{id}', ['middleware' => 'resetLastActive', 'uses' => 'UserController@getPoiCasesAssociates']);
 Route::get('getCaseSearch', ['middleware' => 'resetLastActive', 'uses' => 'UserController@getCaseSearch']);
 
+Route::get('getUsers', ['middleware' => 'auth', 'uses' => 'UserController@getUsers']);
+
 
 Route::get('add-user',  function () {
     return view('users.registration');
@@ -553,6 +555,7 @@ Route::get('pending-referral-cases-list', ['middleware' => 'resetLastActive', 'u
 Route::post('captureCaseUpdate', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@captureCaseUpdate']);
 Route::post('captureCaseUpdateH', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@captureCaseUpdateH']);
 Route::get('relatedCases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@relatedCases']);
+Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCases']);
 
 
 /*
@@ -1115,3 +1118,141 @@ Route::get('poimap/{id}', ['middleware' => 'resetLastActive', 'uses' => 'UserCon
 Route::post('session/ajaxCheck', ['uses' => 'SessionController@ajaxCheck', 'as' => 'session.ajax.check']);
 
 Route::post('resetSession', ['uses' => 'SessionController@resetSession', 'as' => 'resetSession']);
+
+Route::get('list-forms/{id?}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@list_forms']);
+Route::get('forms-list', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@index']);
+Route::get('forms/{id}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@edit']);
+Route::post('addForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@store']);
+Route::post('updateForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@update']);
+Route::get('forms/database/tables', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTables']);
+Route::get('forms/database/tables/{name}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTable']);
+Route::get('forms/database/tables/{name}/{form_id}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTable']);
+Route::get('forms/database/data/{form_id}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getData']);
+Route::controller('list-formsdata', 'FormsDataController', array('getData'=>'formsdata.data','anyIndexx'=>"list-formss"));
+
+Route::get('forms/data/{id}/{form_id?}', ['middleware' => 'resetLastActive', 'uses' => 'FormsDataController@edit']);
+Route::post('updateFormData', ['middleware' => 'resetLastActive', 'uses' => 'FormsDataController@update']);
+
+/*
+|--------------------------------------------------------------------------
+| TASK  ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+
+Route::resource('tasks','TasksController');
+Route::get('getTasks','TasksController@getTasks');
+Route::get('getAssignedByMeTasks','TasksController@getAssignedByMeTasks');
+Route::get('tasks/update/{id}','TasksController@update');
+Route::get('tasks/acceptTask/{id}','TasksController@acceptTask');
+Route::get('tasks/rejectTask/{id}','TasksController@rejectTask');
+Route::get('tasks/edit/{id}','TasksController@edit');
+Route::post('tasks/updateTask','TasksController@updateTask');
+Route::get('linkNewTask/{id}','TasksController@create');
+Route::get('linkExistingTask/{id}','TasksController@linkExistingTask');
+Route::post('tasks/addTaskRelationship','TasksController@addTaskRelationship');
+Route::get('getSearchTasks', ['middleware' => 'auth', 'uses' => 'TasksController@getSearchTasks']);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| END TASKS ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+
+
+/*
+|--------------------------------------------------------------------------
+| TASK CATEGORIES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('tasks-categories','TaskCategoriesController@index');
+Route::post('add-task-category','TaskCategoriesController@store');
+Route::get('delete-task-category/{id}','TaskCategoriesController@destroy');
+Route::get('edit-task-category/','TaskCategoriesController@edit');
+
+
+/*
+|--------------------------------------------------------------------------
+| END TASK CATEGORIES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| TASK NOTES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+
+Route::resource('task-notes','TaskNoteController');
+
+
+
+/*
+|--------------------------------------------------------------------------
+| END TASK NOTES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| TASK FILES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::resource('taskfile','TaskFileController');
+Route::get('task-file/{id}','TaskFileController@create');
+
+/*
+|--------------------------------------------------------------------------
+| END TASK FILES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+/*
+|--------------------------------------------------------------------------
+| TASK ACTIVITY ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::resource('task-activity','TaskActivityController');
+
+/*
+|--------------------------------------------------------------------------
+| END TASK ACTIVITY ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+
+/*
+|--------------------------------------------------------------------------
+| TASK REMINDER ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::resource('task-reminder','TaskRemindersController');
+Route::post('task-reminders','TaskRemindersController@store');
+
+/*
+|--------------------------------------------------------------------------
+| END TASK REMINDER ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
