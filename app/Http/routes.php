@@ -1118,7 +1118,7 @@ Route::get('poimap/{id}', ['middleware' => 'resetLastActive', 'uses' => 'UserCon
 Route::post('session/ajaxCheck', ['uses' => 'SessionController@ajaxCheck', 'as' => 'session.ajax.check']);
 
 Route::post('resetSession', ['uses' => 'SessionController@resetSession', 'as' => 'resetSession']);
-<<<<<<< lonmin
+
 Route::get('list-forms/{id?}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@list_forms']);
 Route::get('forms-list', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@index']);
 Route::get('forms/{id}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@edit']);
@@ -1132,10 +1132,6 @@ Route::controller('list-formsdata', 'FormsDataController', array('getData'=>'for
 
 Route::get('forms/data/{id}/{form_id?}', ['middleware' => 'resetLastActive', 'uses' => 'FormsDataController@edit']);
 Route::post('updateFormData', ['middleware' => 'resetLastActive', 'uses' => 'FormsDataController@update']);
-=======
-
-
->>>>>>> develop~5
 
 /*
 |--------------------------------------------------------------------------
