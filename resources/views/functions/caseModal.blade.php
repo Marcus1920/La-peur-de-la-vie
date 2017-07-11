@@ -1088,7 +1088,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
             limitReachedClass: "label label-danger"
   });
 
-  var user = {!! Auth::user()->id !!};
+  var user = {!! (Auth::check() ? Auth::user()->id : 0) !!};
 
 
   var oTable     = $('#casesTable').DataTable({
@@ -2922,7 +2922,7 @@ console.log("CreateCase error, data - ",data);
 
       $(".modal-body #categoryID").val(id);
       $(".modal-body #caseID").val(id);
-      var userID = {!! Auth::user()->id !!};
+      var userID = {!! (Auth::check() ? Auth::user()->id : 0) !!};
       $.ajax({
         type    :"GET",
         dataType:"json",
@@ -3296,7 +3296,7 @@ console.log("CreateCase error, data - ",data);
         }
 
 
-      var user = {!! Auth::user()->id !!};
+      var user = {!! (Auth::check() ? Auth::user()->id : 0) !!};
       oTableAddressBook     = $('#addressBookTable').DataTable({
             "processing": true,
             "serverSide": true,
@@ -3332,7 +3332,7 @@ console.log("CreateCase error, data - ",data);
         }
 
 
-      var user = {!! Auth::user()->id !!};
+      var user = {!! (Auth::check() ? Auth::user()->id : 0) !!};
       oTableAddress     = $('#addressBook').DataTable({
             "processing": true,
             "serverSide": true,

@@ -685,7 +685,7 @@
   }
 
   function launchModalFormsIn() {
-    var uid = {{\Auth::user()->id}};
+    var uid = {{ (Auth::check() ? Auth::user()->id : 0) }};
     console.log("launchModalFormsIn() uid - ",uid);
     if (typeof oFormsInTable != "undefined") console.log("  oFormsInTable - ",oFormsInTable);
 

@@ -513,6 +513,8 @@ class AppServiceProvider extends ServiceProvider
 
         $view->with('addressBookNumber',addressbook::all());
 
+	        $view->with('noPrivateMessages',0);
+	        $view->with('noFormsIn',0);
           if(\Auth::check()) {
 
             $number = addressbook::where('user','=',\Auth::user()->id)->get();
