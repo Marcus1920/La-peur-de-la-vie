@@ -644,6 +644,7 @@ Route::post('addCategoryResponder', ['middleware' => 'resetLastActive', 'uses' =
 
 
 
+
 /*
 |--------------------------------------------------------------------------
 | END RESPONDERS ROUTING
