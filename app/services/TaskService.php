@@ -36,6 +36,10 @@ class TaskService
             return $tasks;
 
         }
+        public function getSubTasks()
+        {
+            return Task::all();
+        }
 
         public function getTask($id){
 
@@ -63,7 +67,6 @@ class TaskService
             //TODO : MAKE COMMENCEMENT DATE AND DUE DATE DATE IN DATABASE
             //TODO : REDIRECT TO THEIR ORIGIN TAB AFTER SAVING
 
-
             $task= new Task();
             $task->status_id                = 1;
             $task->priority_id              = $request['priority_id'];
@@ -76,6 +79,7 @@ class TaskService
             $task->commencement_date        = $request['commencement_date'];
             $task->last_activity_date_time  = $request['last_activity_date_time'];
             $task->description              = $request['description'];
+            $task->parent_id                = $request['parent_id'];
             $task->created_by               = Auth::user()->id;
             $task->save();
 
@@ -98,6 +102,13 @@ class TaskService
             $this->assignTask($form);
             return $task;
 
+    }
+
+    public function addTaskParent($child_task_id,$parent_task_id){
+
+        $task            = Task::find($child_task_id);
+        $task->parent_id = $parent_task_id;
+        $task->save();
     }
 
     public function assignTask($form){
