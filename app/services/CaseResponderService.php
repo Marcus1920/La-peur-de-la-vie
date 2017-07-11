@@ -8,6 +8,7 @@ class CaseResponderService
 {
 
 <<<<<<< lonmin
+<<<<<<< lonmin
 
     public function get_responders_by_sub_case_type($sub_case_type,$responder_type){
 
@@ -45,33 +46,43 @@ class CaseResponderService
 =======
     public function get_responders_by_sub_case_type($sub_case_type,$responder_type){
 
+=======
+>>>>>>> develop~15
 
-        if($responder_type == 0) {
+    public function get_responders_by_sub_case_type($sub_case_type,$responder_type){
 
-            $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
-                ->where('case_sub_sub_type','=',0)
-                ->get();
-        } else {
 
-            $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
-                ->where('case_sub_sub_type','=',0)->where('responder_type',$responder_type)
-                ->get();
+    if($responder_type == 0) {
 
+<<<<<<< lonmin
 >>>>>>> updates
+=======
+        $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
+            ->where('case_sub_sub_type','=',0)
+            ->get();
+    } else {
+>>>>>>> develop~15
 
-        }
+        $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_sub_type','=',$sub_case_type)
+            ->where('case_sub_sub_type','=',0)->where('responder_type',$responder_type)
+            ->get();
 
-        return $data;
 
     }
 
 <<<<<<< lonmin
 <<<<<<< lonmin
+<<<<<<< lonmin
 
 
 =======
 >>>>>>> updates
 =======
+=======
+    return $data;
+
+}
+>>>>>>> develop~15
 
     public function get_responders_by_case_type($case_type,$responder_type){
 
@@ -79,14 +90,12 @@ class CaseResponderService
         if($responder_type == 0) {
 
             $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_type','=',$case_type)
-                ->where('case_type','=',0)
-                ->get();
+                      ->get();
         } else {
 
             $data  = CaseResponder::with('responderTypeFunc')->with('user')->where('case_type','=',$case_type)
-                ->where('case_type','=',0)->where('responder_type',$responder_type)
-                ->get();
-
+                       ->where('responder_type',$responder_type)
+                       ->get();
 
         }
 
@@ -94,7 +103,12 @@ class CaseResponderService
 
     }
 
+<<<<<<< lonmin
 >>>>>>> develop~16
+=======
+
+
+>>>>>>> develop~15
     public function get_responders_by_sub_case_type_and_by_responder($user,$sub_case_type){
 
 
