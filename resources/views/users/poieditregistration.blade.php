@@ -1254,6 +1254,7 @@
                                 @foreach ($poi->banking_details as $bankingDetail)
 
 <<<<<<< lonmin
+<<<<<<< lonmin
                                     <div class="row">
                                         <div class="col-md-4">
                                             {!! Form::label("Bank Name", "Bank Name") !!}
@@ -1265,6 +1266,12 @@
                                             {!! Form::label("Bank Name", "Bank Name") !!}
                                             {!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],$bankingDetail->id,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail"]) !!}
 >>>>>>> develop~33
+=======
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            {!! Form::label("Bank Name", "Bank Name") !!}
+                                            {!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],$bankingDetail->bank_id,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail"]) !!}
+>>>>>>> develop~32
                                         </div>
                                     </div>
                                     <div class="row">
@@ -2055,12 +2062,14 @@ function generate_criminal_record_html(val) {
            work_address_html+='<div class="row">';
            work_address_html+='<div class="col-md-4">';
            work_address_html+='{!! Form::label("Bank Name", "Bank Name") !!}';
-<<<<<<< lonmin
+
            work_address_html+='{!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],0,["class" => "form-control input-sm m-b-10" ,"id" => "bankingId"]) !!}';
            work_address_html+='</div>';
-=======
            work_address_html+='{!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],0,["class" => "form-control input-sm m-b-10" ,"id" => "other_banking_detail"]) !!}';
->>>>>>> develop~33
+
+           work_address_html+='{!! Form::select("banking_name[]",["0" => "Select Bank","1" => "FNB","2" => "STANDARD BANK"],0,["class" => "form-control input-sm m-b-10" ,"id" => "bankingId"]) !!}';
+           work_address_html+='</div>';
+
            work_address_html+='</div>';
            work_address_html+='</div>';
            work_address_html+='<div class="row">';
@@ -2069,10 +2078,11 @@ function generate_criminal_record_html(val) {
            work_address_html+="<input name='branch_number[]' type='text' class='form-control input-sm m-b-10' >";
            work_address_html+='</div>';
            work_address_html+='</div>';
-<<<<<<< lonmin
+
            work_address_html+='</div>';
-=======
->>>>>>> develop~33
+
+           work_address_html+='</div>';
+
            work_address_html+='<div class="row">';
            work_address_html+='<div class="col-md-4">';
            work_address_html+='{!! Form::label("Account Number", "Account Number") !!}';
