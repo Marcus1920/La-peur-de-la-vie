@@ -1485,6 +1485,37 @@ die("<pre>{$txtDebug}</pre>");
 
     }
 
+    public function getCases()
+    {
+        $searchString   = \Input::get('q');
+        $cases          = \DB::table('cases')
+            ->whereRaw(
+                "CONCAT(`cases`.`id`, ' ', `cases`.`description`) LIKE '%{$searchString}%'")
+            ->select(
+                array
+
+                (
+                    'cases.id as id',
+                    'cases.description as description',
+                )
+            )
+
+            ->get();
+
+        $data = array();
+
+        foreach ($cases as $case) {
+
+            $data[] = array(
+
+                "id"     => "{$case->id}",
+                "name"   => "Case Number: {$case->id} >  Description: {$case->description}",
+            );
+        }
+
+        return $data;
+    }
+
 
     function relatedCases($id)
     {
