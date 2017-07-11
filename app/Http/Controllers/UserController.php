@@ -3580,6 +3580,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                                             users.administrative_area_level_1,
                                                             users.postal_code,
                                                             users.country,
+                                                            users.affiliation,
                                                             users.company,
                                                             users.alt_email,
                                                             users.alt_cellphone
@@ -3617,7 +3618,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
              $affiliation = Affiliation::find($userObj->affiliation);
-             $user->affiliation = $affiliation->slug;
+             $user->affiliation = $affiliation->name;
 
 
           }
@@ -3668,19 +3669,18 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-        if ($request['affiliation'] ==null) {
+        if ($request['affiliation'] == "Select / All") {
 
-           // $users_if   = 1;
+           $users_if   = 1;
         }
 
 
         else{
 
-            $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
-
-            $users_if = $Affiliation_id->id;
-
-
+            if( Affiliation::where('name',$request['affiliation'])->exists()) {
+                $Affiliation_id = Affiliation::where('name', $request['affiliation'])->first();
+                $users_if = $Affiliation_id->id;
+            }
         }
 
 
@@ -3692,9 +3692,9 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         $user->name                        = $request['name'];
         $user->surname                     = $request['surname'];
         $user->id_number                   = $request['id_number'];
-        $user->cellphone                   =$request['cellphone'];
+        $user->cellphone                   = $request['cellphone'];
         $user->alt_cellphone               = $request['alt_cellphone'];
-        $user->email                       =$request['email'];
+        $user->email                       = $request['email'];
         $user->alt_email                   = $request['alt_email'];
         $user->active                      = $request['status'];
         $user->department                  = $request['department'];
