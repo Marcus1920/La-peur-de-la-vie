@@ -636,4 +636,89 @@ Date Time Widget
     }, 1000);
 })();
 
+// FormBuilder Begin
+(function(){
+	$(".hasTip").tooltip( {  } );
+	//$(".hasTip").tooltip( {my: "left top+15", at: "left bottom", collision: "flipfit", track: true} );
+	$(".wForm .toolbar .icon").draggable({
+		connectToSortable: "#formFields"
+		, helper: "clone"
+	});
 
+	var isCancel = false;
+	$("#formFields").sortable({
+		axis: "y"
+		, cursor: "move"
+		, handle: ".wHeader"
+		, opacity: 0.25
+		, placeholder: "placeholder"
+		, tolerance: "pointer"
+		, start: function(ev, ui) {
+			isCancel = false;
+			console.log("sortable.start (#formFields)");
+			console.log("  ev - ",ev,"\n  ui - ",ui,"\n  this - ",$(this));
+			console.log("  ui.item - ",ui.item);
+			/*$(ui.placeholder).height( $(ui.item).height() );
+			$(ui.placeholder).width( $(ui.item).width() );*/
+			if (ui.item.get(0).className.indexOf("icon") != -1) {
+
+			} else {
+				$(ui.placeholder).height( $(ui.item).height() );
+				$(ui.placeholder).width( $(ui.item).width() );
+			}
+		}
+		, sort: function(ev, ui) {
+			var dbg = false;
+			//dbg = true;
+			if (dbg) console.log("sortable.sort (#formFields)");
+			if (dbg) console.log("  ev - ",ev,"\n  ui - ",ui,"\n  this - ",$(this));
+			if (ui.item.get(0).className.indexOf("icon") == -1) {
+				var el = $(this);
+				/*$(this).sortable("cancel");
+				 return false;*/
+				if (dbg) console.log("  children - ",el.get(0).children.length,", childElementCount - ",el.get(0).childElementCount);
+				if (dbg) console.log("  children - ",$(this).get(0).children.length,", childElementCount - ",$(this).get(0).childElementCount);
+				var len = 0;
+				$(el.get(0).children).each(function(i, el) {
+					//console.log("  child "+i+", ",el,"\n  == placeholder - ",(el == ui.placeholder.get(0)));
+					if (el != ui.placeholder.get(0)) len++;
+				});
+				if (dbg) console.log("  len - "+len);
+				if (len == 1) {
+					isCancel = true;
+					setTimeout( function() { el.sortable("cancel"); }, 2 );
+				}
+				else {
+					if (dbg) console.log("WtF!?");
+
+				}
+			}
+		}
+		, stop: function(ev, ui) {
+			/*console.log("sortable.stop (#formFields)");
+			 console.log("  ev - ", ev, "\n  ui - ", ui, "\n  this - ", $(this));
+			 return false;*/
+			var dbg = false;
+			dbg = true;
+			if (dbg) console.log("sortable.stop(ev, ui)  (#formFields)\n  ev - ",ev,"\n  ui - ",ui,"\n  this - ",this);
+			if ($(ui.item).get(0).className.indexOf("icon") != -1) {
+				var newIndex = $(this).data("ui-sortable").currentItem.index();
+				console.log("  newIndex - "+newIndex);
+				var title = "";
+				title = $(ui.item).attr("title");
+				if (title == "") title = $(ui.item).data("original-title");
+				console.log("  title - "+title);
+				$(ui.item).remove();
+				//insertItem(this, newIndex, { title: title });
+
+				var sTypes = ["boolean", "choice", "currency","datetime","file","number","related","text"];
+				var sType = title.toLowerCase();
+				if (sType.indexOf("date")!= -1) sType = "datetime";
+				else if (sType.indexOf("related")!= -1) sType = "rel";
+
+				addField(newIndex, { type: sType });
+			}
+		}
+	});
+})();
+// FormBuilder Begin
