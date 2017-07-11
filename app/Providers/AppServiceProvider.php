@@ -168,11 +168,11 @@ class AppServiceProvider extends ServiceProvider
 
             foreach ($affiliations as $affiliation) {
 
-               $selectAffiliations[$affiliation->id] = $affiliation->name;
+                $selectAffiliations[$affiliation->id] = $affiliation->name;
 
             }
 
-             \View::share('selectAffiliations',$selectAffiliations);
+            \View::share('selectAffiliations',$selectAffiliations);
 
         }
 
