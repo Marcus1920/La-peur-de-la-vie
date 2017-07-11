@@ -35,11 +35,13 @@ class UpdateUserRequest extends Request
             'language'          => 'required|not_in:0',
             'position'          => 'required|not_in:0',
 
-            'cellphone'         => 'required',
+
+            'cellphone'         => 'required|digits:10',
             'alt_cellphone'    => 'different:cellphone',
 
             'email'             => 'required|different:alt_email',
             'alt_email'        => 'different:email',
+
 
             'id_number'         => 'required|digits:13',
             'company'           => 'required',

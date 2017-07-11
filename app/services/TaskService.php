@@ -36,19 +36,10 @@ class TaskService
             return $tasks;
 
         }
-<<<<<<< lonmin
-<<<<<<< lonmin
-=======
->>>>>>> develop~0
         public function getSubTasks()
         {
             return Task::all();
         }
-<<<<<<< lonmin
-=======
->>>>>>> updates
-=======
->>>>>>> develop~0
 
         public function getTask($id){
 
@@ -76,13 +67,6 @@ class TaskService
             //TODO : MAKE COMMENCEMENT DATE AND DUE DATE DATE IN DATABASE
             //TODO : REDIRECT TO THEIR ORIGIN TAB AFTER SAVING
 
-<<<<<<< lonmin
-<<<<<<< lonmin
-=======
-
->>>>>>> updates
-=======
->>>>>>> develop~0
             $task= new Task();
             $task->status_id                = 1;
             $task->priority_id              = $request['priority_id'];
@@ -95,14 +79,7 @@ class TaskService
             $task->commencement_date        = $request['commencement_date'];
             $task->last_activity_date_time  = $request['last_activity_date_time'];
             $task->description              = $request['description'];
-<<<<<<< lonmin
-<<<<<<< lonmin
             $task->parent_id                = $request['parent_id'];
-=======
->>>>>>> updates
-=======
-            $task->parent_id                = $request['parent_id'];
->>>>>>> develop~0
             $task->created_by               = Auth::user()->id;
             $task->save();
 
@@ -127,10 +104,6 @@ class TaskService
 
     }
 
-<<<<<<< lonmin
-<<<<<<< lonmin
-=======
->>>>>>> develop~0
     public function addTaskParent($child_task_id,$parent_task_id){
 
         $task            = Task::find($child_task_id);
@@ -138,11 +111,6 @@ class TaskService
         $task->save();
     }
 
-<<<<<<< lonmin
-=======
->>>>>>> updates
-=======
->>>>>>> develop~0
     public function assignTask($form){
 
 
