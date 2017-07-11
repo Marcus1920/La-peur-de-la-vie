@@ -31,6 +31,7 @@
 
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
+        <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
 
   <!-- DataTables CSS -->
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -589,6 +590,8 @@
         @include('functions.caseModal')
         @yield('footer')
 @include('partials.forms')
+@include('forms.data.form')
+@include('forms.data.view')
         @include('version')
         @include('partials.refresh')
         @include('partials.timeout')
@@ -597,5 +600,9 @@
     var APP_DEBUG = {{ env("APP_DEBUG", 0) }};
     console.log("APP_DEBUG: ",APP_DEBUG," > 2 - ",(APP_DEBUG > 2));
 </script>
+    <script>
+        $(document).ready(function() {
+		});
+    </script>
     </body>
 </html>
