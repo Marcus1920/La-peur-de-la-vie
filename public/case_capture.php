@@ -119,12 +119,12 @@ function toSentenceCase (val)
 <body ONLOAD="setCaptureBorder('#ffffff');document.getElementById('captureForm').reset();document.getElementById('ccg_nam').focus;" TEXT="#ffffff" LINK="#ffffff" VLINK="#ffffff" ALINK="#ffffff" style="margin:0;overflow:hidden;margin-bottom:0;margin-left:0;margin-right:0;margin-top:0">
 
 <center>
-<form id="captureForm" action="case_capture.php" method="post" style="margin:0px;padding:0px;">
+<form id="captureForm" action="case_capture.php" method="post" style="margin:0px;padding:0px; width: auto;">
 <input type=hidden name=ACTION value="SUBMITCASE">
 <input type="hidden" name="repID" id="repID">
 <input type="hidden" name="addressbook" id="addressbook">
 
-<table id="captureContainer" border=0 cellpadding=4 cellspacing=0 style="font: 11pt 'Arial';color:#ffffff;border-collapse:collapse;border:1px solid #ffffff">
+<table id="captureContainer" border=0 cellpadding=4 cellspacing=0 style="font: 11pt 'Arial'; width:100% ; color:#ffffff;border-collapse:collapse;border:1px solid #ffffff ; ">
 		<tr>
 			<td valign=top align=center nowrap style="font: 11pt 'Arial';color:#FFFFFF">
 				GPS COORDINATES
@@ -232,7 +232,7 @@ function toSentenceCase (val)
 
       <tr>        
         <td class="" colspan="3">
-        	<input class="formField" id="saps_case_number"  style="text-align:center" placeholder="SAPS Case Number" type="text"></input>
+        	<input class="formField" id="saps_case_number"  style="text-align:center" placeholder="SAPS Case  Number" type="text"></input>
         </td>
       </tr>
 
@@ -296,7 +296,7 @@ function toSentenceCase (val)
 				<select class="formField" id="case_type" name="case_type" style="text-align:center">
 					<option id="#ffffff" value=""> Please select Case Type
 					<?php
-					$catSql = "select * from case_types order by name asc";
+					$catSql = "select * from cases_types order by name asc";
 					$catResult = mysqli_query($connectionID, $catSql) or die ("Couldn't query categories DB ... ...");
 					while($row = mysqli_fetch_row($catResult))
 						{
@@ -315,16 +315,18 @@ function toSentenceCase (val)
 		</tr>
 
 		
-		<tr style="font: 11pt 'Arial';color:#ffffff">
+		<tr style="font: 11pt 'Arial';color:#ffffff ; border:9px;" >
 			<td valign=middle>
-			 	<textarea name="description" id="description" class="formField" wrap="physical" style="resize:none;height:100px;text-align:center" placeholder="Case details ..." onchange="this.value=toSentenceCase(this.value)"></textarea>
+			 	<textarea name="description" id="description" class="formField" wrap="physical" style="resize:none;height:60px;text-align:center" placeholder="Case details" onchange="this.value=toSentenceCase(this.value)"></textarea>
+
 			</td>
 		</tr>
 
-	</table>
 
-	<input type=hidden name="prob_priority" id="prob_priority" value="Urgent">
-	<input type=hidden name="severity" id="severity" value="5">
+	</table>
+<br>
+	<input type="hidden" name="prob_priority" id="prob_priority" value="Urgent">
+	<input type="hidden" name="severity" id="severity" value="5">
 </form>
 
 </body>

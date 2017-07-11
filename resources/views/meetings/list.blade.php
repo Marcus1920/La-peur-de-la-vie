@@ -219,9 +219,10 @@ $(document).ready(function() {
             {data: 'created_at', name: 'created_at'},
             {data: 'name', name: 'name'},
             {data: 'description', name: 'description'},
+                 {data: 'file', name: 'file'},
             {data: function(d){
 
-              return "<a href='{{ env('LOCAL_URL') }}"+d.img_url+"' download='file'>" + d.file + "</a>";
+              return "<a href='{{ env('LOCAL_URL') }}"+d.img_url+"' download='file'>" + 'VIEW' + "</a>";
 
             }}
            ],

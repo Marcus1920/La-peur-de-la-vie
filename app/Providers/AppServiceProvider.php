@@ -38,6 +38,9 @@ use App\Religion;
 use App\QualificationType;
 use App\TrainingType;
 use App\InvestigationOfficer;
+use App\TaskCategory;
+use App\TaskPriority;
+use App\TaskStatus;
 
 
 
@@ -68,7 +71,8 @@ class AppServiceProvider extends ServiceProvider
 
         }
 	
-	if (\Schema::hasTable('investigation_officers'))
+	//if (\Schema::hasTable('investigation_officers'))
+	if (class_exists(InvestigationOfficer::class))
         {
             $investigation_officers     = InvestigationOfficer::orderBy('name','ASC')->get();
             $selectOfficers    		= array();
@@ -462,6 +466,49 @@ class AppServiceProvider extends ServiceProvider
         }
 
 
+        if (\Schema::hasTable('task_priorities'))
+        {
+            $taskPriorities          = TaskPriority::orderBy('name','ASC')->get();
+            $selectTaskPriorities    = array();
+            $selectTaskPriorities[0] = "Choose a priority";
+
+            foreach ($taskPriorities as $taskPriority) {
+                $selectTaskPriorities[$taskPriority->id] = $taskPriority->name;
+            }
+
+            \View::share('selectTaskPriorities',$selectTaskPriorities);
+
+        }
+
+        if (\Schema::hasTable('task_statuses'))
+        {
+            $taskStatuses          = TaskStatus::orderBy('name','ASC')->get();
+            $selectTaskStatuses    = array();
+            $selectTaskStatuses[0] = "Select / All";
+
+            foreach ($taskStatuses as $taskStatus) {
+                $selectTaskStatuses[$taskStatus->id] = $taskStatus->name;
+            }
+
+            \View::share('selectTaskStatuses',$selectTaskStatuses);
+
+        }
+
+        if (\Schema::hasTable('task_categories'))
+        {
+            $taskCategories          = TaskCategory::orderBy('name','ASC')->get();
+            $selectTaskCategories    = array();
+            $selectTaskCategories[] = "Choose a category";
+
+            foreach ($taskCategories as $taskCategory) {
+                $selectTaskCategories[$taskCategory->id] = $taskCategory->name;
+            }
+
+            \View::share('selectTaskCategories',$selectTaskCategories);
+
+        }
+
+
         View()->composer('master',function($view){
 
         $view->with('addressBookNumber',addressbook::all());
@@ -538,6 +585,9 @@ class AppServiceProvider extends ServiceProvider
 
             $noPermissions = Permission::all();
             $view->with('noPermissions',$noPermissions);
+            
+            $noForms = 0;
+            $view->with('noForms',$noForms);
 
 
            $userViewAffiliationPermission   = \DB::table('group_permissions')
@@ -679,7 +729,11 @@ class AppServiceProvider extends ServiceProvider
 
 
 
-
+						$noFormsIn = \DB::table('forms_assigned')->where('user_id','=',\Auth::user()->id)
+							//->where('read','=',0)
+							//->where('online','=',0)
+							->get();
+						$view->with('noFormsIn',$noFormsIn);
           }
 
 
