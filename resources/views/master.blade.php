@@ -28,7 +28,8 @@
         <link href="{{ asset('/css/buttons.dataTables.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/HoldOn.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
-
+        <link href="{{ asset('/incl/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/Treant.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
         <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
