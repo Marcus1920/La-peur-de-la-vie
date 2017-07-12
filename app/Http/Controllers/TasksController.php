@@ -246,7 +246,7 @@ class TasksController extends Controller
         $this->taskOwners->acceptTask($taskId);
         $creator  = $this->taskOwners->getTaskCreatorOwner($taskId);
         $assignee = Auth::user()->id;
-        $this->tasks->sendTaskAcceptanceCommToTaskOwner($taskId,$creator->id,$assignee);
+        $this->tasks->sendTaskAcceptanceCommToTaskOwner($taskId,$creator->user_id,$assignee);
 
         $data = array(
 
