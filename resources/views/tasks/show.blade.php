@@ -129,31 +129,31 @@
 
                             <div class="p-10 news">
                                 <div class="col-xs-4">
-                                    <div class="tile p-5 m-b-10">
+                                   {{-- <div class="tile p-5 m-b-10">
                                         <a target="_blank" title="Medical-Pro Bootstrap Responsive Template" href="https://wrapbootstrap.com/theme/medical-pro-responsive-template-WB06421XL">
                                             <img class="w-100" src="img/projects/1.png" alt="">
                                             <small class="t-overflow m-t-10">Medical-Pro Bootstrap Responsive</small>
                                         </a>
                                         <div class="clearfix"></div>
-                                    </div>
+                                    </div>--}}
                                 </div>
                                 <div class="col-xs-4">
-                                    <div class="tile p-5 m-b-10">
+                                    {{--<div class="tile p-5 m-b-10">
                                         <a target="_blank" title="Black Pearl Responsive Admin Template" href="https://wrapbootstrap.com/theme/black-pearl-responsive-admin-template-WB040H333">
                                             <img class="w-100" src="img/projects/2.png" alt="">
                                             <small class="t-overflow m-t-10">Black Pearl Responsive Admin Template</small>
                                         </a>
                                         <div class="clearfix"></div>
-                                    </div>
+                                    </div>--}}
                                 </div>
                                 <div class="col-xs-4">
-                                    <div class="tile p-5 m-b-10">
+                                    {{--<div class="tile p-5 m-b-10">
                                         <a target="_blank" title="UNEKUE Single Page Portfolio Template" href="https://wrapbootstrap.com/theme/unekue-single-page-portfolio-template-WB04R2B18">
                                             <img class="w-100" src="img/projects/3.png" alt="">
                                             <small class="t-overflow m-t-10">UNEKUE Single Page Portfolio Template</small>
                                         </a>
                                         <div class="clearfix"></div>
-                                    </div>
+                                    </div>--}}
                                 </div>
 
 
