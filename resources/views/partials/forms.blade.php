@@ -350,9 +350,10 @@
             } else if (data[1][i].type == "currency") {
               var div2 = document.createElement("div");
               input.style.textAlign = "right";
-              $(div2).append(symbols[opts.iso]+" ");
+              if (opts.iso) $(div2).append(symbols[opts.iso]+" ");
+              else $(div2).append("? ");
               $(div2).append(input);
-              $(input).attr("placeholder", "sdjsldsh");
+              //$(input).attr("placeholder", "sdjsldsh");
               //$(input).attr("required", "required");
               //$(input).attr("digits", "digits");
               //$(input).attr("data-rule-requiredd", "true");

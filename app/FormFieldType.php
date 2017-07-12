@@ -12,7 +12,10 @@ use Symfony\Component\DomCrawler\Crawler;
 			//echo "<br>FormFieldType()";
 			if ($type) $this->$type = $type;
 		}
-		
+
+		/**
+		 * @return array|mixed rank,name,iso,symbol
+		 */
 		static function Currency() {
 			if (self::$_inst == null) self::$_inst = new FormFieldType("currency");
 			$txtDebug = "FormFieldType::Currency()";
@@ -33,45 +36,52 @@ use Symfony\Component\DomCrawler\Crawler;
 				if (strlen($grabbed) == 0) $txtDebug .= "\n  Think there was an error: ".curl_error($ch);
 				curl_close($ch);
 				$txtDebug .= "\n  Grabbed content: ".number_format(strlen($grabbed))." bytes";
-				if (strlen($grabbed) == 0) die("<pre>$txtDebug<pre>");
-				$crawler = new Crawler($grabbed);
-				foreach ($crawler as $domElement) {
-			    var_dump($domElement->nodeName);
-				}
-				$tables = $crawler->filter("table");
-				foreach ($tables as $table) {
-			    $html = $table->ownerDocument->saveHTML($table);
-			    if (stristr($html, "Most traded currencies by value")) {
-		    		$crawler = new Crawler($html);
-		    		$rows = $crawler->filter("tr");
-		    		for ($irow = 0; $irow < count($rows); $irow++) {
-		    			$row = $rows->eq($irow);
-							$kids = $row->children();
-							$currency_tmp = [];
-							if (count($kids->filter("td")) > 0) foreach ($kids AS $di=>$d) {
-								if ($d->childNodes->length > 2) $currency_tmp[] = $d->childNodes->item($d->childNodes->length-2)->nodeValue;
+				//if (strlen($grabbed) == 0) die("<pre>$txtDebug<pre>");
+				if (strlen($grabbed) == 0) {
+					$currencies[] = array('rank'=>0,'name'=>"South African Rand",'iso'=>"ZAR",'symbol'=>"R");
+					$currencies[] = array('rank'=>1,'name'=>"British Pound",'iso'=>"GBP",'symbol'=>"£");
+					$currencies[] = array('rank'=>2,'name'=>"US Dollar",'iso'=>"USD",'symbol'=>"$");
+					//die("<pre>$txtDebug<pre>");
+				}	else {
+					$crawler = new Crawler($grabbed);
+					foreach ($crawler as $domElement) {
+						var_dump($domElement->nodeName);
+					}
+					$tables = $crawler->filter("table");
+					foreach ($tables as $table) {
+						$html = $table->ownerDocument->saveHTML($table);
+						if (stristr($html, "Most traded currencies by value")) {
+							$crawler = new Crawler($html);
+							$rows = $crawler->filter("tr");
+							for ($irow = 0; $irow < count($rows); $irow++) {
+								$row = $rows->eq($irow);
+								$kids = $row->children();
+								$currency_tmp = [];
+								if (count($kids->filter("td")) > 0) foreach ($kids AS $di=>$d) {
+									if ($d->childNodes->length > 2) $currency_tmp[] = $d->childNodes->item($d->childNodes->length-2)->nodeValue;
+								}
+								$currencies_tmp[] = $currency_tmp;
 							}
-							$currencies_tmp[] = $currency_tmp;
-		    		}
-			    }
-				}
-				
-				foreach ($currencies_tmp AS $c) if (count($c) > 0) {
-					$currency = ['rank'=>$c[0], 'name'=>"", 'iso'=>"", 'symbol'=>""];
-					$currency['name'] = ucwords(strtolower($c[1]));
-					$currency['iso'] = explode(" ",$c[2])[0];
-					$htmlsymbols = ['CNY'=>"&yen;",'EUR'=>"&euro;", 'INR'=>"&#8360;", 'JPY'=>"&yen;", 'KRW'=>"&#8361;", 'TRY'=>"&#8356;"];
+						}
+					}
+
+					foreach ($currencies_tmp AS $c) if (count($c) > 0) {
+						$currency = ['rank'=>$c[0], 'name'=>"", 'iso'=>"", 'symbol'=>""];
+						$currency['name'] = ucwords(strtolower($c[1]));
+						$currency['iso'] = explode(" ",$c[2])[0];
+						$htmlsymbols = ['CNY'=>"&yen;",'EUR'=>"&euro;", 'INR'=>"&#8360;", 'JPY'=>"&yen;", 'KRW'=>"&#8361;", 'TRY'=>"&#8356;"];
 //					$htmlsymbols = [];
 
-					if (!array_key_exists($currency['iso'], $htmlsymbols)) {
-					$currency['symbol'] = explode(" ",$c[2])[1];
-					$currency['symbol'] = trim($currency['symbol'], " ()");
-					$currency['symbol'] = utf8_decode($currency['symbol']);
-					} else $currency['symbol'] = $htmlsymbols[$currency['iso']];
-					//$txtDebug .= "\n  htmlspecialchars({$currency['symbol']}), {$currency['name']} - ".htmlspecialchars($currency['symbol']);
-					$currencies[] = $currency;
+						if (!array_key_exists($currency['iso'], $htmlsymbols)) {
+							$currency['symbol'] = explode(" ",$c[2])[1];
+							$currency['symbol'] = trim($currency['symbol'], " ()");
+							$currency['symbol'] = utf8_decode($currency['symbol']);
+						} else $currency['symbol'] = $htmlsymbols[$currency['iso']];
+						//$txtDebug .= "\n  htmlspecialchars({$currency['symbol']}), {$currency['name']} - ".htmlspecialchars($currency['symbol']);
+						$currencies[] = $currency;
+					}
+					Cache::put("aims.Currencies", json_encode($currencies), Carbon::now()->addMonths(1));
 				}
-				Cache::put("aims.Currencies", json_encode($currencies), Carbon::now()->addMonths(1));
 			}
 			usort($currencies, "self::sortCurrencies");
 			$txtDebug .= "\n  \$currencies: ".print_r($currencies, 1)."";
