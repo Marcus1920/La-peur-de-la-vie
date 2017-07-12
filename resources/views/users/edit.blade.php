@@ -82,7 +82,7 @@
                 {!! Form::label('Cell Number', 'Cell Number', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
                   {!! Form::text('cellphone',NULL,['class' => 'form-control input-sm','id' => 'cellphone']) !!}
-                  @if ($errors->has('Cellphone')) <p class="help-block red">*{{ $errors->first('Cellphone') }}</p> @endif
+                  @if ($errors->has('cellphone')) <p class="help-block red">*{{ $errors->first('cellphone') }}</p> @endif
               </div>
             </div>
 
@@ -215,18 +215,18 @@
                 <div class="col-md-6">
 
                   {{--{!! Form::select('affiliation',$selectAffiliations,0,['class' => 'form-control input-sm' ,'id' => 'affiliation']) !!}--}}
+                    {{--<input type="text" class="form-control" id="affiliation" value="">--}}
 
-
-                    <select class="form-control" name="affiliation" id="affiliation">
-
+                    <select class="form-control" name="affiliation" >
+                        <option id="affiliation" selected ></option>
                         @foreach($selectAffiliations as $affiliationss )
 
-                            <option  value="{{ $affiliationss}}">{{ $affiliationss}}</option>
+                            <option   value="{{$affiliationss}}">{{$affiliationss}}</option>
 
-                     @endforeach
-
+                        @endforeach
                     </select>
 
+                    @if ($errors->has('affiliation')) <p class="help-block red">*{{ $errors->first('affiliation') }}</p> @endif
               </div>
 
             </div>

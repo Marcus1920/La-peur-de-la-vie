@@ -720,7 +720,7 @@ function switchNewCaseMarker (source,element)
 		if(newCaseMarkerStatus == 0)
 				{
 
-					$("#submitButton").removeAttr('disabled')=false;
+					$("#submitButton").removeAttr('disabled');
 					document.getElementById('addCase').src ="images/cancel_case.png";
 					document.getElementById('addCase').title = "Cancel new case creation ...";
 					$("#caseCapture").addClass('animated flipInY');
