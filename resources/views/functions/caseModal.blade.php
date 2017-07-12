@@ -3862,6 +3862,7 @@ console.log("CreateCase error, data - ",data);
                $("#modalEditUser #country").val(data[0].country);
                $("#modalEditUser #company").val(data[0].company);
                $("#modalEditUser #affiliation").val(data[0].affiliation);
+                $("#modalEditUser #affiliation").text(data[0].affiliation);
 
 
             }
