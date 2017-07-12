@@ -5,7 +5,7 @@ SetOutputFilter DEFLATE
         Options -MultiViews
     </IfModule>
 	
-	
+	Options +FollowSymLinks
 <ifModule mod_gzip.c>
 mod_gzip_on Yes
 
