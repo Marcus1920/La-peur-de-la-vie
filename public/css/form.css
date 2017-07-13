@@ -30,7 +30,8 @@ label {
     font-size: 13px;
 }
 
-.form-group {
+.form-group, .form-groupusers, .form-groupgroups {
+    clear: both;
     margin-bottom: 5px;
 }
 
@@ -109,7 +110,7 @@ select::-ms-expand {
 
 /* Checkbox + Radio */
 input[type="checkbox"], input[type="radio"]{
-    opacity: 0;
+    /*opacity: 0;*/
 }
 
 .radio, .checkbox, .radio-inline, .checkbox-inline {

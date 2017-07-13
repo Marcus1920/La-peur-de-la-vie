@@ -170,6 +170,13 @@ class FormsController extends Controller {
 					\Session::flash('failure', 'Form already assigned to '.$user['name'].' '.$user['surname'].' !');
 					\Session::flash('failure', 'Form already assigned to '.$user['name'].' '.$user['surname'].' !');
 				}
+			//die("<pre>{$txtDebug}</pre>");
+			\Mail::send('emails.formAssigned',array(), function($message) use ($user)
+			{
+				$message->from('info@siyaleader.net', 'Siyaleader');
+				$message->to($user['email'])->subject("Siyaleader Notification - Form Assigned: " .$user['name']);
+
+			});
 				//die("<pre>{$txtDebug}</pre>");
 
 

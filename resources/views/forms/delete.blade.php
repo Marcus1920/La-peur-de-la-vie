@@ -15,7 +15,7 @@
                 Delete Stufff
                 {!! Form::open(['url' => 'deleteForm', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"deleteForm" ]) !!}
                 <div class="form-group">
-                    {!! Form::text('formId',NULL,['class' => 'form-control input-sm','id' => 'formId']) !!}
+                    {!! Form::hidden('formId',NULL,['class' => 'form-control input-sm','id' => 'formId']) !!}
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">

@@ -842,6 +842,7 @@ Route::post('filterReports', ['middleware' => 'resetLastActive', 'uses' => 'Repo
 
 
 $router->resource('users', 'UserController');
+$router->resource('groups', 'RolesController');
 
 Route::get('/api/dropdown/{to}/{from}', function ($to, $from) {
     $name = Input::get('option');
@@ -1122,6 +1123,8 @@ Route::get('list-forms/{id?}', ['middleware' => 'resetLastActive', 'uses' => 'Fo
 Route::get('forms-list', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@index']);
 Route::get('forms/{id}', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@edit']);
 Route::post('addForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@store']);
+Route::post('assignForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@assign']);
+Route::post('deleteForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@delete']);
 Route::post('updateForm', ['middleware' => 'resetLastActive', 'uses' => 'FormsController@update']);
 Route::get('forms/database/tables', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTables']);
 Route::get('forms/database/tables/{name}', ['middleware' => 'resetLastActive', 'uses' => 'DatabaseController@getTable']);

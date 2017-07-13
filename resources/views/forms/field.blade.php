@@ -11,7 +11,7 @@
   $currencies = FormFieldType::Currency();
   $types['currency'] = array();
   foreach ($currencies AS $currency) 
-  $types['currency'][$currency['iso']] = $currency['name'];
+  $types['currency'][$currency['iso']] = "{$currency['symbol']} {$currency['name']}";
   $types['number'] = array(''=>"-- Select --",'text'=>"Text Field", 'select'=>"Dropdown", 'spinner'=>"Spinner");
   //die("\$types - <pre>".print_r($types, 1)."</pre>");
   //foreach ($types AS &$types2) array_unshift($types2, array(''=>"-- Select --"));
