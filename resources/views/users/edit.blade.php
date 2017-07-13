@@ -218,14 +218,14 @@
                     {{--<input type="text" class="form-control" id="affiliation" value="">--}}
 
                     <select class="form-control" name="affiliation" >
-                        <option id="affiliation" selected value="select"></option>
+                        <option id="affiliation" selected ></option>
                         @foreach($selectAffiliations as $affiliationss )
 
                             <option   value="{{$affiliationss}}">{{$affiliationss}}</option>
 
                         @endforeach
-
                     </select>
+
                     @if ($errors->has('affiliation')) <p class="help-block red">*{{ $errors->first('affiliation') }}</p> @endif
               </div>
 

@@ -145,7 +145,7 @@
                                             <tbody>
                                                 <tr><!-- logo -->
                                                     <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px; text-align: center;">
-                                                        <a href="{{ URL::to('home') }}" style="text-decoration: none;">
+                                                        <a href="{{ env('LIVE_URL') }}" style="text-decoration: none;">
                                                            <img src="{{ asset('img/siyaleader_light_bg_100.png') }}" width='166px' alt="Siyaleader" />
                                                         </a>
                                                     </td>
