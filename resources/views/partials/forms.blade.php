@@ -180,7 +180,8 @@
     });
     var vall = $(el).parentsUntil(".modal").last().find("[name='id']").val();
     //editForm = edit;
-    var symbols = { AUD: "$", BRL: "R$", CAD: "$", CNY: "�", EUR: "�", HKD: "$", INR: "?", JPY: "�", MXN: "$", NZD: "$", NOK: "kr", GBP: "&pound;", RUB: "?",SGD: "$", KRW: "?", SEK: "kr", CHF: "Fr", TRY: "?", USD: "$", ZAR: "R" }
+    ///var symbols = { AUD: "$", BRL: "R$", CAD: "$", CNY: "�", EUR: "�", HKD: "$", INR: "?", JPY: "�", MXN: "$", NZD: "$", NOK: "kr", GBP: "&pound;", RUB: "?",SGD: "$", KRW: "?", SEK: "kr", CHF: "Fr", TRY: "?", USD: "$", ZAR: "R" }
+    var symbols = {}
     $(".modal-body #formId").val(form_id);
     $(".modal-body #formDataId").val(id);
     $(".modal-body #formAjax").val(ajax);
@@ -350,9 +351,10 @@
             } else if (data[1][i].type == "currency") {
               var div2 = document.createElement("div");
               input.style.textAlign = "right";
-              $(div2).append(symbols[opts.iso]+" ");
+              if (opts.iso) $(div2).append(symbols[opts.iso]+" ");
+              else $(div2).append("? ");
               $(div2).append(input);
-              $(input).attr("placeholder", "sdjsldsh");
+              //$(input).attr("placeholder", "sdjsldsh");
               //$(input).attr("required", "required");
               //$(input).attr("digits", "digits");
               //$(input).attr("data-rule-requiredd", "true");
@@ -685,7 +687,7 @@
   }
 
   function launchModalFormsIn() {
-    var uid = {{\Auth::user()->id}};
+    var uid = {{ (Auth::check() ? Auth::user()->id : 0) }};
     console.log("launchModalFormsIn() uid - ",uid);
     if (typeof oFormsInTable != "undefined") console.log("  oFormsInTable - ",oFormsInTable);
 

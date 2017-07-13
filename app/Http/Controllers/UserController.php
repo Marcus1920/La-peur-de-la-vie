@@ -3617,7 +3617,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
              $affiliation = Affiliation::find($userObj->affiliation);
-             $user->affiliation = $affiliation->slug;
+             $user->affiliation = $affiliation->name;
 
 
           }
@@ -3668,16 +3668,16 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-        if ($request['affiliation'] ==null) {
+        if ($request['affiliation'] =="Select / All") {
 
-           // $users_if   = 1;
+            $users_if   = 1;
         }
 
 
         else{
 
-            $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
 
+            $Affiliation_id= Affiliation::where('name',$request['affiliation'])->first();
             $users_if = $Affiliation_id->id;
 
 

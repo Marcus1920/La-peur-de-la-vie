@@ -1,32 +1,6 @@
-<!DOCTYPE html>
-<!--[if IE 9 ]><html class="ie9"><![endif]-->
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <meta name="format-detection" content="telephone=no">
-        <meta charset="UTF-8">
-        <meta name="description" content="Aims Safis Case Console Management">
-        <meta name="keywords" content="Aims Safis Case Console System,Incidents Management System">
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
+@extends("master")
 
-       <title> Ubulwembu  </title>
-
-        <!-- CSS -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/form.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/generics.css') }}" rel="stylesheet">
-
-    <style>
-        body{
-
-            background-color: #0B628D;
-        }
-
-    </style>
-    </head>
-    <body class="">
-
+@section("content")
     @if (count($errors) > 0)
     <div class="alert alert-danger">
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -100,17 +74,4 @@
 
        		     <img  src="{{ asset('/img/zzzz.png') }}">
        		     </div>
-        <!-- Javascript Libraries logod
-        <!-- jQuery -->
-        <script src="{{ asset('js/jquery.min.js') }}"></script> <!-- jQuery Library -->
-
-        <!-- Bootstrap -->
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-
-        <!--  Form Related -->
-        <script src="{{ asset('js/icheck.js') }}"></script> <!-- Custom Checkbox + Radio -->
-
-        <!-- All JS functions -->
-        <script src="{{ asset('js/functions.js') }}"></script>
-    </body>
-</html>
+@endsection

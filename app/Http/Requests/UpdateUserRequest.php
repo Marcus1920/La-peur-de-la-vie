@@ -36,7 +36,7 @@ class UpdateUserRequest extends Request
             'position'          => 'required|not_in:0',
 
 
-            'cellphone'         => 'required|digits:10',
+            'cellphone'         => 'required',
             'alt_cellphone'    => 'different:cellphone',
 
             'email'             => 'required|different:alt_email',

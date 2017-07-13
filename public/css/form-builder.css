@@ -52,7 +52,7 @@
     width: 100%;
 }
 .icon {
-    border: thin dashed #FF00FF;
+    border: 0 dashed #FF00FF;
     display: inline-block;
     /*float: left;*/
     height: 32px;
