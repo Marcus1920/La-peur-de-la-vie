@@ -26,7 +26,7 @@ class CreateCaseAgentRequest extends Request
        return [
 
             'case_type'      =>'required|not_in:0',
-            'case_sub_type'  =>'required|not_in:0'
+
             
         ];
     }

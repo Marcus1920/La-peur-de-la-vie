@@ -9,7 +9,7 @@
 
             <div class="modal-body">
                 {!! Form::open(['url' => 'addContact', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"addContactForm" ]) !!}
-                {!! Form::hidden('uid',Auth::user()->id,['id' => 'uid']) !!}
+                {!! Form::hidden('uid',(Auth::check() ? Auth::user()->id : 0),['id' => 'uid']) !!}
                 <div class="form-group">
                     {!! Form::label('First Name', 'First Name', array('class' => 'col-md-2 control-label')) !!}
                     <div class="col-md-10">

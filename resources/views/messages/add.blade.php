@@ -10,7 +10,7 @@
             <div class="modal-body">
 
                 {!! Form::open(['url' => 'addCaseMessage', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"addCaseMessage"]) !!}
-                {!! Form::hidden('uid',Auth::user()->id,['id' => 'uid']) !!}
+                {!! Form::hidden('uid',(Auth::check() ? Auth::user()->id : 0),['id' => 'uid']) !!}
                 {!! Form::hidden('to',NULL,['id' => 'to']) !!}
                 {!! Form::hidden('caseID',NULL,['id' => 'caseID']) !!}
 

@@ -75,6 +75,9 @@
     </head>
     <body>
 
+      @if(!\Auth::check())
+        @yield('content')
+      @else
         <header id="header" class="media">
             <a href="" id="menu-toggle"></a>
             <a class="logo pull-left" href="#">
@@ -605,5 +608,6 @@
         $(document).ready(function() {
 		});
     </script>
+      @endif
     </body>
 </html>

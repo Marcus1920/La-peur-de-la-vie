@@ -9,31 +9,22 @@
       <div class="modal-body">
         {!! Form::open(['url' => 'assignForm', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"testCustomForm", 'style'=>"height: 100%", 'novalidate_'=>"" ]) !!}
         {!! Form::hidden("form_id", null, array('class'=>"form-control", 'style'=>"width: 10em")) !!}
-
         <div>
           {!! Form::label('selDueDate', 'Due Date', array('class' => 'col-md-2 control-label')) !!}
           {!! Form::text("due_date", null, array('class'=>"date-only form-control", 'data-format'=>"yyyy-MM-dd",'id'=>"selDueDate", 'style'=>"width: 10em")) !!}
         </div>
-        <div class="form-groupgroups" style="display: none">
-          {!! Form::label('chkGroup', 'Name', array('class' => 'col-md-2 control-label')) !!}
-          <div class="col-md-10">
-            {!! Form::checkbox('usergroups[]',-1, false,['id'=>'chkGroup']) !!}
-          </div>
-        </div>
+        {{--<div class="form-groupgroups" style="display: none">
+          {!! Form::checkbox('usergroups[]',-1, false,['id'=>'chkGroup']) !!}
+          {!! Form::label('chkGroup', 'Name', array('class' => 'col-md-2_ control-label')) !!}
+        </div>--}}
         <div class="form-groupusers" style="display: none">
-          {!! Form::label('chkUser', 'Name', array('class' => 'col-md-2 control-label')) !!}
-          <div class="col-md-10">
-            {!! Form::checkbox('users[]',-1, false,['id'=>'chkUser']) !!}
-          </div>
+          {!! Form::checkbox('users[]',-1, false,['id'=>'chkUser']) !!}
+          {!! Form::label('chkUser', 'Name', array('class' => 'col-md-2_ control-label')) !!}
         </div>
         <h5>Groups</h5>
-        <div style="height: 100%; overflow-x: hidden; overflow-y: auto;" class="wgroups">
-
-        </div>
+        <div style="height: 100%; overflow-x: hidden; overflow-y: auto;" class="wgroups"></div>
         <h5>Users</h5>
-        <div style="height: 100%; overflow-x: hidden; overflow-y: auto;" class="wusers">
-
-        </div>
+        <div style="height: 100%; overflow-x: hidden; overflow-y: auto;" class="wusers"></div>
       </div>
       <div class="modal-footer">
         <div class="form-group">

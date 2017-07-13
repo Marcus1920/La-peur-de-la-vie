@@ -170,6 +170,13 @@ class FormsController extends Controller {
 					\Session::flash('failure', 'Form already assigned to '.$user['name'].' '.$user['surname'].' !');
 					\Session::flash('failure', 'Form already assigned to '.$user['name'].' '.$user['surname'].' !');
 				}
+			//die("<pre>{$txtDebug}</pre>");
+			\Mail::send('emails.formAssigned',array(), function($message) use ($user)
+			{
+				$message->from('info@siyaleader.net', 'Siyaleader');
+				$message->to($user['email'])->subject("Siyaleader Notification - Form Assigned: " .$user['name']);
+
+			});
 				//die("<pre>{$txtDebug}</pre>");
 
 
@@ -322,9 +329,9 @@ class FormsController extends Controller {
 		\Log::info($txtDebug);
     $saved = $form->save();
 		\Log::info("  \$saved - {$saved}");
-    if (array_key_exists("field", $req)) $saved = $form->saveFields($req, $this);
+	  $saved = $form->saveFields($req, $this);
 		\Log::info("  \$saved - {$saved}");
-	//die("<pre>{$txtDebug}</pre>");
+	  //die("<pre>{$txtDebug}</pre>");
     //die("<pre>FormsController->update(\$request) \$request - ".print_r($request->all(),1)."</pre>");
     //\Session::flash('success', "REQUEST<pre>".print_r($request, 1)."</pre>");
     if ($saved) {
