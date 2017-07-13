@@ -277,7 +277,7 @@
                                         {!! Form::text('postal_code',NULL,['class' => 'form-control input-sm','id' => 'postal_code','disabled' => 'disabled']) !!}
 
                                       </div>
-                                  </div>s
+                                  </div>
 
 
                                   <div class="form-group">
