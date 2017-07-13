@@ -326,6 +326,7 @@ function addField(index, vals) {
 	///$(template).on("mousedown", startDrag);
 	/////$(template).find(".options").find("[class^='opts']").hide();
 	updateField(template, vals, index);
+	updateFieldss();
 	/*$(template).find("input").on("ifClicked", function(ev) {
 		console.log("Checkbox clicked");
 	});
@@ -679,7 +680,7 @@ function updateField(template, vals, index) {
 	}
 	if (APP_DEBUG > 2) console.log("  index - ",index);
 	if (typeof index != "undefined") $(template).find("[name*='field']").each(function(i2, el2) {
-		el2.name = el2.name.replace(/\[\d*\]/, "["+index+"]");
+		//el2.name = el2.name.replace(/\[\d*\]/, "["+index+"]");
 		if (el2.id != "") el2.id = el2.id.replace(/\d*$/, index);
 	});
 	if (template.className.search("fieldTemplate") != -1) {
@@ -812,7 +813,7 @@ function updateFieldss() {
 		///console.log(".fieldTemplate(i, el) i - "+i+", el - ", el);
 		$(el).find("[name*='field']").each(function(i2, el2) {
 			/////console.log("  field(i2, el2) i - "+i2+", el2 - ", el2);
-			/////el2.name = el2.name.replace(/\[\d*\]/, "["+i+"]");
+			el2.name = el2.name.replace(/\[\d*\]/, "["+i+"]");
 			if (el2.id != "") {
 				/////el2.id = el2.id.replace(/\d*$/, i);
 				var lbl = $(el2).parent().find("label").first();
