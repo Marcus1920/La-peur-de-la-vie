@@ -75,7 +75,7 @@ $dbTables = array_merge(array(''=>"-- None --"), $dbTables);
                   </div>
               </div>
             </div>
-            <hr/>
+            <hr style="float: none; margin: 0.5em 0" />
               <div style="text-align: center">
                 <div style="display: inline-block">{!! Form::label("chkFormTypeForm", "Form", [ 'style'=>"float: left; padding: 0.25em 1em 0 1em" ]) !!} {!! Form::radio("chkFormType", "form", true, [ 'id'=>"chkFormTypeForm" ]) !!}</div>
                 <div style="display: inline-block">{!! Form::label("chkFormTypeWorkflow", "Workflow", [ 'style'=>"float: left; padding: 0.25em 1em 0 1em" ]) !!} {!! Form::radio("chkFormType", "workflow", false, [ 'id'=>"chkFormTypeWorkflow" ]) !!}</div>
