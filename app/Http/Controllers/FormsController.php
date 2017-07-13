@@ -329,7 +329,7 @@ class FormsController extends Controller {
 		\Log::info($txtDebug);
     $saved = $form->save();
 		\Log::info("  \$saved - {$saved}");
-    if (array_key_exists("field", $req)) $saved = $form->saveFields($req, $this);
+	  $saved = $form->saveFields($req, $this);
 		\Log::info("  \$saved - {$saved}");
 	  //die("<pre>{$txtDebug}</pre>");
     //die("<pre>FormsController->update(\$request) \$request - ".print_r($request->all(),1)."</pre>");
