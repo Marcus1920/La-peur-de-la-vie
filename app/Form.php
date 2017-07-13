@@ -203,7 +203,7 @@ class Form extends Eloquent {
 	
 	public function saveFields($req, $fff) {
 		$form_id = $req['formId'];
-		$fields = $req['field'];
+		$fields = array_key_exists("field", $req) ? $req['field'] : array();
 		$table = $req['table'];
 		//$txtDebug = "saveFields(req) form_id - {$form_id}, fields<pre>".print_r($fields, 1)."</pre>";
 		/*$txtDebug = "saveFields(req) form_id - {$form_id}";
@@ -227,7 +227,9 @@ class Form extends Eloquent {
 		$sqlDelete = "DELETE FROM forms_fields WHERE form_id = {$form_id}";
 		if (count($ids) > 0) $sqlDelete .= " AND id NOT IN (".implode(",", $ids).") ";
 		$txtDebug .= "\n  \$sqlDelete - {$sqlDelete}";
+		//die("<pre>$txtDebug<pre>");
 		\DB::delete($sqlDelete);
+		//die("<pre>$txtDebug<pre>");
 		if (count($fields) > 0) {
 			$order = 0;
 			foreach ($fields AS $i=>$field) {
