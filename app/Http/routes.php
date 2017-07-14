@@ -41,7 +41,10 @@ Route::group(['middleware' => 'resetLastActive'], function () {
 		if (!\Auth::check()) return view('auth.login');
 		else return redirect("/home");
 	});
+
     Route::get('home', ['uses' => 'HomeController@index']);
+	Route::get('home', ['uses' => 'HomeController@index']);
+
 });
 
 $this->post('dologin', 'Auth\LoginController@doLogin');

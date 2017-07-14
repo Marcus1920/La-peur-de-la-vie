@@ -600,14 +600,16 @@
         @include('partials.refresh')
         @include('partials.timeout')
 
-<script>
+      @endif
+			<script>
     var APP_DEBUG = {{ env("APP_DEBUG", 0) }};
     console.log("APP_DEBUG: ",APP_DEBUG," > 2 - ",(APP_DEBUG > 2));
 </script>
     <script>
         $(document).ready(function() {
+				//$.post( '{!!  url("/resetSession") !!}',{ '_token' : '{!! csrf_token() !!}' }, function( data ) { console.log("/resetSession A, data - ",data); });
+				//$.post( "/resetSession",{ '_token' : '{!! csrf_token() !!}' }, function( data ) { console.log("/resetSession B, data - ",data); });
 		});
     </script>
-      @endif
     </body>
 </html>
