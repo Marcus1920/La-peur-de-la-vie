@@ -297,6 +297,17 @@
 
                     @endif
 
+
+                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+
+                        <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
+                            <a class="sa-side-list" href="{{ url('log-viewer') }}">
+                                <span class="menu-item">Rest </span>
+                            </a>
+                        </li>
+
+                    @endif
+
                 </ul>
 
             </aside>
