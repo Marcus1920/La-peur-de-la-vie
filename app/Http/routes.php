@@ -153,11 +153,6 @@ Route::get('add-user',  function () {
     return view('users.registration');
 });
 
-
-Route::get('/', function () {
-    return view('auth.login');
-});
-
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
