@@ -156,6 +156,7 @@ return [
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
 
+
     ],
 
     /*
