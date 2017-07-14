@@ -1497,6 +1497,9 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
             $('#modalAddMeetingMinutesFilesModal').modal('toggle');
             $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! your file has been successfully uploaded <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
             HoldOn.close();
+						if ( $.fn.dataTable.isDataTable( '#meetingMinutesTable' ) ) {
+							$('#meetingMinutesTable').DataTable().ajax.reload();
+						}
 
           }
 
@@ -3062,8 +3065,6 @@ console.log("CreateCase error, data - ",data);
           if ( $.fn.dataTable.isDataTable( '#caseNotesTable' ) ) {
                     oTableCaseNotes.destroy();
           }
-
-
 
           oTableCaseNotes     = $('#caseNotesTable').DataTable({
                         "processing": true,
