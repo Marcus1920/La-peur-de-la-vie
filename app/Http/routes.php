@@ -1108,8 +1108,16 @@ Route::get('list-permissions-per-group/{group}', ['middleware' => 'resetLastActi
 Route::get('group-users-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'PermissionController@group_users_list']);
 
 
-Route::get('map', ['middleware' => 'resetLastActive', 'uses' => 'MapController@index']);
+//Route::get('map', ['middleware' => 'resetLastActive', 'uses' => 'MapController@index']);
 
+
+Route::get('map' , function(){
+
+
+
+        return  view(map.map);
+
+});
 
 Route::get('poimap/{id}', ['middleware' => 'resetLastActive', 'uses' => 'UserController@poimap']);
 
