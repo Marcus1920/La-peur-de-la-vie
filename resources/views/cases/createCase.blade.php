@@ -22,7 +22,7 @@
                     {!! Form::label('Search Client', 'Search Client', array('class' => 'col-md-3 control-label')) !!}
                     <div class="col-md-6">
                       {!! Form::text('hsecellphone',NULL,['class' => 'form-control input-sm','id' => 'hsecellphone']) !!}
-
+                        <div id = "hse_error_search"></div>
                   </div>
                 </div>
 
@@ -57,7 +57,7 @@
                     {!! Form::label('Company', 'Company', array('class' => 'col-md-3 control-label')) !!}
                     <div class="col-md-6">
                       {!! Form::text('company',NULL,['class' => 'form-control input-sm','id' => 'company','disabled']) !!}
-                     <div id = "hse_error_surname"></div>
+                     <div id = "hse_error_company"></div>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
               {!! Form::label('Enter Address', 'Enter Address', array('class' => 'col-md-3 control-label')) !!}
               <div class="col-md-6">
                 {!! Form::text('autocomplete',NULL,['class' => 'form-control input-sm','id' => 'autocomplete', "onfocus"=>"geolocate()"]) !!}
-
+<div id="hse_error_email"></div>
               </div>
             </div>
 
@@ -198,7 +198,7 @@
                 <div class="form-group">
                   {!! Form::label('Investigation Email', 'Investigation Email', array('class' => 'col-md-3 control-label')) !!}
                   <div class="col-md-6">
-                    {!! Form::text('investigation_email',NULL,['class' => 'form-control input-sm','id' => 'investigation_email','disabled']) !!}
+                        {!! Form::text('investigation_email',NULL,['class' => 'form-control input-sm','id' => 'investigation_email','disabled']) !!}
                     <div id = "hse_error_saps_investigation_email"></div>
                   </div>
                 </div>
@@ -233,7 +233,7 @@
 
                 <div class="form-group" id="case_sub_type_addition">
                     <div class="col-md-3"></div>
-                   {{-- <div class="col-md-6"><a id="add_case_type" class="btn btn-sm">Add Case Type</a></div>--}}
+                   <div class="col-md-6"><a id="add_case_type" class="btn btn-sm">Add Case Type</a></div>
                 </div>
 
                 <div id="case_types_div"></div>
@@ -246,8 +246,9 @@
                     {!! Form::label('Problem Description', 'Problem Description', array('class' => 'col-md-3 control-label')) !!}
                     <div class="col-md-6">
                         <textarea rows="5" id="description" name="description" class="form-control" maxlength="500"></textarea>
+                        <div id = "hse_error_description"></div>
                     </div>
-                    <div id = "hse_error_description"></div>
+
                 </div>
 
                 <hr class="whiter m-t-20">

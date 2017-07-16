@@ -154,7 +154,9 @@ return [
         App\Providers\TaskReminderServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
-				Arcanedev\LogViewer\LogViewerServiceProvider::class,
+
+        Arcanedev\LogViewer\LogViewerServiceProvider::class,
+
 
 
     ],
