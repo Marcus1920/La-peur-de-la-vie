@@ -3695,7 +3695,6 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         $user->cellphone                   =$request['cellphone'];
         $user->alt_cellphone               = $request['alt_cellphone'];
         $user->email                       =$request['email'];
-        $user->company                     =$request['company'];
         $user->alt_email                   = $request['alt_email'];
         $user->active                      = $request['status'];
         $user->department                  = $request['department'];

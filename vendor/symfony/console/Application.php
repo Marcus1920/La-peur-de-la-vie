@@ -15,7 +15,6 @@ use Symfony\Component\Console\Descriptor\TextDescriptor;
 use Symfony\Component\Console\Descriptor\XmlDescriptor;
 use Symfony\Component\Console\Formatter\OutputFormatter;
 use Symfony\Component\Console\Helper\DebugFormatterHelper;
-use Symfony\Component\Console\Helper\Helper;
 use Symfony\Component\Console\Helper\ProcessHelper;
 use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -129,7 +128,7 @@ class Application
         }
 
         if (null !== $e) {
-            if (!$this->catchExceptions || !$x instanceof \Exception) {
+            if (!$this->catchExceptions) {
                 throw $x;
             }
 
@@ -654,7 +653,7 @@ class Application
         do {
             $title = sprintf('  [%s]  ', get_class($e));
 
-            $len = Helper::strlen($title);
+            $len = $this->stringWidth($title);
 
             $width = $this->getTerminalWidth() ? $this->getTerminalWidth() - 1 : PHP_INT_MAX;
             // HHVM only accepts 32 bits integer in str_split, even when PHP_INT_MAX is a 64 bit integer: https://github.com/facebook/hhvm/issues/1327
@@ -665,7 +664,7 @@ class Application
             foreach (preg_split('/\r?\n/', $e->getMessage()) as $line) {
                 foreach ($this->splitStringByWidth($line, $width - 4) as $line) {
                     // pre-format lines to get the right string length
-                    $lineLength = Helper::strlen($line) + 4;
+                    $lineLength = $this->stringWidth($line) + 4;
                     $lines[] = array($line, $lineLength);
 
                     $len = max($lineLength, $len);
@@ -674,7 +673,7 @@ class Application
 
             $messages = array();
             $messages[] = $emptyLine = sprintf('<error>%s</error>', str_repeat(' ', $len));
-            $messages[] = sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - Helper::strlen($title))));
+            $messages[] = sprintf('<error>%s%s</error>', $title, str_repeat(' ', max(0, $len - $this->stringWidth($title))));
             foreach ($lines as $line) {
                 $messages[] = sprintf('<error>  %s  %s</error>', OutputFormatter::escape($line[0]), str_repeat(' ', $len - $line[1]));
             }
@@ -1085,6 +1084,19 @@ class Application
     public function setDefaultCommand($commandName)
     {
         $this->defaultCommand = $commandName;
+    }
+
+    private function stringWidth($string)
+    {
+        if (!function_exists('mb_strwidth')) {
+            return strlen($string);
+        }
+
+        if (false === $encoding = mb_detect_encoding($string, null, true)) {
+            return strlen($string);
+        }
+
+        return mb_strwidth($string, $encoding);
     }
 
     private function splitStringByWidth($string, $width)

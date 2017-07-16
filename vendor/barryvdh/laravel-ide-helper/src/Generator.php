@@ -12,7 +12,7 @@ namespace Barryvdh\LaravelIdeHelper;
 
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Collection;
+use Illuminate\Config\Repository as ConfigRepository;
 use ReflectionClass;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -80,19 +80,18 @@ class Generator
     public function generatePhpHelper()
     {
         $app = app();
-        return $this->view->make('helper')
-            ->with('namespaces_by_extends_ns', $this->getAliasesByExtendsNamespace())
-            ->with('namespaces_by_alias_ns', $this->getAliasesByAliasNamespace())
+        return $this->view->make('ide-helper::helper')
+            ->with('namespaces', $this->getNamespaces())
             ->with('helpers', $this->helpers)
             ->with('version', $app->version())
-            ->with('include_fluent', $this->config->get('ide-helper.include_fluent', true))
+            ->with('include_fluent', $this->config->get('ide-helper.include_fluent', false))
             ->render();
     }
 
     public function generateJsonHelper()
     {
         $classes = array();
-        foreach ($this->getValidAliases() as $aliases) {
+        foreach ($this->getNamespaces() as $aliases) {
             foreach ($aliases as $alias) {
                 $functions = array();
                 foreach ($alias->getMethods() as $method) {
@@ -187,13 +186,13 @@ class Generator
     }
 
     /**
-     * Find all aliases that are valid for us to render
+     * Find all namespaces/aliases that are valid for us to render
      *
-     * @return Collection
+     * @return array
      */
-    protected function getValidAliases()
+    protected function getNamespaces()
     {
-        $aliases = new Collection();
+        $namespaces = array();
 
         // Get all aliases
         foreach ($this->getAliases() as $name => $facade) {
@@ -209,36 +208,16 @@ class Generator
                 if (array_key_exists($name, $this->extra)) {
                     $alias->addClass($this->extra[$name]);
                 }
-                
-                $aliases[] = $alias;
+
+                $namespace = $alias->getExtendsNamespace() ?: $alias->getNamespace();
+                if (!isset($namespaces[$namespace])) {
+                    $namespaces[$namespace] = array();
+                }
+                $namespaces[$namespace][] = $alias;
             }
         }
 
-        return $aliases;
-    }
-    
-    /**
-     * Regroup aliases by namespace of extended classes
-     *
-     * @return Collection
-     */
-    protected function getAliasesByExtendsNamespace()
-    {
-        return $this->getValidAliases()->groupBy(function (Alias $alias) {
-            return $alias->getExtendsNamespace();
-        });
-    }
-    
-    /**
-     * Regroup aliases by namespace of alias
-     *
-     * @return Collection
-     */
-    protected function getAliasesByAliasNamespace()
-    {
-        return $this->getValidAliases()->groupBy(function (Alias $alias) {
-            return $alias->getNamespace();
-        });
+        return $namespaces;
     }
 
     protected function getAliases()
