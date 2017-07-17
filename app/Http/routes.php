@@ -16,8 +16,8 @@ use App\Affiliation;
 use App\MeetingVenue;
 use App\CaseType;
 use App\CaseSubType;
-
-
+use App\AffiliationPositions;
+use App\Position;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -1054,8 +1054,16 @@ Route::get('list-affiliations', ['middleware' => 'resetLastActive', function () 
 Route::get('list-affiliation-positions/{affiliation}', ['middleware' => 'resetLastActive', function ($affiliation) {
 
     $affiliationObj = Affiliation::find($affiliation);
+    $afflpos= AffiliationPositions::where('affiliation',$affiliation)->first();
+    $id=$affiliation;
+    $created=$afflpos->created_at;
+    $users=User::where('id',$afflpos->created_by)->first();
+    $created_by_name = $users->name;
+    $created_by_surname = $users->surname;
 
-    return view('affiliations.positions', compact('affiliationObj'));
+    $position= Position::where('id',$afflpos->positions)->first();
+    $position_name=$position->name;
+    return view('affiliations.positions', compact('affiliationObj','id','created','created_by_name','created_by_surname','position_name'));
 }]);
 
 Route::get('affiliations-list', ['middleware' => 'resetLastActive', 'uses' => 'AffiliationsController@index']);
