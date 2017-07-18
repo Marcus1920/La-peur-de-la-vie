@@ -33,7 +33,7 @@
 
 
 
-            <iframe id="googleMap" src="map1.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="width:100%;height:100%;" allowFullScreen></iframe>
+            <iframe id="googleMap" src="map.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="width:100%;height:100%;" allowFullScreen></iframe>
 
         </div>
     </div>
