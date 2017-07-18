@@ -43,8 +43,9 @@
                     <th>Id</th>
                     <th>Created At</th>
                     <th>Name</th>
-                    <th>Actions</th>
+                    <th>Position</th>
               </tr>
+            <tr><td>{{$id}}</td><td>{{$created->diffForHumans()}}</td><td>{{$created_by_name}} {{$created_by_surname}}</td><td>{{$position_name}}</td></tr>
             </thead>
         </table>
     </div>

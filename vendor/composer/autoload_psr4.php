@@ -51,5 +51,7 @@ return array(
     'Cartalyst\\Sentinel\\' => array($vendorDir . '/cartalyst/sentinel/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Barryvdh\\LaravelIdeHelper\\' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
+    'Arcanedev\\Support\\' => array($vendorDir . '/arcanedev/support/src'),
+    'Arcanedev\\LogViewer\\' => array($vendorDir . '/arcanedev/log-viewer/src'),
     'App\\' => array($baseDir . '/app'),
 );
