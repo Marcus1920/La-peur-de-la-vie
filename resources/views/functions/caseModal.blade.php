@@ -2344,6 +2344,16 @@ $("#submitAssociatePoiForm").on("click",function(){
                     HoldOn.close();
                     $("#hse_error_type").html("");
                     $("#hse_error_sub_type").html("");
+                    $("#hse_error_client_reference_number").html("");
+                    $("#hse_error_cellphone").html("");
+                    $("#hse_error_name").html("");
+                    $("#hse_error_surname").html("");
+                    $("#hse_error_company").html("");
+                    $("#hse_error_description").html("");
+                    $("#hse_error_saps_station").html("");
+                    $("#hse_error_email").html("");
+                    $("#hse_error_saps_case_number").html("");
+
 
 
                     if (data.responseJSON.case_type)
@@ -2351,9 +2361,46 @@ $("#submitAssociatePoiForm").on("click",function(){
                       $("#hse_error_type").html("<p class='help-block red'>*"+data.responseJSON.case_type+"</p>")
                     }
 
+                    if (data.responseJSON.saps_case_number)
+                    {
+                      $("#hse_error_saps_case_number").html("<p class='help-block red'>*"+data.responseJSON.saps_case_number+"</p>")
+                    }
+
+                    if (data.responseJSON.saps_station)
+                    {
+                      $("#hse_error_saps_station").html("<p class='help-block red'>*"+data.responseJSON.saps_station+"</p>")
+                    }
+
                     if (data.responseJSON.case_sub_type)
                     {
                       $("#hse_error_sub_type").html("<p class='help-block red'>*"+data.responseJSON.case_sub_type+"</p>")
+                    }
+                    if(data.responseJSON.rate_value)
+                    {
+                        $("#hse_error_client_reference_number").html("<p class='help-block red'>*"+data.responseJSON.rate_value+"</p>")
+                    }
+                    if(data.responseJSON.cellphone)
+                    {
+                        $("#hse_error_cellphone").html("<p class='help-block red'>*"+data.responseJSON.cellphone+"</p>")
+                    }
+
+                    if(data.responseJSON.name)
+                    {
+                        $("#hse_error_name").html("<p class='help-block red'>*"+data.responseJSON.name+"</p>")
+                    }
+
+                    if(data.responseJSON.surname)
+                    {
+                        $("#hse_error_surname").html("<p class='help-block red'>*"+data.responseJSON.surname+"</p>")
+                    }
+
+                    if(data.responseJSON.company)
+                    {
+                        $("#hse_error_company").html("<p class='help-block red'>*"+data.responseJSON.company+"</p>")
+                    }
+                    if(data.responseJSON.description)
+                    {
+                        $("#hse_error_description").html("<p class='help-block red'>*"+data.responseJSON.description+"</p>")
                     }
 
                     $('#modalCreateCaseAgent').modal('show');
