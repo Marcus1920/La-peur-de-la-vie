@@ -1,5 +1,10 @@
 
-
+<style>
+    .case{
+        border: 1px solid black;
+        margin-left: 5px;
+    }
+</style>
 
 <!-- Modal Default -->
 <div class="modal fade modalCase modal-blue" id="modalCase" tabindex="-1" role="dialog" aria-hidden="true">
@@ -12,28 +17,31 @@
 
             </div>
 
+          
+
             <div class="modal-body">
 
 				<div id="exTab1" class="container">
+
 					<ul  class="nav nav-pills nav-justified">
 						<li class="active">
-							<a  href="#1a" data-toggle="tab">Case Profile</a>
+							<a  href="#1a" data-toggle="tab" class="case">Case Profile</a>
 						</li>
-						<li><a href="#2a" data-toggle="tab">Related Cases</a>
+						<li><a href="#2a" data-toggle="tab" class="case">Related Cases</a>
 						</li>
-						<li><a href="#3a" data-toggle="tab">People Involved</a>
+						<li><a href="#3a" data-toggle="tab" class="case">People Involved</a>
 						</li>
-						<li><a href="#4a" data-toggle="tab">Person Of Interest</a>
+						<li><a href="#4a" data-toggle="tab" class="case">Person Of Interest</a>
 						</li>
 
 						<!--------------------- -------->
-						<li><a href="#5a" data-toggle="tab">Case Activities</a>
+						<li><a href="#5a" data-toggle="tab" class="case">Case Activities</a>
 						</li>
 
-						<li><a href="#6a" data-toggle="tab">Case Notes</a>
+						<li><a href="#6a" data-toggle="tab" class="case">Case Notes</a>
 						</li>
 
-						<li><a href="#7a" data-toggle="tab">Case Attachments</a>
+						<li><a href="#7a" data-toggle="tab" class="case">Case Attachments</a>
 						</li>
 					</ul>
 
