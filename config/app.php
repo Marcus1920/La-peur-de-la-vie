@@ -153,7 +153,7 @@ return [
         App\Providers\TaskActivityProvider::class,
         App\Providers\TaskReminderServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
-        Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
+       // Cartalyst\Sentinel\Laravel\SentinelServiceProvider::class,
 
         Arcanedev\LogViewer\LogViewerServiceProvider::class,
 
@@ -210,9 +210,9 @@ return [
         'HTML'       => 'Illuminate\Html\HtmlFacade',
         'Datatables' => yajra\Datatables\Datatables::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
-        'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
-        'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
-        'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
+        //'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
+        //'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,
+       // 'Sentinel'   => Cartalyst\Sentinel\Laravel\Facades\Sentinel::class,
 
 
 
