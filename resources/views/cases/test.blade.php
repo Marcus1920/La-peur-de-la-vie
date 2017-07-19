@@ -94,7 +94,7 @@
                                     </li>
                                     <li><a href="#2a" data-toggle="tab" onclick="hides()">Related Cases</a>
                                     </li>
-                                    <li><a href="#3a" data-toggle="tab">People Involved</a>
+                                    <li><a href="#3a" data-toggle="tab" onclick="hides()">People Involved</a>
                                     </li>
                                     <li><a href="#4a" data-toggle="tab" onclick="hides()">Person Of Interest</a>
                                     </li>
@@ -359,7 +359,7 @@
                             {{--</div>--}}
                             {{--</div>--}}
                             <!-- train section -->
-                                <div class="bhoechie-tab-content active">
+                                <div class="bhoechie-tab-content active" id="top_navs_action" >
                                     <center>
                                         {{--<h1 class="glyphicon glyphicon-road" style="font-size:12em;color:#55518a"></h1>--}}
                                         {{--<h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>--}}
@@ -369,7 +369,7 @@
                                         <div class="row">
 
                                             <div class="btn-group-vertical">
-                                                <a id="editCaseDiv" data-toggle="modal" onclick data-target=".modalCaseReport"></a>
+                                                <a id="editCaseDiv" data-toggle="modal" onclick data-target="modalCaseReport"></a>
                                                 @if(isset($userAllocateCasesPermission) && $userAllocateCasesPermission->permission_id =='22')
                                                     <a class="btn btn-lg btn-alt" style="margin-top: 20%;" data-toggle="modal" onClick="launchReferModal('Allocate');" data-target=".modalReferCase">Allocate Case</a>
                                                 @endif
@@ -430,7 +430,6 @@
                                             @foreach($case as $case)
 
                                                 <h1> </h1>
-
 
 
                                                 <div class="tab-content clearfix">
@@ -809,27 +808,35 @@
                                 </div>
 
                                 <!-- hotel search -->
-                                <div class="bhoechie-tab-content">
+
+                                <div class="bhoechie-tab-content"  >
+                                    <div id="side_contents">
                                     <center>
                                         <h1 class="glyphicon glyphicon-home" style="font-size:12em;color:#55518a"></h1>
                                         <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
                                         <h3 style="margin-top: 0;color:#55518a">Hotel Directory</h3>
                                     </center>
+                                    </div>
                                 </div>
                                 <div class="bhoechie-tab-content">
+                                    <div id="side_contents2">
                                     <center>
                                         <h1 class="glyphicon glyphicon-cutlery" style="font-size:12em;color:#55518a"></h1>
                                         <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
                                         <h3 style="margin-top: 0;color:#55518a">Restaurant Diirectory</h3>
                                     </center>
+                                    </div>
                                 </div>
                                 <div class="bhoechie-tab-content">
+                                    <div id="side_contents3">
                                     <center>
                                         <h1 class="glyphicon glyphicon-credit-card" style="font-size:12em;color:#55518a"></h1>
                                         <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
                                         <h3 style="margin-top: 0;color:#55518a">Credit Card</h3>
                                     </center>
                                 </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -1514,10 +1521,18 @@
                     });
 
                     function shows() {
-                        document.getElementById("side_navs").style.display="block"
+                        document.getElementById("side_navs").style.display="block";
+                        document.getElementById("top_navs_action").className="bhoechie-tab-content";
+                        document.getElementById('side_contents').style.display="block";
+                        document.getElementById('side_contents2').style.display="block";
+                        document.getElementById('side_contents3').style.display="block";
                     }
                     function hides() {
-                        document.getElementById("side_navs").style.display="none"
+                        document.getElementById("side_navs").style.display="none";
+                        document.getElementById('side_contents').style.display="none";
+                        document.getElementById('side_contents2').style.display="none";
+                        document.getElementById('side_contents3').style.display="none";
+                        document.getElementById("top_navs_action").className="bhoechie-tab-content active";
                     }
                 </script>
 
