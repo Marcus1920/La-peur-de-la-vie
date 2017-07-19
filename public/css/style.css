@@ -2332,3 +2332,7 @@ div.dataTables_processing {
 
 
 
+.pagination > .disabled a, .pagination > li:first-child > span {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.1);
+}
