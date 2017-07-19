@@ -90,23 +90,22 @@
                             <div class="panel-heading">
                                 <ul  class="nav nav-pills nav-justified">
                                     <li class="active">
-                                        <a  href="#1a" data-toggle="tab">Case Profile</a>
+                                        <a  href="#1a" data-toggle="tab" onclick="shows()">Case Profile</a>
                                     </li>
-                                    <li><a href="#2a" data-toggle="tab">Related Cases</a>
+                                    <li><a href="#2a" data-toggle="tab" onclick="hides()">Related Cases</a>
                                     </li>
                                     <li><a href="#3a" data-toggle="tab">People Involved</a>
                                     </li>
-                                    <li><a href="#4a" data-toggle="tab">Person Of Interest</a>
+                                    <li><a href="#4a" data-toggle="tab" onclick="hides()">Person Of Interest</a>
+                                    </li>
+                      <!--------------------- -------->
+                                    <li><a href="#5a" data-toggle="tab" onclick="hides()">Case Activities</a>
                                     </li>
 
-                                    <!--------------------- -------->
-                                    <li><a href="#5a" data-toggle="tab">Case Activities</a>
+                                    <li><a href="#6a" data-toggle="tab" onclick="hides()">Case Notes</a>
                                     </li>
 
-                                    <li><a href="#6a" data-toggle="tab">Case Notes</a>
-                                    </li>
-
-                                    <li><a href="#7a" data-toggle="tab">Case Attachments</a>
+                                    <li><a href="#7a" data-toggle="tab" onclick="hides()">Case Attachments</a>
                                     </li>
 
                                 </ul>
@@ -115,7 +114,8 @@
                                 <hr class="whiter m-b-20">
 
                             </div>
-                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu">
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu" id="side_navs">
                                 <div class="list-group">
                                     <a href="#" class="list-group-item active text-center">
                                         <h5 class="glyphicon glyphicon-plane"></h5><br/>Allocate Case
@@ -1512,7 +1512,16 @@
                         });
 
                     });
+
+                    function shows() {
+                        document.getElementById("side_navs").style.display="block"
+                    }
+                    function hides() {
+                        document.getElementById("side_navs").style.display="none"
+                    }
                 </script>
+
+
 @endsection
 
 
