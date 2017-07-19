@@ -85,9 +85,10 @@
                                         </table>
                                     </td>
                                 </table>
+
                             </td>
 
-                            <td bgcolor="#1c1c1c" valign=middle align=right width=25 style="min-width:25px">
+                            <td bgcolor="#1c1c1c" valign=middle align=center width="400"style="min-width:200px">
                                 <a href="#" id="newCaseIcon" onclick="document.getElementById('RUS').innerHTML = 'ARE YOU SURE?';switchNewCaseMarker('icon',this.id);this.blur()"><i id="addCase" class="fa fa-plus-square-o fa-lg fa-fw" style="color:#ffffff" title="Add a new case ..." ></i></a>
                             </td>
                             <td bgcolor="#1c1c1c" valign=middle align=right><font style="font: 10pt 'arial'; color:#FFFFFF;"><span id="toolTip"></span></font>&nbsp;</td>
@@ -256,7 +257,6 @@ function initialize() {
             }
           });
           map.fitBounds(bounds);
-          addCase=switchNewCaseMarker('icon',this.id);this.blur();
         });
 
 
@@ -1399,8 +1399,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </table>
 </div>
 
-<div id="ruSure" style="opacity:0.9;padding:6px;border-radius:3px;position:absolute;width:212px;right:230px;top:31px;background:#1c1c1c;align:center;z-index:12;display:none;box-shadow:4px 4px 4px #000000">
-    <table border=0 cellpadding=3 cellspacing=0 style="width:100%;font: 12pt 'Arial';color: #ffffff;border-collapse:collapse;border:1px solid #ffffff">
+<div id="ruSure" style="float: left;opacity:0.9;padding:6px;border-radius:3px;position:absolute;width:300px;left:230px;top:31px;background:#1c1c1c;align:center;z-index:12;display:none;box-shadow:4px 4px 4px #000000">
+    <table border=0 cellpadding=3 cellspacing=0 style="float: left; width:100%;font: 12pt 'Arial';color: #ffffff;border-collapse:collapse;border:1px solid #ffffff">
         <tr>
             <td valign=middle align=center colspan=2>
                 <span id="RUS">ARE YOU SURE?</span>
