@@ -344,7 +344,7 @@ class CasesController extends Controller
 
 
         return \Datatables::of($cases)
-            ->addColumn('actions', '<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchCaseModal({{$id}},1);" data-target=".modalCase">View</a>
+            ->addColumn('actions', '<a class="btn btn-xs btn-alt" data-toggle="modal" href="casetest/{{ $id }}"  target="_self">View</a>
 
                                                    <a class="btn btn-xs btn-alt" data-toggle="modal" href="view-case-poi-associates/{{ $id }}" target="_blank">View POI association chart</a>
                                                     ')
@@ -561,9 +561,9 @@ class CasesController extends Controller
                 'typeStatus' => $request['typeStatus']
             );
 
-         $details = CaseReport::where('id' , '=',$request['caseID'] )->first() ;
-		 $details->status = 7;
-		 $details->save() ;
+            $details = CaseReport::where('id' , '=',$request['caseID'] )->first() ;
+            $details->status = 7;
+            $details->save() ;
 
 
             $caseActivity = New CaseActivity();
@@ -578,24 +578,24 @@ class CasesController extends Controller
             $caseEscalationObj->from = \Auth::user()->id;
             $caseEscalationObj->to = $to;
             $caseEscalationObj->type = $type;
-			$caseEscalationObj->description = $details->description;
-			$caseEscalationObj->category = $details->case_type;
-			$caseEscalationObj->sub_category =  $details->case_sub_type;
+            $caseEscalationObj->description = $details->description;
+            $caseEscalationObj->category = $details->case_type;
+            $caseEscalationObj->sub_category =  $details->case_sub_type;
 
 
-			$caseEscalationObj->investigation_officer = $details->investigation_officer;
-			$caseEscalationObj->investigation_cell =  $details->investigation_cell;
-			$caseEscalationObj->investigation_email =  $details->investigation_email;
-			$caseEscalationObj->status = 7;
+            $caseEscalationObj->investigation_officer = $details->investigation_officer;
+            $caseEscalationObj->investigation_cell =  $details->investigation_cell;
+            $caseEscalationObj->investigation_email =  $details->investigation_email;
+            $caseEscalationObj->status = 7;
 
 
 
 
-	    $caseEscalationObj->start    = date("Y-m-d");
-	    $caseEscalationObj->color    = "#4caf50";
-	    $caseEscalationObj->end = $request['due_date'];
-	    $caseEscalationObj->title    = "Case ID: " . $request['caseID'];
-	    $caseEscalationObj->due_date = $request['due_date']." ".$request['due_time'];
+            $caseEscalationObj->start    = date("Y-m-d");
+            $caseEscalationObj->color    = "#4caf50";
+            $caseEscalationObj->end = $request['due_date'];
+            $caseEscalationObj->title    = "Case ID: " . $request['caseID'];
+            $caseEscalationObj->due_date = $request['due_date']." ".$request['due_time'];
             $caseEscalationObj->message = $request['message'];
             $caseEscalationObj->save();
 
@@ -646,21 +646,21 @@ class CasesController extends Controller
 
     }
 
-	public function mobilecalendarListPerUser()
+    public function mobilecalendarListPerUser()
     {
-		$api_key  = \Input::get('api_key');
+        $api_key  = \Input::get('api_key');
 
-		$user  = User::where('api_key','=',$api_key )->first();
+        $user  = User::where('api_key','=',$api_key )->first();
 
-     //  $events    = CaseEscalator::select('id','title','start','end','color', 'description' 'department' '' 'investigation_note'  'message' )->where('to','=',$user->id)->get();
+        //  $events    = CaseEscalator::select('id','title','start','end','color', 'description' 'department' '' 'investigation_note'  'message' )->where('to','=',$user->id)->get();
         $events = \DB::table('cases_escalations')
 
-						->join('categories','cases_escalations.category','=','categories.id')
-						->join('cases_statuses', 'cases_escalations.status', '=', 'cases_statuses.id')
+            ->join('categories','cases_escalations.category','=','categories.id')
+            ->join('cases_statuses', 'cases_escalations.status', '=', 'cases_statuses.id')
 
-					    ->join('sub_categories', 'cases_escalations.sub_category', '=', 'sub_categories.id')
-                        ->where('to','=',$user->id)
-                        ->select(\DB::raw( "
+            ->join('sub_categories', 'cases_escalations.sub_category', '=', 'sub_categories.id')
+            ->where('to','=',$user->id)
+            ->select(\DB::raw( "
                                     cases_escalations.id,
                                     cases_escalations.title,
                                     cases_escalations.start,
@@ -675,12 +675,12 @@ class CasesController extends Controller
 									categories.name as category,
 									sub_categories.name as sub_category
 									")
-									)->get() ;
+            )->get() ;
 
 
 
 
-	   echo json_encode($events);
+        echo json_encode($events);
 
     }
 
@@ -988,9 +988,99 @@ class CasesController extends Controller
      *
      * @param  int $id
      * @return Response
+     *
+     *
      */
+
+    public  function  viewcase($id)
+    {
+
+
+        $destinationFolder = 'files/case_' . $id;
+
+        if (!\File::exists($destinationFolder)) {
+            $createDir = \File::makeDirectory($destinationFolder, 0777, true);
+        }
+
+        $caseObj = \DB::table('cases')
+            ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+            ->where('cases.id', '=', $id)
+            ->select(\DB::raw("
+                                    cases.id,
+                                    cases.case_sub_type,
+                                    cases.case_type,
+                                    cases.house_holder_id,
+                                    cases_statuses.name as status
+                                   "
+            ))
+            ->first();
+
+
+        if ($caseObj->status == 'Pending') {
+
+            $case = \DB::table('cases')
+                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                ->join('cases_types', 'cases.case_type', '=', 'cases_types.id')
+                ->join('cases_sub_types', 'cases.case_sub_type', '=', 'cases_sub_types.id')
+                ->where('cases.id', '=', $id)
+                ->select(\DB::raw("
+                                    cases.id,
+                                    cases.description,
+                                    cases.created_at,
+                                    cases.img_url,
+                                
+                                    cases_types.name as  case_type,
+                                    cases_sub_types.name  as  case_sub_type ,
+                                    cases.reporter as reporteID,
+                                    cases.house_holder_id,
+                                    cases.saps_case_number,
+                                    cases.street_number,
+                                    cases.route,
+                                    cases.locality,
+                                    cases.administrative_area_level_1,
+                                    cases.postal_code,
+                                    cases.country,
+                                    cases.client_reference_number,
+                                    cases.saps_station,
+                                    cases.investigation_officer,
+                                    cases.investigation_cell,
+                                    cases.investigation_email,
+                                    cases.investigation_note,
+                                    cases_statuses.name as status,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporter,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as household,
+                                    (select `created_at` from `cases_activities` where `case_id` = `cases`.`id` order by `created_at` desc limit 1) as last_at,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporterCell,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as householdCell
+                                   "
+                )
+                )
+                ->get();
+        }
+
+
+        $relatedCases = \DB::table('related_cases')
+            ->join('cases', 'related_cases.child', '=', 'cases.id')
+            ->where('related_cases.parent', '=', $id)
+            ->select(
+                array(
+                    'cases.id as id',
+                    'cases.description as description',
+                    'related_cases.created_at as created_at'
+
+                )
+            );
+
+
+
+        return  view('cases.test')->with(compact('case')) ;
+
+    }
+
     public function edit($id)
     {
+
+
 
         $destinationFolder = 'files/case_' . $id;
 
@@ -1184,7 +1274,7 @@ class CasesController extends Controller
         }
 
 
-        return $case;
+        return  view('case.test');
     }
 
     /**
@@ -1196,8 +1286,8 @@ class CasesController extends Controller
      */
     public function captureCaseUpdate(CaseRequest $request)
     {
-	    $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequest \$request) \$request - ".print_r($request, 1);
-	    die("<pre>{$txtDebug}</pre>");
+        $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequest \$request) \$request - ".print_r($request, 1);
+        die("<pre>{$txtDebug}</pre>");
         $userRole = UserRole::where('name', '=', 'House Holder')->first();
         $user = New User();
         $user->role = $userRole->id;
@@ -1245,8 +1335,8 @@ class CasesController extends Controller
 
     public function captureCaseUpdateH(CaseRequestH $request)
     {
-	    $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequestH \$request) \$request - ".print_r($request, 1);
-	    die("<pre>{$txtDebug}</pre>");
+        $txtDebug = __CLASS__.".".__FUNCTION__."(CaseRequestH \$request) \$request - ".print_r($request, 1);
+        die("<pre>{$txtDebug}</pre>");
         $casePriority = CasePriority::where('slug', '=', $request['priority'])->first();
         $houseHolderObj = User::find($request['hseHolderId']);
         $case = CaseReport::find($request['caseID']);
@@ -1274,7 +1364,7 @@ class CasesController extends Controller
      */
     public function create(CreateCaseRequest $request)
     {
-$txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseRequest \$request) \$request - ".print_r($request, 1);
+        $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseRequest \$request) \$request - ".print_r($request, 1);
         $case = CaseReport::find($request['caseID']);
         $newCase = New CaseReport();
         $newCase->created_at = $case->created_at;
@@ -1292,7 +1382,7 @@ $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseRequest \$request) \$request 
         $newCase->active = 1;
         $newCase->house_holder_id = $case->house_holder_id;
         $newCase->agent = $case->agent;
-die("<pre>{$txtDebug}</pre>");
+        die("<pre>{$txtDebug}</pre>");
         $newCase->save();
 
         $relatedCase = New CaseRelated();
@@ -1343,13 +1433,13 @@ die("<pre>{$txtDebug}</pre>");
     function createCaseAgent(CreateCaseAgentRequest $request)
     {
 
-	    $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseAgentRequest \$request) \$request - ".print_r($request->all(), 1);
+        $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseAgentRequest \$request) \$request - ".print_r($request->all(), 1);
 
         $house_holder_id = 0;
         if ($request['house_holder_id']) $house_holder_id = $request['house_holder_id'];
         else if ($request['hseHolderId']) $house_holder_id = $request['hseHolderId'];
-	    $txtDebug .= PHP_EOL."  \$house_holder_id - {$house_holder_id}";
-	    //die("<pre>{$txtDebug}</pre>");
+        $txtDebug .= PHP_EOL."  \$house_holder_id - {$house_holder_id}";
+        //die("<pre>{$txtDebug}</pre>");
 
         if (empty($house_holder_id)) {
 
@@ -1382,20 +1472,20 @@ die("<pre>{$txtDebug}</pre>");
         $case_sub_type = ($request['case_sub_type'] == 0) ? 7 : $request['case_sub_type'];
         $house_holder_obj = User::find($house_holder_id);
 
-	$officer;
+        $officer;
 
-	if($request['officers'] == 0){
-		$investigationOfficer  			= new InvestigationOfficer();
-		$investigationOfficer->name		= $request['investigation_officer'];
-		$investigationOfficer->email 		= $request['investigation_email'];
-		$investigationOfficer->cellphone 	= $request['investigation_cell'];
-		$investigationOfficer->save();
+        if($request['officers'] == 0){
+            $investigationOfficer  			= new InvestigationOfficer();
+            $investigationOfficer->name		= $request['investigation_officer'];
+            $investigationOfficer->email 		= $request['investigation_email'];
+            $investigationOfficer->cellphone 	= $request['investigation_cell'];
+            $investigationOfficer->save();
 
-		$officer = $request['investigation_officer'];
-	}else{
-		$officerObj = InvestigationOfficer::find($request['officers']);
-		$officer = $officerObj->name;
-	}
+            $officer = $request['investigation_officer'];
+        }else{
+            $officerObj = InvestigationOfficer::find($request['officers']);
+            $officer = $officerObj->name;
+        }
 
         $newCase = New CaseReport();
         $newCase->created_at = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
@@ -1464,7 +1554,7 @@ die("<pre>{$txtDebug}</pre>");
         $this->case_responders->send_comms_to_first_responders($newCase,$first_responders);
 
 
-	    $caseNote          = new CaseNote();
+        $caseNote          = new CaseNote();
         $caseNote->note    = $request['investigation_note'];;
         $caseNote->user    = \Auth::user()->id;
         $caseNote->case_id = $newCase->id;
