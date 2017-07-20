@@ -137,23 +137,22 @@
                                         <h5 class="glyphicon glyphicon-ok-sign"></h5><br/>Accept Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-log-out"></h5><br/>Refer Case
+                                        <h5 class="glyphicon glyphicon-plus-sign"></h5><br/> Add Case Note
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-plus-sign"></h5><br/>Add Case Note
+                                        <h5 class="glyphicon glyphicon-paperclip"></h5><br/>Attach File
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-<<<<<<< HEAD
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Close Case
-=======
-                                        <h4 class="glyphicon glyphicon-paperclip"></h4><br/>Attach File
+
+
+                                        <h4 class="glyphicon glyphicon-log-out"></h4><br/>Refer Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-off"></h4><br/>Close Case
->>>>>>> origin/feature/Case_profile_design
+
                                     </a>
                                 </div>
                             </div>
