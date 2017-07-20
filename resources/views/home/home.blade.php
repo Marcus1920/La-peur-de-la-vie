@@ -232,8 +232,6 @@
 @include('cases.closeRequest')
 @include('addressbook.list')
 @include('addressbook.add')
-@include('casenotes.add')
-@include('casefiles.add')
 @include('users.edit')
 @include('cases.workflow')
 @include('cases.poi')

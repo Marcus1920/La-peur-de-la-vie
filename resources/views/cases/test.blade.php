@@ -108,6 +108,9 @@
                                     <li><a href="#7a" data-toggle="tab" onclick="hides()">Case Attachments</a>
                                     </li>
 
+                                    <li><a href="#8a" data-toggle="tab" onclick="hides()">Case Tasks</a>
+                                    </li>
+
                                 </ul>
 
                                 <hr class="whiter m-t-20">
@@ -131,6 +134,9 @@
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Attach File
+                                    </a>
+                                    <a href="#" class="list-group-item text-center">
+                                        <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Close Case
@@ -436,6 +442,13 @@
 
                                                     <div class="tab-pane active" id="1a">
                                                         <div id="caseNotesNotification"></div>
+                                                        @if(Session::has('success'))
+                                                            <div class="alert alert-success alert-icon">
+                                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                {{ Session::get('success') }}
+                                                                <i class="icon">&#61845;</i>
+                                                            </div>
+                                                        @endif
                                                         {!! Form::open(['url' => '#', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"caseProfileForm" ]) !!}
                                                         {!! Form::hidden('caseID',$case->id,['id' => 'caseID']) !!}
                                                         {!! Form::hidden('userID',Null,['id' => 'userID']) !!}
@@ -773,7 +786,7 @@
 
 
                                                             <div class="table-responsive overflow">
-                                                                <table style="width:928px;" class="table tile table-striped" id="caseNotesTable">
+                                                                <table style="width:728px;" class="table tile table-striped" id="caseNotesTable">
                                                                     <thead>
                                                                     <tr>
                                                                         <th>Created at</th>
@@ -829,12 +842,18 @@
                                 </div>
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents3">
-                                    <center>
-                                        <h1 class="glyphicon glyphicon-credit-card" style="font-size:12em;color:#55518a"></h1>
-                                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                                        <h3 style="margin-top: 0;color:#55518a">Credit Card</h3>
-                                    </center>
+                                        @include('casenotes.add')
+                                    </div>
                                 </div>
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents4">
+                                        @include('casefiles.add')
+                                    </div>
+                                </div>
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents5">
+                                        @include('tasks.createCaseTask')
+                                    </div>
                                 </div>
 
                             </div>
@@ -1291,7 +1310,11 @@
 
                     $(document).ready(function(){
 
+                        $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+
                         var  id  =   $("#id").val() ;
+
+                        var case_id={{$case->id}};
 
 
                         if ( $.fn.dataTable.isDataTable( '#relatedCasesTable' ) ) {
@@ -1378,7 +1401,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/caseNotes-list/id')!!}",
+                            "ajax": "{!! url('/caseNotes-list/')!!}" + '/'+case_id,
                             "columns": [
                                 {data: 'created_at', name: 'created_at'},
                                 {data: 'user', name: 'user'},
@@ -1407,7 +1430,7 @@
                             "pageLength": 8,
                             "dom": 'T<"clear">lfrtip',
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/caseActivities-list/id ')!!}",
+                            "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
                             "columns": [
                                 {data: 'created_at', name: 'created_at'},
                                 {data: 'note', name: 'note'}
@@ -1526,12 +1549,16 @@
                         document.getElementById('side_contents').style.display="block";
                         document.getElementById('side_contents2').style.display="block";
                         document.getElementById('side_contents3').style.display="block";
+                        document.getElementById('side_contents4').style.display="block";
+                        document.getElementById('side_contents5').style.display="block";
                     }
                     function hides() {
                         document.getElementById("side_navs").style.display="none";
                         document.getElementById('side_contents').style.display="none";
                         document.getElementById('side_contents2').style.display="none";
                         document.getElementById('side_contents3').style.display="none";
+                        document.getElementById('side_contents4').style.display="none";
+                        document.getElementById('side_contents5').style.display="none";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content active";
                     }
                 </script>

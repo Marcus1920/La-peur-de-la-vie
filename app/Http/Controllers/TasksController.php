@@ -135,6 +135,27 @@ class TasksController extends Controller
 
     }
 
+    public function storeCaseTask(TaskRequest $request)
+    {
+
+        $task = $this->tasks->storeTask($request);
+
+        if(isset($request['case_id'])){
+
+            $this->storeTaskCategoryType($task,$request['case_id']);
+
+        }
+
+        $assignee = User::find($request['task_user_id']);
+
+        $this->storeTaskOwner($task,$assignee->id);
+        $this->tasks->sendTaskCreationCommToTaskOwner($task->id,$assignee->id);
+
+        \Session::flash('success', 'Case task has been successfully added!');
+        return Redirect::to('casetest/'.$request['case_id']);
+
+    }
+
 
     public function storeTaskCategoryType($task,$type_id){
 

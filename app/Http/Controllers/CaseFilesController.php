@@ -10,6 +10,8 @@ use App\CaseFile;
 use App\CaseOwner;
 use App\CaseActivity;
 use App\User;
+use Redirect;
+use Session;
 
 class CaseFilesController extends Controller
 {
@@ -107,8 +109,8 @@ class CaseFilesController extends Controller
 
 
 
-
-         return "ok";
+        \Session::flash('success', 'Case file has been successfully added!');
+        return Redirect::to('casetest/'.$request['caseID']);
 
 
     }
