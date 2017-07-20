@@ -842,7 +842,7 @@
                                                     </div>
 
                                                     <div class="tab-pane" id="8a">
-                                                        <table style="width:728px;" class="table tile table-striped" id="CaseTasksTable">
+                                                        <table style="width:100%" class="table tile table-striped" id="CaseTasksTable">
                                                             <thead>
                                                             <tr>
                                                                 <th>ID</th>
