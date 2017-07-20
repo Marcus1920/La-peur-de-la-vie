@@ -101,6 +101,24 @@ class TasksController extends Controller
 
     }
 
+    public function getCaseTasks($id)
+    {
+        $caseTasks=$this->tasks->getCaseTasks($id);
+
+        return \Datatables::of($caseTasks)
+            ->addColumn('actions','
+            
+                <div class="col-md-2 m-b-15">
+                 
+                   <a class="btn btn-xs btn-alt" data-toggle="modal" href="tasks/{{ $task_id }}" target="">View</a>
+                   
+              
+                  
+                </div>       '
+            )
+            ->make(true);
+    }
+
 
     public function create($parent_id = 0)
     {

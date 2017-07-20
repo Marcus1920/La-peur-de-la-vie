@@ -4,6 +4,7 @@ namespace App\services;
 use App\Task;
 use App\TaskOwner;
 use App\User;
+use App\TaskCategoryType;
 
 use Auth;
 
@@ -57,6 +58,12 @@ class TaskService
                                             ->where('task_owner_type_id',2);
             return $myAssignedTasks;
 
+        }
+
+        public function getCaseTasks($id)
+        {
+            $caseTasks=TaskCategoryType::with('tasks')->where('type_id',$id)->get();
+            return $caseTasks;
         }
 
 

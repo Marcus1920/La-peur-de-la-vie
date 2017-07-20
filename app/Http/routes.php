@@ -1167,6 +1167,7 @@ Route::get('linkExistingTask/{id}','TasksController@linkExistingTask');
 Route::post('tasks/addTaskRelationship','TasksController@addTaskRelationship');
 Route::get('getSearchTasks', ['middleware' => 'auth', 'uses' => 'TasksController@getSearchTasks']);
 Route::post('caseTasks','TasksController@storeCaseTask');
+Route::get('getCaseTasks/{id}','TasksController@getCaseTasks');
 
 
 
