@@ -15,15 +15,16 @@
             border-radius: 4px;
             -moz-border-radius: 4px;
             /*border:1px solid #ddd;*/
-            margin-top: 20px;
-            margin-left: 50px;
+            margin-top: 15px;
+            margin-left: 20px;
             -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
             box-shadow: 0 6px 12px rgba(0,0,0,.175);
             -moz-box-shadow: 0 6px 12px rgba(0,0,0,.175);
             background-clip: padding-box;
             opacity: 0.97;
             filter: alpha(opacity=97);
-            width: 90%;
+            width: 98%;
+
         }
         div.bhoechie-tab-menu{
             padding-right: 0;
@@ -38,7 +39,7 @@
         }
         div.bhoechie-tab-menu div.list-group>a .glyphicon,
         div.bhoechie-tab-menu div.list-group>a .fa {
-            color: #5A55A3;
+            /*color: #5A55A3;*/
         }
         div.bhoechie-tab-menu div.list-group>a:first-child{
             border-top-right-radius: 0;
@@ -51,9 +52,9 @@
         div.bhoechie-tab-menu div.list-group>a.active,
         div.bhoechie-tab-menu div.list-group>a.active .glyphicon,
         div.bhoechie-tab-menu div.list-group>a.active .fa{
-            background-color: #5A55A3;
-            background-image: #5A55A3;
-            color: #ffffff;
+            /*background-color: #5A55A3;*/
+            /*background-image: #5A55A3;*/
+            /*color: #ffffff;*/
         }
         div.bhoechie-tab-menu div.list-group>a.active:after{
             content: '';
@@ -64,11 +65,11 @@
             border-left: 0;
             border-bottom: 13px solid transparent;
             border-top: 13px solid transparent;
-            border-left: 10px solid #5A55A3;
+            border-left: 10px solid #0D3349;
         }
 
         div.bhoechie-tab-content{
-            background-color: #0B628D;
+            /*background-color: #0B628D;*/
             /* border: 1px solid #eeeeee; */
             padding-left: 10px;
             padding-top: 10px;
@@ -76,6 +77,12 @@
 
         div.bhoechie-tab div.bhoechie-tab-content:not(.active){
             display: none;
+        }
+
+
+        .top li a{
+            border: 1px solid white;
+            border-radius: 15px;
         }
 
     </style>
@@ -88,24 +95,24 @@
                     <div class="col-md-12">
                         <div class="panel with-nav-tabs panel-default">
                             <div class="panel-heading">
-                                <ul  class="nav nav-pills nav-justified">
+                                <ul  class="nav nav-pills nav-justified top">
                                     <li class="active">
-                                        <a  href="#1a" data-toggle="tab" onclick="shows()">Case Profile</a>
+                                        <a  href="#1a" data-toggle="tab"  onclick="shows()"><span class="fa fa-file-text"> Case Profile</span></a>
                                     </li>
-                                    <li><a href="#2a" data-toggle="tab" onclick="hides()">Related Cases</a>
+                                    <li><a href="#2a" data-toggle="tab" onclick="hides()"><span class="fa fa-briefcase "> Related Cases</span></a>
                                     </li>
-                                    <li><a href="#3a" data-toggle="tab" onclick="hides()">People Involved</a>
+                                    <li><a href="#3a" data-toggle="tab" onclick="hides()"><span class="fa fa-users "> People Involved</span></a>
                                     </li>
-                                    <li><a href="#4a" data-toggle="tab" onclick="hides()">Person Of Interest</a>
+                                    <li><a href="#4a" data-toggle="tab" onclick="hides()" ><span class="fa fa-user "> Person Of Interest</span></a>
                                     </li>
                       <!--------------------- -------->
-                                    <li><a href="#5a" data-toggle="tab" onclick="hides()">Case Activities</a>
+                                    <li><a href="#5a" data-toggle="tab" onclick="hides()"><span class="fa fa-folder-open-o "> Case Activities</span></a>
                                     </li>
 
-                                    <li><a href="#6a" data-toggle="tab" onclick="hides()">Case Notes</a>
+                                    <li><a href="#6a" data-toggle="tab" onclick="hides()"><span class="fa fa-file-text-o"> Case Notes</span> </a>
                                     </li>
 
-                                    <li><a href="#7a" data-toggle="tab" onclick="hides()">Case Attachments</a>
+                                    <li><a href="#7a" data-toggle="tab" onclick="hides()"><span class="fa fa-paste "> Case Attachments</span></a>
                                     </li>
 
                                     <li><a href="#8a" data-toggle="tab" onclick="hides()">Case Tasks</a>
@@ -120,26 +127,33 @@
 
                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 bhoechie-tab-menu" id="side_navs">
                                 <div class="list-group">
-                                    <a href="#" class="list-group-item active text-center">
-                                        <h5 class="glyphicon glyphicon-plane"></h5><br/>Allocate Case
+                                    <a id="case" disabled  style="border: none;cursor: hand" class="list-group-item text-center active">
+
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-road"></h5><br/>Accept Case
+                                        <h5 class="glyphicon glyphicon-folder-open"></h5><br/>Allocate Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-home"></h5><br/>Refer Case
+                                        <h5 class="glyphicon glyphicon-ok-sign"></h5><br/>Accept Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-cutlery"></h5><br/>Add Case Note
+                                        <h5 class="glyphicon glyphicon-log-out"></h5><br/>Refer Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Attach File
+                                        <h5 class="glyphicon glyphicon-plus-sign"></h5><br/>Add Case Note
                                     </a>
                                     <a href="#" class="list-group-item text-center">
+<<<<<<< HEAD
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Close Case
+=======
+                                        <h4 class="glyphicon glyphicon-paperclip"></h4><br/>Attach File
+                                    </a>
+                                    <a href="#" class="list-group-item text-center">
+                                        <h4 class="glyphicon glyphicon-off"></h4><br/>Close Case
+>>>>>>> origin/feature/Case_profile_design
                                     </a>
                                 </div>
                             </div>
@@ -366,11 +380,8 @@
                             {{--</div>--}}
                             <!-- train section -->
                                 <div class="bhoechie-tab-content active" id="top_navs_action" >
-                                    <center>
-                                        {{--<h1 class="glyphicon glyphicon-road" style="font-size:12em;color:#55518a"></h1>--}}
-                                        {{--<h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>--}}
-                                        {{--<h3 style="margin-top: 0;color:#55518a">Train Reservation</h3>--}}
 
+                                    <center>
 
                                         <div class="row">
 
@@ -379,7 +390,6 @@
                                                 @if(isset($userAllocateCasesPermission) && $userAllocateCasesPermission->permission_id =='22')
                                                     <a class="btn btn-lg btn-alt" style="margin-top: 20%;" data-toggle="modal" onClick="launchReferModal('Allocate');" data-target=".modalReferCase">Allocate Case</a>
                                                 @endif
-
 
                                                 {{--@if(isset($userCreateCasesPermission) && $userCreateCasesPermission->permission_id =='21')--}}
 
@@ -435,7 +445,7 @@
 
                                             @foreach($case as $case)
 
-                                                <h1> </h1>
+
 
 
                                                 <div class="tab-content clearfix">
@@ -692,7 +702,27 @@
 
 
 
+                                                    <div class="tab-pane" id="0a">
+                                                        <div class="block-area" id="responsiveTable">
 
+                                                            @if(Session::has('successReferral1'))
+                                                                <div class="alert alert-info alert-dismissable fade in">
+                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                                    {{ Session::get('successReferral1') }}
+                                                                </div>
+                                                            @endif
+                                                            <div class="table-responsive overflow">
+                                                                <table style="width:928px;" class="table tile table-striped" id="caseActivities">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>Allocated</th>
+                                                                        <th>activity</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
 
                                                     @endforeach
@@ -829,13 +859,19 @@
                                                 </div>
 
 
+
+
+
+
+
                                         </div>
 
-
                                     </center>
+
                                 </div>
 
                                 <!-- hotel search -->
+
 
                                 <div class="bhoechie-tab-content"  >
                                     <div id="side_contents">
@@ -1138,6 +1174,7 @@
                     });
 
                     function shows() {
+
                         document.getElementById("side_navs").style.display="block";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content";
                         document.getElementById('side_contents').style.display="block";
@@ -1145,6 +1182,18 @@
                         document.getElementById('side_contents3').style.display="block";
                         document.getElementById('side_contents4').style.display="block";
                         document.getElementById('side_contents5').style.display="block";
+
+                        location.reload()
+                     //   document.getElementById("side_navs").style.display="block";
+
+                       // document.getElementById('case').className="list-group-item text-center active";
+
+                      //  document.getElementById("top_navs_action").className="bhoechie-tab-content ";
+                      //  document.getElementById('side_contents').style.display="block";
+                      //  document.getElementById('side_contents2').style.display="block";
+                     //   document.getElementById('side_contents3').style.display="block";
+
+
                     }
                     function hides() {
                         document.getElementById("side_navs").style.display="none";
