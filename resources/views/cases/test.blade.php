@@ -975,7 +975,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/poi-list/')!!}" + '/'+case_id,
+                            "ajax": "{!! url('/poi-list/id')!!}",
                             "columns": [
                                 {data: 'id', name: 'poi.id'},
                                 {data: 'name', name: 'poi.name'},
