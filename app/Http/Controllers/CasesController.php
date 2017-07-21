@@ -875,8 +875,8 @@ class CasesController extends Controller
             ->join('poi', 'poi.id', '=', 'cases_poi.poi_id')
             ->select(array('poi.id', 'poi.name', 'poi.surname'));
 
-        return \Datatables::of($casePois)->addColumn('actions', '<a target="_blank" class="btn btn-xs btn-alt" href="edit-poi-user/{{$id}}" >View / Edit</a>
-                                                   <a target="_blank" class="btn btn-xs btn-alt" href="view-poi-associates/{{$id}}" >View / Add Associates</a>
+        return \Datatables::of($casePois)->addColumn('actions', '<a target="_blank" class="btn btn-xs btn-alt" href="{{ url(\'edit-poi-user\',$id) }}" >View / Edit</a>
+                                                   <a target="_blank" class="btn btn-xs btn-alt" href="{{ url(\'view-poi-associates\',$id) }}" >View / Add Associates</a>
 
                                         '
         )->make(true);
