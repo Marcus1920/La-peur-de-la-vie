@@ -86,8 +86,16 @@
         }
 
     </style>
-    <div class="container">
 
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb hidden-xs">
+        <li><a href="{{ url('home') }}">Cases</a></li>
+        <li class="active">Case Profile</li>
+    </ol>
+
+    <h4 class="page-title">Case Profile</h4>
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-9 bhoechie-tab-container">
 
