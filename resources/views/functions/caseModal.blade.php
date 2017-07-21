@@ -401,6 +401,9 @@
                   $("#caseReportCaseForm #position,#CreateCaseAgentForm #position").removeAttr("disabled");
                   $("#caseReportCaseForm #priority,#CreateCaseAgentForm #priority").removeAttr("disabled");
                   $("#caseReportCaseForm #dob,#CreateCaseAgentForm #dob").removeAttr("disabled");
+
+
+
                   $("#caseReportCaseForm #gender,#CreateCaseAgentForm #gender").removeAttr("disabled");
 
               }
@@ -2085,54 +2088,54 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
 
     });
 
-    $("#submitPoiForm").on("click",function(){
+    {{--$("#submitPoiForm").on("click",function(){--}}
 
 
-        var pois             = $("#poi_CaseForm #POISearch").val();
-        var token            = $('input[name="_token"]').val();
-        var caseID           = $("#poi_CaseForm #caseID").val();
+        {{--var pois             = $("#poi_CaseForm #POISearch").val();--}}
+        {{--var token            = $('input[name="_token"]').val();--}}
+        {{--var caseID           = $("#poi_CaseForm #caseID").val();--}}
 
-        var formData         = {
-                                  pois:pois,
-                                  caseID:caseID
+        {{--var formData         = {--}}
+                                  {{--pois:pois,--}}
+                                  {{--caseID:caseID--}}
 
-                                };
+                                {{--};--}}
 
-        $('#modalPoiCase').modal('toggle');
+        {{--$('#modalPoiCase').modal('toggle');--}}
 
-        $.ajax({
-        type    :"POST",
-        data    : formData,
-        headers : { 'X-CSRF-Token': token },
-        url     :"{!! url('/addCasePoi')!!}",
-        beforeSend : function() {
-          HoldOn.open({
-          theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-          message: "<h4> loading please wait... ! </h4>",
-          content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                       // this will replace the theme by something customized.
-          backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                     // Keep in mind is necessary the .css file too.
-          textColor:"white" // Change the font color of the message
-            });
-        },
-        success : function(data){
+        {{--$.ajax({--}}
+        {{--type    :"POST",--}}
+        {{--data    : formData,--}}
+        {{--headers : { 'X-CSRF-Token': token },--}}
+        {{--url     :"{!! url('/addCasePoi')!!}",--}}
+        {{--beforeSend : function() {--}}
+          {{--HoldOn.open({--}}
+          {{--theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect--}}
+          {{--message: "<h4> loading please wait... ! </h4>",--}}
+          {{--content:"Your HTML Content", // If theme is set to "custom", this property is available--}}
+                                       {{--// this will replace the theme by something customized.--}}
+          {{--backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript--}}
+                     {{--// Keep in mind is necessary the .css file too.--}}
+          {{--textColor:"white" // Change the font color of the message--}}
+            {{--});--}}
+        {{--},--}}
+        {{--success : function(data){--}}
 
-          if (data.status == 'ok') {
-            $(".token-input-token").remove();
-            $('#poi_CaseForm')[0].reset();
-            $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! POI has been successfully added <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-            launchCaseModal(caseID);
-            $('#modalCase').modal('toggle');
-            HoldOn.close();
+          {{--if (data.status == 'ok') {--}}
+            {{--$(".token-input-token").remove();--}}
+            {{--$('#poi_CaseForm')[0].reset();--}}
+            {{--$("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! POI has been successfully added <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');--}}
+           {{--/// launchCaseModal(caseID);--}}
+            {{--//$('#modalCase').modal('toggle');--}}
+            {{--HoldOn.close();--}}
 
-          }
+          {{--}--}}
 
-        }
+        {{--}--}}
 
-    })
+    {{--})--}}
 
-    });
+    {{--});--}}
 
 $("#submitAssociatePoiForm").on("click",function(){
 
@@ -3446,59 +3449,59 @@ console.log("CreateCase error, data - ",data);
 
     }
 
-    function launchPersonOfInterestModal(id)
-    {
+    {{--function launchPersonOfInterestModal(id)--}}
+    {{--{--}}
 
-      var sub_category =  1
-      var formData     =  { sub_category : sub_category};
-
-
-      $.ajax({
-              type    :"GET",
-              data    : formData,
-              url     :"{!! url('/getPois')!!}",
-              success : function(data){
-
-                if (data.length > 0)
-                {
-                  $("#submitAllocateCaseForm").removeClass("hidden");
-                }
-                else {
-
-                  $("#submitAllocateCaseForm").addClass("hidden");
-                }
-
-              var content = "";
-
-              $.each(data, function(key, element) {
-
-                 content += "<tr><td><a class='remove fa fa-trash-o'></a><div class='checkbox m-b-5'><label><input type='checkbox'";
-                 content += "name='responders' id='responders' value="+element.id+" class='pull-left list-check'>";
-                 content += "</label></div></td><td>"+element.name+"</td><td>"+element.surname+"</td><td>"+element.email;
-              });
-
-              $("#POITableBody").html(content);
+      {{--var sub_category =  1--}}
+      {{--var formData     =  { sub_category : sub_category};--}}
 
 
-                if (data == 'ok') {
+      {{--$.ajax({--}}
+              {{--type    :"GET",--}}
+              {{--data    : formData,--}}
+              {{--url     :"{!! url('/getPois')!!}",--}}
+              {{--success : function(data){--}}
+
+                {{--if (data.length > 0)--}}
+                {{--{--}}
+                  {{--$("#submitAllocateCaseForm").removeClass("hidden");--}}
+                {{--}--}}
+                {{--else {--}}
+
+                  {{--$("#submitAllocateCaseForm").addClass("hidden");--}}
+                {{--}--}}
+
+              {{--var content = "";--}}
+
+              {{--$.each(data, function(key, element) {--}}
+
+                 {{--content += "<tr><td><a class='remove fa fa-trash-o'></a><div class='checkbox m-b-5'><label><input type='checkbox'";--}}
+                 {{--content += "name='responders' id='responders' value="+element.id+" class='pull-left list-check'>";--}}
+                 {{--content += "</label></div></td><td>"+element.name+"</td><td>"+element.surname+"</td><td>"+element.email;--}}
+              {{--});--}}
+
+              {{--$("#POITableBody").html(content);--}}
 
 
-
-                }
-
-              }
-          });
+                {{--if (data == 'ok') {--}}
 
 
 
+                {{--}--}}
 
-      $('#modalCase').modal('hide');
-      $('#modalPoiCase').modal('toggle');
+              {{--}--}}
+          {{--});--}}
 
 
 
 
-    }
+      {{--$('#modalCase').modal('hide');--}}
+      {{--$('#modalPoiCase').modal('toggle');--}}
+
+
+
+
+    {{--}--}}
 
     function launchPersonOfInterestAssocatiatesModal(id)
     {
@@ -3507,6 +3510,7 @@ console.log("CreateCase error, data - ",data);
       $("#poi_CaseForm #poiID").val(id);
       var pois      = $("#poi_CaseForm #POISearch").val();
       console.log(pois);
+
 
 
       $.ajax({

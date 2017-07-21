@@ -777,9 +777,10 @@
                                                     <div class="tab-pane" id="4a">
                                                         @if(isset($userAddPoiPermission) && $userAddPoiPermission->permission_id =='30')
 
-                                                            <a class="btn btn-xs btn-alt" onClick="launchPersonOfInterestModal();">Add Person</a>
+
 
                                                     @endif
+                                                            <a class="btn btn-xs btn-alt" onClick="launchPersonOfInterestModal();">Add Person</a>
                                                     <!-- Responsive Table -->
                                                         <div class="block-area" id="responsiveTable">
                                                             <div class="table-responsive">
@@ -919,7 +920,68 @@
     </div>
 
 
-                <script>
+    <!-- Modal Default -->
+    <div class="modal modalPoiCase" id="modalPoiCase" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"  id="closePOiCase" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id='modalTitle'></h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+
+                    </div>
+
+                </div>
+
+                @if (Session::has('message'))
+                    <div class="alert alert-info">{{ Session::get('message') }}</div>
+                @endif
+
+
+                <div class="modal-body">
+                    {!! Form::open(['url' => 'addCasePoi', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"poi_CaseForm" ]) !!}
+
+
+                    @if($case)
+
+                        <input type="hidden" name="caseID" id="caseID" value="{{ $case->id }}">
+                    @endif
+
+                    <div class="form-group">
+                        {!! Form::label('Search Box', 'Search Box', array('class' => 'col-md-2 control-label')) !!}
+                        <div class="col-md-6">
+                            {!! Form::text('POISearch',NULL,['class' => 'form-control input-sm','id' => 'POISearch']) !!}
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <a type="#" id='submitPoiForm' class="btn btn-sm">Add</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+
+                        </div>
+                    </div>
+
+                    {!! Form::close() !!}
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <script>
 
                     $(document).ready(function(){
 
@@ -927,8 +989,41 @@
                         $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
                         $("#addresses1").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
 
+                        $("#POISearch").tokenInput("{{ url ('/getPoisContacts')   }}",
+                            {
+
+                                tokenLimit:1,
+                                onResult : function(results) {
+
+                                    if(results.length == 0) {
+
+                                        var r = confirm("Do want to Capture POI ?");
+
+                                        var newWindow = window.open();
+
+                                        if (r == true) {
+
+                                            var doc_ref = document.location.href;
+                                            var doc_url = doc_ref.substring( 0, doc_ref.indexOf( "home")) ;
+                                            doc_url+= "add-poi-user";
+                                            //$("#anchorID").attr("href",doc_url);
+                                            //document.getElementById("anchorID").click();
+                                            newWindow.location = doc_url}
+                                    }
+
+                                    return results;
+
+                                }
+
+
+
+                            });
+
+
 
                         var  id  =   $("#id").val() ;
+
+                        launchCaseModal(id);
 
                         var case_id={{$case->id}};
 
@@ -985,7 +1080,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/poi-list/id')!!}",
+                            "ajax": "{!! url('/poi-list/')!!}" + '/'+case_id,
                             "columns": [
                                 {data: 'id', name: 'poi.id'},
                                 {data: 'name', name: 'poi.name'},
@@ -1208,6 +1303,121 @@
 
 
                     }
+
+
+
+
+
+                    function launchPersonOfInterestModal(id)
+                    {
+
+                        var sub_category =  1
+                        var formData     =  { sub_category : sub_category};
+
+
+                        $.ajax({
+                            type    :"GET",
+                            data    : formData,
+                            url     :"{!! url('/getPois')!!}",
+                            success : function(data){
+
+                                if (data.length > 0)
+                                {
+                                    $("#submitAllocateCaseForm").removeClass("hidden");
+                                }
+                                else {
+
+                                    $("#submitAllocateCaseForm").addClass("hidden");
+                                }
+
+                                var content = "";
+
+                                $.each(data, function(key, element) {
+
+                                    content += "<tr><td><a class='remove fa fa-trash-o'></a><div class='checkbox m-b-5'><label><input type='checkbox'";
+                                    content += "name='responders' id='responders' value="+element.id+" class='pull-left list-check'>";
+                                    content += "</label></div></td><td>"+element.name+"</td><td>"+element.surname+"</td><td>"+element.email;
+                                });
+
+                                $("#POITableBody").html(content);
+
+
+                                if (data == 'ok') {
+
+
+
+                                }
+
+                            }
+                        });
+
+
+
+
+                       // $('#modalCase').modal('hide');
+                        $('#modalPoiCase').modal('toggle');
+
+
+
+
+                    }
+
+
+
+
+                    $("#submitPoiForm").on("click",function(){
+
+
+                        var pois             = $("#poi_CaseForm #POISearch").val();
+                        var token            = $('input[name="_token"]').val();
+                        var caseID           = $("#poi_CaseForm #caseID").val();
+
+                        var formData         = {
+                            pois:pois,
+                            caseID:caseID
+
+                        };
+
+                        $('#modalPoiCase').modal('toggle');
+
+                        $.ajax({
+                            type    :"POST",
+                            data    : formData,
+                            headers : { 'X-CSRF-Token': token },
+                            url     :"{!! url('/addCasePoi')!!}",
+                            beforeSend : function() {
+                                HoldOn.open({
+                                    theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
+                                    message: "<h4> loading please wait... ! </h4>",
+                                    content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                                                 // this will replace the theme by something customized.
+                                    backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
+                                    // Keep in mind is necessary the .css file too.
+                                    textColor:"white" // Change the font color of the message
+                                });
+                            },
+                            success : function(data){
+
+                                if (data.status == 'ok') {
+                                    $(".token-input-token").remove();
+                                    $('#poi_CaseForm')[0].reset();
+                                    $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! POI has been successfully added <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
+                                     launchCaseModal(caseID);
+                                    //$('#modalCase').modal('toggle');
+
+
+                                   // window.location.replace(+caseID);
+                                    HoldOn.close();
+
+                                }
+
+                            }
+
+                        })
+
+                    });
+
+
                     function hides() {
                         document.getElementById("side_navs").style.display="none";
                         document.getElementById('side_contents1').style.display="none";
