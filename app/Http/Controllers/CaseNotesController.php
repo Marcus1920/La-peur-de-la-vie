@@ -94,12 +94,6 @@ class CaseNotesController extends Controller
         return Redirect::to('casetest/'.$request['caseID']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show($id)
     {
         //

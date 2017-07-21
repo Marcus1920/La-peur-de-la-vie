@@ -343,7 +343,7 @@
 
   $('#tabs a[href="#' + activeTab + '"]').tab('show');
 
-  $("#addresses").tokenInput("getContacts");
+//  $("#addresses").tokenInput("getContacts");
 
   $("#POISearch").tokenInput("getPoisContacts",
     {
@@ -364,14 +364,7 @@
               doc_url+= "add-poi-user";
               //$("#anchorID").attr("href",doc_url);
               //document.getElementById("anchorID").click();
-              newWindow.location = doc_url;
-
-
-
-
-            }
-
-
+              newWindow.location = doc_url}
           }
 
            return results;

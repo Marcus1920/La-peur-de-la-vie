@@ -40,6 +40,8 @@ use App\InvestigationOfficer;
 use App\services\CaseOwnerService;
 use App\services\CaseResponderService;
 use App\services\CaseActivityService;
+use Redirect;
+
 
 
 
@@ -169,9 +171,8 @@ class CasesController extends Controller
 
         return \Datatables::of($cases)
             ->addColumn('actions', '<a class="btn btn-xs btn-alt" data-toggle="modal"   href="casetest/{{$id}}" >View</a>
-                                                    <a class="btn btn-xs btn-alt" data-toggle="modal" href="view-case-poi-associates/{{ $id }}" target="_blank">View POI association chart</a>
-
-                                ')
+                                    <a class="btn btn-xs btn-alt" data-toggle="modal" href="view-case-poi-associates/{{ $id }}" target="_blank">View POI association chart</a>
+                                    ')
             ->make(true);
     }
 
@@ -417,9 +418,9 @@ class CasesController extends Controller
 
 
         }
-
         return "ok";
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -512,72 +513,95 @@ class CasesController extends Controller
     public function escalate(Request $request)
     {
 
+        $case_id=$request['caseID'];
+
         $addresses = explode(',', $request['addresses']);
         $caseOwners = CaseOwner::where('case_id', '=', $request['caseID'])->get();
         $typeMessage = ($request['modalType'] == 'Allocate') ? 'allocated' : 'referred';
         $typeStatus = ($request['modalType'] == 'Allocate') ? 'Allocated' : 'Referred';
 
 
-        foreach ($caseOwners as $caseOwner) {
-
-            $user = User::find($caseOwner->user);
-            $data = array(
-
-                'name' => $user->name,
-                'caseID' => $request['caseID'],
-                'content' => $request['message'],
-                'executor' => \Auth::user()->name . ' ' . \Auth::user()->surname,
-            );
-
-
-            \Mail::send('emails.caseEscalation', $data, function ($message) use ($user) {
-                $message->from('info@siyaleader.net', 'Siyaleader');
-                $message->to($user->email)->subject("Siyaleader Notification - Case Referred: ");
-
-            });
-
-        }
-
 
         foreach ($addresses as $address) {
 
-            $user = User::where('email', '=', $address)->first();
+                $user = User::where('id', '=', $address)->first();
+                $data = array(
 
-            if (sizeof($user) <= 0) {
-                $userAddressbook = addressbook::where('email', '=', $address)->first();
-            }
+                    'name' => $user->name,
+                    'caseID' => $request['caseID'],
+                    'content' => $request['message'],
+                    'executor' => \Auth::user()->name . ' ' . \Auth::user()->surname,
+                );
 
-            $name = (sizeof($user) <= 0) ? $userAddressbook->first_name : $user->name;
-            $surname = (sizeof($user) <= 0) ? $userAddressbook->surname : $user->surname;
-            $to = (sizeof($user) <= 0) ? $userAddressbook->id : $user->id;
-            $type = (sizeof($user) <= 0) ? 1 : 0;
-            $addressbook = (sizeof($user) <= 0) ? 1 : 0;
-            $cellphone = (sizeof($user) <= 0) ? $userAddressbook->surname : $user->cellphone;
 
-            $data = array(
-                'name' => $name,
-                'caseID' => $request['caseID'],
-                'content' => $request['message'],
-                'typeStatus' => $request['typeStatus']
-            );
+                \Mail::send('emails.caseEscalation', $data, function ($message) use ($user) {
+                    $message->from('info@siyaleader.net', 'Siyaleader');
+                    $message->to($user->email)->subject("Siyaleader Notification - Case Referred: ");
 
-            $details = CaseReport::where('id' , '=',$request['caseID'] )->first() ;
+                });
+        }
+//
+//
+//      foreach ($caseOwners as $caseOwner) {
+//
+//           $user = User::find($caseOwner->user);
+//           $data = array(
+//
+//                'name' => $user->name,
+//                'caseID' => $request['caseID'],
+//                'content' => $request['message'],
+//                'executor' => \Auth::user()->name . ' ' . \Auth::user()->surname,
+//            );
+//
+//
+//            \Mail::send('emails.caseEscalation', $data, function ($message) use ($user) {
+//               $message->from('info@siyaleader.net', 'Siyaleader');
+//                $message->to($user->email)->subject("Siyaleader Notification - Case Referred: ");
+//
+//            });
+//
+//        }
+//
+
+//        foreach ($addresses as $address) {
+//
+//            $user = User::where('email', '=', $address)->first();
+//
+//            if (sizeof($user) <= 0) {
+//                $userAddressbook = addressbook::where('email', '=', $address)->first();
+//            }
+//
+//            $name = (sizeof($user) <= 0) ? $userAddressbook->first_name : $user->name;
+//            $surname = (sizeof($user) <= 0) ? $userAddressbook->surname : $user->surname;
+//            $to = (sizeof($user) <= 0) ? $userAddressbook->id : $user->id;
+//            $type = (sizeof($user) <= 0) ? 1 : 0;
+//            $addressbook = (sizeof($user) <= 0) ? 1 : 0;
+//            $cellphone = (sizeof($user) <= 0) ? $userAddressbook->surname : $user->cellphone;
+
+//            $data = array(
+//                'name' => $name,
+//                'caseID' => $request['caseID'],
+//                'content' => $request['message'],
+//                'typeStatus' => $request['typeStatus']
+//            );
+
+            $details = CaseReport::where('id' , '=',$request['caseID'] )->first();
             $details->status = 7;
             $details->save() ;
 
-
-            $caseActivity = New CaseActivity();
-            $caseActivity->case_id = $request['caseID'];
-            $caseActivity->user = $to;
-            $caseActivity->addressbook = $addressbook;
-            $caseActivity->note = "Case " . $typeMessage . " to " . $name . " " . $surname . " by " . \Auth::user()->name . ' ' . \Auth::user()->surname;
-            $caseActivity->save();
+//
+//            $caseActivity = New CaseActivity();
+//            $caseActivity->case_id = $request['caseID'];
+//            $caseActivity->user = $to;
+//
+//            $caseActivity->note = "Case " . $typeMessage . " to " . $name . " " . $surname . " by " . \Auth::user()->name . ' ' . \Auth::user()->surname;
+//            $caseActivity->save();
 
             $caseEscalationObj = New CaseEscalator();
             $caseEscalationObj->case_id = $request['caseID'];
             $caseEscalationObj->from = \Auth::user()->id;
-            $caseEscalationObj->to = $to;
-            $caseEscalationObj->type = $type;
+//            $caseEscalationObj->to = $to;
+//            $caseEscalationObj->type = $type;
             $caseEscalationObj->description = $details->description;
             $caseEscalationObj->category = $details->case_type;
             $caseEscalationObj->sub_category =  $details->case_sub_type;
@@ -601,9 +625,9 @@ class CasesController extends Controller
 
             $caseOwnerObj = New CaseOwner();
             $caseOwnerObj->case_id = $request['caseID'];
-            $caseOwnerObj->user = $to;
+//            $caseOwnerObj->user = $to;
             $caseOwnerObj->type = 4;
-            $caseOwnerObj->addressbook = $addressbook;
+//            $caseOwnerObj->addressbook = $addressbook;
             $caseOwnerObj->save();
 
             if ($typeStatus == 'Allocated') {
@@ -614,35 +638,87 @@ class CasesController extends Controller
                 $objCase->status = $objCaseStatus->id;
                 $objCase->save();
 
-            } else {
+            } else
+                {
 
                 $objCase = CaseReport::find($request['caseID']);
                 $objCaseStatus = CaseStatus::where('name', '=', $typeStatus)->first();
                 $objCase->referred_at = \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
                 $objCase->status = $objCaseStatus->id;
                 $objCase->save();
+                }
 
 
-            }
+//            \Mail::send('emails.caseEscalated', $data, function ($message) use ( $typeStatus) {
+//                $message->from('info@siyaleader.net', 'Siyaleader');
+//                $message->to($address)->subject("Siyaleader Notification - Case $typeStatus: ");
+//
+//            });
+//
+//            \Mail::send('emails.caseEscalatedSMS', $data, function ($message) use ($cellphone) {
+//                $message->from('info@siyaleader.net', 'Siyaleader');
+//                $message->to('cooluma@siyaleader.net')->subject("REFER: $cellphone");
+//
+//            });
+
+        $caseObj = \DB::table('cases')
+            ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+            ->where('cases.id', '=', $request['caseID'] )
+            ->select(\DB::raw("
+                                    cases.id,
+                                    cases.case_sub_type,
+                                    cases.case_type,
+                                    cases.house_holder_id,
+                                    cases_statuses.name as status
+                                   "
+            ))
+            ->first();
 
 
-            \Mail::send('emails.caseEscalated', $data, function ($message) use ($address, $typeStatus) {
-                $message->from('info@siyaleader.net', 'Siyaleader');
-                $message->to($address)->subject("Siyaleader Notification - Case $typeStatus: ");
+        if ($caseObj->status == 'Allocated') {
 
-            });
-
-            \Mail::send('emails.caseEscalatedSMS', $data, function ($message) use ($cellphone) {
-                $message->from('info@siyaleader.net', 'Siyaleader');
-                $message->to('cooluma@siyaleader.net')->subject("REFER: $cellphone");
-
-            });
-
+            $case = \DB::table('cases')
+                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                ->join('cases_types', 'cases.case_type', '=', 'cases_types.id')
+                ->join('cases_sub_types', 'cases.case_sub_type', '=', 'cases_sub_types.id')
+                ->where('cases.id', '=', $request['caseID'])
+                ->select(\DB::raw("
+                                    cases.id,
+                                    cases.description,
+                                    cases.created_at,
+                                    cases.img_url,
+                                
+                                    cases_types.name as  case_type,
+                                    cases_sub_types.name  as  case_sub_type ,
+                                    cases.reporter as reporteID,
+                                    cases.house_holder_id,
+                                    cases.saps_case_number,
+                                    cases.street_number,
+                                    cases.route,
+                                    cases.locality,
+                                    cases.administrative_area_level_1,
+                                    cases.postal_code,
+                                    cases.country,
+                                    cases.client_reference_number,
+                                    cases.saps_station,
+                                    cases.investigation_officer,
+                                    cases.investigation_cell,
+                                    cases.investigation_email,
+                                    cases.investigation_note,
+                                    cases_statuses.name as status,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporter,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as household,
+                                    (select `created_at` from `cases_activities` where `case_id` = `cases`.`id` order by `created_at` desc limit 1) as last_at,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporterCell,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as householdCell
+                                   "
+                )
+                )
+                ->get();
 
         }
-
-        return response()->json(['status' => 'ok', 'typeStatus' => $typeStatus]);
-        //return "ok";
+        \Session::flash('success', 'A Case has been Allocated successfully');
+        return Redirect::to('casetest/'.$request['caseID']);
 
     }
 
@@ -676,14 +752,8 @@ class CasesController extends Controller
 									sub_categories.name as sub_category
 									")
             )->get() ;
-
-
-
-
         echo json_encode($events);
-
     }
-
 
     public function addCasePoi(Request $request)
     {
@@ -1193,9 +1263,52 @@ class CasesController extends Controller
                                    "
                 )
                 )
+        ->get();
+    }
+
+        elseif ($caseObj->status == 'Referred')
+        {
+
+
+            $case = \DB::table('cases')
+                ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                ->join('cases_types', 'cases.case_type', '=', 'cases_types.id')
+                ->join('cases_sub_types', 'cases.case_sub_type', '=', 'cases_sub_types.id')
+                ->where('cases.id', '=', $id)
+                ->select(\DB::raw("
+                                    cases.id,
+                                    cases.description,
+                                    cases.created_at,
+                                    cases.img_url,
+                                
+                                    cases_types.name as  case_type,
+                                    cases_sub_types.name  as  case_sub_type ,
+                                    cases.reporter as reporteID,
+                                    cases.house_holder_id,
+                                    cases.saps_case_number,
+                                    cases.street_number,
+                                    cases.route,
+                                    cases.locality,
+                                    cases.administrative_area_level_1,
+                                    cases.postal_code,
+                                    cases.country,
+                                    cases.client_reference_number,
+                                    cases.saps_station,
+                                    cases.investigation_officer,
+                                    cases.investigation_cell,
+                                    cases.investigation_email,
+                                    cases.investigation_note,
+                                    cases_statuses.name as status,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporter,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as household,
+                                    (select `created_at` from `cases_activities` where `case_id` = `cases`.`id` order by `created_at` desc limit 1) as last_at,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporterCell,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as householdCell
+                                   "
+                )
+                )
                 ->get();
         }
-
 
         $relatedCases = \DB::table('related_cases')
             ->join('cases', 'related_cases.child', '=', 'cases.id')

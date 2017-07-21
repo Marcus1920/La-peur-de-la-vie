@@ -146,8 +146,6 @@
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-
-
                                         <h4 class="glyphicon glyphicon-log-out"></h4><br/>Refer Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
@@ -378,6 +376,7 @@
                             {{--</div>--}}
                             {{--</div>--}}
                             <!-- train section -->
+
                                 <div class="bhoechie-tab-content active" id="top_navs_action" >
 
                                     <center>
@@ -872,22 +871,15 @@
                                 <!-- hotel search -->
 
 
-                                <div class="bhoechie-tab-content"  >
-                                    <div id="side_contents">
-                                    <center>
-                                        <h1 class="glyphicon glyphicon-home" style="font-size:12em;color:#55518a"></h1>
-                                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                                        <h3 style="margin-top: 0;color:#55518a">Hotel Directory</h3>
-                                    </center>
+                                <div class="bhoechie-tab-content "  >
+                                    <div id="side_contents1">
+                                            @include('cases.refer')
                                     </div>
                                 </div>
+
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents2">
-                                    <center>
-                                        <h1 class="glyphicon glyphicon-cutlery" style="font-size:12em;color:#55518a"></h1>
-                                        <h2 style="margin-top: 0;color:#55518a">Cooming Soon</h2>
-                                        <h3 style="margin-top: 0;color:#55518a">Restaurant Diirectory</h3>
-                                    </center>
+
                                     </div>
                                 </div>
                                 <div class="bhoechie-tab-content">
@@ -900,11 +892,22 @@
                                         @include('casefiles.add')
                                     </div>
                                 </div>
+
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents5">
                                         @include('tasks.createCaseTask')
                                     </div>
                                 </div>
+
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents6">
+                                        @include('cases.allocate')
+                                    </div>
+                                </div>
+
+
+
+                            </div>
 
                             </div>
                         </div>
@@ -916,6 +919,7 @@
                     $(document).ready(function(){
 
                         $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+                        $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
 
                         var  id  =   $("#id").val() ;
 
@@ -1176,11 +1180,12 @@
 
                         document.getElementById("side_navs").style.display="block";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content";
-                        document.getElementById('side_contents').style.display="block";
+                        document.getElementById('side_contents1').style.display="block";
                         document.getElementById('side_contents2').style.display="block";
                         document.getElementById('side_contents3').style.display="block";
                         document.getElementById('side_contents4').style.display="block";
                         document.getElementById('side_contents5').style.display="block";
+                        document.getElementById('side_contents6').style.display="block";
 
                         location.reload()
                      //   document.getElementById("side_navs").style.display="block";
@@ -1196,11 +1201,13 @@
                     }
                     function hides() {
                         document.getElementById("side_navs").style.display="none";
-                        document.getElementById('side_contents').style.display="none";
+                        document.getElementById('side_contents1').style.display="none";
                         document.getElementById('side_contents2').style.display="none";
                         document.getElementById('side_contents3').style.display="none";
                         document.getElementById('side_contents4').style.display="none";
                         document.getElementById('side_contents5').style.display="none";
+                        document.getElementById('side_contents6').style.display="none";
+                        document.getElementById('side_contents7').style.display="none";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content active";
                     }
                 </script>
