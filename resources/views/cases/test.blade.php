@@ -798,15 +798,8 @@
 
                                                     <div class="tab-pane" id="5a">
                                                         <div class="block-area" id="responsiveTable">
-
-                                                            @if(Session::has('successReferral1'))
-                                                                <div class="alert alert-info alert-dismissable fade in">
-                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                                    {{ Session::get('successReferral1') }}
-                                                                </div>
-                                                            @endif
                                                             <div class="table-responsive overflow">
-                                                                <table style="width:928px;" class="table tile table-striped" id="caseActivities">
+                                                                <table style="width:928px;" class="table tile table-striped" id="caseActivitiesTable">
                                                                     <thead>
                                                                     <tr>
                                                                         <th>Created At</th>
@@ -942,7 +935,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/relatedCases-list/id')!!}",
+                            "ajax": "{!! url('/relatedCases-list/')!!}" + '/'+case_id,
                             "columns": [
                                 {data: function(d){
 
@@ -982,7 +975,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/poi-list/id ')!!}",
+                            "ajax": "{!! url('/poi-list/')!!}" + '/'+case_id,
                             "columns": [
                                 {data: 'id', name: 'poi.id'},
                                 {data: 'name', name: 'poi.name'},
@@ -1028,7 +1021,37 @@
 
                         });
 
-                        oTableCaseNotes     = $('#CaseTasksTable').DataTable({
+                        if ( $.fn.dataTable.isDataTable( '#caseActivities' ) ) {
+                            oTableCaseActivities.destroy();
+                        }
+
+
+
+                        oTableCaseActivities     = $('#caseActivitiesTable').DataTable({
+                            "processing": true,
+                            "serverSide": true,
+                            "autoWidth": false,
+                            "pageLength": 8,
+                            "dom": 'T<"clear">lfrtip',
+                            "order" :[[0,"desc"]],
+                            "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
+                            "columns": [
+                                {data: 'created_at', name: 'created_at'},
+                                {data: 'note', name: 'note'}
+                            ],
+
+                            "aoColumnDefs": [
+                                { "bSearchable": false, "aTargets": [ 1] },
+                                { "bSortable": false, "aTargets": [ 1 ] }
+                            ]
+
+                        });
+
+                        if ( $.fn.dataTable.isDataTable( '#CaseTasksTable' ) ) {
+                            oTableTasksTable.destroy();
+                        }
+
+                        oTableTasksTable     = $('#CaseTasksTable').DataTable({
                             "processing": true,
                             "serverSide": true,
                             "autoWidth": false,
@@ -1054,33 +1077,6 @@
 // case  note
 
 
-                        if ( $.fn.dataTable.isDataTable( '#caseActivities' ) ) {
-                            oTableCaseActivities.destroy();
-                        }
-
-
-
-                        oTableCaseActivities     = $('#caseActivities').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 8,
-                            "dom": 'T<"clear">lfrtip',
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
-                            "columns": [
-                                {data: 'created_at', name: 'created_at'},
-                                {data: 'note', name: 'note'}
-                            ],
-
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
-
-                        });
-
-
 
 
                         if ( $.fn.dataTable.isDataTable( '#caseResponders' ) ) {
@@ -1096,7 +1092,7 @@
                             "pageLength": 8,
                             "dom": 'T<"clear">lfrtip',
                             "order" :[[0,"asc"]],
-                            "ajax": "{!! url('/caseResponders-list/id')!!}",
+                            "ajax": "{!! url('/caseResponders-list/')!!}" + '/'+case_id,
                             "columns": [
 
 
