@@ -103,7 +103,7 @@
                                     </li>
                                     <li><a href="#3a" data-toggle="tab" onclick="hides()"><span class="fa fa-users "> People Involved</span></a>
                                     </li>
-                                    <li><a href="#4a" data-toggle="tab" onclick="hides()" ><span class="fa fa-user "> Person Of Interest</span></a>
+                                    <li><a href="#4a" data-toggle="tab" onclick="hides()" ><span class="fa fa-user "> POI </span></a>
                                     </li>
                       <!--------------------- -------->
                                     <li><a href="#5a" data-toggle="tab" onclick="hides()"><span class="fa fa-folder-open-o "> Case Activities</span></a>

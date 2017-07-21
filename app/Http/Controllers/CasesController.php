@@ -1195,6 +1195,51 @@ class CasesController extends Controller
                 )
                 ->get();
         }
+         elseif ($caseObj->status == 'Referred')
+
+
+         {
+
+             $case = \DB::table('cases')
+                 ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                 ->join('cases_types', 'cases.case_type', '=', 'cases_types.id')
+                 ->join('cases_sub_types', 'cases.case_sub_type', '=', 'cases_sub_types.id')
+                 ->where('cases.id', '=', $id)
+                 ->select(\DB::raw("
+                                    cases.id,
+                                    cases.description,
+                                    cases.created_at,
+                                    cases.img_url,
+                                
+                                    cases_types.name as  case_type,
+                                    cases_sub_types.name  as  case_sub_type ,
+                                    cases.reporter as reporteID,
+                                    cases.house_holder_id,
+                                    cases.saps_case_number,
+                                    cases.street_number,
+                                    cases.route,
+                                    cases.locality,
+                                    cases.administrative_area_level_1,
+                                    cases.postal_code,
+                                    cases.country,
+                                    cases.client_reference_number,
+                                    cases.saps_station,
+                                    cases.investigation_officer,
+                                    cases.investigation_cell,
+                                    cases.investigation_email,
+                                    cases.investigation_note,
+                                    cases_statuses.name as status,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporter,
+                                    IF(`cases`.`addressbook` = 1,(SELECT CONCAT(`first_name`, ' ', `surname`) FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT CONCAT(users.`name`, ' ', users.`surname`) FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as household,
+                                    (select `created_at` from `cases_activities` where `case_id` = `cases`.`id` order by `created_at` desc limit 1) as last_at,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`reporter`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`reporter`)) as reporterCell,
+                                    IF(`cases`.`addressbook` = 1,(SELECT `cellphone` FROM `addressbook` WHERE `addressbook`.`id`= `cases`.`house_holder_id`), (SELECT `cellphone` FROM `users` WHERE `users`.`id`= `cases`.`house_holder_id`)) as householdCell
+                                   "
+                 )
+                 )
+                 ->get();
+
+         }
 
 
         $relatedCases = \DB::table('related_cases')
