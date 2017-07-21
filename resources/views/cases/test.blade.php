@@ -899,14 +899,6 @@
                                     </div>
                                 </div>
 
-                                <div class="bhoechie-tab-content">
-                                    <div id="side_contents6">
-                                        @include('cases.allocate')
-                                    </div>
-                                </div>
-
-
-
                             </div>
 
                             </div>
@@ -1184,9 +1176,6 @@
                         document.getElementById('side_contents2').style.display="block";
                         document.getElementById('side_contents3').style.display="block";
                         document.getElementById('side_contents4').style.display="block";
-                        document.getElementById('side_contents5').style.display="block";
-                        document.getElementById('side_contents6').style.display="block";
-
                         location.reload()
                      //   document.getElementById("side_navs").style.display="block";
 
@@ -1206,8 +1195,6 @@
                         document.getElementById('side_contents3').style.display="none";
                         document.getElementById('side_contents4').style.display="none";
                         document.getElementById('side_contents5').style.display="none";
-                        document.getElementById('side_contents6').style.display="none";
-                        document.getElementById('side_contents7').style.display="none";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content active";
                     }
                 </script>
