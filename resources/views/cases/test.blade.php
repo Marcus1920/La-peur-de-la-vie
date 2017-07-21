@@ -86,8 +86,16 @@
         }
 
     </style>
-    <div class="container">
 
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb hidden-xs">
+        <li><a href="{{ url('home') }}">Cases</a></li>
+        <li class="active">Case Profile</li>
+    </ol>
+
+    <h4 class="page-title">Case Profile</h4>
+
+    <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-9 bhoechie-tab-container">
 
@@ -103,7 +111,7 @@
                                     </li>
                                     <li><a href="#3a" data-toggle="tab" onclick="hides()"><span class="fa fa-users "> People Involved</span></a>
                                     </li>
-                                    <li><a href="#4a" data-toggle="tab" onclick="hides()" ><span class="fa fa-user "> Person Of Interest</span></a>
+                                    <li><a href="#4a" data-toggle="tab" onclick="hides()" ><span class="fa fa-user "> POI </span></a>
                                     </li>
                       <!--------------------- -------->
                                     <li><a href="#5a" data-toggle="tab" onclick="hides()"><span class="fa fa-folder-open-o "> Case Activities</span></a>
@@ -134,7 +142,7 @@
                                         <h5 class="glyphicon glyphicon-folder-open"></h5><br/>Allocate Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-ok-sign"></h5><br/>Accept Case
+                                        <h4 class="glyphicon glyphicon-log-out"></h4><br/>Refer Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h5 class="glyphicon glyphicon-plus-sign"></h5><br/> Add Case Note
@@ -146,14 +154,17 @@
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
                                     <a href="#" class="list-group-item text-center">
-                                        <h4 class="glyphicon glyphicon-log-out"></h4><br/>Refer Case
+                                        <h5 class="glyphicon glyphicon-ok-sign"></h5><br/>Accept Case
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-off"></h4><br/>Close Case
 
                                     </a>
+
                                 </div>
                             </div>
+
+
                             <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 bhoechie-tab">
                                 <!-- flight section -->
                             {{--<div class="bhoechie-tab-content active">--}}
@@ -789,15 +800,8 @@
 
                                                     <div class="tab-pane" id="5a">
                                                         <div class="block-area" id="responsiveTable">
-
-                                                            @if(Session::has('successReferral1'))
-                                                                <div class="alert alert-info alert-dismissable fade in">
-                                                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                                                    {{ Session::get('successReferral1') }}
-                                                                </div>
-                                                            @endif
                                                             <div class="table-responsive overflow">
-                                                                <table style="width:928px;" class="table tile table-striped" id="caseActivities">
+                                                                <table style="width:928px;" class="table tile table-striped" id="caseActivitiesTable">
                                                                     <thead>
                                                                     <tr>
                                                                         <th>Created At</th>
@@ -841,7 +845,7 @@
                                                     </div>
 
                                                     <div class="tab-pane" id="8a">
-                                                        <table style="width:728px;" class="table tile table-striped" id="CaseTasksTable">
+                                                        <table style="width:100%" class="table tile table-striped" id="CaseTasksTable">
                                                             <thead>
                                                             <tr>
                                                                 <th>ID</th>
@@ -879,7 +883,7 @@
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents2">
-
+                                        @include('cases.allocate')
                                     </div>
                                 </div>
                                 <div class="bhoechie-tab-content">
@@ -899,12 +903,21 @@
                                     </div>
                                 </div>
 
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents6">
+
+                                    </div>
+                                </div>
+
                             </div>
 
                             </div>
                         </div>
                     </div>
                 </div>
+        </div>
+    </div>
+
 
                 <script>
 
@@ -912,6 +925,8 @@
 
                         $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
                         $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+                        $("#addresses1").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+
 
                         var  id  =   $("#id").val() ;
 
@@ -930,7 +945,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/relatedCases-list/id')!!}",
+                            "ajax": "{!! url('/relatedCases-list/')!!}" + '/'+case_id,
                             "columns": [
                                 {data: function(d){
 
@@ -970,7 +985,7 @@
                             "pageLength": 5,
                             "bLengthChange": false,
                             "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/poi-list/id ')!!}",
+                            "ajax": "{!! url('/poi-list/')!!}" + '/'+case_id,
                             "columns": [
                                 {data: 'id', name: 'poi.id'},
                                 {data: 'name', name: 'poi.name'},
@@ -1016,7 +1031,37 @@
 
                         });
 
-                        oTableCaseNotes     = $('#CaseTasksTable').DataTable({
+                        if ( $.fn.dataTable.isDataTable( '#caseActivities' ) ) {
+                            oTableCaseActivities.destroy();
+                        }
+
+
+
+                        oTableCaseActivities     = $('#caseActivitiesTable').DataTable({
+                            "processing": true,
+                            "serverSide": true,
+                            "autoWidth": false,
+                            "pageLength": 8,
+                            "dom": 'T<"clear">lfrtip',
+                            "order" :[[0,"desc"]],
+                            "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
+                            "columns": [
+                                {data: 'created_at', name: 'created_at'},
+                                {data: 'note', name: 'note'}
+                            ],
+
+                            "aoColumnDefs": [
+                                { "bSearchable": false, "aTargets": [ 1] },
+                                { "bSortable": false, "aTargets": [ 1 ] }
+                            ]
+
+                        });
+
+                        if ( $.fn.dataTable.isDataTable( '#CaseTasksTable' ) ) {
+                            oTableTasksTable.destroy();
+                        }
+
+                        oTableTasksTable     = $('#CaseTasksTable').DataTable({
                             "processing": true,
                             "serverSide": true,
                             "autoWidth": false,
@@ -1042,33 +1087,6 @@
 // case  note
 
 
-                        if ( $.fn.dataTable.isDataTable( '#caseActivities' ) ) {
-                            oTableCaseActivities.destroy();
-                        }
-
-
-
-                        oTableCaseActivities     = $('#caseActivities').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 8,
-                            "dom": 'T<"clear">lfrtip',
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
-                            "columns": [
-                                {data: 'created_at', name: 'created_at'},
-                                {data: 'note', name: 'note'}
-                            ],
-
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
-
-                        });
-
-
 
 
                         if ( $.fn.dataTable.isDataTable( '#caseResponders' ) ) {
@@ -1084,7 +1102,7 @@
                             "pageLength": 8,
                             "dom": 'T<"clear">lfrtip',
                             "order" :[[0,"asc"]],
-                            "ajax": "{!! url('/caseResponders-list/id')!!}",
+                            "ajax": "{!! url('/caseResponders-list/')!!}" + '/'+case_id,
                             "columns": [
 
 
@@ -1176,6 +1194,8 @@
                         document.getElementById('side_contents2').style.display="block";
                         document.getElementById('side_contents3').style.display="block";
                         document.getElementById('side_contents4').style.display="block";
+                        document.getElementById('side_contents5').style.display="block";
+
                         location.reload()
                      //   document.getElementById("side_navs").style.display="block";
 
@@ -1195,9 +1215,12 @@
                         document.getElementById('side_contents3').style.display="none";
                         document.getElementById('side_contents4').style.display="none";
                         document.getElementById('side_contents5').style.display="none";
+                        document.getElementById('side_contents6').style.display="none";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content active";
+
                     }
                 </script>
+
 
 
 @endsection

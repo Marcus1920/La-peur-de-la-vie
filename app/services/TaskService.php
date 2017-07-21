@@ -66,6 +66,13 @@ class TaskService
             return $caseTasks;
         }
 
+    public function getCaseProfile($id)
+    {
+        $caseProfile=TaskCategoryType::with('tasks')->where('task_id',$id)->first();
+
+        return $caseProfile;
+    }
+
 
         public function storeTask($request)
         {

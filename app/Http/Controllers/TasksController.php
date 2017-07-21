@@ -110,13 +110,24 @@ class TasksController extends Controller
             
                 <div class="col-md-2 m-b-15">
                  
-                   <a class="btn btn-xs btn-alt" data-toggle="modal" href="tasks/{{ $task_id }}" target="">View</a>
+                   <a class="btn btn-xs btn-alt" data-toggle="modal" href="{{ url(\'tasks\',$task_id) }}" target="">View</a>
                    
               
                   
                 </div>       '
             )
             ->make(true);
+    }
+    public function showCaseProfile($id)
+    {
+        $caseProfile=$this->tasks->getCaseProfile($id);
+        if($caseProfile==NULL)
+        {
+            \Session::flash('success', 'This task does not belong to a Case!');
+            return Redirect::to('tasks/'.$id);
+        }
+
+        return Redirect::to('casetest/'.$caseProfile['type_id']);
     }
 
 

@@ -7,6 +7,7 @@
     <!-- Breadcrumb -->
     <ol class="breadcrumb hidden-xs">
         <li><a href="{{ url('tasks') }}">TASK LIST</a></li>
+        <li><a href="{{ url('CaseProfile',$task->id) }}">CASE PROFILE</a></li>
         <li class="active">TASK DETAILS</li>
     </ol>
 
