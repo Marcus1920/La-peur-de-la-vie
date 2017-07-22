@@ -20,6 +20,11 @@ class TaskCategoryType extends Eloquent
         return $this->belongsTo(TaskCategory::class);
     }
 
+    public  function tasks(){
+
+        return $this->belongsTo(Task::class,'task_id','id');
+    }
+
     public function store($task,$type_id){
 
         TaskCategoryType::create(

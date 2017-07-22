@@ -4,6 +4,7 @@ namespace App\services;
 use App\Task;
 use App\TaskOwner;
 use App\User;
+use App\TaskCategoryType;
 
 use Auth;
 
@@ -58,6 +59,19 @@ class TaskService
             return $myAssignedTasks;
 
         }
+
+        public function getCaseTasks($id)
+        {
+            $caseTasks=TaskCategoryType::with('tasks')->where('type_id',$id)->get();
+            return $caseTasks;
+        }
+
+    public function getCaseProfile($id)
+    {
+        $caseProfile=TaskCategoryType::with('tasks')->where('task_id',$id)->first();
+
+        return $caseProfile;
+    }
 
 
         public function storeTask($request)

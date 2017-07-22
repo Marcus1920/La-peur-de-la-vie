@@ -16,8 +16,8 @@ use App\Affiliation;
 use App\MeetingVenue;
 use App\CaseType;
 use App\CaseSubType;
-
-
+use App\AffiliationPositions;
+use App\Position;
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -535,7 +535,7 @@ Route::post('updateSubSubCategory', ['middleware' => 'resetLastActive', 'uses' =
 |--------------------------------------------------------------------------
 |
 */
-
+Route::get('casetest/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
 Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@index']);
 Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@edit']);
 Route::get('workflows-list-case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@workflow']);
@@ -1057,8 +1057,16 @@ Route::get('list-affiliations', ['middleware' => 'resetLastActive', function () 
 Route::get('list-affiliation-positions/{affiliation}', ['middleware' => 'resetLastActive', function ($affiliation) {
 
     $affiliationObj = Affiliation::find($affiliation);
+    $afflpos= AffiliationPositions::where('affiliation',$affiliation)->first();
+    $id=$affiliation;
+    $created=$afflpos->created_at;
+    $users=User::where('id',$afflpos->created_by)->first();
+    $created_by_name = $users->name;
+    $created_by_surname = $users->surname;
 
-    return view('affiliations.positions', compact('affiliationObj'));
+    $position= Position::where('id',$afflpos->positions)->first();
+    $position_name=$position->name;
+    return view('affiliations.positions', compact('affiliationObj','id','created','created_by_name','created_by_surname','position_name'));
 }]);
 
 Route::get('affiliations-list', ['middleware' => 'resetLastActive', 'uses' => 'AffiliationsController@index']);
@@ -1114,6 +1122,7 @@ Route::get('group-users-list/{id}', ['middleware' => 'resetLastActive', 'uses' =
 Route::get('map', ['middleware' => 'resetLastActive', 'uses' => 'MapController@index']);
 
 
+
 Route::get('poimap/{id}', ['middleware' => 'resetLastActive', 'uses' => 'UserController@poimap']);
 
 
@@ -1157,6 +1166,9 @@ Route::get('linkNewTask/{id}','TasksController@create');
 Route::get('linkExistingTask/{id}','TasksController@linkExistingTask');
 Route::post('tasks/addTaskRelationship','TasksController@addTaskRelationship');
 Route::get('getSearchTasks', ['middleware' => 'auth', 'uses' => 'TasksController@getSearchTasks']);
+Route::post('caseTasks','TasksController@storeCaseTask');
+Route::get('getCaseTasks/{id}','TasksController@getCaseTasks');
+Route::get('CaseProfile/{id}','TasksController@showCaseProfile');
 
 
 
