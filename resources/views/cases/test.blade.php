@@ -153,10 +153,21 @@
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
-                                    <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-ok-sign"></h5><br/>Accept Case
-                                    </a>
-                                    <a href="#" class="list-group-item text-center">
+
+                                    @if($accepted == 1)
+                                        <button  class="list-group-item text-center" disabled style="width: 100%" >
+                                            <h5 class="glyphicon glyphicon-remove-sign" ></h5><br/>Case already accepted
+                                        </button>
+                                    @else
+                                        <a href="#" class="list-group-item text-center" id="acceptCase" onClick="acceptCase()">
+                                            <h5 class="glyphicon glyphicon-ok-sign" ></h5><br/>Accept Case
+                                        </a>
+                                    @endif
+                                    <button  class="list-group-item text-center" id="acceptedCase" disabled style="width: 100%; display: none" >
+                                        <h5 class="glyphicon glyphicon-remove-sign" ></h5><br/>Case accepted
+                                    </button>
+
+                                    <a href="#" class="list-group-item text-center" onclick="closeCase()">
                                         <h4 class="glyphicon glyphicon-off"></h4><br/>Close Case
 
                                     </a>
@@ -910,6 +921,13 @@
                                     </div>
                                 </div>
 
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents7">
+
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             </div>
@@ -1283,13 +1301,13 @@
 
                     function shows() {
 
-                        document.getElementById("side_navs").style.display="block";
-                        document.getElementById("top_navs_action").className="bhoechie-tab-content";
-                        document.getElementById('side_contents1').style.display="block";
-                        document.getElementById('side_contents2').style.display="block";
-                        document.getElementById('side_contents3').style.display="block";
-                        document.getElementById('side_contents4').style.display="block";
-                        document.getElementById('side_contents5').style.display="block";
+//                        document.getElementById("side_navs").style.display="block";
+//                        document.getElementById("top_navs_action").className="bhoechie-tab-content";
+//                        document.getElementById('side_contents1').style.display="block";
+//                        document.getElementById('side_contents2').style.display="block";
+//                        document.getElementById('side_contents3').style.display="block";
+//                        document.getElementById('side_contents4').style.display="block";
+//                        document.getElementById('side_contents5').style.display="block";
 
                         location.reload()
                      //   document.getElementById("side_navs").style.display="block";
@@ -1426,6 +1444,7 @@
                         document.getElementById('side_contents4').style.display="none";
                         document.getElementById('side_contents5').style.display="none";
                         document.getElementById('side_contents6').style.display="none";
+                        document.getElementById('side_contents7').style.display="none";
                         document.getElementById("top_navs_action").className="bhoechie-tab-content active";
 
                     }
