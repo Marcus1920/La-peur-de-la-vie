@@ -787,7 +787,10 @@
 
 
                                                         @endif
-                                                        <a class="btn btn-xs btn-alt" onClick="launchPersonOfInterestModal();">Add Person</a>
+                                                        <div class="rows">
+                                                            <div class="col-md-2">  <a class="btn btn-default" onClick="launchPersonOfInterestModal();">Add Person</a>    </div>
+                                                        </div>
+
                                                         <!-- Responsive Table -->
                                                         <div class="block-area" id="responsiveTable">
                                                             <div class="table-responsive">

@@ -1100,7 +1100,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
                     "type": "GET",
                     "url": sSource,
                     "data": aoData,
-                    "timeout": 40000,
+                    "timeout": 0000,
                     "error": handleAjaxError,
                     "success": fnCallback
                   } );
@@ -1207,7 +1207,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
         "autoWidth": false,
 
        "processing": true,
-       "serverSide": true,
+       speed: 500,
        "dom": 'T<"clear">lfrtip',
        "order" :[[0,"desc"]],
        "ajax": "{!! url('/pending-referral-cases-list/')!!}","processing": true,
@@ -2867,10 +2867,10 @@ console.log("CreateCase error, data - ",data);
           $('#caseProfileForm')[0].reset();
 
       }
-
-      var options = {
+              var options = {
           resizable : false,
-          url : 'php/connector.minimal.php?folderId='+ id + '&type=case',
+
+                  url : '{!! url("/php/connector.minimal.php?folderId=")!!}' + id + '&type=case',
           commandsOptions : {
             info : {
               nullUrlDirLinkSelf : true,
@@ -3112,6 +3112,7 @@ console.log("CreateCase error, data - ",data);
           oTableCaseNotes     = $('#caseNotesTable').DataTable({
                         "processing": true,
                         "serverSide": true,
+                         "autoWidth": false,
                         "pageLength": 5,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
@@ -3139,7 +3140,9 @@ console.log("CreateCase error, data - ",data);
           oTablePoi     = $('#pointListTable').DataTable({
                         "processing": true,
                         "serverSide": true,
+                         "autoWidth": false,
                         "pageLength": 5,
+                        "speed" : 500,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
                         "ajax": "{!! url('/poi-list/" + id +"')!!}",
@@ -3170,6 +3173,7 @@ console.log("CreateCase error, data - ",data);
           oTableRelatedCases   = $('#relatedCasesTable').DataTable({
                         "processing": true,
                         "serverSide": true,
+                          "autoWidth": false,
                         "pageLength": 5,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
@@ -3208,6 +3212,7 @@ console.log("CreateCase error, data - ",data);
           oTableCaseActivities     = $('#caseActivities').DataTable({
                         "processing": true,
                         "serverSide": true,
+                        "autoWidth": false,
                         "pageLength": 8,
                         "dom": 'T<"clear">lfrtip',
                         "order" :[[0,"desc"]],
@@ -3236,6 +3241,7 @@ console.log("CreateCase error, data - ",data);
      oTableCaseResponders     = $('#caseResponders').DataTable({
                   "processing": true,
                   "serverSide": true,
+                  "autoWidth": false,
                   "pageLength": 8,
                   "dom": 'T<"clear">lfrtip',
                   "order" :[[0,"asc"]],

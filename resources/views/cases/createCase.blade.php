@@ -206,7 +206,7 @@
                 <div class="form-group">
                   {!! Form::label('Investigation Note', 'Investigation Note', array('class' => 'col-md-3 control-label')) !!}
                   <div class="col-md-6">
-                    {!! Form::text('investigation_note',NULL,['class' => 'form-control input-sm','id' => 'investigation_note']) !!}
+                    {!! Form::textarea('investigation_note',NULL,['class' => 'form-control input-sm','id' => 'investigation_note' , 'rows'=> '5']) !!}
                     <div id = "hse_error_saps_investigation_note"></div>
                   </div>
                 </div>
@@ -231,10 +231,10 @@
                     </div>
                 </div>
 
-                <div class="form-group" id="case_sub_type_addition">
-                    <div class="col-md-3"></div>
-                   <div class="col-md-6"><a id="add_case_type" class="btn btn-sm">Add Case Type</a></div>
-                </div>
+                {{--<div class="form-group" id="case_sub_type_addition">--}}
+                    {{--<div class="col-md-3"></div>--}}
+                   {{--<div class="col-md-6"><a id="add_case_type" class="btn btn-sm">Add Case Type</a></div>--}}
+                {{--</div>--}}
 
                 <div id="case_types_div"></div>
 

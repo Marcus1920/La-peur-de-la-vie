@@ -188,14 +188,26 @@
                     <li class="dropdown">
 
                         <a class="sa-side-ui" href="">
-                            <span class="menu-item">Setting </span>
+                            <span class="menu-item">Settings </span>
                         </a>
                         <ul class="list-unstyled menu-item">
 
+                            @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
+
+
+                                <li><a href="{{ url('list-departments') }}"><span class="badge badge-r">{{ count($noDepartments,0) }}</span>Departments</a></li>
+
+                            @endif
+
+                            @if(isset($userViewPositionsPermission) && $userViewPositionsPermission->permission_id =='6')
+
+                                    <li><a href="{{ url('list-positions') }}"><span class="badge badge-r">{{ count($noPositions,0) }}</span>Positions</a></li>
+
+                                @endif
 
 
                             @if(isset($userViewAffiliationPermission) && $userViewAffiliationPermission->permission_id =='1')
-                                <li><a href="{{ url('list-affiliations') }}"><span class="badge badge-r">{{ count($noAffiliations,0) }}</span>Affiliations</a></li>
+                                <li><a href="{{ url('list-affiliations') }}"><span class="badge badge-r">{{ count($noAffiliations,0) }}</span>Association</a></li>
                             @endif
 
                             @if(isset($userViewCasePriorityPermission) && $userViewCasePriorityPermission->permission_id =='2')
@@ -208,12 +220,7 @@
 
                             @endif
 
-                            @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
 
-
-                            <li><a href="{{ url('list-departments') }}"><span class="badge badge-r">{{ count($noDepartments,0) }}</span>Departments</a></li>
-
-                             @endif
 
                             @if(isset($userViewMeetingsPermission) && $userViewMeetingsPermission->permission_id =='5')
 
@@ -221,11 +228,7 @@
 
                             @endif
 
-                            @if(isset($userViewPositionsPermission) && $userViewPositionsPermission->permission_id =='6')
 
-                            <li><a href="{{ url('list-positions') }}"><span class="badge badge-r">{{ count($noPositions,0) }}</span>Positions</a></li>
-
-                            @endif
                             @if(isset($userViewProvincesPermission) && $userViewProvincesPermission->permission_id =='7')
 
                             {{--<li><a href="{{ url('list-provinces') }}"><span class="badge badge-r">{{ count($noProvinces,0) }}</span>Provinces</a></li>--}}
@@ -233,14 +236,17 @@
                             @if(isset($userViewRelationshipsPermission) && $userViewRelationshipsPermission->permission_id =='8')
                             {{--<li><a href="{{ url('list-relationships') }}"><span class="badge badge-r">{{ count($noRelationships,0) }}</span>Relationships</a></li>--}}
                             @endif
+
+                                @if(isset($userViewUsersPermission) && $userViewUsersPermission->permission_id =='10')
+
+                                    <li><a href="{{ url('list-users') }}"><span class="badge badge-r">{{ count($noUsers,0) }}</span>Users</a></li>
+                                @endif
+
                             @if(isset($userViewUserGroupsPermission) && $userViewUserGroupsPermission->permission_id =='9')
 
                             <li><a href="{{ url('list-roles') }}"><span class="badge badge-r">{{ count($noRoles,0) }}</span>User Groups</a></li>
                             @endif
-                            @if(isset($userViewUsersPermission) && $userViewUsersPermission->permission_id =='10')
 
-                            <li><a href="{{ url('list-users') }}"><span class="badge badge-r">{{ count($noUsers,0) }}</span>Users</a></li>
-                             @endif
                             @if(isset($userViewPOIPermission) && $userViewPOIPermission->permission_id =='11')
 
                            {{-- <li><a href="{{ url('list-poi-users') }}"><span class="badge badge-r">{{ count($noPOIUsers,0) }}</span>POI</a></li>--}}
@@ -251,8 +257,8 @@
                     {{--          <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li> --}}
                              @endif
 
-                             <li><a href="{{ url('list-forms') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms</a></li>
-                             <li><a href="{{ url('list-formsdata') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms Data</a></li>
+                             {{--<li><a href="{{ url('list-forms') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms</a></li>--}}
+                             {{--<li><a href="{{ url('list-formsdata') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms Data</a></li>--}}
 
                         </ul>
                     </li>
@@ -298,19 +304,37 @@
                     @endif
 
 
-               {{--     @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
 
-                        <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
-                            <a class="sa-side-list" href="{{ url('log-viewer') }}">
-                                <span class="menu-item">Rest </span>
+                        <li class="dropdown">
+
+                            <a class="sa-side-page" href="">
+                                <span class="menu-item">Form wizard </span>
                             </a>
+
+                            <ul class="list-unstyled menu-item">
+
+                                @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
+
+
+
+                                    <li><a href="{{ url('list-forms') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms</a></li>
+                                    <li><a href="{{ url('list-formsdata') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms Data</a></li>
+
+                                @endif
+                            </ul>
                         </li>
+                    @endif
+
+                  @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+
 
                     @endif
 
-                    --}}
+
 
                 </ul>
+
 
             </aside>
 

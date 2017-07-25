@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Affiliation</h4>
+                <h4 class="modal-title">Association</h4>
             </div>
             <div class="modal-body">
             {!! Form::open(['url' => 'addAffiliation', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"addAffiliationForm" ]) !!}
@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <button type="submit" id='submitAddAffiliationForm' type="button" class="btn btn-sm">Add Affiliation</button>
+                    <button type="submit" id='submitAddAffiliationForm' type="button" class="btn btn-sm">Add Association</button>
                 </div>
             </div>
             </div>

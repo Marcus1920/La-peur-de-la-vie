@@ -4,16 +4,16 @@
 <!-- Breadcrumb -->
 <ol class="breadcrumb hidden-xs">
     <li><a href="#">Administration</a></li>
-    <li><a href="{{ url('list-affiliations') }}">Affiliations</a></li>
-    <li class="active">Affiliations Listing</li>
+    <li><a href="{{ url('list-affiliations') }}">Association</a></li>
+    <li class="active">Association Listing</li>
 </ol>
 
-<h4 class="page-title">AFFILIATIONS</h4>
+<h4 class="page-title">Association</h4>
 <!-- Alternative -->
 <div class="block-area" id="alternative-buttons">
-    <h3 class="block-title">Affiliations Listing</h3>
+    <h3 class="block-title">Association Listing</h3>
     <a class="btn btn-sm" data-toggle="modal" data-target=".modalAddAffiliation">
-     Add Affiliation
+     Add Association
     </a>
 </div>
 
