@@ -24,7 +24,7 @@
                 <a data-toggle="dropdown" href="" class="tile-menu"></a>
                 <ul class="dropdown-menu pull-right text-right">
 
-                    <li><a href="javascript:void()" onclick="document.getElementById('googleMap').src='map1.php'">Refresh</a></li>
+                    <li><a href="javascript:void()" onclick="document.getElementById('googleMap').src='map.php'">Refresh</a></li>
 
                 </ul>
             </div>
