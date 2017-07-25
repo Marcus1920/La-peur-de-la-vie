@@ -1555,7 +1555,10 @@ class CasesController extends Controller
 
 
 
-        return  view('cases.test')->with(compact('case')) ;
+        $cases=CaseReport::where('id',$id)->first();
+        $accepted=$cases->accepted;
+        return  view('cases.test')->with(compact('case','accepted')) ;
+
 
     }
 
