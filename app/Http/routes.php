@@ -150,6 +150,7 @@ Route::get('getPoiCasesAssociates/{id}', ['middleware' => 'resetLastActive', 'us
 Route::get('getCaseSearch', ['middleware' => 'resetLastActive', 'uses' => 'UserController@getCaseSearch']);
 
 Route::get('getUsers', ['middleware' => 'auth', 'uses' => 'UserController@getUsers']);
+Route::get('getAddressBookUsers', ['middleware' => 'auth', 'uses' => 'AddressBookController@getAddressBookUsers']);
 
 
 Route::get('add-user',  function () {
@@ -1002,6 +1003,8 @@ Route::get('getLoggedInUsers', function () {
 */
 
 Route::post('addCaseMessage', ['middleware' => 'resetLastActive', 'uses' => 'MessageController@store']);
+
+Route::post('sendCaseMessage', ['middleware' => 'resetLastActive', 'uses' => 'MessageController@storeEmail']);
 
 Route::get('/getOfflineMessage', function () {
 

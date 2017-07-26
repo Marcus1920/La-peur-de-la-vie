@@ -147,14 +147,17 @@
                                     <a href="#" class="list-group-item text-center">
                                         <h5 class="glyphicon glyphicon-plus-sign"></h5><br/> Add Case Note
                                     </a>
+
+                                    <a href="#" class="list-group-item text-center">
+                                        <h5 class="glyphicon glyphicon-envelope"></h5><br/> Send Email
+                                    </a>
+
                                     <a href="#" class="list-group-item text-center">
                                         <h5 class="glyphicon glyphicon-paperclip"></h5><br/>Attach File
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
-
-
                                         <a href="#" class="list-group-item text-center" id="acceptCase" onClick="acceptCase()">
                                             <h5 class="glyphicon glyphicon-ok-sign" ></h5><br/>Accept Case
                                         </a>
@@ -902,26 +905,33 @@
                                         @include('casenotes.add')
                                     </div>
                                 </div>
+
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents4">
-                                        @include('casefiles.add')
+                                        @include('messages.addEmail')
                                     </div>
                                 </div>
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents5">
-                                        @include('tasks.createCaseTask')
+                                        @include('casefiles.add')
                                     </div>
                                 </div>
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents6">
-
+                                        @include('tasks.createCaseTask')
                                     </div>
                                 </div>
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents7">
+
+                                    </div>
+                                </div>
+
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents8">
 
                                     </div>
                                 </div>
@@ -1005,6 +1015,8 @@
             $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
             $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
             $("#addresses1").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+            $("#Recepient").tokenInput("{!! url('/getAddressBookUsers')!!}",{tokenLimit:1});
+            $("#Cc").tokenInput("{!! url('/getAddressBookUsers')!!}",{tokenLimit:50});
 
             $("#POISearch").tokenInput("{{ url ('/getPoisContacts')   }}",
                 {
@@ -1444,6 +1456,7 @@
             document.getElementById('side_contents5').style.display="none";
             document.getElementById('side_contents6').style.display="none";
             document.getElementById('side_contents7').style.display="none";
+            document.getElementById('side_contents8').style.display="none";
             document.getElementById("top_navs_action").className="bhoechie-tab-content active";
 
         }
