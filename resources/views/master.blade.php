@@ -634,8 +634,10 @@
 @include('forms.data.form')
 @include('forms.data.view')
         @include('version')
+        @if(env('APP_ENV','Production')!='local')
         @include('partials.refresh')
         @include('partials.timeout')
+        @endif
 
       @endif
 			<script>
