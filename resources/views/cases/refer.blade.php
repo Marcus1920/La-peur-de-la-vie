@@ -6,7 +6,7 @@
 
 		<div class="form-group">
                     {!! Form::label('Search Box', 'Search Box', array('class' => 'col-md-2 control-label')) !!}
-                <div class="col-md-6">
+                <div class="col-md-8">
                     {!! Form::text('addresses',NULL,['class' => 'form-control input-sm','id' => 'addresses']) !!}
                 </div>
                 </div>
