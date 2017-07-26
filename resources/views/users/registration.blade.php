@@ -201,7 +201,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('Affiliation', 'Affiliation', array('class' => 'col-md-2 control-label')) !!}
+                {!! Form::label('Association', 'Association', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
                   {!! Form::select('affiliation',$selectAffiliations,0,['class' => 'form-control input-sm' ,'id' => 'affiliation']) !!}
                   @if ($errors->has('affiliation')) <p class="help-block red">*{{ $errors->first('affiliation') }}</p> @endif
