@@ -113,7 +113,7 @@
                                     </li>
                                     <li><a href="#4a" data-toggle="tab" onclick="hides()" ><span class="fa fa-user "> POI </span></a>
                                     </li>
-                      <!--------------------- -------->
+                                    <!--------------------- -------->
                                     <li><a href="#5a" data-toggle="tab" onclick="hides()"><span class="fa fa-folder-open-o "> Case Activities</span></a>
                                     </li>
 
@@ -153,10 +153,17 @@
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
-                                    <a href="#" class="list-group-item text-center">
-                                        <h5 class="glyphicon glyphicon-ok-sign"></h5><br/>Accept Case
-                                    </a>
-                                    <a href="#" class="list-group-item text-center">
+
+
+                                        <a href="#" class="list-group-item text-center" id="acceptCase" onClick="acceptCase()">
+                                            <h5 class="glyphicon glyphicon-ok-sign" ></h5><br/>Accept Case
+                                        </a>
+
+                                    <button  class="list-group-item text-center" id="acceptedCase" disabled style="width: 100%; display: none" >
+                                        <h5 class="glyphicon glyphicon-remove-sign" ></h5><br/>Case accepted
+                                    </button>
+
+                                    <a href="#" class="list-group-item text-center" onclick="closeCase()">
                                         <h4 class="glyphicon glyphicon-off"></h4><br/>Close Case
 
                                     </a>
@@ -779,9 +786,12 @@
 
 
 
-                                                    @endif
-                                                            <a class="btn btn-xs btn-alt" onClick="launchPersonOfInterestModal();">Add Person</a>
-                                                    <!-- Responsive Table -->
+                                                        @endif
+                                                        <div class="rows">
+                                                            <div class="col-md-2">  <a class="btn btn-default" onClick="launchPersonOfInterestModal();">Add Person</a>    </div>
+                                                        </div>
+
+                                                        <!-- Responsive Table -->
                                                         <div class="block-area" id="responsiveTable">
                                                             <div class="table-responsive">
                                                                 <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="pointListTable">
@@ -878,7 +888,7 @@
 
                                 <div class="bhoechie-tab-content "  >
                                     <div id="side_contents1">
-                                            @include('cases.refer')
+                                        @include('cases.refer')
                                     </div>
                                 </div>
 
@@ -910,12 +920,19 @@
                                     </div>
                                 </div>
 
-                            </div>
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents7">
+
+                                    </div>
+                                </div>
+
 
                             </div>
+
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 
@@ -983,453 +1000,454 @@
 
     <script>
 
-                    $(document).ready(function(){
+        $(document).ready(function(){
 
-                        $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
-                        $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
-                        $("#addresses1").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+            $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+            $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+            $("#addresses1").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
 
-                        $("#POISearch").tokenInput("{{ url ('/getPoisContacts')   }}",
-                            {
+            $("#POISearch").tokenInput("{{ url ('/getPoisContacts')   }}",
+                {
 
-                                tokenLimit:1,
-                                onResult : function(results) {
+                    tokenLimit:1,
+                    onResult : function(results) {
 
-                                    if(results.length == 0) {
+                        if(results.length == 0) {
 
-                                        var r = confirm("Do want to Capture POI ?");
+                            var r = confirm("Do want to Capture POI ?");
 
-                                        var newWindow = window.open();
+                            var newWindow = window.open();
 
-                                        if (r == true) {
+                            if (r == true) {
 
-                                            var doc_ref = document.location.href;
-                                            var doc_url = doc_ref.substring( 0, doc_ref.indexOf( "home")) ;
-                                            doc_url+= "add-poi-user";
-                                            //$("#anchorID").attr("href",doc_url);
-                                            //document.getElementById("anchorID").click();
-                                            newWindow.location = doc_url}
-                                    }
-
-                                    return results;
-
-                                }
-
-
-
-                            });
-
-
-
-                        var  id  =   $("#id").val() ;
-
-                        launchCaseModal(id);
-
-                        var case_id={{$case->id}};
-
-
-                        if ( $.fn.dataTable.isDataTable( '#relatedCasesTable' ) ) {
-                            oTableRelatedCases.destroy();
+                                var doc_ref = document.location.href;
+                                var doc_url = doc_ref.substring( 0, doc_ref.indexOf( "home")) ;
+                                doc_url+= "add-poi-user";
+                                //$("#anchorID").attr("href",doc_url);
+                                //document.getElementById("anchorID").click();
+                                newWindow.location = doc_url}
                         }
 
+                        return results;
+
+                    }
 
 
-                        oTableRelatedCases   = $('#relatedCasesTable').DataTable({
-                            "processing": true,
-                            "autoWidth": false,
-                            "pageLength": 5,
-                            "bLengthChange": false,
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/relatedCases-list/')!!}" + '/'+case_id,
-                            "columns": [
-                                {data: function(d){
 
-                                    return "<a href='#' class='btn' onclick=launchRelatedCaseModal(" + d.id + ",2)>" + d.id + "</a>";
+                });
 
-                                },"name" : 'cases.id'},
-                                {data: 'created_at', name: 'related_cases.created_at'},
-                                {data: 'description', name: 'cases.description'},
-                                {data: function(d){
 
-                                    return 'Child';
-                                }}
-                            ],
 
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
+            var  id  =   $("#id").val() ;
 
-                        });
+            launchCaseModal(id);
+
+            var case_id={{$case->id}};
+
+
+            if ( $.fn.dataTable.isDataTable( '#relatedCasesTable' ) ) {
+                oTableRelatedCases.destroy();
+            }
+
+
+
+            oTableRelatedCases   = $('#relatedCasesTable').DataTable({
+                "processing": true,
+                "autoWidth": false,
+                "pageLength": 5,
+                "bLengthChange": false,
+                "order" :[[0,"desc"]],
+                "ajax": "{!! url('/relatedCases-list/')!!}" + '/'+case_id,
+                "columns": [
+                    {data: function(d){
+
+                        return "<a href='#' class='btn' onclick=launchRelatedCaseModal(" + d.id + ",2)>" + d.id + "</a>";
+
+                    },"name" : 'cases.id'},
+                    {data: 'created_at', name: 'related_cases.created_at'},
+                    {data: 'description', name: 'cases.description'},
+                    {data: function(d){
+
+                        return 'Child';
+                    }}
+                ],
+
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
+
+            });
 
 
 // poi list
 
 
 
-                        if ( $.fn.dataTable.isDataTable( '#pointListTable' ) ) {
-                            oTablePoi.destroy();
-                        }
+            if ( $.fn.dataTable.isDataTable( '#pointListTable' ) ) {
+                oTablePoi.destroy();
+            }
 
 
 
-                        oTablePoi     = $('#pointListTable').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 5,
-                            "bLengthChange": false,
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/poi-list/')!!}" + '/'+case_id,
-                            "columns": [
-                                {data: 'id', name: 'poi.id'},
-                                {data: 'name', name: 'poi.name'},
-                                {data: 'surname', name: 'poi.surname'},
-                                {data: 'actions', name: 'actions'}
+            oTablePoi     = $('#pointListTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 5,
+                "bLengthChange": false,
+                "order" :[[0,"desc"]],
+                "ajax": "{!! url('/poi-list/')!!}" + '/'+case_id,
+                "columns": [
+                    {data: 'id', name: 'poi.id'},
+                    {data: 'name', name: 'poi.name'},
+                    {data: 'surname', name: 'poi.surname'},
+                    {data: 'actions', name: 'actions'}
 
-                            ],
+                ],
 
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
 
-                        });
+            });
 
 // case Note
 
 
 
 
-                        if ( $.fn.dataTable.isDataTable( '#caseNotesTable' ) ) {
-                            oTableCaseNotes.destroy();
-                        }
+            if ( $.fn.dataTable.isDataTable( '#caseNotesTable' ) ) {
+                oTableCaseNotes.destroy();
+            }
 
-                        oTableCaseNotes     = $('#caseNotesTable').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 5,
-                            "bLengthChange": false,
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/caseNotes-list/')!!}" + '/'+case_id,
-                            "columns": [
-                                {data: 'created_at', name: 'created_at'},
-                                {data: 'user', name: 'user'},
-                                {data: 'note', name: 'note'}
-                            ],
+            oTableCaseNotes     = $('#caseNotesTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 5,
+                "bLengthChange": false,
+                "order" :[[0,"desc"]],
+                "ajax": "{!! url('/caseNotes-list/')!!}" + '/'+case_id,
+                "columns": [
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'user', name: 'user'},
+                    {data: 'note', name: 'note'}
+                ],
 
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
 
-                        });
+            });
 
-                        if ( $.fn.dataTable.isDataTable( '#caseActivities' ) ) {
-                            oTableCaseActivities.destroy();
-                        }
+            if ( $.fn.dataTable.isDataTable( '#caseActivities' ) ) {
+                oTableCaseActivities.destroy();
+            }
 
 
 
-                        oTableCaseActivities     = $('#caseActivitiesTable').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 8,
-                            "dom": 'T<"clear">lfrtip',
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
-                            "columns": [
-                                {data: 'created_at', name: 'created_at'},
-                                {data: 'note', name: 'note'}
-                            ],
+            oTableCaseActivities     = $('#caseActivitiesTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 8,
+                "dom": 'T<"clear">lfrtip',
+                "order" :[[0,"desc"]],
+                "ajax": "{!! url('/caseActivities-list/')!!}"+ '/'+case_id,
+                "columns": [
+                    {data: 'created_at', name: 'created_at'},
+                    {data: 'note', name: 'note'}
+                ],
 
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
 
-                        });
+            });
 
-                        if ( $.fn.dataTable.isDataTable( '#CaseTasksTable' ) ) {
-                            oTableTasksTable.destroy();
-                        }
+            if ( $.fn.dataTable.isDataTable( '#CaseTasksTable' ) ) {
+                oTableTasksTable.destroy();
+            }
 
-                        oTableTasksTable     = $('#CaseTasksTable').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 5,
-                            "bLengthChange": false,
-                            "order" :[[0,"desc"]],
-                            "ajax": "{!! url('/getCaseTasks/')!!}" + '/'+case_id,
-                            "columns": [
-                                {data: 'tasks.id', name: 'tasks.id'},
-                                {data: 'tasks.title', name: 'tasks.title'},
-                                {data: 'tasks.description', name: 'tasks.description'},
-                                {data: 'tasks.commencement_date', name: 'tasks.commencement_date'},
-                                {data: 'tasks.due_date', name: 'tasks.due_date'},
-                                {data: 'actions', name: 'actions'},
-                            ],
+            oTableTasksTable     = $('#CaseTasksTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 5,
+                "bLengthChange": false,
+                "order" :[[0,"desc"]],
+                "ajax": "{!! url('/getCaseTasks/')!!}" + '/'+case_id,
+                "columns": [
+                    {data: 'tasks.id', name: 'tasks.id'},
+                    {data: 'tasks.title', name: 'tasks.title'},
+                    {data: 'tasks.description', name: 'tasks.description'},
+                    {data: 'tasks.commencement_date', name: 'tasks.commencement_date'},
+                    {data: 'tasks.due_date', name: 'tasks.due_date'},
+                    {data: 'actions', name: 'actions'},
+                ],
 
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
 
-                        });
+            });
 // case  note
 
 
 
 
-                        if ( $.fn.dataTable.isDataTable( '#caseResponders' ) ) {
-                            oTableCaseResponders.destroy();
+            if ( $.fn.dataTable.isDataTable( '#caseResponders' ) ) {
+                oTableCaseResponders.destroy();
+            }
+
+
+
+            oTableCaseResponders     = $('#caseResponders').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 8,
+                "dom": 'T<"clear">lfrtip',
+                "order" :[[0,"asc"]],
+                "ajax": "{!! url('/caseResponders-list/')!!}" + '/'+case_id,
+                "columns": [
+
+
+                    {data: function(d){
+
+                        if (d.type  == 1 )
+                        {
+                            return "First Responder";
+                        }
+
+                        if (d.type  == 0 )
+                        {
+                            return "Reporter";
+                        }
+
+                        if (d.type  == 2 )
+                        {
+                            return "Second Responder";
+                        }
+
+                        if (d.type  == 3 )
+                        {
+                            return "Third Responder";
+                        }
+
+                        if (d.type  == 4  )
+                        {
+                            return "Escalation";
+                        }
+
+                        if (d.type  == 5  )
+                        {
+                            return "Critical Team";
                         }
 
 
 
-                        oTableCaseResponders     = $('#caseResponders').DataTable({
-                            "processing": true,
-                            "serverSide": true,
-                            "autoWidth": false,
-                            "pageLength": 8,
-                            "dom": 'T<"clear">lfrtip',
-                            "order" :[[0,"asc"]],
-                            "ajax": "{!! url('/caseResponders-list/')!!}" + '/'+case_id,
-                            "columns": [
+                    },"name" : 'type'},
+
+                    {data: function(d){
+
+                        return d.name + ' ' + d.surname;
 
 
-                                {data: function(d){
+                    },"name" : 'name'},
 
-                                    if (d.type  == 1 )
-                                    {
-                                        return "First Responder";
-                                    }
+                    {data: function(d){
 
-                                    if (d.type  == 0 )
-                                    {
-                                        return "Reporter";
-                                    }
+                        if (d.accept  == 1 )
+                        {
+                            return "yes";
+                        }
+                        else {
 
-                                    if (d.type  == 2 )
-                                    {
-                                        return "Second Responder";
-                                    }
+                            return "no";
+                        }
 
-                                    if (d.type  == 3 )
-                                    {
-                                        return "Third Responder";
-                                    }
+                    },"name" : 'accept'},
 
-                                    if (d.type  == 4  )
-                                    {
-                                        return "Escalation";
-                                    }
-
-                                    if (d.type  == 5  )
-                                    {
-                                        return "Critical Team";
-                                    }
+                    {data: 'actions', name: 'actions'},
 
 
+                ],
 
-                                },"name" : 'type'},
+                "aoColumnDefs": [
+                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
 
-                                {data: function(d){
-
-                                    return d.name + ' ' + d.surname;
-
-
-                                },"name" : 'name'},
-
-                                {data: function(d){
-
-                                    if (d.accept  == 1 )
-                                    {
-                                        return "yes";
-                                    }
-                                    else {
-
-                                        return "no";
-                                    }
-
-                                },"name" : 'accept'},
-
-                                {data: 'actions', name: 'actions'},
+            });
 
 
-                            ],
+            $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
+                e.preventDefault();
+                $(this).siblings('a.active').removeClass("active");
+                $(this).addClass("active");
+                var index = $(this).index();
+                $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
+                $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
+            });
 
-                            "aoColumnDefs": [
-                                { "bSearchable": false, "aTargets": [ 1] },
-                                { "bSortable": false, "aTargets": [ 1 ] }
-                            ]
+        });
 
-                        });
+        function shows() {
 
+//                        document.getElementById("side_navs").style.display="block";
+//                        document.getElementById("top_navs_action").className="bhoechie-tab-content";
+//                        document.getElementById('side_contents1').style.display="block";
+//                        document.getElementById('side_contents2').style.display="block";
+//                        document.getElementById('side_contents3').style.display="block";
+//                        document.getElementById('side_contents4').style.display="block";
+//                        document.getElementById('side_contents5').style.display="block";
 
-                        $("div.bhoechie-tab-menu>div.list-group>a").click(function(e) {
-                            e.preventDefault();
-                            $(this).siblings('a.active').removeClass("active");
-                            $(this).addClass("active");
-                            var index = $(this).index();
-                            $("div.bhoechie-tab>div.bhoechie-tab-content").removeClass("active");
-                            $("div.bhoechie-tab>div.bhoechie-tab-content").eq(index).addClass("active");
-                        });
+            location.reload()
+            //   document.getElementById("side_navs").style.display="block";
 
-                    });
+            // document.getElementById('case').className="list-group-item text-center active";
 
-                    function shows() {
-
-                        document.getElementById("side_navs").style.display="block";
-                        document.getElementById("top_navs_action").className="bhoechie-tab-content";
-                        document.getElementById('side_contents1').style.display="block";
-                        document.getElementById('side_contents2').style.display="block";
-                        document.getElementById('side_contents3').style.display="block";
-                        document.getElementById('side_contents4').style.display="block";
-                        document.getElementById('side_contents5').style.display="block";
-
-                        location.reload()
-                     //   document.getElementById("side_navs").style.display="block";
-
-                       // document.getElementById('case').className="list-group-item text-center active";
-
-                      //  document.getElementById("top_navs_action").className="bhoechie-tab-content ";
-                      //  document.getElementById('side_contents').style.display="block";
-                      //  document.getElementById('side_contents2').style.display="block";
-                     //   document.getElementById('side_contents3').style.display="block";
+            //  document.getElementById("top_navs_action").className="bhoechie-tab-content ";
+            //  document.getElementById('side_contents').style.display="block";
+            //  document.getElementById('side_contents2').style.display="block";
+            //   document.getElementById('side_contents3').style.display="block";
 
 
-                    }
+        }
 
 
 
 
 
-                    function launchPersonOfInterestModal(id)
+        function launchPersonOfInterestModal(id)
+        {
+
+            var sub_category =  1
+            var formData     =  { sub_category : sub_category};
+
+
+            $.ajax({
+                type    :"GET",
+                data    : formData,
+                url     :"{!! url('/getPois')!!}",
+                success : function(data){
+
+                    if (data.length > 0)
                     {
+                        $("#submitAllocateCaseForm").removeClass("hidden");
+                    }
+                    else {
 
-                        var sub_category =  1
-                        var formData     =  { sub_category : sub_category};
-
-
-                        $.ajax({
-                            type    :"GET",
-                            data    : formData,
-                            url     :"{!! url('/getPois')!!}",
-                            success : function(data){
-
-                                if (data.length > 0)
-                                {
-                                    $("#submitAllocateCaseForm").removeClass("hidden");
-                                }
-                                else {
-
-                                    $("#submitAllocateCaseForm").addClass("hidden");
-                                }
-
-                                var content = "";
-
-                                $.each(data, function(key, element) {
-
-                                    content += "<tr><td><a class='remove fa fa-trash-o'></a><div class='checkbox m-b-5'><label><input type='checkbox'";
-                                    content += "name='responders' id='responders' value="+element.id+" class='pull-left list-check'>";
-                                    content += "</label></div></td><td>"+element.name+"</td><td>"+element.surname+"</td><td>"+element.email;
-                                });
-
-                                $("#POITableBody").html(content);
-
-
-                                if (data == 'ok') {
-
-
-
-                                }
-
-                            }
-                        });
-
-
-
-
-                       // $('#modalCase').modal('hide');
-                        $('#modalPoiCase').modal('toggle');
-
-
-
-
+                        $("#submitAllocateCaseForm").addClass("hidden");
                     }
 
+                    var content = "";
 
+                    $.each(data, function(key, element) {
 
-
-                    $("#submitPoiForm").on("click",function(){
-
-
-                        var pois             = $("#poi_CaseForm #POISearch").val();
-                        var token            = $('input[name="_token"]').val();
-                        var caseID           = $("#poi_CaseForm #caseID").val();
-
-                        var formData         = {
-                            pois:pois,
-                            caseID:caseID
-
-                        };
-
-                        $('#modalPoiCase').modal('toggle');
-
-                        $.ajax({
-                            type    :"POST",
-                            data    : formData,
-                            headers : { 'X-CSRF-Token': token },
-                            url     :"{!! url('/addCasePoi')!!}",
-                            beforeSend : function() {
-                                HoldOn.open({
-                                    theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-                                    message: "<h4> loading please wait... ! </h4>",
-                                    content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                                                 // this will replace the theme by something customized.
-                                    backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                                    // Keep in mind is necessary the .css file too.
-                                    textColor:"white" // Change the font color of the message
-                                });
-                            },
-                            success : function(data){
-
-                                if (data.status == 'ok') {
-                                    $(".token-input-token").remove();
-                                    $('#poi_CaseForm')[0].reset();
-                                    $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! POI has been successfully added <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-                                     launchCaseModal(caseID);
-                                    //$('#modalCase').modal('toggle');
-
-
-                                   // window.location.replace(+caseID);
-                                    HoldOn.close();
-
-                                }
-
-                            }
-
-                        })
-
+                        content += "<tr><td><a class='remove fa fa-trash-o'></a><div class='checkbox m-b-5'><label><input type='checkbox'";
+                        content += "name='responders' id='responders' value="+element.id+" class='pull-left list-check'>";
+                        content += "</label></div></td><td>"+element.name+"</td><td>"+element.surname+"</td><td>"+element.email;
                     });
 
+                    $("#POITableBody").html(content);
 
-                    function hides() {
-                        document.getElementById("side_navs").style.display="none";
-                        document.getElementById('side_contents1').style.display="none";
-                        document.getElementById('side_contents2').style.display="none";
-                        document.getElementById('side_contents3').style.display="none";
-                        document.getElementById('side_contents4').style.display="none";
-                        document.getElementById('side_contents5').style.display="none";
-                        document.getElementById('side_contents6').style.display="none";
-                        document.getElementById("top_navs_action").className="bhoechie-tab-content active";
+
+                    if (data == 'ok') {
+
+
 
                     }
-                </script>
+
+                }
+            });
+
+
+
+
+            // $('#modalCase').modal('hide');
+            $('#modalPoiCase').modal('toggle');
+
+
+
+
+        }
+
+
+
+
+        $("#submitPoiForm").on("click",function(){
+
+
+            var pois             = $("#poi_CaseForm #POISearch").val();
+            var token            = $('input[name="_token"]').val();
+            var caseID           = $("#poi_CaseForm #caseID").val();
+
+            var formData         = {
+                pois:pois,
+                caseID:caseID
+
+            };
+
+            $('#modalPoiCase').modal('toggle');
+
+            $.ajax({
+                type    :"POST",
+                data    : formData,
+                headers : { 'X-CSRF-Token': token },
+                url     :"{!! url('/addCasePoi')!!}",
+                beforeSend : function() {
+                    HoldOn.open({
+                        theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
+                        message: "<h4> loading please wait... ! </h4>",
+                        content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                                     // this will replace the theme by something customized.
+                        backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
+                        // Keep in mind is necessary the .css file too.
+                        textColor:"white" // Change the font color of the message
+                    });
+                },
+                success : function(data){
+
+                    if (data.status == 'ok') {
+                        $(".token-input-token").remove();
+                        $('#poi_CaseForm')[0].reset();
+                        $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! POI has been successfully added <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
+                        launchCaseModal(caseID);
+                        //$('#modalCase').modal('toggle');
+
+
+                        // window.location.replace(+caseID);
+                        HoldOn.close();
+
+                    }
+
+                }
+
+            })
+
+        });
+
+
+        function hides() {
+            document.getElementById("side_navs").style.display="none";
+            document.getElementById('side_contents1').style.display="none";
+            document.getElementById('side_contents2').style.display="none";
+            document.getElementById('side_contents3').style.display="none";
+            document.getElementById('side_contents4').style.display="none";
+            document.getElementById('side_contents5').style.display="none";
+            document.getElementById('side_contents6').style.display="none";
+            document.getElementById('side_contents7').style.display="none";
+            document.getElementById("top_navs_action").className="bhoechie-tab-content active";
+
+        }
+    </script>
 
 
 

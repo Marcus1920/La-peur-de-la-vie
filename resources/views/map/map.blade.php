@@ -2,12 +2,11 @@
 @section('content')
 
     @include('cases.profile')
-@include('cases.refer')
+
 @include('cases.closeRequest')
 @include('addressbook.list')
 @include('addressbook.add')
-@include('casenotes.add')
-@include('casefiles.add')
+
 
 
     <!-- Breadcrumb -->
@@ -24,7 +23,7 @@
                 <a data-toggle="dropdown" href="" class="tile-menu"></a>
                 <ul class="dropdown-menu pull-right text-right">
 
-                    <li><a href="javascript:void()" onclick="document.getElementById('googleMap').src='map1.php'">Refresh</a></li>
+                    <li><a href="javascript:void()" onclick="document.getElementById('googleMap').src='../map.php'">Refresh</a></li>
 
                 </ul>
             </div>
@@ -33,7 +32,7 @@
 
 
 
-            <iframe id="googleMap" src="map.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="width:100%;height:100%;" allowFullScreen></iframe>
+            <iframe id="googleMap" src="../map.php" MARGINWIDTH=0 MARGINHEIGHT=0 SCROLLING=auto HSPACE=0 VSPACE=0 NORESIZE frameborder=0 style="width:100%;height:100%;" allowFullScreen></iframe>
 
         </div>
     </div>

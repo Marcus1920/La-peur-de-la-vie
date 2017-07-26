@@ -1100,7 +1100,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
                     "type": "GET",
                     "url": sSource,
                     "data": aoData,
-                    "timeout": 40000,
+                    "timeout": 0000,
                     "error": handleAjaxError,
                     "success": fnCallback
                   } );
@@ -1207,7 +1207,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
         "autoWidth": false,
 
        "processing": true,
-       "serverSide": true,
+       speed: 500,
        "dom": 'T<"clear">lfrtip',
        "order" :[[0,"desc"]],
        "ajax": "{!! url('/pending-referral-cases-list/')!!}","processing": true,
@@ -2525,7 +2525,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                       });
                   },
                   success : function(data){
-console.log("CreateCase success, data - ",data); 
+console.log("CreateCase success, data - ",data);
                     if (data == 'ok') {
                       $(".token-input-token").remove();
                       $('#caseReportCaseForm')[0].reset();
@@ -2539,7 +2539,7 @@ console.log("CreateCase success, data - ",data);
                   },
 
                   error: function(data) {
-console.log("CreateCase error, data - ",data); 
+console.log("CreateCase error, data - ",data);
                     HoldOn.close();
 
                     $("#error_cellphone").html("");
@@ -2867,10 +2867,10 @@ console.log("CreateCase error, data - ",data);
           $('#caseProfileForm')[0].reset();
 
       }
-
-      var options = {
+              var options = {
           resizable : false,
-          url : 'php/connector.minimal.php?folderId='+ id + '&type=case',
+
+                  url : '{!! url("/php/connector.minimal.php?folderId=")!!}' + id + '&type=case',
           commandsOptions : {
             info : {
               nullUrlDirLinkSelf : true,
@@ -3112,6 +3112,7 @@ console.log("CreateCase error, data - ",data);
           oTableCaseNotes     = $('#caseNotesTable').DataTable({
                         "processing": true,
                         "serverSide": true,
+                         "autoWidth": false,
                         "pageLength": 5,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
@@ -3139,7 +3140,9 @@ console.log("CreateCase error, data - ",data);
           oTablePoi     = $('#pointListTable').DataTable({
                         "processing": true,
                         "serverSide": true,
+                         "autoWidth": false,
                         "pageLength": 5,
+                        "speed" : 500,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
                         "ajax": "{!! url('/poi-list/" + id +"')!!}",
@@ -3170,6 +3173,7 @@ console.log("CreateCase error, data - ",data);
           oTableRelatedCases   = $('#relatedCasesTable').DataTable({
                         "processing": true,
                         "serverSide": true,
+                          "autoWidth": false,
                         "pageLength": 5,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
@@ -3208,6 +3212,7 @@ console.log("CreateCase error, data - ",data);
           oTableCaseActivities     = $('#caseActivities').DataTable({
                         "processing": true,
                         "serverSide": true,
+                        "autoWidth": false,
                         "pageLength": 8,
                         "dom": 'T<"clear">lfrtip',
                         "order" :[[0,"desc"]],
@@ -3236,6 +3241,7 @@ console.log("CreateCase error, data - ",data);
      oTableCaseResponders     = $('#caseResponders').DataTable({
                   "processing": true,
                   "serverSide": true,
+                  "autoWidth": false,
                   "pageLength": 8,
                   "dom": 'T<"clear">lfrtip',
                   "order" :[[0,"asc"]],
@@ -3602,81 +3608,170 @@ console.log("CreateCase error, data - ",data);
 
     }
 
+    {{--function acceptCase()--}}
+    {{--{--}}
+
+
+      {{--$('#modalCase').modal('toggle');--}}
+      {{--var id = $(".modal-body #caseID").val();--}}
+
+      {{--$.ajax({--}}
+        {{--type    :"GET",--}}
+        {{--url     :"{!! url('/acceptCase/" + id +"')!!}",--}}
+        {{--beforeSend : function() {--}}
+            {{--HoldOn.open({--}}
+                {{--theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect--}}
+                {{--message: "<h4>processing please wait... ! </h4>",--}}
+                {{--content:"Your HTML Content", // If theme is set to "custom", this property is available--}}
+                                             {{--// this will replace the theme by something customized.--}}
+                {{--backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript--}}
+                           {{--// Keep in mind is necessary the .css file too.--}}
+                {{--textColor:"white" // Change the font color of the message--}}
+            {{--});--}}
+
+        {{--},--}}
+        {{--success : function(data){--}}
+
+          {{--if (data == "ok") {--}}
+
+              {{--$("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! You successfully accepted case ' + id +'<i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');--}}
+              {{--launchCaseModal(id);--}}
+              {{--$('#modalCase').modal('show');--}}
+              {{--HoldOn.close()--}}
+
+          {{--}--}}
+
+
+        {{--}--}}
+       {{--})--}}
+
+    {{--}--}}
+
+    {{--function closeCase() {--}}
+
+
+      {{--$('#modalCase').modal('toggle');--}}
+      {{--var id = $(".modal-body #caseID").val();--}}
+
+      {{--$.ajax({--}}
+        {{--type    :"GET",--}}
+        {{--url     :"{!! url('/closeCase/" + id +"')!!}",--}}
+        {{--beforeSend : function() {--}}
+            {{--HoldOn.open({--}}
+                {{--theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect--}}
+                {{--message: "<h4>processing please wait... ! </h4>",--}}
+                {{--content:"Your HTML Content", // If theme is set to "custom", this property is available--}}
+                                             {{--// this will replace the theme by something customized.--}}
+                {{--backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript--}}
+                           {{--// Keep in mind is necessary the .css file too.--}}
+                {{--textColor:"white" // Change the font color of the message--}}
+            {{--});--}}
+
+        {{--},--}}
+        {{--success : function(data){--}}
+
+          {{--if (data == "ok") {--}}
+
+              {{--$("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! You successfully closed case ' + id +'<i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');--}}
+              {{--$('#modalCase').modal('show');--}}
+              {{--HoldOn.close()--}}
+
+          {{--}--}}
+
+
+        {{--}--}}
+       {{--})--}}
+
+    {{--}--}}
+
+
+
+
     function acceptCase()
     {
 
 
-      $('#modalCase').modal('toggle');
-      var id = $(".modal-body #caseID").val();
+//      $('#modalCase').modal('toggle');
+        var id = $("#id").val();
 
-      $.ajax({
-        type    :"GET",
-        url     :"{!! url('/acceptCase/" + id +"')!!}",
-        beforeSend : function() {
-            HoldOn.open({
-                theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-                message: "<h4>processing please wait... ! </h4>",
-                content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                             // this will replace the theme by something customized.
-                backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                           // Keep in mind is necessary the .css file too.
-                textColor:"white" // Change the font color of the message
-            });
+        $.ajax({
+            type    :"GET",
+            url     :"{!! url('/acceptCase/" + id +"')!!}",
+            beforeSend : function() {
+                HoldOn.open({
+                    theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
+                    message: "<h4>processing please wait... ! </h4>",
+                    content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                                 // this will replace the theme by something customized.
+                    backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
+                    // Keep in mind is necessary the .css file too.
+                    textColor:"white" // Change the font color of the message
+                });
 
-        },
-        success : function(data){
+            },
+            success : function(data){
 
-          if (data == "ok") {
+                if (data == "ok") {
 
-              $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! You successfully accepted case ' + id +'<i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-              launchCaseModal(id);
-              $('#modalCase').modal('show');
-              HoldOn.close()
+                    document.getElementById("acceptCase").style.display="none";
+                    document.getElementById("acceptedCase").style.display="block";
 
-          }
+                    $("#side_contents6").html('<div class="alert alert-success alert-icon">Well done! You successfully accepted case ' + id +'<i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
+                    HoldOn.close()
 
-
-        }
-       })
-
-    }
-
-    function closeCase() {
+                }
 
 
-      $('#modalCase').modal('toggle');
-      var id = $(".modal-body #caseID").val();
-
-      $.ajax({
-        type    :"GET",
-        url     :"{!! url('/closeCase/" + id +"')!!}",
-        beforeSend : function() {
-            HoldOn.open({
-                theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-                message: "<h4>processing please wait... ! </h4>",
-                content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                             // this will replace the theme by something customized.
-                backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                           // Keep in mind is necessary the .css file too.
-                textColor:"white" // Change the font color of the message
-            });
-
-        },
-        success : function(data){
-
-          if (data == "ok") {
-
-              $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! You successfully closed case ' + id +'<i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-              $('#modalCase').modal('show');
-              HoldOn.close()
-
-          }
-
-
-        }
-       })
+            }
+        })
 
     }
+
+
+
+
+
+  function closeCase() {
+      var id = $("#id").val();
+
+      $.ajax({
+          type    :"GET",
+          url     :"{!! url('/closeCase/" + id +"')!!}",
+
+
+          beforeSend : function() {
+              HoldOn.open({
+                  theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
+                  message: "<h4>processing please wait... ! </h4>",
+                  content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                               // this will replace the theme by something customized.
+                  backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
+                  // Keep in mind is necessary the .css file too.
+                  textColor:"white" // Change the font color of the message
+              });
+
+          },
+
+          success : function(data){
+
+              if (data == "ok") {
+
+                  $("#side_contents7").html('<div class="alert alert-success alert-icon">Well done! You successfully closed case '+ id +'<i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
+                  HoldOn.close()
+              }
+
+
+          }
+      })
+
+  }
+
+
+
+
+
+
+
 
     function chatStart(d)
     {

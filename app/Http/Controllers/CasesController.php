@@ -1129,6 +1129,7 @@ class CasesController extends Controller
                 ->get();
         }
 
+
         elseif ($caseObj->status == 'Pending Closure')
 
 
@@ -1356,6 +1357,7 @@ class CasesController extends Controller
 
          }
 
+
         $relatedCases = \DB::table('related_cases')
             ->join('cases', 'related_cases.child', '=', 'cases.id')
             ->where('related_cases.parent', '=', $id)
@@ -1370,7 +1372,13 @@ class CasesController extends Controller
 
 
 
+
         return  view('cases.test')->with(compact('case')) ;
+
+        $cases=CaseReport::where('id',$id)->first();
+        $accepted=$cases->accepted;
+        return  view('cases.test')->with(compact('case','accepted')) ;
+
 
     }
 
