@@ -7,7 +7,7 @@
 		<div class="form-group">
                     {!! Form::label('Search Box', 'Search Box', array('class' => 'col-md-2 control-label')) !!}
                 <div class="col-md-6">
-                    {!! Form::text('addresses',NULL,['class' => 'form-control input-sm','id' => 'addresses']) !!}
+                    {!! Form::text('addresses1',NULL,['class' => 'form-control input-sm','id' => 'addresses1']) !!}
                 </div>
                 </div>
 		

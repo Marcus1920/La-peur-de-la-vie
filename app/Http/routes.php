@@ -41,7 +41,10 @@ Route::group(['middleware' => 'resetLastActive'], function () {
 		if (!\Auth::check()) return view('auth.login');
 		else return redirect("/home");
 	});
+
+    Route::get('home', ['uses' => 'HomeController@index']);
 	Route::get('home', ['uses' => 'HomeController@index']);
+
 });
 
 $this->post('dologin', 'Auth\LoginController@doLogin');
@@ -532,7 +535,7 @@ Route::post('updateSubSubCategory', ['middleware' => 'resetLastActive', 'uses' =
 |--------------------------------------------------------------------------
 |
 */
-
+Route::get('casetest/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
 Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@index']);
 Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@edit']);
 Route::get('workflows-list-case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@workflow']);
@@ -1163,6 +1166,9 @@ Route::get('linkNewTask/{id}','TasksController@create');
 Route::get('linkExistingTask/{id}','TasksController@linkExistingTask');
 Route::post('tasks/addTaskRelationship','TasksController@addTaskRelationship');
 Route::get('getSearchTasks', ['middleware' => 'auth', 'uses' => 'TasksController@getSearchTasks']);
+Route::post('caseTasks','TasksController@storeCaseTask');
+Route::get('getCaseTasks/{id}','TasksController@getCaseTasks');
+Route::get('CaseProfile/{id}','TasksController@showCaseProfile');
 
 
 

@@ -101,6 +101,35 @@ class TasksController extends Controller
 
     }
 
+    public function getCaseTasks($id)
+    {
+        $caseTasks=$this->tasks->getCaseTasks($id);
+
+        return \Datatables::of($caseTasks)
+            ->addColumn('actions','
+            
+                <div class="col-md-2 m-b-15">
+                 
+                   <a class="btn btn-xs btn-alt" data-toggle="modal" href="{{ url(\'tasks\',$task_id) }}" target="">View</a>
+                   
+              
+                  
+                </div>       '
+            )
+            ->make(true);
+    }
+    public function showCaseProfile($id)
+    {
+        $caseProfile=$this->tasks->getCaseProfile($id);
+        if($caseProfile==NULL)
+        {
+            \Session::flash('success', 'This task does not belong to a Case!');
+            return Redirect::to('tasks/'.$id);
+        }
+
+        return Redirect::to('casetest/'.$caseProfile['type_id']);
+    }
+
 
     public function create($parent_id = 0)
     {
@@ -132,6 +161,27 @@ class TasksController extends Controller
         $this->tasks->sendTaskCreationCommToTaskOwner($task->id,$assignee->id);
 
         return redirect('tasks')->withStatus('Form submitted!');
+
+    }
+
+    public function storeCaseTask(TaskRequest $request)
+    {
+
+        $task = $this->tasks->storeTask($request);
+
+        if(isset($request['case_id'])){
+
+            $this->storeTaskCategoryType($task,$request['case_id']);
+
+        }
+
+        $assignee = User::find($request['task_user_id']);
+
+        $this->storeTaskOwner($task,$assignee->id);
+        $this->tasks->sendTaskCreationCommToTaskOwner($task->id,$assignee->id);
+
+        \Session::flash('success', 'Case task has been successfully added!');
+        return Redirect::to('casetest/'.$request['case_id']);
 
     }
 

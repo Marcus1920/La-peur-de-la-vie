@@ -14,7 +14,7 @@
         "barryvdh/laravel-ide-helper": "^2.2",
         "consoletvs/charts": "3.*",
         
-        "cartalyst/sentinel": "2.0.*",
+
         "arcanedev/log-viewer": "^4.3"
     },
     "require-dev": {

@@ -10,6 +10,8 @@ use App\CaseNote;
 use App\CaseOwner;
 use App\CaseActivity;
 use App\User;
+use Redirect;
+use Session;
 
 class CaseNotesController extends Controller
 {
@@ -88,16 +90,10 @@ class CaseNotesController extends Controller
             });
 
         }*/
-
-        return "ok";
+        \Session::flash('success', 'Case note has been successfully added!');
+        return Redirect::to('casetest/'.$request['caseID']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show($id)
     {
         //

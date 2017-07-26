@@ -282,7 +282,6 @@ $(document).ready(function() {
 
 
 
-
       $.ajax({
         type    :"POST",
         data    : {arr:arr,id:id},

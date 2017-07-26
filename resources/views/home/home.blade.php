@@ -219,27 +219,15 @@
 <a id="anchorID" target="newwindow" class="hidden"></a>
 
 <hr class="whiter" />
-
-
-
-
 @include('cases.profile')
-@include('cases.refer')
 @include('cases.report')
 @include('cases.allocation')
 @include('cases.create')
 @include('cases.createCase')
 @include('cases.closeRequest')
-@include('addressbook.list')
-@include('addressbook.add')
-@include('casenotes.add')
-@include('casefiles.add')
 @include('users.edit')
 @include('cases.workflow')
 @include('cases.poi')
-
-
-
 @endsection
 
 @section('footer')
@@ -249,9 +237,7 @@
   @if (count($errors) > 0)
 
     $('#modalAddContactModal').modal('show');
-
-
-  @endif
+     @endif
 
 
  
