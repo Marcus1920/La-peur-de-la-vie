@@ -1887,6 +1887,9 @@ class CasesController extends Controller
         $response["error"] = FALSE;
         $response["caseID"] = $request['caseID'];
 
+//        \Session::flash('success', 'well done! Case '.$newCase['id'].' has been successfully created!');
+//        return Redirect::to('casetest/'.$newCase['id']);
+
 
         return \Response::json($response, 201);
 
