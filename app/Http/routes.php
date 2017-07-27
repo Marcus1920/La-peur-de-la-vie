@@ -36,7 +36,7 @@ use App\Position;
 |
 */
 
-Route::group(['middleware' => 'resetLastActive'], function () {
+Route::group(['middleware' => 'adminmiddlewar'], function () {
 	Route::get('/', function () {
 		if (!\Auth::check()) return view('auth.login');
 		else return redirect("/home");
@@ -1050,6 +1050,12 @@ Route::get('all-messages', 'MessageController@index');
 |--------------------------------------------------------------------------
 |
 */
+
+Route::get('middle', function(){
+
+    echo  "hello";
+
+})->middleware('adminmiddlewar');
 Route::get('list-affiliations', ['middleware' => 'resetLastActive', function () {
     return view('affiliations.list');
 }]);
