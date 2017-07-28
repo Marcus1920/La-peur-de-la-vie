@@ -770,7 +770,19 @@
                                                                 </div>
                                                             @endif
                                                             <div class="table-responsive">
-                                                                <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="caseResponders">
+                                                                <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="caseResponders1">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>Type</th>
+                                                                        <th>Name</th>
+                                                                        <th>Accepted</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                                <br/>
+                                                                <br/>
+                                                                <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="allCaseResponders">
                                                                     <thead>
                                                                     <tr>
                                                                         <th>Type</th>
@@ -1213,17 +1225,20 @@
 
 
 
-            if ( $.fn.dataTable.isDataTable( '#caseResponders' ) ) {
-                oTableCaseResponders.destroy();
+            if ( $.fn.dataTable.isDataTable( '#caseResponders1' ) ) {
+                oTableCaseResponders1.destroy();
             }
 
 
 
-            oTableCaseResponders     = $('#caseResponders').DataTable({
+            oTableCaseResponders1     = $('#caseResponders1').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "autoWidth": false,
                 "pageLength": 8,
+                "bInfo" : false,
+                "paging":false,
+                "searching":false,
                 "dom": 'T<"clear">lfrtip',
                 "order" :[[0,"asc"]],
                 "ajax": "{!! url('/caseResponders-list/')!!}" + '/'+case_id,
@@ -1292,7 +1307,90 @@
                 ],
 
                 "aoColumnDefs": [
-                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
+
+            });
+            if ( $.fn.dataTable.isDataTable( '#allCaseResponders' ) ) {
+                oTableAllCaseResponders.destroy();
+            }
+
+            oTableAllCaseResponders     = $('#allCaseResponders').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 8,
+                "bInfo" : false,
+                "paging":false,
+                "searching":false,
+                "dom": 'T<"clear">lfrtip',
+                "order" :[[0,"asc"]],
+                "ajax": "{!! url('/allCaseResponders-list/')!!}" + '/'+case_id,
+                "columns": [
+
+
+                    {data: function(d){
+
+                        if (d.type  == 1 )
+                        {
+                            return "First Responder";
+                        }
+
+                        if (d.type  == 0 )
+                        {
+                            return "Reporter";
+                        }
+
+                        if (d.type  == 2 )
+                        {
+                            return "Second Responder";
+                        }
+
+                        if (d.type  == 3 )
+                        {
+                            return "Third Responder";
+                        }
+
+                        if (d.type  == 4  )
+                        {
+                            return "Escalation";
+                        }
+
+                        if (d.type  == 5  )
+                        {
+                            return "Critical Team";
+                        }
+
+
+
+                    },"name" : 'type'},
+
+                    {data: function(d){
+
+                        return d.name + ' ' + d.surname;
+
+
+                    },"name" : 'name'},
+
+                    {data: function(d){
+
+                        if (d.accept  == 1 )
+                        {
+                            return "yes";
+                        }
+                        else {
+
+                            return "no";
+                        }
+
+                    },"name" : 'accept'},
+
+                    {data: 'actions', name: 'actions'},
+
+
+                ],
+
+                "aoColumnDefs": [
                     { "bSortable": false, "aTargets": [ 1 ] }
                 ]
 

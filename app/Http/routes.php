@@ -642,6 +642,7 @@ Route::post('addSubSubCategoryResponder', ['middleware' => 'resetLastActive', 'u
 Route::get('getSubResponders/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@subResponder']);
 Route::post('addSubCategoryResponder', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@storeSubResponder']);
 Route::get('caseResponders-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@index']);
+Route::get('allCaseResponders-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@indexResponders']);
 Route::get('getResponders/{id}', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@responder']);
 Route::post('addCategoryResponder', ['middleware' => 'resetLastActive', 'uses' => 'RespondersController@storeResponder']);
 
@@ -1165,6 +1166,7 @@ Route::get('tasks/acceptTask/{id}','TasksController@acceptTask');
 Route::get('tasks/rejectTask/{id}','TasksController@rejectTask');
 Route::get('tasks/edit/{id}','TasksController@edit');
 Route::post('tasks/updateTask','TasksController@updateTask');
+Route::post('tasks/updateTaskDates','TasksController@updateTaskDates');
 Route::get('linkNewTask/{id}','TasksController@create');
 Route::get('linkExistingTask/{id}','TasksController@linkExistingTask');
 Route::post('tasks/addTaskRelationship','TasksController@addTaskRelationship');
@@ -1172,6 +1174,9 @@ Route::get('getSearchTasks', ['middleware' => 'auth', 'uses' => 'TasksController
 Route::post('caseTasks','TasksController@storeCaseTask');
 Route::get('getCaseTasks/{id}','TasksController@getCaseTasks');
 Route::get('CaseProfile/{id}','TasksController@showCaseProfile');
+Route::post('dateChangeRequest','TasksController@storeDateChangeRequest');
+Route::get('dateChangeRequest/{id}','TasksController@showDateRequest');
+Route::get('ChangeRequest/{id}','TasksController@showRequestedDates');
 
 
 
