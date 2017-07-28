@@ -36,6 +36,17 @@ use App\Position;
 |
 */
 
+
+
+
+
+Route::group(['middleware' => 'adminmiddlewar'], function () {
+
+    Route::get('admin',  'SeniorHomeController@index');
+   // Route::get('admin', 'SeniorHomeController@index');
+
+});
+
 Route::group(['middleware' => 'adminmiddlewar'], function () {
 	Route::get('/', function () {
 		if (!\Auth::check()) return view('auth.login');
