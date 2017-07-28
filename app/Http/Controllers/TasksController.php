@@ -185,6 +185,16 @@ class TasksController extends Controller
 
     }
 
+    public function storeDateChangeRequest(Request $request)
+    {
+        $taskDateChange = $this->tasks->storeDateChangeRequest($request);
+        $taskActivity = $this->taskActivity->createTaskActivity($request);
+        $task           = $this->tasks->getTask($taskDateChange->task_id);
+
+        \Session::flash('success', 'Your have successfully requested date change!');
+        return Redirect::to('tasks/'.$task->id);
+    }
+
 
     public function storeTaskCategoryType($task,$type_id){
 
@@ -216,6 +226,28 @@ class TasksController extends Controller
 
 
     }
+    public function showDateRequest($id)
+    {
+        $task = $this->tasks->getTask($id);
+        $taskDateChangeRequest=$this->tasks->getDateChangeRequest($task->id);
+
+        return view('tasks.dateChangeRequest',compact('taskDateChangeRequest','task'));
+    }
+    public function showRequestedDates($id)
+    {
+        $task           = $this->tasks->getTask($id);
+        $taskDateChangeRequest=$this->tasks->getDateChangeRequest($task->id);
+
+        if($taskDateChangeRequest!=NULL)
+        {
+            return view('tasks.dateChange',compact('taskDateChangeRequest','task'));
+        }
+        else
+        {
+            \Session::flash('success', 'There is no Date Change Requests!');
+            return Redirect::to('tasks/'.$task['id']);
+        }
+    }
 
 
     public function edit($id)
@@ -245,6 +277,18 @@ class TasksController extends Controller
         $task   = $this->tasks->getTask($form['task_id']);
         $this->tasks->updateTask($form);
         return Redirect::to('tasks/'.$form['task_id']);
+
+        //TODO: ELie Once you save to redirect you their tab of choice
+
+    }
+
+    public function updateTaskDates(Request $request){
+
+        $task   = $this->tasks->getTask($request['task_id']);
+        $this->tasks->updateTaskDates($request);
+        $taskActivity = $this->taskActivity->createTaskActivity($request);
+        \Session::flash('success', 'Task dates has been successfully updated!');
+        return Redirect::to('tasks/'.$request['task_id']);
 
         //TODO: ELie Once you save to redirect you their tab of choice
 

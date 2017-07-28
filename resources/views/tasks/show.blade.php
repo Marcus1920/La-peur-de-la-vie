@@ -33,6 +33,8 @@
 
                             </div>
 
+                            <a class="btn btn-sm" href="{{ url('ChangeRequest/'.$task->id) }}">View Date Change Request</a>
+
                             <div class="tab-content">
                                 <div class="tab-pane active" id="taskprofile">
 
