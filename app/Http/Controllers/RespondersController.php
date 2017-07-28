@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\CaseReport;
 use Illuminate\Http\Request;
 
 use App\services\CaseResponderService;
@@ -29,17 +30,40 @@ class RespondersController extends Controller
     public function index($id)
     {
 
-        $caseResponders = \DB::table('cases_owners')
-            ->where('case_id','=',$id)
-            ->join('users','users.id','=','cases_owners.user')
+//        $caseResponders = \DB::table('cases_owners')
+//            ->where('case_id','=',$id)
+//            ->join('users','users.id','=','cases_owners.user')
+//            ->select(
+//                array(
+//                    'users.id',
+//                    'users.name',
+//                    'users.surname',
+//                    'users.cellphone',
+//                    'cases_owners.type',
+//                    'cases_owners.accept'
+//                )
+//            );
+//
+//        return \Datatables::of($caseResponders)
+//            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-dest="{{$id}}" data-name="{{$name}} {{$surname}}" data-toggle="modal" onClick="launchMessageModal({{$id}},this);" data-target=".compose-message"><i class="fa fa-envelope"></i></a>'
+//            )
+//            ->make(true);
+
+        $case=CaseReport::find($id);
+        $caseType=$case->case_type;
+
+        $caseResponders=\DB::table('responders')
+            ->where('case_type','=',$caseType)
+            ->join('users','users.id','=','responders.responder')
+//            ->join('cases_owners','cases_owners.case_id','=',$id)
+
             ->select(
                 array(
                     'users.id',
                     'users.name',
                     'users.surname',
                     'users.cellphone',
-                    'cases_owners.type',
-                    'cases_owners.accept'
+                    'responders.responder_type as type'
                 )
             );
 
@@ -47,6 +71,7 @@ class RespondersController extends Controller
             ->addColumn('actions','<a class="btn btn-xs btn-alt" data-dest="{{$id}}" data-name="{{$name}} {{$surname}}" data-toggle="modal" onClick="launchMessageModal({{$id}},this);" data-target=".compose-message"><i class="fa fa-envelope"></i></a>'
             )
             ->make(true);
+
     }
 
 

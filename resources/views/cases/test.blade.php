@@ -123,7 +123,7 @@
                                     <li><a href="#7a" data-toggle="tab" onclick="hides()"><span class="fa fa-paste "> Case Attachments</span></a>
                                     </li>
 
-                                    <li><a href="#8a" data-toggle="tab" onclick="hides()">Case Tasks</a>
+                                    <li><a href="#8a" data-toggle="tab" onclick="hides()"><span class="fa fa-file-text-o"> Case Tasks</span></a>
                                     </li>
 
                                 </ul>
