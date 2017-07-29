@@ -13,7 +13,7 @@
 
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'createCaseAgent', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CreateCaseAgentForm" ,'files' => 'true','enctype'=>'multipart/form-data']) !!}
+                {!! Form::open(['url' => 'createCaseAgent', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CreateCaseAgentForm" ,'files' => 'true']) !!}
                 {!! Form::hidden('hseHolderId',NULL,['id' => 'hseHolderId']) !!}
                 {!! Form::hidden('gpsAddressLat',NULL,['id' => 'gpsAddressLat','class' => 'latitude']) !!}
                 {!! Form::hidden('gpsAddressLong',NULL,['id' => 'gpsAddressLong','class' => 'longitude']) !!}
@@ -263,7 +263,7 @@
                     <span class="btn btn-file btn-alt btn-sm">
                     <span class="fileupload-new">Select file</span>
                     <span class="fileupload-exists">Change</span>
-                    <input type="file" name="caseFile" id="caseFile"/>
+                        {!!  Form::file('caseFile' , null , ['id' => 'caseFile']) !!}
                 </span>
                             </div>
 

@@ -2239,71 +2239,19 @@ $("#submitAssociatePoiForm").on("click",function(){
 
 
       $("#submitCreateCaseAgentForm").on("click",function(){
-          var house_holder_id             = $("#CreateCaseAgentForm #hseHolderId").val();
-        var cellphone                   = $("#CreateCaseAgentForm #cellphone").val();
-        var name                        = $("#CreateCaseAgentForm #name").val();
-        var surname                     = $("#CreateCaseAgentForm #surname").val();
-        var client_reference_number     = $("#CreateCaseAgentForm #client_reference_number").val();
-        var saps_case_number            = $("#CreateCaseAgentForm #saps_case_number").val();
-        var saps_station                = $("#CreateCaseAgentForm #saps_station").val();
-        var officers			        = $("#CreateCaseAgentForm #officers").val();
-        var  rate_value                 = $("#CreateCaseAgentForm  #rate_value").val() ;
-        var investigation_officer       = $("#CreateCaseAgentForm #investigation_officer").val();
-        var investigation_cell          = $("#CreateCaseAgentForm #investigation_cell").val();
-        var investigation_email         = $("#CreateCaseAgentForm #investigation_email").val();
-        var investigation_note          = $("#CreateCaseAgentForm #investigation_note").val();
-        var country                     = $("#CreateCaseAgentForm #country").val();
-        var case_type                   = $("#CreateCaseAgentForm #case_type").val();
-        var case_sub_type               = $("#CreateCaseAgentForm #case_sub_type").val();
-        var description                 = $("#CreateCaseAgentForm #description").val();
-        var street_number               = $("#CreateCaseAgentForm #route").val();
-        var route                       = $("#CreateCaseAgentForm #locality").val();
-        var locality                    = $("#CreateCaseAgentForm #municipality").val();
-        var administrative_area_level_1 = $("#CreateCaseAgentForm #administrative_area_level_1").val();
-        var postal_code                 = $("#CreateCaseAgentForm #postal_code").val();
-        var company                     = $("#CreateCaseAgentForm #company").val();
-        var gpsAddressLat               = $("#CreateCaseAgentForm #gpsAddressLat").val();
-        var gpsAddressLong              = $("#CreateCaseAgentForm #gpsAddressLong").val();
-        var caseFile                    = $("#CreateCaseAgentForm #caseFile").val();
-        var token                        = $('input[name="_token"]').val();
 
-
-
-        var formData         = {
-                                  street_number:street_number,
-                                  route:route,
-                                  locality:locality,
-                                  administrative_area_level_1:administrative_area_level_1,
-                                  postal_code:postal_code,
-                                  country:country,
-                                  house_holder_id:house_holder_id,
-                                  description:description,
-                                  cellphone:cellphone,
-                                  name:name,
-                                  surname:surname,
-                                  client_reference_number:client_reference_number,
-                                  saps_case_number:saps_case_number,
-                                  saps_station:saps_station,
-                                  investigation_officer:investigation_officer,
-                                  investigation_cell:investigation_cell,
-                                  investigation_email:investigation_email,
-                                  investigation_note:investigation_note,
-                                  case_type:case_type,
-                                  case_sub_type:case_sub_type,
-                                  company:company,
-                                  rate_value:rate_value,
-                                  gpsAddressLat:gpsAddressLat,
-                                  gpsAddressLong:gpsAddressLong,
-                                  caseFile:caseFile,
-                                  officers:officers
-        };
-
+         var formData    = new FormData($("#CreateCaseAgentForm")[0]);
+         var token       = $('input[name="_token"]').val();
 
       $('#modalCreateCaseAgent').modal('toggle');
 
         $.ajax({
         type    :"POST",
         data    : formData,
+            processData: false,
+            dataType:'json',
+            contentType: false,
+            async:false,
         headers : { 'X-CSRF-Token': token },
         url     :"{!! url('/createCaseAgent')!!}",
         beforeSend : function() {

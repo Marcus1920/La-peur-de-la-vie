@@ -42,6 +42,7 @@ use App\services\CaseResponderService;
 use App\services\CaseActivityService;
 use Redirect;
 use Input;
+use File;
 
 
 
@@ -1745,7 +1746,7 @@ class CasesController extends Controller
         $txtDebug = __CLASS__ . "." . __FUNCTION__ . "(CreateCaseAgentRequest \$request) \$request - " . print_r($request->all(), 1);
 
         $house_holder_id = 0;
-        if ($request['house_holder_id']) $house_holder_id = $request['house_holder_id'];
+        if ($request['hseHolderId']) $house_holder_id = $request['hseHolderId'];
         else if ($request['hseHolderId']) $house_holder_id = $request['hseHolderId'];
         $txtDebug .= PHP_EOL . "  \$house_holder_id - {$house_holder_id}";
         //die("<pre>{$txtDebug}</pre>");
@@ -1758,8 +1759,7 @@ class CasesController extends Controller
             $user->name = $request['name'];
             $user->surname = $request['surname'];
             $user->cellphone = $request['cellphone'];
-            $title = Title::where('slug', '=', $request['title'])->first();
-            $user->title = $title->id;
+            $user->title = 1;
             $user->client_reference_number = $request['client_reference_number'];
             $user->email = $request['cellphone'] . "@siyaleader.net";
             $user->created_by = \Auth::user()->id;
@@ -1775,13 +1775,13 @@ class CasesController extends Controller
 
         }
 
-        $house_holder_id = ($house_holder_id == 0) ? $request['house_holder_id'] : $house_holder_id;
+        $house_holder_id = ($house_holder_id == 0) ? $request['hseHolderId'] : $house_holder_id;
 
         $case_type = ($request['case_type'] == 0) ? 5 : $request['case_type'];
         $case_sub_type = ($request['case_sub_type'] == 0) ? 7 : $request['case_sub_type'];
         $house_holder_obj = User::find($house_holder_id);
 
-        $officer;
+
 
         if ($request['officers'] == 0) {
             $investigationOfficer = new InvestigationOfficer();
@@ -1870,14 +1870,16 @@ class CasesController extends Controller
 
         $destinationFolder = 'files/case_'. $newCase->id;
 
-      if(!\File::exists($destinationFolder)) {
+      if(!File::exists($destinationFolder)) {
           $createDir         = \File::makeDirectory($destinationFolder,0777,true);
       }
 
+
       $fileName          = $request->file('caseFile')->getClientOriginalName();
+
       $fileFullPath      = $destinationFolder.'/'.$fileName;
 
-      if(!\File::exists($fileFullPath)) {
+      if(!File::exists($fileFullPath)) {
 
           $request->file('caseFile')->move($destinationFolder, $fileName);
 //            $caseOwners = CaseOwner::where('case_id', '=', $request['caseID'])->get();
