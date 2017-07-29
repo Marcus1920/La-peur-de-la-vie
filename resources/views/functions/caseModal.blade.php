@@ -465,11 +465,9 @@
                     $("#caseReportCaseForm #gender,#CreateCaseAgentForm #gender").val(results.hseGender);
                     $("#caseReportCaseForm #dob,#CreateCaseAgentForm #dob").val(results.hseDob);
                     $("#caseReportCaseForm #description").val($("#caseProfileForm #description").val());
-
-
-
                 }
-                else {
+                else
+                    {
 
                   $("#caseReportCaseForm #cellphone,#CreateCaseAgentForm #cellphone").val('');
                   $("#caseReportCaseForm #name,#CreateCaseAgentForm #name").val('');
@@ -1462,6 +1460,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
       $("#submitAddMeetingMinutesFileForm").on("click",function(){
 
         var myForm   = $("#addMeetingMinutesFileForm")[0];
+
         var formData = new FormData(myForm);
         var token    = $('input[name="_token"]').val();
 
@@ -2239,18 +2238,15 @@ $("#submitAssociatePoiForm").on("click",function(){
     });
 
 
-  $("#submitCreateCaseAgentForm").on("click",function(){
-
-
-
-        var house_holder_id             = $("#CreateCaseAgentForm #hseHolderId").val();
+      $("#submitCreateCaseAgentForm").on("click",function(){
+          var house_holder_id             = $("#CreateCaseAgentForm #hseHolderId").val();
         var cellphone                   = $("#CreateCaseAgentForm #cellphone").val();
         var name                        = $("#CreateCaseAgentForm #name").val();
         var surname                     = $("#CreateCaseAgentForm #surname").val();
         var client_reference_number     = $("#CreateCaseAgentForm #client_reference_number").val();
         var saps_case_number            = $("#CreateCaseAgentForm #saps_case_number").val();
         var saps_station                = $("#CreateCaseAgentForm #saps_station").val();
-	      var officers			              = $("#CreateCaseAgentForm #officers").val();
+        var officers			        = $("#CreateCaseAgentForm #officers").val();
         var  rate_value                 = $("#CreateCaseAgentForm  #rate_value").val() ;
         var investigation_officer       = $("#CreateCaseAgentForm #investigation_officer").val();
         var investigation_cell          = $("#CreateCaseAgentForm #investigation_cell").val();
@@ -2268,11 +2264,12 @@ $("#submitAssociatePoiForm").on("click",function(){
         var company                     = $("#CreateCaseAgentForm #company").val();
         var gpsAddressLat               = $("#CreateCaseAgentForm #gpsAddressLat").val();
         var gpsAddressLong              = $("#CreateCaseAgentForm #gpsAddressLong").val();
-        var token                       = $('input[name="_token"]').val();
+        var caseFile                    = $("#CreateCaseAgentForm #caseFile").val();
+        var token                        = $('input[name="_token"]').val();
+
+
 
         var formData         = {
-
-
                                   street_number:street_number,
                                   route:route,
                                   locality:locality,
@@ -2297,13 +2294,12 @@ $("#submitAssociatePoiForm").on("click",function(){
                                   rate_value:rate_value,
                                   gpsAddressLat:gpsAddressLat,
                                   gpsAddressLong:gpsAddressLong,
-				                          officers:officers
+                                  caseFile:caseFile,
+                                  officers:officers
+        };
 
-                                };
 
-
-
-        $('#modalCreateCaseAgent').modal('toggle');
+      $('#modalCreateCaseAgent').modal('toggle');
 
         $.ajax({
         type    :"POST",
@@ -2407,7 +2403,6 @@ $("#submitAssociatePoiForm").on("click",function(){
     })
 
     });
-
 
      $("#submitEscalateCaseForm").on("click",function(){
 

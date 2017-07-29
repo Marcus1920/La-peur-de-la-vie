@@ -76,11 +76,6 @@ class TaskService
 
         public function storeTask($request)
         {
-
-            //TODO : ADD COMPLETE FIELD IN DATABASE
-            //TODO : MAKE COMMENCEMENT DATE AND DUE DATE DATE IN DATABASE
-            //TODO : REDIRECT TO THEIR ORIGIN TAB AFTER SAVING
-
             $task= new Task();
             $task->status_id                = 1;
             $task->priority_id              = $request['priority_id'];

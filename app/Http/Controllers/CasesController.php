@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Requests\CaseRequest;
 use App\Http\Requests\CaseRequestH;
@@ -36,11 +35,13 @@ use App\CasePoi;
 use App\Poi;
 use App\PoiAssociate;
 use App\CaseNote;
+use App\CaseFile;
 use App\InvestigationOfficer;
 use App\services\CaseOwnerService;
 use App\services\CaseResponderService;
 use App\services\CaseActivityService;
 use Redirect;
+use Input;
 
 
 
@@ -806,7 +807,6 @@ class CasesController extends Controller
 
 
         }
-
 
     }
 
@@ -1735,15 +1735,19 @@ class CasesController extends Controller
 
     }
 
-    function createCaseAgent(CreateCaseAgentRequest $request)
+    /**
+     * @param CreateCaseAgentRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    function createCaseAgent(Request $request)
     {
 
-        $txtDebug = __CLASS__.".".__FUNCTION__."(CreateCaseAgentRequest \$request) \$request - ".print_r($request->all(), 1);
+        $txtDebug = __CLASS__ . "." . __FUNCTION__ . "(CreateCaseAgentRequest \$request) \$request - " . print_r($request->all(), 1);
 
         $house_holder_id = 0;
         if ($request['house_holder_id']) $house_holder_id = $request['house_holder_id'];
         else if ($request['hseHolderId']) $house_holder_id = $request['hseHolderId'];
-        $txtDebug .= PHP_EOL."  \$house_holder_id - {$house_holder_id}";
+        $txtDebug .= PHP_EOL . "  \$house_holder_id - {$house_holder_id}";
         //die("<pre>{$txtDebug}</pre>");
 
         if (empty($house_holder_id)) {
@@ -1779,15 +1783,15 @@ class CasesController extends Controller
 
         $officer;
 
-        if($request['officers'] == 0){
-            $investigationOfficer  			= new InvestigationOfficer();
-            $investigationOfficer->name		= $request['investigation_officer'];
-            $investigationOfficer->email 		= $request['investigation_email'];
-            $investigationOfficer->cellphone 	= $request['investigation_cell'];
+        if ($request['officers'] == 0) {
+            $investigationOfficer = new InvestigationOfficer();
+            $investigationOfficer->name = $request['investigation_officer'];
+            $investigationOfficer->email = $request['investigation_email'];
+            $investigationOfficer->cellphone = $request['investigation_cell'];
             $investigationOfficer->save();
 
             $officer = $request['investigation_officer'];
-        }else{
+        } else {
             $officerObj = InvestigationOfficer::find($request['officers']);
             $officer = $officerObj->name;
         }
@@ -1807,7 +1811,7 @@ class CasesController extends Controller
         $newCase->investigation_email = $request['investigation_email'];
         $newCase->investigation_note = $request['investigation_note'];
         $newCase->client_reference_number = $request['client_reference_number'];
-        $newCase->rate_value =$request['rate_value'];
+        $newCase->rate_value = $request['rate_value'];
         $newCase->status = 1;
         $newCase->addressbook = 0;
         $newCase->source = 3;
@@ -1823,54 +1827,72 @@ class CasesController extends Controller
         $newCase->save();
 
 
-
         $create_case_owner_data = array(
-            "case_id"      => $newCase->id,
-            "user"         => $newCase->user,
-            "type"         => 1,
-            "addressbook"  => 0
+            "case_id" => $newCase->id,
+            "user" => $newCase->user,
+            "type" => 1,
+            "addressbook" => 0
         );
 
         $user = User::find(\Auth::user()->id);
         $this->case_owners->create_case_owner($create_case_owner_data);
-        $this->case_responders->send_com($user,$newCase);
+        $this->case_responders->send_com($user, $newCase);
 
-        $first_responders   = $this->case_responders->get_responders_by_sub_case_type($newCase->case_sub_type,1);
+        $first_responders = $this->case_responders->get_responders_by_sub_case_type($newCase->case_sub_type, 1);
 
-        if(empty($first_responders)){
+        if (empty($first_responders)) {
 
-            $first_responders   = $this->case_responders->get_responders_by_case_type($newCase->case_type,1);
+            $first_responders = $this->case_responders->get_responders_by_case_type($newCase->case_type, 1);
 
         }
 
-        foreach ($first_responders as $first_responder){
+        foreach ($first_responders as $first_responder) {
 
             $create_case_owner_data = array(
-                "case_id"      => $newCase->id,
-                "user"         => $first_responder->responder,
-                "type"         => 1,
-                "addressbook"  => 0
+                "case_id" => $newCase->id,
+                "user" => $first_responder->responder,
+                "type" => 1,
+                "addressbook" => 0
             );
 
             $this->case_owners->create_case_owner($create_case_owner_data);
 
         }
 
-        $this->case_responders->send_comms_to_first_responders($newCase,$first_responders);
+        $this->case_responders->send_comms_to_first_responders($newCase, $first_responders);
 
 
-        $caseNote          = new CaseNote();
-        $caseNote->note    = $request['investigation_note'];;
-        $caseNote->user    = \Auth::user()->id;
+        $caseNote = new CaseNote();
+        $caseNote->note = $request['investigation_note'];
+        $caseNote->user = \Auth::user()->id;
         $caseNote->case_id = $newCase->id;
         $caseNote->save();
 
-        $destinationFolder = 'files/case_' . $newCase->id;
+        $destinationFolder = 'files/case_'. $newCase->id;
 
-        if (!\File::exists($destinationFolder)) {
-            $createDir = \File::makeDirectory($destinationFolder, 0777, true);
-        }
+      if(!\File::exists($destinationFolder)) {
+          $createDir         = \File::makeDirectory($destinationFolder,0777,true);
+      }
 
+      $fileName          = $request->file('caseFile')->getClientOriginalName();
+      $fileFullPath      = $destinationFolder.'/'.$fileName;
+
+      if(!\File::exists($fileFullPath)) {
+
+          $request->file('caseFile')->move($destinationFolder, $fileName);
+//            $caseOwners = CaseOwner::where('case_id', '=', $request['caseID'])->get();
+//            $author = User::find($request['uid']);
+
+          $caseFile           = new CaseFile();
+          $caseFile->file     = $fileName;
+          $caseFile->img_url  = $fileFullPath;
+          $caseFile->user     = \Auth::user()->id;
+          $caseFile->case_id  =  $newCase->id;
+//            $caseFile->file_note = $request['fileNote'];
+          $caseFile->save();
+
+
+  }
 
         $response["message"] = "Case created successfully";
         $response["error"] = FALSE;
@@ -1914,8 +1936,6 @@ class CasesController extends Controller
 
     function relatedCases($id)
     {
-
-
         $relatedCases = \DB::table('related_cases')
             ->join('cases', 'related_cases.child', '=', 'cases.id')
             ->where('related_cases.parent', '=', $id)
@@ -1924,13 +1944,13 @@ class CasesController extends Controller
                     'cases.id as id',
                     'cases.description as description',
                     'related_cases.created_at as created_at'
-
                 )
             );
 
         return \Datatables::of($relatedCases)
             ->addColumn('actions', '<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateAffiliationModal({{$id}});" data-target=".modalEditAffiliation">Edit</a>')
             ->make(true);
-
     }
+
+
 }
