@@ -33,7 +33,9 @@
 
                             </div>
 
-                            <a class="btn btn-sm" href="{{ url('ChangeRequest/'.$task->id) }}">View Date Change Request</a>
+                            @if(Auth::user()->id == $task->created_by)
+                            <a class="btn btn-sm" href="{{ url('ChangeRequest/'.$task->id) }}" aria-hidden="true">View Date Change Request</a>
+                            @endif
 
                             <div class="tab-content">
                                 <div class="tab-pane active" id="taskprofile">

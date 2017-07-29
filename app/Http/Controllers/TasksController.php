@@ -191,6 +191,22 @@ class TasksController extends Controller
         $taskActivity = $this->taskActivity->createTaskActivity($request);
         $task           = $this->tasks->getTask($taskDateChange->task_id);
 
+        $user = User::find($task['created_by']);
+
+        $data = array(
+            'name'        =>$user->first_name,
+            'taskID'      =>$request['task_id'],
+            'sender'      => \Auth::user()->name.' '.\Auth::user()->surname,
+            'msg'         =>\Auth::user()->name.' '.\Auth::user()->surname.' '."requested Task Date Change",
+        );
+
+        \Mail::send('emails.tasks.requestDateChange',$data, function($message) use ($user)
+        {
+            $message->from('info@siyaleader.net', 'Siyaleader');
+            $message->to($user->email)->subject("Siyaleader Notification - New Private Message: ");
+
+        });
+
         \Session::flash('success', 'Your have successfully requested date change!');
         return Redirect::to('tasks/'.$task->id);
     }
