@@ -4,6 +4,7 @@ namespace App\services;
 use App\Task;
 use App\TaskOwner;
 use App\User;
+use App\TaskDateChange;
 use App\TaskCategoryType;
 
 use Auth;
@@ -40,6 +41,11 @@ class TaskService
         public function getSubTasks()
         {
             return Task::all();
+        }
+        public function getDateChangeRequest($id)
+        {
+            $dateChangeRequest=TaskDateChange::where('task_id',$id)->orderBy('id','DESC')->first();
+            return $dateChangeRequest;
         }
 
         public function getTask($id){
@@ -95,6 +101,19 @@ class TaskService
             return $task;
         }
 
+        public function storeDateChangeRequest($request)
+        {
+            $taskDateChange                    = new TaskDateChange();
+            $taskDateChange->task_id           = $request['task_id'];
+            $taskDateChange->note              = $request['note'];
+            $taskDateChange->commencement_date = $request['commencement_date'];
+            $taskDateChange->due_date          = $request['due_date'];
+            $taskDateChange->created_by        = Auth::user()->id;
+            $taskDateChange->save();
+
+            return $taskDateChange;
+        }
+
     public function updateTask($form)
     {
 
@@ -110,6 +129,18 @@ class TaskService
 
             $this->assignTask($form);
             return $task;
+
+    }
+
+    public function updateTaskDates($request)
+    {
+
+        $task                       = Task::find($request['task_id']);
+        $task->commencement_date    = $request['commencement_date'];
+        $task->due_date             = $request['due_date'];
+        $task->save();
+
+        return $task;
 
     }
 

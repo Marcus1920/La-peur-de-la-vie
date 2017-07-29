@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\addressbook;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Message;
 use App\User;
 use App\Events\MyEventNameHere;
+use phpDocumentor\Reflection\Types\Null_;
+use Redirect;
+use Session;
 
 class MessageController extends Controller
 {
@@ -81,7 +85,7 @@ class MessageController extends Controller
         \Mail::send('emails.privateMessage',$data, function($message) use ($user)
         {
             $message->from('info@siyaleader.net', 'Siyaleader');
-            $message->to($user->username)->subject("Siyaleader Notification - New Private Message: ");
+            $message->to($user->email)->subject("Siyaleader Notification - New Private Message: ");
 
        });
 
@@ -96,6 +100,70 @@ class MessageController extends Controller
 
         return 'ok';
 
+    }
+
+    public function storeEmail(Request $request)
+    {
+
+        $caseMessage           = new Message();
+        $caseMessage->from     = $request['uid'];
+        $caseMessage->to       = $request['Recepient'];
+        $caseMessage->online   = 0;
+        $caseMessage->case_id  = $request['caseID'];
+        $caseMessage->message  = $request['msg'];
+        $caseMessage->subject  = $request['msgSubject'];
+        $caseMessage->active   = 1;
+        $caseMessage->save();
+
+        $user = addressbook::find($request['Recepient']);
+
+        $data = array(
+            'name'        =>$user->first_name,
+            'caseID'      =>$request['caseID'],
+            'sender'      => \Auth::user()->name.' '.\Auth::user()->surname,
+            'msg'         =>$request['msg'],
+        );
+
+
+        \Mail::send('emails.privateMessage',$data, function($message) use ($user)
+        {
+            $message->from('info@siyaleader.net', 'Siyaleader');
+            $message->to($user->email)->subject("Siyaleader Notification - New Private Message: ");
+
+        });
+
+        if($request['Cc']!=NULL)
+        {
+            $Ccs=explode(",",$request->Cc);
+
+            for($i=0 ; $i < count($Ccs) ; $i++)
+            {
+                $user = addressbook::find($Ccs[$i]);
+
+                $data = array(
+                    'name'        =>$user->first_name,
+                    'caseID'      =>$request['caseID'],
+                    'sender'      => \Auth::user()->name.' '.\Auth::user()->surname,
+                    'msg'         =>$request['msg'],
+                );
+
+
+                \Mail::send('emails.privateMessage',$data, function($message) use ($user)
+                {
+                    $message->from('info@siyaleader.net', 'Siyaleader');
+                    $message->to($user->email)->subject("Siyaleader Notification - New Private Message: ");
+
+                });
+            };
+
+            \Session::flash('success', 'Email has been successfully sent!');
+            return Redirect::to('casetest/'.$request['caseID']);
+        }
+        else
+        {
+            \Session::flash('success', 'Email has been successfully sent!');
+            return Redirect::to('casetest/'.$request['caseID']);
+        }
     }
 
     /**

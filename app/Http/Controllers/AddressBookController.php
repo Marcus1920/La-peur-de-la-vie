@@ -116,6 +116,41 @@ class AddressBookController extends Controller
 
     }
 
+    public function getAddressBookUsers()
+    {
+        $searchString   = \Input::get('q');
+        $users          = \DB::table('addressbook')
+
+            ->where('addressbook.user', '=', \Auth::user()->id)
+            ->whereRaw(
+                "CONCAT(`addressbook`.`first_name`, ' ', `addressbook`.`surname`) LIKE '%{$searchString}%'")
+            ->select(
+                array
+
+                (
+                    'addressbook.id as id',
+                    'addressbook.first_name as first_name',
+                    'addressbook.surname as surname',
+                    'addressbook.email as email',
+                )
+            )
+
+            ->get();
+
+        $data = array();
+
+        foreach ($users as $user) {
+
+            $data[] = array(
+
+                "name"              => "{$user->first_name} > {$user->surname}",
+                "id"                => "{$user->id}",
+            );
+        }
+
+        return $data;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -149,4 +184,5 @@ class AddressBookController extends Controller
     {
         //
     }
+
 }
