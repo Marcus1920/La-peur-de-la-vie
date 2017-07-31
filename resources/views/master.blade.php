@@ -165,6 +165,53 @@
 
                 <!-- Side Menu -->
                 <ul class="list-unstyled side-menu">
+                    @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
+                <li {{ (Request::is('home') ? "class=active" : '') }}>
+                    <a class="sa-side-homepage" href="{{ url('home') }}">
+                        <span class="menu-item">Home</span>
+                    </a>
+                </li>
+                    @endif
+
+                @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
+                    <li {{ (Request::is('home') ? "class=active" : '') }}>
+                        <a class="sa-side-folder" href="{{ url('home') }}">
+                            <span class="menu-item">My Cases</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
+                        <a class="sa-side-list" href="{{ url('tasks') }}">
+                            <span class="menu-item">My Tasks</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
+                    <li {{ (Request::is('calendar') ? "class=active" : '') }}>
+                        <a class="sa-side-calendar" href="{{ url('calendar') }}">
+                            <span class="menu-item">Calendar</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('list-meetings') ? "class=active" : '') }}>
+                        <a class="sa-side-widget" href="{{ url('list-meetings') }}">
+                            <span class="menu-item">Meetings</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('list-poi-users') ? "class=active" : '') }}>
+                        <a class="sa-side-photos" href="{{ url('list-poi-users') }}">
+                            <span class="menu-item">Poi</span>
+                        </a>
+                    </li>
+                @endif
 
                 @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
                     <li {{ (Request::is('map') ? "class=active" : '') }}>
@@ -174,25 +221,16 @@
                     </li>
                 @endif
 
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('reports') ? "class=active" : '') }}>
+                        <a class="sa-side-chart" href="{{ url('reports') }}">
+                            <span class="menu-item">Reports</span>
+                        </a>
+                    </li>
+                @endif
 
-                @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
-                    <li {{ (Request::is('calendar') ? "class=active" : '') }}>
-                        <a class="sa-side-calendar" href="{{ url('calendar') }}">
-                            <span class="menu-item">Calendar</span>
-                        </a>
-                    </li>
-                @endif
-                @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
-                    <li {{ (Request::is('home') ? "class=active" : '') }}>
-                        <a class="sa-side-folder" href="{{ url('home') }}">
-                            <span class="menu-item">My Cases</span>
-                        </a>
-                    </li>
-                @endif
                 @if(isset($userViewAdministrationPermission) && $userViewAdministrationPermission->permission_id =='14')
-
                     <li class="dropdown">
-
                         <a class="sa-side-ui" href="">
                             <span class="menu-item">Settings </span>
                         </a>
@@ -269,46 +307,6 @@
                         </ul>
                     </li>
                   @endif
-                  @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-                    <li {{ (Request::is('reports') ? "class=active" : '') }}>
-                        <a class="sa-side-chart" href="{{ url('reports') }}">
-                            <span class="menu-item">Reports</span>
-                        </a>
-                    </li>
-                   @endif
-
-                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-                        <li {{ (Request::is('list-meetings') ? "class=active" : '') }}>
-                            <a class="sa-side-widget" href="{{ url('list-meetings') }}">
-                                <span class="menu-item">Meetings</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-
-
-                        <li {{ (Request::is('list-poi-users') ? "class=active" : '') }}>
-                            <a class="sa-side-photos" href="{{ url('list-poi-users') }}">
-                                <span class="menu-item">Poi</span>
-                            </a>
-                        </li>
-
-                    @endif
-
-                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-                    <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
-                        <a class="sa-side-list" href="{{ url('tasks') }}">
-                            <span class="menu-item">My Tasks</span>
-                        </a>
-                    </li>
-
-                    @endif
-
 
                     @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
 
@@ -641,8 +639,10 @@
 @include('forms.data.form')
 @include('forms.data.view')
         @include('version')
+        @if(env('APP_ENV','Production')!='local')
         @include('partials.refresh')
         @include('partials.timeout')
+        @endif
 
       @endif
 			<script>

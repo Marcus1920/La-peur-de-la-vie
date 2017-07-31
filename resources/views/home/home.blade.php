@@ -95,6 +95,7 @@
                         {{ Session::get('success') }}
                     </div>
                     @endif
+                    <div id="caseNotesNotification"></div>
                     <div class="table-responsive overflow">
                         <h3 class="block-title">Allocated/Referred Cases</h3>
                        @if(isset($userCreateCasesPermission) && $userCreateCasesPermission->permission_id =='21')

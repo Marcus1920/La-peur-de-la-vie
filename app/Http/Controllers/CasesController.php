@@ -1887,7 +1887,6 @@ class CasesController extends Controller
         $response["error"] = FALSE;
         $response["caseID"] = $request['caseID'];
 
-
         return \Response::json($response, 201);
 
 

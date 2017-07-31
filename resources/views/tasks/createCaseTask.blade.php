@@ -3,14 +3,6 @@
 <input type="hidden" name="case_id" value="{{ $case->id }}">
 
 <div class="form-group">
-    {!! Form::label('Task Title', 'Task Title', array('class' => 'col-md-3 control-label validate[required]')) !!}
-    <div class="col-md-6">
-        {!! Form::text('title',NULL,['class' => 'form-control input-sm','id' => 'title']) !!}
-        @if ($errors->has('title')) <p class="help-block red">*{{ $errors->first('title') }}</p> @endif
-    </div>
-</div>
-
-<div class="form-group">
     {!! Form::label('Task Delegation', 'Task Delegation', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-6">
         {!! Form::text('task_user_id',NULL,['class' => 'form-control input-sm','id' => 'task_user_id']) !!}
@@ -19,7 +11,15 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('From', 'From', array('class' => 'col-md-3 control-label')) !!}
+    {!! Form::label('Task Title', 'Task Title', array('class' => 'col-md-3 control-label validate[required]')) !!}
+    <div class="col-md-6">
+        {!! Form::text('title',NULL,['class' => 'form-control input-sm','id' => 'title']) !!}
+        @if ($errors->has('title')) <p class="help-block red">*{{ $errors->first('title') }}</p> @endif
+    </div>
+</div>
+
+<div class="form-group">
+    {!! Form::label('Start', 'Start', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-6">
         <div class="input-icon datetime-pick date-only">
             <input data-format="yyyy-MM-dd" type="text" id='commencement_date' name ='commencement_date' class="form-control input-sm"  style="color:#FFFFFF"/>
@@ -33,7 +33,7 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('To', 'To', array('class' => 'col-md-3 control-label')) !!}
+    {!! Form::label('Finish', 'Finish', array('class' => 'col-md-3 control-label')) !!}
     <div class="col-md-6">
         <div class="input-icon datetime-pick date-only">
             <input data-format="yyyy-MM-dd" type="text" id='due_date' name ='due_date' class="form-control input-sm"  style="color:#FFFFFF"/>
