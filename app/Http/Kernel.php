@@ -24,9 +24,11 @@ class Kernel extends HttpKernel
     ];
 
     /**
+    /**
      * The application's route middleware.
      *
      * @var array
+     * UsersMilldware
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
@@ -34,5 +36,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'resetLastActive' => \App\Http\Middleware\ResetLastActive::class,
         'adminmiddlewar' => \App\Http\Middleware\AdminMildware::class,
+        'UsersMilldware' => \App\Http\Middleware\UsersMilldware::class,
     ];
 }

@@ -3,11 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
 use Illuminate\Support\Facades\Auth;
-use  App\User;
-
-class AdminMildware
+class UsersMilldware
 {
     /**
      * Handle an incoming request.
@@ -18,20 +15,27 @@ class AdminMildware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check())
-        {
 
-              return $next($request);
-            return redirect('/home');
+        if (Auth::check()  && Auth::User()->role == 1)
+    {
 
-        }
+       return $next($request);
+       //// return redirect('/home');
 
 
-        else
-            {
+    }
 
-                return redirect('/auth/login');
-            }
+
+    else
+    {
+
+       // $mesage  =   '<h1>  Home    </h1>' ;
+
+
+          return redirect('/erro');
+
+    }
+
 
 
     }

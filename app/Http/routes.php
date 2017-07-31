@@ -116,7 +116,7 @@ Route::get('reports', 'MainreportController@index');
 |
 */
 
-Route::get('list-roles', ['middleware' => 'resetLastActive', function () {
+Route::get('list-roles', ['middleware' => 'UsersMilldware', function () {
     return view('roles.list');
 }]);
 Route::get('roles-list', ['middleware' => 'resetLastActive', 'uses' => 'RolesController@index']);
@@ -142,7 +142,7 @@ Route::post('update-role', ['middleware' => 'resetLastActive', 'uses' => 'RolesC
 */
 
 
-Route::get('list-users', ['middleware' => 'resetLastActive', 'uses' => 'UserController@list_users']);
+Route::get('list-users', ['middleware' => 'UsersMilldware', 'uses' => 'UserController@list_users']);
 
 
 Route::get('users-list', ['uses' => 'UserController@index']);
@@ -228,15 +228,21 @@ Route::get('getOfficer/{id}', ['middleware' => 'resetLastActive', 'uses' => 'Inv
 |--------------------------------------------------------------------------
 |
 */
-Route::get('list-departments', ['middleware' => 'resetLastActive', function () {
+
+Route::get('erro', function () {
+
+    return view('messages.erro');
+
+});
+Route::get('list-departments', ['middleware' => 'UsersMilldware', function () {
     return view('departments.list');
 }]);
 
-Route::get('departments-list', ['middleware' => 'resetLastActive', 'uses' => 'DepartmentController@index']);
-Route::get('departments/{id}', ['middleware' => 'resetLastActive', 'uses' => 'DepartmentController@edit']);
+Route::get('departments-list', ['middleware' => 'UsersMilldware', 'uses' => 'DepartmentController@index']);
+Route::get('departments/{id}', ['middleware' => 'UsersMilldware', 'uses' => 'DepartmentController@edit']);
 
-Route::post('updateDepartment', ['middleware' => 'resetLastActive', 'uses' => 'DepartmentController@update']);
-Route::post('addDepartment', ['middleware' => 'resetLastActive', 'uses' => 'DepartmentController@store']);
+Route::post('updateDepartment', ['middleware' => 'UsersMilldware', 'uses' => 'DepartmentController@update']);
+Route::post('addDepartment', ['middleware' => 'UsersMilldware', 'uses' => 'DepartmentController@store']);
 
 
 /*
@@ -748,7 +754,7 @@ Route::get('caseActivities-list/{id}', ['middleware' => 'resetLastActive', 'uses
 |
 */
 
-Route::get('list-positions', ['middleware' => 'resetLastActive', function () {
+Route::get('list-positions', ['middleware' => 'UsersMilldware', function () {
     return view('positions.list');
 }]);
 
@@ -1067,11 +1073,11 @@ Route::get('middle', function(){
     echo  "hello";
 
 })->middleware('adminmiddlewar');
-Route::get('list-affiliations', ['middleware' => 'resetLastActive', function () {
+Route::get('list-affiliations', ['middleware' => 'UsersMilldware', function () {
     return view('affiliations.list');
 }]);
 
-Route::get('list-affiliation-positions/{affiliation}', ['middleware' => 'resetLastActive', function ($affiliation) {
+Route::get('list-affiliation-positions/{affiliation}', ['middleware' => 'UsersMilldware', function ($affiliation) {
 
     $affiliationObj = Affiliation::find($affiliation);
     $afflpos= AffiliationPositions::where('affiliation',$affiliation)->first();
