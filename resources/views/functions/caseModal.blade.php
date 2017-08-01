@@ -2238,34 +2238,63 @@ $("#submitAssociatePoiForm").on("click",function(){
     });
 
 
-      $("#submitCreateCaseAgentForm").on("click",function(){
+    {{----}}
+              {{--$("#submitCreateCaseAgentForm").on("click",function(){--}}
 
-         var formData    = new FormData($("#CreateCaseAgentForm")[0]);
-         var token       = $('input[name="_token"]').val();
+            {{--var formData    = new FormData($("#CreateCaseAgentForm")[0]);--}}
+            {{--var token       = $('input[name="_token"]').val();--}}
 
-      $('#modalCreateCaseAgent').modal('toggle');
+            {{--$('#modalCreateCaseAgent').modal('toggle');--}}
 
-        $.ajax({
-        type    :"POST",
-        data    : formData,
-            processData: false,
-            dataType:'json',
-            contentType: false,
-            async:false,
-        headers : { 'X-CSRF-Token': token },
-        url     :"{!! url('/createCaseAgent')!!}",
-        beforeSend : function() {
-          HoldOn.open({
-          theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-          message: "<h4> loading please wait... ! </h4>",
-          content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                       // this will replace the theme by something customized.
-          backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                     // Keep in mind is necessary the .css file too.
-          textColor:"white" // Change the font color of the message
-            });
-        },
-        success : function(response){
+            {{--$.ajax({--}}
+                {{--type    :"POST",--}}
+                {{--data    : formData,--}}
+                {{--processData: false,--}}
+                {{--dataType:'json',--}}
+                {{--contentType: false,--}}
+                {{--async:false,--}}
+                {{--headers : { 'X-CSRF-Token': token },--}}
+                {{--url     :"{!! url('/createCaseAgent')!!}",--}}
+                {{--beforeSend : function() {--}}
+                    {{--HoldOn.open({--}}
+                        {{--theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect--}}
+                        {{--message: "<h4> loading please wait... ! </h4>",--}}
+                        {{--content:"Your HTML Content", // If theme is set to "custom", this property is available--}}
+                                                     {{--// this will replace the theme by something customized.--}}
+                        {{--backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript--}}
+                        {{--// Keep in mind is necessary the .css file too.--}}
+                        {{--textColor:"white" // Change the font color of the message--}}
+                    {{--});--}}
+                {{--},--}}
+
+                $("#submitCreateCaseAgentForm").on("click",function(){
+
+                var myForm   = $("#CreateCaseAgentForm")[0];
+
+                var formData = new FormData(myForm);
+                var token    = $('input[name="_token"]').val();
+
+                $.ajax({
+                    type    :"POST",
+                    data    : formData,
+                    contentType: false,
+                    processData: false,
+                    headers : { 'X-CSRF-Token': token },
+                    url     :"{!! url('/createCaseAgent')!!}",
+                    beforeSend : function() {
+                        HoldOn.open({
+                            theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
+                            message: "<h4> uploading please wait... ! </h4>",
+                            content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                                         // this will replace the theme by something customized.
+                            backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
+                            // Keep in mind is necessary the .css file too.
+                            textColor:"white" // Change the font color of the message
+                        });
+
+                    },
+
+                    success : function(response){
 
           //if (response.error == false) {
             $('#CreateCaseAgentForm')[0].reset();
