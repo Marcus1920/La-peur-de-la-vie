@@ -36,7 +36,7 @@ class CreateCaseAgentRequest extends Request
            'client_reference_number'    =>'required',
            'saps_case_number'           =>'required',
            'saps_case_number'           =>'required',
-           'rate_value'                 =>'required',
+        //   'rate_value'                 =>'required',
            'investigation_cell'         =>'required',
            'investigation_email'        =>'email',
            'investigation_note'         =>'required',

@@ -1155,9 +1155,11 @@ hr {
 }
 
 .modal-content, .dark {
-    background: rgba(0, 0, 0, 0.68);
+    /*background: rgba(0, 0, 0, 0.68);*/
+    background-color: #607d8b;
     border: 0;
     color: #fff;
+
 }
 
 .modal-header, .dark-header {
@@ -1233,7 +1235,7 @@ hr {
 
 /* Close */
 .close {
-    font-size: 16px;
+    font-size: 25px;
     text-shadow: none;
 }
 

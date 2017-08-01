@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\CaseReport;
 use Illuminate\Http\Request;
 
 use App\services\CaseResponderService;
@@ -40,6 +41,30 @@ class RespondersController extends Controller
                     'users.cellphone',
                     'cases_owners.type',
                     'cases_owners.accept'
+                )
+            );
+
+        return \Datatables::of($caseResponders)
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-dest="{{$id}}" data-name="{{$name}} {{$surname}}" data-toggle="modal" onClick="launchMessageModal({{$id}},this);" data-target=".compose-message"><i class="fa fa-envelope"></i></a>'
+            )
+            ->make(true);
+
+    }
+    public function indexResponders($id)
+    {
+        $case=CaseReport::find($id);
+        $caseType=$case->case_type;
+
+        $caseResponders=\DB::table('responders')
+            ->where('case_type','=',$caseType)
+            ->join('users','users.id','=','responders.responder')
+            ->select(
+                array(
+                    'users.id',
+                    'users.name',
+                    'users.surname',
+                    'users.cellphone',
+                    'responders.responder_type as type'
                 )
             );
 
