@@ -5,11 +5,9 @@
 
 @section('content')
 
-    <di>
-
-
-        <img class="" src="{{ asset('/img/01_fix_background.png') }}" width="100%" alt="">
-    </di>
+    <div style="margin: auto; text-align: center">
+        <img class="" src="{{ asset('/img/01_fix_background.png') }}"  align="center" width="50%" alt="">
+    </div>
 
 
 
