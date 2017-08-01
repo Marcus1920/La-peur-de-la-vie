@@ -42,7 +42,7 @@ use App\services\CaseResponderService;
 use App\services\CaseActivityService;
 use Redirect;
 
-
+use Auth;
 
 
 class CasesController extends Controller
@@ -65,10 +65,10 @@ class CasesController extends Controller
     public function index($id)
     {
 
-        $myCases = CaseOwner::where('user', '=', \Auth::user()->id)
+        $myCases = CaseOwner::where('user', '=', Auth::user()->id)
             ->get();
 
-        $otherCases = CaseReport::where('user', '=', \Auth::user()->id)
+        $otherCases = CaseReport::where('user', '=', Auth::user()->id)
             ->get();
         $caseIds = array();
 
@@ -84,7 +84,7 @@ class CasesController extends Controller
         }
 
         $caseIds = array_unique($caseIds);
-        $userRoleObj = UserRole::find(\Auth::user()->role);
+        $userRoleObj = UserRole::find(Auth::user()->role);
 
 
         if ($userRoleObj->id == 1) {
@@ -181,7 +181,7 @@ class CasesController extends Controller
     {
 
 
-        $userRoleObj = UserRole::find(\Auth::user()->role);
+        $userRoleObj = UserRole::find(Auth::user()->role);
 
 
         if ($userRoleObj->id == 1) {
@@ -242,7 +242,7 @@ class CasesController extends Controller
     public function resolvedCasesList()
     {
 
-        $userRoleObj = UserRole::find(\Auth::user()->role);
+        $userRoleObj = UserRole::find(Auth::user()->role);
 
         if ($userRoleObj->id == 1) {
 
@@ -300,7 +300,7 @@ class CasesController extends Controller
     {
 
 
-        $userRoleObj = UserRole::find(\Auth::user()->role);
+        $userRoleObj = UserRole::find(Auth::user()->role);
 
         if ($userRoleObj->id == 1) {
 
@@ -361,10 +361,10 @@ class CasesController extends Controller
     {
 
         $caseOwnerObj = CaseOwner::where("case_id", '=', $id)
-            ->where("user", '=', \Auth::user()->id)
+            ->where("user", '=', Auth::user()->id)
             ->first();
 
-        $numberCases = CaseReport::where('user', '=', \Auth::user()->id)->get();
+        $numberCases = CaseReport::where('user', '=', Auth::user()->id)->get();
 
 
         if (sizeof($caseOwnerObj) > 0) {

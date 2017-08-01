@@ -566,13 +566,40 @@ Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCa
 
 
 
-Route::get('closedCases', ['middleware' => 'auth', 'uses' => 'CasesController@closedCases']);
+//Route::get('closedCases', ['middleware' => 'auth', 'uses' => 'CasesController@closedCases']);
 
-Route::get('pendingCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingCases']);
-Route::get('pendingClosureCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingClosureCases']);
+//Route::get('pendingCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingCases']);
+///Route::get('pendingClosureCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingClosureCases']);
 
-Route::get('allocatedCases', ['middleware' => 'auth', 'uses' => 'CasesController@allocatedCases']);
 
+Route::get('pendingClosureCases' , function() {
+
+
+    return view('cases.pendingClosureCases');
+}) ;
+
+
+Route::get('pendingCases' , function() {
+
+
+    return view('cases.pendingCases');
+}) ;
+
+
+Route::get('closedCases' , function() {
+
+
+    return view('cases.closedCases');
+}) ;
+
+//Route::get('allocatedCases', ['middleware' => 'auth', 'uses' => 'CasesController@allocatedCases']);
+
+
+Route::get('allocatedCases' , function(){
+
+    return view('cases.allocatedCases');
+
+});
 
 /*
 |--------------------------------------------------------------------------
