@@ -2066,15 +2066,14 @@ class CasesController extends Controller
       if(!File::exists($fileFullPath)) {
 
           $request->file('caseFile')->move($destinationFolder, $fileName);
-//            $caseOwners = CaseOwner::where('case_id', '=', $request['caseID'])->get();
-//            $author = User::find($request['uid']);
+
 
           $caseFile           = new CaseFile();
           $caseFile->file     = $fileName;
           $caseFile->img_url  = $fileFullPath;
           $caseFile->user     = \Auth::user()->id;
           $caseFile->case_id  =  $newCase->id;
-//            $caseFile->file_note = $request['fileNote'];
+
           $caseFile->save();
 
 

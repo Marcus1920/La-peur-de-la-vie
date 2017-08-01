@@ -293,21 +293,6 @@
 
             </div>
 
-
-
         </div>
     </div>
 </div>
-
-<script>
-    var form =document.querySelector('CreateCaseAgentForm');
-    var request = new XHLHttpRequest();
-
-    form.addEventListener('submitCreateCaseAgentForm' ,function(e)
-{
-e.preventDefault();
-var formData        = new FormData(form);
-request.open('post','/createCaseAgent');
-request.send(formdata);
-});
-</script>
