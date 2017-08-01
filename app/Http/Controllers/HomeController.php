@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\CaseReport;
 use App\CaseOwner;
+use function MongoDB\BSON\toJSON;
 
 class HomeController extends Controller
 {
@@ -562,6 +563,50 @@ class HomeController extends Controller
      *
      * @return Response
      */
+
+    public function getcharts()
+    {
+$respomse   = array() ;
+            $cases_db =\DB::table('cases')
+                            ->join('cases_statuses','cases_statuses.id','=','cases.status')
+                            ->join('departments','departments.id','=','cases.department')
+                            ->join('landingpagecharts','departments.id','=','landingpagecharts.department_id')
+                            ->select(
+                                        \DB::raw("
+                                            landingpagecharts.strokeColor as strokeColor,
+                                            landingpagecharts.pointColor as pointColor,
+                                            landingpagecharts.pointStrokeColor as pointStrokeColor ,
+                                            landingpagecharts.pointHighlightFill as pointHighlightFill,
+                                            landingpagecharts.pointHighlightStroke as pointHighlightStroke,
+                                             landingpagecharts.data as data,
+                                            cases.id case_id,
+                                            cases_statuses.name as CaseStatus,
+                                            departments.name as label
+                                           "
+                                        )
+                                    )
+                             ->get();
+
+            foreach ($cases_db as $datavale){
+                $datavale->data=[65, 59, 80, 81, 56, 55, 40, 81, 56, 55, 40, 32];
+
+             //  return   json_encode($data);
+            }
+
+        return $cases_db;
+//            $respomse['data'] =   $cases_db;
+//            $respomse['erro'] =  true ;
+
+
+
+
+
+
+    }
+
+
+
+
     public function create()
     {
         //

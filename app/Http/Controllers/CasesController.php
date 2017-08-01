@@ -1911,7 +1911,6 @@ class CasesController extends Controller
         return $data;
     }
 
-
     function relatedCases($id)
     {
 
@@ -1933,4 +1932,26 @@ class CasesController extends Controller
             ->make(true);
 
     }
+
+
+    public function allocatedCases()
+    {
+
+        return view('cases.allocatedCases');
+    }
+    public function closedCases()
+    {
+
+        return view('cases.closedCases');
+    }
+    public function pendingCases()
+    {
+        return view('cases.pendingCases');
+    }
+    public function pendingClosureCases()
+    {
+
+        return view('cases.pendingClosureCases');
+    }
+
 }

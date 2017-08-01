@@ -44,6 +44,11 @@ Route::group(['middleware' => 'resetLastActive'], function () {
 
     Route::get('home', ['uses' => 'HomeController@index']);
 	Route::get('home', ['uses' => 'HomeController@index']);
+	Route::get('generatecharts', ['uses' => 'HomeController@getcharts']);
+
+
+
+
 
 });
 
@@ -558,6 +563,15 @@ Route::post('captureCaseUpdate', ['middleware' => 'resetLastActive', 'uses' => '
 Route::post('captureCaseUpdateH', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@captureCaseUpdateH']);
 Route::get('relatedCases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@relatedCases']);
 Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCases']);
+
+
+
+Route::get('closedCases', ['middleware' => 'auth', 'uses' => 'CasesController@closedCases']);
+
+Route::get('pendingCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingCases']);
+Route::get('pendingClosureCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingClosureCases']);
+
+Route::get('allocatedCases', ['middleware' => 'auth', 'uses' => 'CasesController@allocatedCases']);
 
 
 /*
