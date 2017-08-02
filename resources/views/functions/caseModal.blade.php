@@ -1,6 +1,60 @@
 
   <script type="application/javascript">
+
+      {{--function InitOverviewDataTable()--}}
+      {{--{--}}
+          {{--oOverviewTable =$('#pendingreferralCasesTable').dataTable(--}}
+              {{--{--}}
+                  {{--"bPaginate": true,--}}
+                  {{--"bJQueryUI": true,  // ThemeRoller-stöd--}}
+                  {{--"bLengthChange": false,--}}
+                  {{--"bFilter": false,--}}
+                  {{--"bSort": false,--}}
+                  {{--"bInfo": true,--}}
+                  {{--"bAutoWidth": true,--}}
+                  {{--"bProcessing": true,--}}
+
+                  {{--"sAjaxSource": "{!! url('/pending-referral-cases-list/')!!}"--}}
+              {{--});--}}
+      {{--}--}}
+
+      {{--function RefreshTable(tableId, urlData)--}}
+      {{--{--}}
+          {{--$.getJSON(urlData, null, function( json )--}}
+          {{--{--}}
+              {{--table = $(tableId).dataTable();--}}
+              {{--oSettings = table.fnSettings();--}}
+
+              {{--table.fnClearTable(this);--}}
+
+              {{--for (var i=0; i<json.aaData.length; i++)--}}
+              {{--{--}}
+                  {{--table.oApi._fnAddData(oSettings, json.aaData[i]);--}}
+              {{--}--}}
+
+              {{--oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();--}}
+              {{--table.fnDraw();--}}
+          {{--});--}}
+      {{--}--}}
+
+      {{--function AutoReload()--}}
+      {{--{--}}
+          {{--RefreshTable('#pendingreferralCasesTable', "{!! url('/pending-referral-cases-list/')!!}");--}}
+
+          {{--setTimeout(function(){AutoReload();}, 00000);--}}
+      {{--}--}}
+
+
+
+
+
+
   $(document).ready(function() {
+
+
+//      InitOverviewDataTable();
+//      setTimeout(function(){AutoReload();}, 30000);
+
 
       $("#add_officer").click(function(){
 	      $("#CreateCaseAgentForm #investigation_cell").val("");
@@ -1033,7 +1087,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
   });
 
 
-
+// new  dataTable
 
 
 
@@ -1091,21 +1145,13 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
                 "autoWidth": false,
                 "processing": true,
                 "serverSide": true,
+      "serverSide": true,
+      "processing": true,
                 "dom": 'T<"clear">lfrtip',
                 "order" :[[0,"desc"]],
                 "sAjaxSource": "{!! url('/cases-list/" + user +"')!!}",
-                 "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-                  oSettings.jqXHR = $.ajax( {
-                    "dataType": 'json',
-                    "type": "GET",
-                    "url": sSource,
-                    "data": aoData,
-                    "timeout": 0000,
-                    "error": handleAjaxError,
-                    "success": fnCallback
-                  } );
-                },
-
+                "serverSide": true,
+                 "processing": true,
                  "columns": [
                 {data: 'id', name: 'cases.id'},
                 {data: 'created_at', name: 'cases.created_at'},
@@ -1206,9 +1252,15 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
    var pendingreferralCasesTable     = $('#pendingreferralCasesTable').DataTable({
         "autoWidth": false,
 
-       "processing": true,
-       speed: 500,
+
+
+       "bProcessing": true,
+       "bServerSide": true,
+       "iDisplayLength": 10,
+       "bLengthChange": false,
+       "bDestroy": true,
        "dom": 'T<"clear">lfrtip',
+       "aLengthMenu": [[5, 10, 15, -1], [5, 10, 50, "All"]],
        "order" :[[0,"desc"]],
        "ajax": "{!! url('/pending-referral-cases-list/')!!}","processing": true,
        "serverSide": true,
@@ -3174,10 +3226,15 @@ console.log("CreateCase error, data - ",data);
                         "processing": true,
                         "serverSide": true,
                           "autoWidth": false,
+
+              "aLengthMenu": [[5, 10, 15, -1], [5, 10, 50, "All"]],
+              "bDestroy": true,
                         "pageLength": 5,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
                         "ajax": "{!! url('/relatedCases-list/" + id +"')!!}",
+              "serverSide": true,
+              "processing": true,
                          "columns": [
                         {data: function(d){
 

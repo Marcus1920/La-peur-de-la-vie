@@ -3,7 +3,13 @@
 
 @section('content')
 
+    <script>
 
+        $(document).ready(function() {
+           // jQuery.migrateMute = true;
+            $.fn.dataTableExt.sErrMode = 'throw';
+        })
+    </script>
     <div class="tab-pane" id="closure">
         <!-- Responsive Table -->
         <div class="block-area" id="responsiveTable">

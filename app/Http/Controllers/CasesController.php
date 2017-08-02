@@ -1579,7 +1579,7 @@ class CasesController extends Controller
         }
 
 
-        return  view('case.test');
+        return  view('cases.test');
     }
 
     /**

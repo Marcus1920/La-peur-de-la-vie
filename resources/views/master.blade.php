@@ -43,7 +43,12 @@
         <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
 
+    <script>
 
+        $(document).ready(function() {
+            jQuery.migrateMute = true;
+        })
+    </script>
 
 
         <script>
