@@ -502,6 +502,7 @@ class ComposerStaticInit1c721112013bbf52b0a2636c6824a7ee
         'App\\Http\\Controllers\\VenuesController' => __DIR__ . '/../..' . '/app/Http/Controllers/VenuesController.php',
         'App\\Http\\Controllers\\WardsController' => __DIR__ . '/../..' . '/app/Http/Controllers/WardsController.php',
         'App\\Http\\Controllers\\WorkflowsController' => __DIR__ . '/../..' . '/app/Http/Controllers/WorkflowsController.php',
+<<<<<<< HEAD
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -833,6 +834,8 @@ class ComposerStaticInit1c721112013bbf52b0a2636c6824a7ee
         'ConsoleTVs\\Charts\\Builder\\Realtime' => __DIR__ . '/..' . '/consoletvs/charts/src/Builder/Realtime.php',
         'ConsoleTVs\\Charts\\ChartsServiceProvider' => __DIR__ . '/..' . '/consoletvs/charts/src/ChartsServiceProvider.php',
         'ConsoleTVs\\Charts\\Facades\\Charts' => __DIR__ . '/..' . '/consoletvs/charts/src/Facades/Charts.php',
+=======
+>>>>>>> develop
         'CreateAffiliationsPositionsTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_20_131159_create_affiliations_positions_table.php',
         'CreateAffiliationsTable' => __DIR__ . '/../..' . '/database/migrations/2015_11_20_112445_create_affiliations_table.php',
         'CreateAssociatesPoiTables' => __DIR__ . '/../..' . '/database/migrations/2016_04_27_121725_create_associates_poi_tables.php',
@@ -896,6 +899,7 @@ class ComposerStaticInit1c721112013bbf52b0a2636c6824a7ee
         'CreateSubCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2015_07_31_081942_create_sub_categories_table.php',
         'CreateSubSubCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2015_07_31_113813_create_sub_sub_categories_table.php',
         'CreateTaskCategoriesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_22_095832_create_task_categories_table.php',
+        'CreateTaskDateChangesTable' => __DIR__ . '/../..' . '/database/migrations/2017_07_28_225452_create_task_date_changes_table.php',
         'CreateTaskPrioritiesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_21_110816_create_task_priorities_table.php',
         'CreateTaskRemindersTable' => __DIR__ . '/../..' . '/database/migrations/2017_06_28_110413_create_task_reminders_table.php',
         'CreateTaskStatusesTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_20_141013_create_task_statuses_table.php',
@@ -1750,6 +1754,7 @@ class ComposerStaticInit1c721112013bbf52b0a2636c6824a7ee
         'Hamcrest\\Util' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
         'Hamcrest\\Xml\\HasXPath' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
         'IlluminateQueueClosure' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+<<<<<<< HEAD
         'Illuminate\\Auth\\Access\\Gate' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',
         'Illuminate\\Auth\\Access\\HandlesAuthorization' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/HandlesAuthorization.php',
         'Illuminate\\Auth\\Access\\Response' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Auth/Access/Response.php',
@@ -2340,6 +2345,9 @@ class ComposerStaticInit1c721112013bbf52b0a2636c6824a7ee
         'League\\Fractal\\Serializer\\JsonApiSerializer' => __DIR__ . '/..' . '/league/fractal/src/Serializer/JsonApiSerializer.php',
         'League\\Fractal\\Serializer\\SerializerAbstract' => __DIR__ . '/..' . '/league/fractal/src/Serializer/SerializerAbstract.php',
         'League\\Fractal\\TransformerAbstract' => __DIR__ . '/..' . '/league/fractal/src/TransformerAbstract.php',
+=======
+        'Languages' => __DIR__ . '/../..' . '/database/seeds/Languages.php',
+>>>>>>> develop
         'MigrationCartalystSentinel' => __DIR__ . '/../..' . '/database/migrations/2014_07_02_230147_migration_cartalyst_sentinel.php',
         'Mockery' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',

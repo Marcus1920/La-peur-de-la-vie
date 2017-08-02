@@ -267,12 +267,79 @@
         <!-- /.col (LEFT) -->
 
 
+
         <div class="col-md-6">
             <!-- LINE CHART -->
             <a href="{{url('pendingClosureCases')}}">
                 <div class="box box-danger">
                     <div class="box-header with-border">
                         <h3 align="center">PENDING CLOSURE</h3>
+
+
+       <div class="tab-content">
+            <div class="tab-pane active" id="reported">
+                <!-- Responsive Table -->
+                <div class="block-area" id="responsiveTable">
+                    @if(Session::has('success'))
+                    <div class="alert alert-info alert-dismissable fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ Session::get('success') }}
+                    </div>
+                    @endif
+                    <div id="caseNotesNotification"></div>
+                    <div class="table-responsive overflow">
+                        <h3 class="block-title">Allocated/Referred Cases</h3>
+                       @if(isset($userCreateCasesPermission) && $userCreateCasesPermission->permission_id =='21')
+                        <button class="btn btn-sm m-r-5" data-toggle="modal" onclick="clearCreateCaseModal()" data-target=".modalCreateCaseAgent">Create Case</button>
+
+
+                        <table class="table tile table-striped" id="casesTable">
+                            <thead>
+                              <tr>
+                                    <th>Id</th>
+                                    <th>Created At</th>
+                                    <th>Description</th>
+                                    <th>Source</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                              </tr>
+                            </thead>
+                        </table>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="closure">
+             <!-- Responsive Table -->
+                <div class="block-area" id="responsiveTable">
+                    @if(Session::has('success'))
+                    <div class="alert alert-info alert-dismissable fade in">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ Session::get('success') }}
+                    </div>
+                    @endif
+                    <div class="table-responsive overflow">
+                        <h3 class="block-title">Pending Closure Cases</h3>
+                         @if(isset($userCreateCasesPermission) && $userCreateCasesPermission->permission_id =='21')
+                        <button class="btn btn-sm m-r-5" data-toggle="modal" onclick="clearCreateCaseModal()" data-target=".modalCreateCaseAgent">Create Case</button>
+
+                        <table class="table tile table-striped" id="deletedCasesTable">
+                            <thead>
+                              <tr>
+                                    <th>Id</th>
+                                    <th>Created At</th>
+                                    <th>Description</th>
+                                    <th>Source</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                              </tr>
+                            </thead>
+                        </table>
+                         @endif
+                    </div>
+                </div>
+            </div>
 
 
                     </div>

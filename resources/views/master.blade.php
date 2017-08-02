@@ -73,8 +73,14 @@
 
               background-color: #0B628D;
          }
+         .eerross {
 
+             background-image: url("{{ asset('/img/01_fix_background.png') }}");
+             width: 100%;
+             height: 100%;
+         }
         </style>
+
 
 
     </head>
@@ -164,6 +170,53 @@
 
                 <!-- Side Menu -->
                 <ul class="list-unstyled side-menu">
+                    @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
+                <li {{ (Request::is('home') ? "class=active" : '') }}>
+                    <a class="sa-side-homepage" href="{{ url('home') }}">
+                        <span class="menu-item">Home</span>
+                    </a>
+                </li>
+                    @endif
+
+                @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
+                    <li {{ (Request::is('home') ? "class=active" : '') }}>
+                        <a class="sa-side-folder" href="{{ url('home') }}">
+                            <span class="menu-item">My Cases</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
+                        <a class="sa-side-list" href="{{ url('tasks') }}">
+                            <span class="menu-item">My Tasks</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
+                    <li {{ (Request::is('calendar') ? "class=active" : '') }}>
+                        <a class="sa-side-calendar" href="{{ url('calendar') }}">
+                            <span class="menu-item">Calendar</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('list-meetings') ? "class=active" : '') }}>
+                        <a class="sa-side-widget" href="{{ url('list-meetings') }}">
+                            <span class="menu-item">Meetings</span>
+                        </a>
+                    </li>
+                @endif
+
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('list-poi-users') ? "class=active" : '') }}>
+                        <a class="sa-side-photos" href="{{ url('list-poi-users') }}">
+                            <span class="menu-item">Poi</span>
+                        </a>
+                    </li>
+                @endif
 
                 @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
                     <li {{ (Request::is('map') ? "class=active" : '') }}>
@@ -173,25 +226,16 @@
                     </li>
                 @endif
 
+                @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+                    <li {{ (Request::is('reports') ? "class=active" : '') }}>
+                        <a class="sa-side-chart" href="{{ url('reports') }}">
+                            <span class="menu-item">Reports</span>
+                        </a>
+                    </li>
+                @endif
 
-                @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
-                    <li {{ (Request::is('calendar') ? "class=active" : '') }}>
-                        <a class="sa-side-calendar" href="{{ url('calendar') }}">
-                            <span class="menu-item">Calendar</span>
-                        </a>
-                    </li>
-                @endif
-                @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
-                    <li {{ (Request::is('home') ? "class=active" : '') }}>
-                        <a class="sa-side-folder" href="{{ url('home') }}">
-                            <span class="menu-item">My Cases</span>
-                        </a>
-                    </li>
-                @endif
                 @if(isset($userViewAdministrationPermission) && $userViewAdministrationPermission->permission_id =='14')
-
                     <li class="dropdown">
-
                         <a class="sa-side-ui" href="">
                             <span class="menu-item">Settings </span>
                         </a>
@@ -215,32 +259,32 @@
                                 <li><a href="{{ url('list-affiliations') }}"><span class="badge badge-r">{{ count($noAffiliations,0) }}</span>Association</a></li>
                             @endif
 
-                            @if(isset($userViewCasePriorityPermission) && $userViewCasePriorityPermission->permission_id =='2')
-                           {{-- <li><a href="{{ url('list-priorities') }}"><span class="badge badge-r">{{ count($noCasesPriorities,0) }}</span>Cases Priorities</a></li>--}}
-                            @endif
+                            {{--@if(isset($userViewCasePriorityPermission) && $userViewCasePriorityPermission->permission_id =='2')--}}
+                            {{--<li><a href="{{ url('list-priorities') }}"><span class="badge badge-r">{{ count($noCasesPriorities,0) }}</span>Cases Priorities</a></li>--}}
+                            {{--@endif--}}
 
-                            @if(isset($userViewCaseStatusPermission) && $userViewCaseStatusPermission->permission_id =='3')
+                            {{--@if(isset($userViewCaseStatusPermission) && $userViewCaseStatusPermission->permission_id =='3')--}}
 
-                         {{--   <li><a href="{{ url('list-statuses') }}"><span class="badge badge-r">{{ count($noCaseStatuses,0) }}</span>Cases Statuses</a></li>--}}
+                            {{--<li><a href="{{ url('list-statuses') }}"><span class="badge badge-r">{{ count($noCaseStatuses,0) }}</span>Cases Statuses</a></li>--}}
 
-                            @endif
-
-
-
-                            @if(isset($userViewMeetingsPermission) && $userViewMeetingsPermission->permission_id =='5')
-
-                           {{-- <li><a href="{{ url('list-meetings') }}"><span class="badge badge-r">{{ count($noMeetings,0) }}</span>Meetings</a></li>--}}
-
-                            @endif
+                            {{--@endif--}}
 
 
-                            @if(isset($userViewProvincesPermission) && $userViewProvincesPermission->permission_id =='7')
+
+                            {{--@if(isset($userViewMeetingsPermission) && $userViewMeetingsPermission->permission_id =='5')--}}
+
+                            {{--<li><a href="{{ url('list-meetings') }}"><span class="badge badge-r">{{ count($noMeetings,0) }}</span>Meetings</a></li>--}}
+
+                            {{--@endif--}}
+
+
+                            {{--@if(isset($userViewProvincesPermission) && $userViewProvincesPermission->permission_id =='7')--}}
 
                             {{--<li><a href="{{ url('list-provinces') }}"><span class="badge badge-r">{{ count($noProvinces,0) }}</span>Provinces</a></li>--}}
-                            @endif
-                            @if(isset($userViewRelationshipsPermission) && $userViewRelationshipsPermission->permission_id =='8')
+                            {{--@endif--}}
+                            {{--@if(isset($userViewRelationshipsPermission) && $userViewRelationshipsPermission->permission_id =='8')--}}
                             {{--<li><a href="{{ url('list-relationships') }}"><span class="badge badge-r">{{ count($noRelationships,0) }}</span>Relationships</a></li>--}}
-                            @endif
+                            {{--@endif--}}
 
                                 @if(isset($userViewUsersPermission) && $userViewUsersPermission->permission_id =='10')
 
@@ -252,15 +296,15 @@
                             <li><a href="{{ url('list-roles') }}"><span class="badge badge-r">{{ count($noRoles,0) }}</span>User Groups</a></li>
                             @endif
 
-                            @if(isset($userViewPOIPermission) && $userViewPOIPermission->permission_id =='11')
+                            {{--@if(isset($userViewPOIPermission) && $userViewPOIPermission->permission_id =='11')--}}
 
-                           {{-- <li><a href="{{ url('list-poi-users') }}"><span class="badge badge-r">{{ count($noPOIUsers,0) }}</span>POI</a></li>--}}
-                            @endif
+                            {{--<li><a href="{{ url('list-poi-users') }}"><span class="badge badge-r">{{ count($noPOIUsers,0) }}</span>POI</a></li>--}}
+                            {{--@endif--}}
 
 
-                            @if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')
-                    {{--          <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li> --}}
-                             @endif
+                            {{--@if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')--}}
+                              {{--<li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li>--}}
+                             {{--@endif--}}
 
                              {{--<li><a href="{{ url('list-forms') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms</a></li>--}}
                              {{--<li><a href="{{ url('list-formsdata') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms Data</a></li>--}}
@@ -268,46 +312,6 @@
                         </ul>
                     </li>
                   @endif
-                  @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-                    <li {{ (Request::is('reports') ? "class=active" : '') }}>
-                        <a class="sa-side-chart" href="{{ url('reports') }}">
-                            <span class="menu-item">Reports</span>
-                        </a>
-                    </li>
-                   @endif
-
-                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-                        <li {{ (Request::is('list-meetings') ? "class=active" : '') }}>
-                            <a class="sa-side-widget" href="{{ url('list-meetings') }}">
-                                <span class="menu-item">Meetings</span>
-                            </a>
-                        </li>
-                    @endif
-
-                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-
-
-                        <li {{ (Request::is('list-poi-users') ? "class=active" : '') }}>
-                            <a class="sa-side-photos" href="{{ url('list-poi-users') }}">
-                                <span class="menu-item">Poi</span>
-                            </a>
-                        </li>
-
-                    @endif
-
-                    @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
-
-                    <li {{ (Request::is('Meetings') ? "class=active" : '') }}>
-                        <a class="sa-side-list" href="{{ url('tasks') }}">
-                            <span class="menu-item">My Tasks</span>
-                        </a>
-                    </li>
-
-                    @endif
-
 
                     @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
 
@@ -347,6 +351,7 @@
             <section id="content" class="container">
                 @include('messages.list')
                 @include('messages.add')
+
                 @yield('content')
                 @include('addressbook.list')
                 @include('addressbook.global')
@@ -639,8 +644,10 @@
 @include('forms.data.form')
 @include('forms.data.view')
         @include('version')
+        @if(env('APP_ENV','Production')!='local')
         @include('partials.refresh')
         @include('partials.timeout')
+        @endif
 
       @endif
 			<script>

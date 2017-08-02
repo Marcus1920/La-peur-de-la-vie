@@ -123,7 +123,7 @@
                                     <li><a href="#7a" data-toggle="tab" onclick="hides()"><span class="fa fa-paste "> Case Attachments</span></a>
                                     </li>
 
-                                    <li><a href="#8a" data-toggle="tab" onclick="hides()">Case Tasks</a>
+                                    <li><a href="#8a" data-toggle="tab" onclick="hides()"><span class="fa fa-file-text-o"> Case Tasks</span></a>
                                     </li>
 
                                 </ul>
@@ -147,14 +147,17 @@
                                     <a href="#" class="list-group-item text-center">
                                         <h5 class="glyphicon glyphicon-plus-sign"></h5><br/> Add Case Note
                                     </a>
+
+                                    <a href="#" class="list-group-item text-center">
+                                        <h5 class="glyphicon glyphicon-envelope"></h5><br/> Send Email
+                                    </a>
+
                                     <a href="#" class="list-group-item text-center">
                                         <h5 class="glyphicon glyphicon-paperclip"></h5><br/>Attach File
                                     </a>
                                     <a href="#" class="list-group-item text-center">
                                         <h4 class="glyphicon glyphicon-credit-card"></h4><br/>Add Case Task
                                     </a>
-
-
                                         <a href="#" class="list-group-item text-center" id="acceptCase" onClick="acceptCase()">
                                             <h5 class="glyphicon glyphicon-ok-sign" ></h5><br/>Accept Case
                                         </a>
@@ -767,7 +770,19 @@
                                                                 </div>
                                                             @endif
                                                             <div class="table-responsive">
-                                                                <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="caseResponders">
+                                                                <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="caseResponders1">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>Type</th>
+                                                                        <th>Name</th>
+                                                                        <th>Accepted</th>
+                                                                        <th>Actions</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                </table>
+                                                                <br/>
+                                                                <br/>
+                                                                <table style="width:928px;" class="table tile table-striped dataTable no-footer" id="allCaseResponders">
                                                                     <thead>
                                                                     <tr>
                                                                         <th>Type</th>
@@ -902,26 +917,33 @@
                                         @include('casenotes.add')
                                     </div>
                                 </div>
+
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents4">
-                                        @include('casefiles.add')
+                                        @include('messages.addEmail')
                                     </div>
                                 </div>
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents5">
-                                        @include('tasks.createCaseTask')
+                                        @include('casefiles.add')
                                     </div>
                                 </div>
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents6">
-
+                                        @include('tasks.createCaseTask')
                                     </div>
                                 </div>
 
                                 <div class="bhoechie-tab-content">
                                     <div id="side_contents7">
+
+                                    </div>
+                                </div>
+
+                                <div class="bhoechie-tab-content">
+                                    <div id="side_contents8">
 
                                     </div>
                                 </div>
@@ -1005,6 +1027,8 @@
             $("#task_user_id").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
             $("#addresses").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
             $("#addresses1").tokenInput("{!! url('/getUsers')!!}",{tokenLimit:1});
+            $("#Recepient").tokenInput("{!! url('/getAddressBookUsers')!!}",{tokenLimit:1});
+            $("#Cc").tokenInput("{!! url('/getAddressBookUsers')!!}",{tokenLimit:50});
 
             $("#POISearch").tokenInput("{{ url ('/getPoisContacts')   }}",
                 {
@@ -1201,17 +1225,20 @@
 
 
 
-            if ( $.fn.dataTable.isDataTable( '#caseResponders' ) ) {
-                oTableCaseResponders.destroy();
+            if ( $.fn.dataTable.isDataTable( '#caseResponders1' ) ) {
+                oTableCaseResponders1.destroy();
             }
 
 
 
-            oTableCaseResponders     = $('#caseResponders').DataTable({
+            oTableCaseResponders1     = $('#caseResponders1').DataTable({
                 "processing": true,
                 "serverSide": true,
                 "autoWidth": false,
                 "pageLength": 8,
+                "bInfo" : false,
+                "paging":false,
+                "searching":false,
                 "dom": 'T<"clear">lfrtip',
                 "order" :[[0,"asc"]],
                 "ajax": "{!! url('/caseResponders-list/')!!}" + '/'+case_id,
@@ -1280,7 +1307,90 @@
                 ],
 
                 "aoColumnDefs": [
-                    { "bSearchable": false, "aTargets": [ 1] },
+                    { "bSortable": false, "aTargets": [ 1 ] }
+                ]
+
+            });
+            if ( $.fn.dataTable.isDataTable( '#allCaseResponders' ) ) {
+                oTableAllCaseResponders.destroy();
+            }
+
+            oTableAllCaseResponders     = $('#allCaseResponders').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "autoWidth": false,
+                "pageLength": 8,
+                "bInfo" : false,
+                "paging":false,
+                "searching":false,
+                "dom": 'T<"clear">lfrtip',
+                "order" :[[0,"asc"]],
+                "ajax": "{!! url('/allCaseResponders-list/')!!}" + '/'+case_id,
+                "columns": [
+
+
+                    {data: function(d){
+
+                        if (d.type  == 1 )
+                        {
+                            return "First Responder";
+                        }
+
+                        if (d.type  == 0 )
+                        {
+                            return "Reporter";
+                        }
+
+                        if (d.type  == 2 )
+                        {
+                            return "Second Responder";
+                        }
+
+                        if (d.type  == 3 )
+                        {
+                            return "Third Responder";
+                        }
+
+                        if (d.type  == 4  )
+                        {
+                            return "Escalation";
+                        }
+
+                        if (d.type  == 5  )
+                        {
+                            return "Critical Team";
+                        }
+
+
+
+                    },"name" : 'type'},
+
+                    {data: function(d){
+
+                        return d.name + ' ' + d.surname;
+
+
+                    },"name" : 'name'},
+
+                    {data: function(d){
+
+                        if (d.accept  == 1 )
+                        {
+                            return "yes";
+                        }
+                        else {
+
+                            return "no";
+                        }
+
+                    },"name" : 'accept'},
+
+                    {data: 'actions', name: 'actions'},
+
+
+                ],
+
+                "aoColumnDefs": [
                     { "bSortable": false, "aTargets": [ 1 ] }
                 ]
 
@@ -1444,6 +1554,7 @@
             document.getElementById('side_contents5').style.display="none";
             document.getElementById('side_contents6').style.display="none";
             document.getElementById('side_contents7').style.display="none";
+            document.getElementById('side_contents8').style.display="none";
             document.getElementById("top_navs_action").className="bhoechie-tab-content active";
 
         }

@@ -119,6 +119,7 @@ return array(
     'App\\Http\\Controllers\\VenuesController' => $baseDir . '/app/Http/Controllers/VenuesController.php',
     'App\\Http\\Controllers\\WardsController' => $baseDir . '/app/Http/Controllers/WardsController.php',
     'App\\Http\\Controllers\\WorkflowsController' => $baseDir . '/app/Http/Controllers/WorkflowsController.php',
+<<<<<<< HEAD
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
@@ -450,6 +451,8 @@ return array(
     'ConsoleTVs\\Charts\\Builder\\Realtime' => $vendorDir . '/consoletvs/charts/src/Builder/Realtime.php',
     'ConsoleTVs\\Charts\\ChartsServiceProvider' => $vendorDir . '/consoletvs/charts/src/ChartsServiceProvider.php',
     'ConsoleTVs\\Charts\\Facades\\Charts' => $vendorDir . '/consoletvs/charts/src/Facades/Charts.php',
+=======
+>>>>>>> develop
     'CreateAffiliationsPositionsTable' => $baseDir . '/database/migrations/2015_11_20_131159_create_affiliations_positions_table.php',
     'CreateAffiliationsTable' => $baseDir . '/database/migrations/2015_11_20_112445_create_affiliations_table.php',
     'CreateAssociatesPoiTables' => $baseDir . '/database/migrations/2016_04_27_121725_create_associates_poi_tables.php',
@@ -513,6 +516,7 @@ return array(
     'CreateSubCategoriesTable' => $baseDir . '/database/migrations/2015_07_31_081942_create_sub_categories_table.php',
     'CreateSubSubCategoriesTable' => $baseDir . '/database/migrations/2015_07_31_113813_create_sub_sub_categories_table.php',
     'CreateTaskCategoriesTable' => $baseDir . '/database/migrations/2017_04_22_095832_create_task_categories_table.php',
+    'CreateTaskDateChangesTable' => $baseDir . '/database/migrations/2017_07_28_225452_create_task_date_changes_table.php',
     'CreateTaskPrioritiesTable' => $baseDir . '/database/migrations/2017_04_21_110816_create_task_priorities_table.php',
     'CreateTaskRemindersTable' => $baseDir . '/database/migrations/2017_06_28_110413_create_task_reminders_table.php',
     'CreateTaskStatusesTable' => $baseDir . '/database/migrations/2017_04_20_141013_create_task_statuses_table.php',
@@ -1367,6 +1371,7 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
+<<<<<<< HEAD
     'Illuminate\\Auth\\Access\\Gate' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',
     'Illuminate\\Auth\\Access\\HandlesAuthorization' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/HandlesAuthorization.php',
     'Illuminate\\Auth\\Access\\Response' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/Response.php',
@@ -1957,6 +1962,9 @@ return array(
     'League\\Fractal\\Serializer\\JsonApiSerializer' => $vendorDir . '/league/fractal/src/Serializer/JsonApiSerializer.php',
     'League\\Fractal\\Serializer\\SerializerAbstract' => $vendorDir . '/league/fractal/src/Serializer/SerializerAbstract.php',
     'League\\Fractal\\TransformerAbstract' => $vendorDir . '/league/fractal/src/TransformerAbstract.php',
+=======
+    'Languages' => $baseDir . '/database/seeds/Languages.php',
+>>>>>>> develop
     'MigrationCartalystSentinel' => $baseDir . '/database/migrations/2014_07_02_230147_migration_cartalyst_sentinel.php',
     'Mockery' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
