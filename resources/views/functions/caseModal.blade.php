@@ -519,11 +519,9 @@
                     $("#caseReportCaseForm #gender,#CreateCaseAgentForm #gender").val(results.hseGender);
                     $("#caseReportCaseForm #dob,#CreateCaseAgentForm #dob").val(results.hseDob);
                     $("#caseReportCaseForm #description").val($("#caseProfileForm #description").val());
-
-
-
                 }
-                else {
+                else
+                    {
 
                   $("#caseReportCaseForm #cellphone,#CreateCaseAgentForm #cellphone").val('');
                   $("#caseReportCaseForm #name,#CreateCaseAgentForm #name").val('');
@@ -1514,6 +1512,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
       $("#submitAddMeetingMinutesFileForm").on("click",function(){
 
         var myForm   = $("#addMeetingMinutesFileForm")[0];
+
         var formData = new FormData(myForm);
         var token    = $('input[name="_token"]').val();
 
@@ -2290,95 +2289,44 @@ $("#submitAssociatePoiForm").on("click",function(){
 
     });
 
+      $("#submitCreateCaseAgentForm").on("click",function()
+      {
 
-  $("#submitCreateCaseAgentForm").on("click",function(){
+                var myForm   = $("#CreateCaseAgentForm")[0];
 
+                var formData = new FormData(myForm);
+                var token    = $('input[name="_token"]').val();
+               $('#modalCreateCaseAgent').modal('toggle');
 
+                $.ajax({
+                    type    :"POST",
+                    data    : formData,
+                    contentType: false,
+                    dataType:'json',
+                    processData: false,
+                    headers : { 'X-CSRF-Token': token },
+                    url     :"{!! url('/createCaseAgent')!!}",
+                    beforeSend : function() {
+                        HoldOn.open({
+                            theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
+                            message: "<h4> uploading please wait... ! </h4>",
+                            content:"Your HTML Content", // If theme is set to "custom", this property is available
+                                                         // this will replace the theme by something customized.
+                            backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
+                            // Keep in mind is necessary the .css file too.
+                            textColor:"white" // Change the font color of the message
+                        });
 
-        var house_holder_id             = $("#CreateCaseAgentForm #hseHolderId").val();
-        var cellphone                   = $("#CreateCaseAgentForm #cellphone").val();
-        var name                        = $("#CreateCaseAgentForm #name").val();
-        var surname                     = $("#CreateCaseAgentForm #surname").val();
-        var client_reference_number     = $("#CreateCaseAgentForm #client_reference_number").val();
-        var saps_case_number            = $("#CreateCaseAgentForm #saps_case_number").val();
-        var saps_station                = $("#CreateCaseAgentForm #saps_station").val();
-	      var officers			              = $("#CreateCaseAgentForm #officers").val();
-        var  rate_value                 = $("#CreateCaseAgentForm  #rate_value").val() ;
-        var investigation_officer       = $("#CreateCaseAgentForm #investigation_officer").val();
-        var investigation_cell          = $("#CreateCaseAgentForm #investigation_cell").val();
-        var investigation_email         = $("#CreateCaseAgentForm #investigation_email").val();
-        var investigation_note          = $("#CreateCaseAgentForm #investigation_note").val();
-        var country                     = $("#CreateCaseAgentForm #country").val();
-        var case_type                   = $("#CreateCaseAgentForm #case_type").val();
-        var case_sub_type               = $("#CreateCaseAgentForm #case_sub_type").val();
-        var description                 = $("#CreateCaseAgentForm #description").val();
-        var street_number               = $("#CreateCaseAgentForm #route").val();
-        var route                       = $("#CreateCaseAgentForm #locality").val();
-        var locality                    = $("#CreateCaseAgentForm #municipality").val();
-        var administrative_area_level_1 = $("#CreateCaseAgentForm #administrative_area_level_1").val();
-        var postal_code                 = $("#CreateCaseAgentForm #postal_code").val();
-        var company                     = $("#CreateCaseAgentForm #company").val();
-        var gpsAddressLat               = $("#CreateCaseAgentForm #gpsAddressLat").val();
-        var gpsAddressLong              = $("#CreateCaseAgentForm #gpsAddressLong").val();
-        var token                       = $('input[name="_token"]').val();
+                    },
 
-        var formData         = {
-
-
-                                  street_number:street_number,
-                                  route:route,
-                                  locality:locality,
-                                  administrative_area_level_1:administrative_area_level_1,
-                                  postal_code:postal_code,
-                                  country:country,
-                                  house_holder_id:house_holder_id,
-                                  description:description,
-                                  cellphone:cellphone,
-                                  name:name,
-                                  surname:surname,
-                                  client_reference_number:client_reference_number,
-                                  saps_case_number:saps_case_number,
-                                  saps_station:saps_station,
-                                  investigation_officer:investigation_officer,
-                                  investigation_cell:investigation_cell,
-                                  investigation_email:investigation_email,
-                                  investigation_note:investigation_note,
-                                  case_type:case_type,
-                                  case_sub_type:case_sub_type,
-                                  company:company,
-                                  rate_value:rate_value,
-                                  gpsAddressLat:gpsAddressLat,
-                                  gpsAddressLong:gpsAddressLong,
-				                          officers:officers
-
-                                };
-
-
-
-        $('#modalCreateCaseAgent').modal('toggle');
-
-        $.ajax({
-        type    :"POST",
-        data    : formData,
-        headers : { 'X-CSRF-Token': token },
-        url     :"{!! url('/createCaseAgent')!!}",
-        beforeSend : function() {
-          HoldOn.open({
-          theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-          message: "<h4> loading please wait... ! </h4>",
-          content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                       // this will replace the theme by something customized.
-          backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                     // Keep in mind is necessary the .css file too.
-          textColor:"white" // Change the font color of the message
-            });
-        },
-        success : function(response){
+                    success : function(response){
 
           //if (response.error == false) {
             $('#CreateCaseAgentForm')[0].reset();
             $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! Case has been successfully created <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-//            launchCaseModal(response.caseID);
+//
+//     launchCaseModal(response.caseID);
+
 //            $('#modalCase').modal('toggle');
             HoldOn.close();
 
@@ -2401,8 +2349,6 @@ $("#submitAssociatePoiForm").on("click",function(){
                     $("#hse_error_saps_station").html("");
                     $("#hse_error_email").html("");
                     $("#hse_error_saps_case_number").html("");
-
-
 
                     if (data.responseJSON.case_type)
                     {
@@ -2454,12 +2400,8 @@ $("#submitAssociatePoiForm").on("click",function(){
                     $('#modalCreateCaseAgent').modal('show');
 
                   }
-
-
-    })
-
-    });
-
+                })
+      });
 
      $("#submitEscalateCaseForm").on("click",function(){
 
