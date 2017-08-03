@@ -43,10 +43,17 @@
         <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
 
+   <script>
+
+    $(document).ready(function() {
+    jQuery.migrateMute = true;
+    $.fn.dataTable.ext.errMode = 'none';
+    });
+    </script>
 
 
 
-        <script>
+    <script>
 
 
         var placeSearch, autocomplete;
