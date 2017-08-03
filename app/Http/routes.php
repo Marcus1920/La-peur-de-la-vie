@@ -554,7 +554,7 @@ Route::post('updateSubSubCategory', ['middleware' => 'resetLastActive', 'uses' =
 |
 */
 Route::get('casetest/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
-Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@index']);
+Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
 Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@edit']);
 Route::get('workflows-list-case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@workflow']);
 Route::post('escalateCase', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@escalate']);
