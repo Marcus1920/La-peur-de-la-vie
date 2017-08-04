@@ -97,7 +97,7 @@
 
                     <div class="pull-left tm-icon">
 
-                        <a href="" data-toggle="modal" onClick="launchAddress();" data-target=".modalAddress" >
+                        <a href="{{ url('addressbookList') }}" >
                             <i class="fa fa-book fa-2x"></i>
                             <i class="n-count animated">{{ count($addressBookNumber,0) }}</i>
                         </a>

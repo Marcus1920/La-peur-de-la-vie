@@ -575,7 +575,9 @@ Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCa
 |--------------------------------------------------------------------------
 |
 */
+Route::get('addressbookList','AddressBookController@AddressbookList');
 Route::get('addressbook-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@index']);
+Route::get('CreateContact','AddressBookController@Create');
 Route::post('addContact', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@store']);
 Route::get('getContacts', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@show']);
 Route::get('getPoisContacts', ['middleware' => 'resetLastActive', 'uses' => 'UserController@searchPOI']);

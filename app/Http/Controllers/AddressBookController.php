@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Requests\AddressBookRequest;
 use App\Http\Controllers\Controller;
 use App\addressbook;
+use Redirect;
+use Session;
 
 class AddressBookController extends Controller
 {
@@ -16,6 +19,11 @@ class AddressBookController extends Controller
      *
      * @return Response
      */
+    public function AddressbookList()
+    {
+        return view('addressbook.index');
+    }
+
     public function index($id)
     {
         $addresses = addressbook::select(
@@ -40,7 +48,7 @@ class AddressBookController extends Controller
      */
     public function create()
     {
-        //
+        return view('addressbook.add');
     }
 
     /**
@@ -51,19 +59,18 @@ class AddressBookController extends Controller
      */
     public function store(AddressBookRequest $request)
     {
+        $addressbook = new addressbook();
+        $addressbook->first_name = $request['FirstName'];
+        $addressbook->surname = $request['Surname'];
+        $addressbook->email = $request['email'];
+        $addressbook->cellphone = $request['cellphone'];
+        $addressbook->user = $request['uid'];
+        $addressbook->relationship = $request['relationship'];
+        $addressbook->active = 1;
+        $addressbook->save();
 
-         $addressbook                   = new addressbook();
-         $addressbook->first_name       = $request['FirstName'];
-         $addressbook->surname          = $request['Surname'];
-         $addressbook->email            = $request['email'];
-         $addressbook->cellphone        = $request['cellphone'];
-         $addressbook->user             = $request['uid'];
-         $addressbook->relationship     = $request['relationship'];
-         $addressbook->active           = 1;
-         $addressbook->save();
-
-        \Session::flash('successAddressBook', $request['FirstName'].' '.$request['Surname'].' has been successfully added!');
-        return redirect()->back();
+        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been successfully added!');
+        return Redirect::to('addressbookList');
     }
 
     /**
