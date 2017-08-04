@@ -571,6 +571,8 @@ $respomse   = array() ;
                             ->join('cases_statuses','cases_statuses.id','=','cases.status')
                             ->join('departments','departments.id','=','cases.department')
                             ->join('landingpagecharts','departments.id','=','landingpagecharts.department_id')
+                           //->where('departments.id','=', 1)
+                           // ->where('departments.name','=','Investigations')
                             ->select(
                                         \DB::raw("
                                             landingpagecharts.strokeColor as strokeColor,
@@ -585,15 +587,31 @@ $respomse   = array() ;
                                            "
                                         )
                                     )
-                             ->get();
+                            ->orderBy('label','ASC')
+                             ->get(['name']);
 
-            foreach ($cases_db as $datavale){
-                $datavale->data=[65, 59, 80, 81, 56, 55, 40, 81, 56, 55, 40, 32];
+            foreach ($cases_db as $datavale) {
 
-             //  return   json_encode($data);
+
+                $label_id = $datavale->case_id;
+
+                if($datavale->label == "Investigations") {
+                    $datavale->data=[6,54,30,54,90,1,9,0,32,6,82,60];
+//                for($i=1; $i < 12 ; $i++) {
+//                    $Investigations[]= \DB::table('cases')->whereMonth('created_at', '=', $i)
+//                        ->where('department', '=', 1)->count();
+//                   }
+//                    $datavale->data=$Investigations;
+                }else{
+                    $datavale->data=[2,5,43,65,78,21,9,32,53,7,8,76];
+                }
+
+
+
             }
 
-        return $cases_db;
+
+  return $cases_db;
 //            $respomse['data'] =   $cases_db;
 //            $respomse['erro'] =  true ;
 
