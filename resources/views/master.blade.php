@@ -171,7 +171,7 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                     </div>
 
                     <div class="tile">
-                        <h2 class="tile-title">RECENT TASKS</h2>
+                        <h2 class="tile-title">TASKS</h2>
 
                         <div class="listview narrow">
 
