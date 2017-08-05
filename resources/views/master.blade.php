@@ -1,11 +1,13 @@
 <?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
 
+if (\Auth::check())
+{
 $userId=Auth::user();
 
 $tasks  = \App\TaskOwner::with('user','task','task.status')
     ->where('user_id',$userId->id)
     ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
-
+}
 ?>
 
 <!DOCTYPE html>
