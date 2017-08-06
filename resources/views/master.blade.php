@@ -7,6 +7,10 @@ $userId=Auth::user();
 $tasks  = \App\TaskOwner::with('user','task','task.status')
     ->where('user_id',$userId->id)
     ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
+
+    $allTasks  = \App\TaskOwner::with('user','task','task.status')
+        ->where('user_id',$userId->id)
+        ->where('task_owner_type_id',2)->orderBy('id','desc')->get();
 }
 ?>
 
@@ -173,7 +177,13 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                     </div>
 
                     <div class="tile">
-                        <h2 class="tile-title">TASKS</h2>
+                        <h2 class="tile-title">TASKS
+                            <div class="pull-right">
+                                <a href="{{ url('tasks') }}" >
+                                    Total.....<i class="n-count animated">{{ count($allTasks,0) }}</i>
+                                </a>
+                            </div>
+                        </h2>
 
                         <div class="listview narrow">
 
@@ -190,6 +200,9 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                                 </div>
                             @endforeach
 
+                        </div>
+                        <div class="media text-center whiter l-100">
+                            <a href="{{ url('/tasks') }}"><small>VIEW ALL</small></a>
                         </div>
                     </div>
                 </div>
