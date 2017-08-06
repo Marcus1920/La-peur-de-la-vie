@@ -177,7 +177,7 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                     </div>
 
                     <div class="tile">
-                        <h2 class="tile-title">TASKS
+                        <h2 class="tile-title"><i class="glyphicon glyphicon-credit-card"></i> TASKS
                             <div class="pull-right">
                                 <a href="{{ url('tasks') }}" >
                                     Total.....<i class="n-count animated">{{ count($allTasks,0) }}</i>
