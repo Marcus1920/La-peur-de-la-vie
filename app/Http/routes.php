@@ -106,7 +106,7 @@ Route::get('reports', 'MainreportController@index');
 
 
 
-Route::get('all' , function () {
+Route::get('creatCase' , function () {
 
 
     return  view ('cases.createFor');

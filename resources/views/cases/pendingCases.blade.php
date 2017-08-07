@@ -23,7 +23,7 @@
             <div class="table-responsive overflow">
                 <h3 class="block-title">Pending Closure Cases</h3>
 
-                <button class="btn btn-sm m-r-5" data-toggle="modal" onclick="clearCreateCaseModal()" data-target=".modalCreateCaseAgent">Create Case</button>
+                <a href="{{ url('creatCase') }}" class="btn btn-info" role="button">Create Case</a>
 
                 <table class="table tile table-striped" id="pendingreferralCasesTable">
                     <thead>
@@ -48,25 +48,6 @@
     </script>
 
 
-    <div class="table-responsive overflow">
-        <h3 class="block-title">Pending Allocation Cases</h3>
-
-        <button class="btn btn-sm m-r-5" data-toggle="modal" onclick="clearCreateCaseModal()" data-target=".modalCreateCaseAgent">Create Case</button>
-
-        <table class="table tile table-striped" id="pendingreferralCasesTable">
-            <thead>
-            <tr>
-                <th>Id</th>
-                <th>Created At</th>
-                <th>Description</th>
-                <th>Source</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-        </table>
-
-    </div>
 
 
 

@@ -16,7 +16,8 @@
             <div class="table-responsive overflow">
                 <h3 class="block-title">Pending Closure Cases</h3>
 
-                <button class="btn btn-sm m-r-5" data-toggle="modal" onclick="clearCreateCaseModal()" data-target=".modalCreateCaseAgent">Create Case</button>
+
+                <a href="{{ url('creatCase') }}" class="btn btn-info" role="button">Create Case</a>
 
                 <table class="table tile table-striped" id="casesTable">
                     <thead>
