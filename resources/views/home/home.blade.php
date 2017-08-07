@@ -39,7 +39,7 @@
                     <h3 class="box-title">Pending /Allocation Cases</h3>
                     <hr class="whiter m-b-20">
                 </div>
-                <div class="box-body chart-responsive">
+                <div class="box-body chart-responsive ">
                     {!! $charts->render() !!}
                     {{--<div class="chart" id="line-chart" style="height: 300px;"></div>--}}
                 </div><!-- /.box-body -->

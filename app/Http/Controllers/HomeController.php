@@ -574,7 +574,8 @@ class HomeController extends Controller
             $chartssz =   Charts::database(CaseActivity::all(), 'bar', 'highcharts')->dateColumn('created_at')
                 //  $chart = Charts::multi('bar', 'highcharts')
                 // Setup the chart settings
-                ->title("Case Activity")
+                ->title("Pending Closure")
+                ->colors(['#ff0000', '#ffffff'])
                 // A dimension of 0 means it will take 100% of the space
                 ->dimensions(0, 400) // Width x Height
                 // This defines a preset of colors already done:)
@@ -585,9 +586,9 @@ class HomeController extends Controller
                 ->groupBy('note');
 
             $chartss= Charts::database(CaseOwner::all(), 'line', 'highcharts')->dateColumn('created_at')
-                ->title('Case Owners')
+                ->title('Resolve Cases')
                 ->elementLabel('Total')
-//           ->labels(['First', 'Second', 'Third'])
+          //      ->labels(['First', 'Second', 'Third'])
 //           ->values([5,10,20])
                 ->dimensions(1000,500)
                 ->responsive(true)
@@ -610,7 +611,7 @@ class HomeController extends Controller
             $chart = Charts::database(CaseReport::all(), 'bar', 'highcharts')->dateColumn('created_at')
                 //  $chart = Charts::multi('bar', 'highcharts')
                 // Setup the chart settings
-                ->title("Case Status")
+                ->title("Pending /Allocation Cases")
                 // A dimension of 0 means it will take 100% of the space
                 ->dimensions(0, 400) // Width x Height
                 // This defines a preset of colors already done:)
@@ -621,13 +622,13 @@ class HomeController extends Controller
 
 
 
-                ->groupBy('status',null,[0 => 'Pending closure cases',1 => 'Pending allocation cases', 2 => 'Pending-closure', 3 => 'Resolved cases', 4 => 'Allocated/Reffered cases', 5 => 'Preliminary' , 6 => 'Confirmed', 7 =>'allocated']);
+                ->groupBy('status',null,[0 => 'reffered', 7 =>'allocated']);
 
 
             $charts = Charts::database(CaseReport::all(), 'donut', 'highcharts')->dateColumn('created_at')
                 //  $chart = Charts::multi('bar', 'highcharts')
                 // Setup the chart settings
-                ->title("Case Priority ")
+                ->title("Pending /Allocation Cases")
                 // A dimension of 0 means it will take 100% of the space
                 ->dimensions(0, 400) // Width x Height
                 // This defines a preset of colors already done:)
