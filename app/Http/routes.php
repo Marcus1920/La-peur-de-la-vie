@@ -106,6 +106,12 @@ Route::get('reports', 'MainreportController@index');
 
 
 
+Route::get('all' , function () {
+
+
+    return  view ('cases.createFor');
+});
+
 /*
 |--------------------------------------------------------------------------
 | END HOME ROUTING
