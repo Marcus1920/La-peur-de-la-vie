@@ -1,4 +1,18 @@
-<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start(); ?>
+<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
+
+if (\Auth::check())
+{
+$userId=Auth::user();
+
+$tasks  = \App\TaskOwner::with('user','task','task.status')
+    ->where('user_id',$userId->id)
+    ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
+
+    $allTasks  = \App\TaskOwner::with('user','task','task.status')
+        ->where('user_id',$userId->id)
+        ->where('task_owner_type_id',2)->orderBy('id','desc')->get();
+}
+?>
 
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -167,6 +181,36 @@
                     <!-- Calendar -->
                     <div class="s-widget m-b-25">
                         <div id="sidebar-calendar"></div>
+                    </div>
+
+                    <div class="tile">
+                        <h2 class="tile-title"><i class="glyphicon glyphicon-credit-card"></i> TASKS
+                            <div class="pull-right">
+                                <a href="{{ url('tasks') }}" >
+                                    Total.....<i class="n-count animated">{{ count($allTasks,0) }}</i>
+                                </a>
+                            </div>
+                        </h2>
+
+                        <div class="listview narrow">
+
+                            @foreach($tasks as $task)
+                                <div class="media p-l-5">
+                                    <div class="pull-left">
+                                        <span class='label label-danger'>{{$task->task->status->name}}</span>
+                                    </div>
+                                    <div class="media-body">
+                                        <a class="t-overflow" href="{{ url('tasks/'.$task->task->id) }}">{{ $task->task->title }} </a><br/>
+                                        <small class="text-muted">{{ $task->created_at->diffForHumans() }} </small>
+
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        <div class="media text-center whiter l-100">
+                            <a href="{{ url('/tasks') }}"><small>VIEW ALL</small></a>
+                        </div>
                     </div>
                 </div>
 
