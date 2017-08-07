@@ -22,7 +22,7 @@
                 </div>
                 <div class="box-body chart-responsive">
                     {!! $chart->render() !!}
-                    {{--<div class="chart" id="revenue-chart" style="height: 300px;"></div>--}}
+
 
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
@@ -41,7 +41,7 @@
                 </div>
                 <div class="box-body chart-responsive">
                     {!! $charts->render() !!}
-                    {{--<div class="chart" id="line-chart" style="height: 300px;"></div>--}}
+
                 </div><!-- /.box-body -->
             </div>
 
@@ -56,6 +56,7 @@
     <div class="row" >
         <div class="col-md-1" >
         </div>
+
         <div class="col-md-5" >
             <!-- AREA CHART -->
             <a href="{{url('pendingClosureCases')}}">
@@ -67,13 +68,14 @@
                 </div>
                 <div class="box-body chart-responsive">
                     {!! $chartssz->render() !!}
-                    {{--<div class="chart" id="revenue-chart" style="height: 300px;"></div>--}}
+
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
             <!-- DONUT CHART -->
             </a>
 
         </div><!-- /.col (LEFT) -->
+
         <div class="col-md-5">
             <a href="{{url('closedCases')}}">
             <!-- LINE CHART -->
@@ -84,7 +86,7 @@
                 </div>
                 <div class="box-body chart-responsive">
                     {!! $chartss->render() !!}
-                    {{--<div class="chart" id="line-chart" style="height: 300px;"></div>--}}
+
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
             </a>
@@ -100,14 +102,6 @@
 </section><!-- /.content -->
 
 
-
-<center>
-
-</center>
-
-<center>
-
-</center>
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js" charset="utf-8"></script>
 </body>
 
