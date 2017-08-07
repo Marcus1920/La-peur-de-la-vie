@@ -777,7 +777,6 @@ Route::get('getPositions', ['middleware' => 'resetLastActive', 'uses' => 'Positi
 |
 */
 
-
 /*
 |--------------------------------------------------------------------------
 | CALENDAR ROUTING
@@ -785,10 +784,27 @@ Route::get('getPositions', ['middleware' => 'resetLastActive', 'uses' => 'Positi
 |
 */
 
-Route::get('calendar', ['middleware' => 'resetLastActive', 'uses' => 'CalendarController@index']);
-Route::post('getEvents', ['middleware' => 'resetLastActive', 'uses' => 'CalendarController@show']);
-Route::get('cases-calendar-list', ['middleware' => 'auth', 'uses' => 'CalendarController@calendarList']);
-Route::get('cases-calendar-list-perUser/{id}', ['middleware' => 'auth', 'uses' => 'CalendarController@calendarListPerUser']);
+
+Route::get('calendar/events', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@index']);
+Route::get('calendar/events/create', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@openCreateEventView']);
+Route::post('calendar/events/createEvent', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@store']);
+Route::get('calendar/events/getEvents', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@getEvents']);
+Route::get('calendar/events/getEvent/{id}', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@show']);
+Route::get('calendar/events/deleteEvent/{id}', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@destroy']);
+Route::get('calendar/events/getEventPerType/{id}', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@getEventPerType']);
+
+Route::get('getCalendarsPerGroup/{id}', ['middleware' => 'auth', 'uses' => 'CalendarEventsController@getCalendarsPerGroup']);
+
+
+Route::resource('calendar','CalendarController@index');
+Route::resource('calendar','CalendarController@update');
+Route::resource('calendar','CalendarController@update');
+Route::get('calendar/create/{calendarGroup}','CalendarController@create');
+Route::post('calendars/create','CalendarController@store');
+Route::get('calendar/show/{calendarGroup}','CalendarController@show');
+
+Route::resource('calendar-group','CalendarGroupsController');
+
 
 
 /*
@@ -797,6 +813,24 @@ Route::get('cases-calendar-list-perUser/{id}', ['middleware' => 'auth', 'uses' =
 |--------------------------------------------------------------------------
 |
 */
+
+/*
+|--------------------------------------------------------------------------
+| CALENDAR EVENT TYPES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('calendar/events/event-types', ['middleware' => 'auth', 'uses' => 'CalendarEventTypesController@index']);
+Route::post('calendar/event-types/create', ['middleware' => 'auth', 'uses' => 'CalendarEventTypesController@store']);
+
+/*
+|--------------------------------------------------------------------------
+| END CALENDAR  EVENT TYPES ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+
 
 /*
 |--------------------------------------------------------------------------

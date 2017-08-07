@@ -7,9 +7,24 @@ use App\Http\Requests\RolesRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\UserRole;
+use App\services\CalendarGroupService;
+use App\services\CalendarGroupUserService;
+use App\services\CalendarService;
+
 
 class RolesController extends Controller
 {
+	
+	protected $calendarGroup;
+    protected $calendarGroupUser;
+    protected $calendar;
+
+    public function __construct(CalendarGroupService $calendarGroupService,CalendarGroupUserService $calendarGroupUserService ,CalendarService $calendarService)
+    {
+        $this->calendarGroup=$calendarGroupService;
+        $this->calendarGroupUser=$calendarGroupUserService;
+        $this->calendar=$calendarService;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -45,11 +60,18 @@ class RolesController extends Controller
     public function store(RolesRequest $request)
     {
         $role             = new UserRole();
+		$role->id         = 17;
         $role->name       = $request['name'];
         $slug             = preg_replace('/\s+/','-',$request['name']);
         $role->slug       = $slug;
         $role->created_by = \Auth::user()->id;
         $role->save();
+		
+		$calendarGroup=$this->calendarGroup->createCalendarGroup($request['name'],$request['name']);
+        $this->calendarGroupUser->createCalendarGroupUser($calendarGroup->id,$role->id);
+        $request['calendar_group_id']= $calendarGroup->id;
+        $this->calendar->storeCalendar($request);
+		
         \Session::flash('success', 'well done! User Group '.$request['name'].' has been successfully added!');
         return redirect()->back();
     }

@@ -15,8 +15,19 @@ use App\MeetingFile;
 use App\User;
 use App\addressbook;
 use App\CalendarEvent;
+use App\services\CalendarEventService;
+use App\CalendarEventType;
+use App\Calendar;
 
 class MeetingsController extends Controller {
+	
+	protected $calendar_events;
+
+    public function __construct(CalendarEventService $calendar_event_service)
+    {
+        $this->calendar_events   = $calendar_event_service;
+
+    }
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -184,6 +195,31 @@ class MeetingsController extends Controller {
 		$meeting->end_time    = $request['end_time'];
 		$meeting->created_by  = \Auth::user()->id;
 		$meeting->save();
+		
+		
+		$calendarEventTypeID    = CalendarEventType::find(1);
+        $calendarID = Calendar::where('event_type_id',$calendarEventTypeID->id)->first();
+
+        $meetingEventData =
+            [
+                'event_type_id' => $calendarEventTypeID->id,
+                'calendar_id'   => $calendarID->id,
+                'title'         => $request['title'],
+                'description'   =>$request['description'],
+                'start_date'    => $request['date'],
+                'end_date'      => $request['date'],
+                'progress'      => 0,
+                'color'         =>$calendarID->color,
+                'note'          => '',
+                //'user_id'       => '1',
+                //'role'          => '1',
+                'venue' => $request['venue']
+            ];
+
+        $this->calendar_events->store($meetingEventData);
+		
+		
+		
 		$userObj                     = User::find(\Auth::user()->id);
 		$cellphone                   = '27' . (ltrim($userObj->cellphone, '0'));
 		$meetingAttendee             = new MeetingAttendee();
