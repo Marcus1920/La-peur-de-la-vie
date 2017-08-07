@@ -2309,7 +2309,7 @@ $("#submitAssociatePoiForm").on("click",function(){
                     beforeSend : function() {
                         HoldOn.open({
                             theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-                            message: "<h4> uploading please wait... ! </h4>",
+                            message: "<h4>  Case  Creating  please wait ! </h4>",
                             content:"Your HTML Content", // If theme is set to "custom", this property is available
                                                          // this will replace the theme by something customized.
                             backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
@@ -2321,7 +2321,7 @@ $("#submitAssociatePoiForm").on("click",function(){
 
                     success : function(response){
 
-          //if (response.error == false) {
+          if (response.error == false) {
             $('#CreateCaseAgentForm')[0].reset();
             $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! Case has been successfully created <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
 //
@@ -2330,7 +2330,7 @@ $("#submitAssociatePoiForm").on("click",function(){
 //            $('#modalCase').modal('toggle');
             HoldOn.close();
 
-          //}
+          }
 
         },
 

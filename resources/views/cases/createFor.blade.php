@@ -1,9 +1,14 @@
 @extends('master')
 
 @section('content')
-
+    <ol class="breadcrumb hidden-xs">
+        <li><a href="#">Home</a></li>
+        <li class="active">Console</li>
+    </ol>
 
 <H2>   CREATE CASE  </H2>
+<div id="caseNotesNotification"> </div>
+
     <div class="container-fluid" style="border-color: #0c0c0c; border:inset ;border-radius: 50%">
     <div class="row">
         {!! Form::open(['url' => 'createCaseAgent', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CreateCaseAgentForm" ,'files' => 'true']) !!}

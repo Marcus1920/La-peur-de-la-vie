@@ -231,11 +231,34 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                     @endif
 
                 @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
-                    <li {{ (Request::is('home') ? "class=active" : '') }}>
-                        <a class="sa-side-folder" href="{{ url('home') }}">
-                            <span class="menu-item">My Cases</span>
-                        </a>
-                    </li>
+                    {{--<li {{ (Request::is('home') ? "class=active" : '') }}>--}}
+                        {{--<a class="sa-side-folder" href="{{ url('home') }}">--}}
+                            {{--<span class="menu-item">My Cases</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+
+
+
+                            <li class="dropdown">
+
+                                <a class="sa-side-folder" href="">
+                                    <span class="menu-item">My Cases </span>
+                                </a>
+
+                                <ul class="list-unstyled menu-item">
+
+                                    @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
+
+
+
+                                        <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
+                                        <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending /Allocation Cases</a></li>
+                                        <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>
+                                        <li><a href="{{ url('closedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Reslove Cases</a></li>
+
+                                    @endif
+                                </ul>
+                            </li>
                 @endif
 
                 @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
