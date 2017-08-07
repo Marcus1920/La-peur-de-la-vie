@@ -559,8 +559,13 @@ Route::post('updateSubSubCategory', ['middleware' => 'resetLastActive', 'uses' =
 |
 */
 Route::get('casetest/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
+
 Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@index']);
 Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
+
+Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
+Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@edit']);
+
 Route::get('workflows-list-case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@workflow']);
 Route::post('escalateCase', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@escalate']);
 Route::post('allocateCase', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@allocate']);
@@ -633,7 +638,9 @@ Route::get('allocatedCases' , function(){
 |--------------------------------------------------------------------------
 |
 */
+Route::get('addressbookList','AddressBookController@AddressbookList');
 Route::get('addressbook-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@index']);
+Route::get('CreateContact','AddressBookController@Create');
 Route::post('addContact', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@store']);
 Route::get('getContacts', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@show']);
 Route::get('getPoisContacts', ['middleware' => 'resetLastActive', 'uses' => 'UserController@searchPOI']);

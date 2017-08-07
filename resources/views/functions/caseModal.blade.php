@@ -3336,41 +3336,6 @@ console.log("CreateCase error, data - ",data);
 
     }
 
-    function launchAddressBookModal()
-    {
-
-      $('#modalReferCase').modal('toggle');
-       if ( $.fn.dataTable.isDataTable( '#addressBookTable' ) ) {
-                    oTableAddressBook.destroy();
-        }
-
-
-      var user = {!! (Auth::check() ? Auth::user()->id : 0) !!};
-      oTableAddressBook     = $('#addressBookTable').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "dom": 'T<"clear">lfrtip',
-            "order" :[[0,"desc"]],
-            "ajax": "{!! url('/addressbook-list/" + user +"')!!}",
-             "columns": [
-            {data: 'created_at', name: 'created_at'},
-            {data: 'first_name', name: 'first_name'},
-            {data: 'surname', name: 'surname'},
-            {data: 'cellphone', name: 'cellphone'},
-            {data: 'email', name: 'email'},
-            {data: 'actions',  name: 'actions'},
-           ],
-
-        "aoColumnDefs": [
-            { "bSearchable": false, "aTargets": [ 1] },
-            { "bSortable": false, "aTargets": [ 1 ] }
-        ]
-
-     });
-
-
-    }
-
      function launchAddress()
     {
 
