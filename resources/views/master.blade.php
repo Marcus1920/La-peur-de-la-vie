@@ -52,25 +52,24 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
 
         <!-- DataTables Responsive CSS -->
-        <link href="{{ asset('/bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">
+        {{--<link href="{{ asset('/bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">--}}
         <!-- jQuery Library -->
         <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
 
-    <script>
+    {{--<script>--}}
 
-        $(document).ready(function() {
-            jQuery.migrateMute = true;
-        })
+        {{--$(document).ready(function() {--}}
+            {{--jQuery.migrateMute = true;--}}
+        {{--});--}}
 
-   <script>
 
-    $(document).ready(function() {
-    jQuery.migrateMute = true;
-    $.fn.dataTable.ext.errMode = 'none';
-    });
+    {{--$(document).ready(function() {--}}
+    {{--jQuery.migrateMute = true;--}}
+    {{--$.fn.dataTable.ext.errMode = 'none';--}}
+    {{--});--}}
 
-    </script>
+    {{--</script>--}}
 
 
 
