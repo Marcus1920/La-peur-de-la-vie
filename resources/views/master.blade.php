@@ -1,18 +1,4 @@
-<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
-
-if (\Auth::check())
-{
-$userId=Auth::user();
-
-$tasks  = \App\TaskOwner::with('user','task','task.status')
-    ->where('user_id',$userId->id)
-    ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
-
-    $allTasks  = \App\TaskOwner::with('user','task','task.status')
-        ->where('user_id',$userId->id)
-        ->where('task_owner_type_id',2)->orderBy('id','desc')->get();
-}
-?>
+<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start(); ?>
 
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -252,7 +238,7 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
 
 
                                         <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
-                                        <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending /Allocation Cases</a></li>
+                                        <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noOfPendingAllocationCases,0) }}</span>Pending /Allocation Cases</a></li>
                                         <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>
                                         <li><a href="{{ url('closedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Reslove Cases</a></li>
 

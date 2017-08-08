@@ -41,6 +41,7 @@ use App\InvestigationOfficer;
 use App\TaskCategory;
 use App\TaskPriority;
 use App\TaskStatus;
+use Auth;
 
 
 
@@ -529,6 +530,28 @@ class AppServiceProvider extends ServiceProvider
                                          ->get();
 
             $view->with('noPrivateMessages',$noPrivateMessages);
+
+              $userId=Auth::user();
+
+              $allTasks  = \App\TaskOwner::with('user','task','task.status')
+                  ->where('user_id',$userId->id)
+                  ->where('task_owner_type_id',2)->orderBy('id','desc')->get();
+
+              $view->with('allTasks',$allTasks);
+
+              $tasks  = \App\TaskOwner::with('user','task','task.status')
+                  ->where('user_id',$userId->id)
+                  ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
+
+              $view->with('tasks',$tasks);
+
+              $noOfPendingAllocationCases=CaseReport::where('user', '=', \Auth::user()->id)
+                  ->join('cases_statuses', 'cases.status', '=', 'cases_statuses.id')
+                  ->where('cases_statuses.name', '=', 'Pending')
+                  ->where('user', '=', \Auth::user()->id)
+                  ->get();
+
+              $view->with('noOfPendingAllocationCases',$noOfPendingAllocationCases);
 
             $noInboxMessages = Message::where('to','=',\Auth::user()->id)
                                         ->where('online','=',0)

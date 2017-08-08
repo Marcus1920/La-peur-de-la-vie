@@ -14,16 +14,18 @@
     <div class="tab-pane" id="closure">
         <!-- Responsive Table -->
         <div class="block-area" id="responsiveTable">
-            @if(Session::has('success'))
-                <div class="alert alert-info alert-dismissable fade in">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    {{ Session::get('success') }}
-                </div>
-            @endif
             <div class="table-responsive overflow">
                 <h3 class="block-title">Pending Closure Cases</h3>
 
                 <a href="{{ url('creatCase') }}" class="btn btn-info" role="button">Create Case</a>
+
+                @if(Session::has('success'))
+                    <div class="alert alert-success alert-icon">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        {{ Session::get('success') }}
+                        <i class="icon">&#61845;</i>
+                    </div>
+                @endif
 
                 <table class="table tile table-striped" id="pendingreferralCasesTable">
                     <thead>

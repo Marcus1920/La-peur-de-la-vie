@@ -2052,38 +2052,51 @@ class CasesController extends Controller
         $caseNote->case_id = $newCase->id;
         $caseNote->save();
 
-        $destinationFolder = 'files/case_'. $newCase->id;
+        if($request->file('caseFile')==NULL)
+        {
+            $destinationFolder = 'files/case_'. $newCase->id;
 
-      if(!File::exists($destinationFolder)) {
-          $createDir         = \File::makeDirectory($destinationFolder,0777,true);
-      }
+            if(!File::exists($destinationFolder)) {
+                $createDir         = \File::makeDirectory($destinationFolder,0777,true);
+            }
+        }
+        else {
+
+            $destinationFolder = 'files/case_' . $newCase->id;
+
+            if (!File::exists($destinationFolder)) {
+                $createDir = \File::makeDirectory($destinationFolder, 0777, true);
+            }
+
+            $fileName = $request->file('caseFile')->getClientOriginalName();
+
+            $fileFullPath = $destinationFolder . '/' . $fileName;
+
+            if (!File::exists($fileFullPath)) {
+
+                $request->file('caseFile')->move($destinationFolder, $fileName);
 
 
-      $fileName          = $request->file('caseFile')->getClientOriginalName();
+                $caseFile = new CaseFile();
+                $caseFile->file = $fileName;
+                $caseFile->img_url = $fileFullPath;
+                $caseFile->user = \Auth::user()->id;
+                $caseFile->case_id = $newCase->id;
 
-      $fileFullPath      = $destinationFolder.'/'.$fileName;
-
-      if(!File::exists($fileFullPath)) {
-
-          $request->file('caseFile')->move($destinationFolder, $fileName);
-
-
-          $caseFile           = new CaseFile();
-          $caseFile->file     = $fileName;
-          $caseFile->img_url  = $fileFullPath;
-          $caseFile->user     = \Auth::user()->id;
-          $caseFile->case_id  =  $newCase->id;
-
-          $caseFile->save();
+                $caseFile->save();
 
 
-  }
+            }
+        }
+
 
         $response["message"] = "Case created successfully";
         $response["error"] = FALSE;
         $response["caseID"] = $newCase->id;
 
-        return \Response::json($response, 201);
+        //return "ok";
+        \Session::flash('success', 'Well done! Case '.$newCase->id.' has been successfully created');
+        return Redirect::to('pendingCases/');
 
     }
 

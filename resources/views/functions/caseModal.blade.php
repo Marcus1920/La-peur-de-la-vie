@@ -2289,119 +2289,119 @@ $("#submitAssociatePoiForm").on("click",function(){
 
     });
 
-      $("#submitCreateCaseAgentForm").on("click",function()
-      {
+      {{--$("#submitCreateCaseAgentForm").on("click",function()--}}
+      {{--{--}}
 
-                var myForm   = $("#CreateCaseAgentForm")[0];
+                {{--var myForm   = $("#CreateCaseAgentForm")[0];--}}
 
-                var formData = new FormData(myForm);
-                var token    = $('input[name="_token"]').val();
-               $('#modalCreateCaseAgent').modal('toggle');
+                {{--var formData = new FormData(myForm);--}}
+                {{--var token    = $('input[name="_token"]').val();--}}
+               {{--$('#modalCreateCaseAgent').modal('toggle');--}}
 
-                $.ajax({
-                    type    :"POST",
-                    data    : formData,
-                    contentType: false,
-                    dataType:'json',
-                    processData: false,
-                    headers : { 'X-CSRF-Token': token },
-                    url     :"{!! url('/createCaseAgent')!!}",
-                    beforeSend : function() {
-                        HoldOn.open({
-                            theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-                            message: "<h4>  Case  Creating  please wait ! </h4>",
-                            content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                                         // this will replace the theme by something customized.
-                            backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                            // Keep in mind is necessary the .css file too.
-                            textColor:"white" // Change the font color of the message
-                        });
+                {{--$.ajax({--}}
+                    {{--type    :"POST",--}}
+                    {{--data    : formData,--}}
+                    {{--contentType: false,--}}
+                    {{--dataType:'json',--}}
+                    {{--processData: false,--}}
+                    {{--headers : { 'X-CSRF-Token': token },--}}
+                    {{--url     :"{!! url('/createCaseAgent')!!}",--}}
+                    {{--beforeSend : function() {--}}
+                        {{--HoldOn.open({--}}
+                            {{--theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect--}}
+                            {{--message: "<h4>  Case  Creating  please wait ! </h4>",--}}
+                            {{--content:"Your HTML Content", // If theme is set to "custom", this property is available--}}
+                                                         {{--// this will replace the theme by something customized.--}}
+                            {{--backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript--}}
+                            {{--// Keep in mind is necessary the .css file too.--}}
+                            {{--textColor:"white" // Change the font color of the message--}}
+                        {{--});--}}
 
-                    },
+                    {{--},--}}
 
-                    success : function(response){
+                    {{--success : function(response){--}}
 
-          if (response.error == false) {
-            $('#CreateCaseAgentForm')[0].reset();
-            $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! Case has been successfully created <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-//
-//     launchCaseModal(response.caseID);
+          {{--if (response.error == false) {--}}
+            {{--$('#CreateCaseAgentForm')[0].reset();--}}
+            {{--$("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! Case has been successfully created <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');--}}
+{{--//--}}
+{{--//     launchCaseModal(response.caseID);--}}
 
-//            $('#modalCase').modal('toggle');
-            HoldOn.close();
+{{--//            $('#modalCase').modal('toggle');--}}
+            {{--HoldOn.close();--}}
 
-          }
+          {{--}--}}
 
-        },
+        {{--},--}}
 
-        error: function(data) {
+        {{--error: function(data) {--}}
 
 
-                    HoldOn.close();
-                    $("#hse_error_type").html("");
-                    $("#hse_error_sub_type").html("");
-                    $("#hse_error_client_reference_number").html("");
-                    $("#hse_error_cellphone").html("");
-                    $("#hse_error_name").html("");
-                    $("#hse_error_surname").html("");
-                    $("#hse_error_company").html("");
-                    $("#hse_error_description").html("");
-                    $("#hse_error_saps_station").html("");
-                    $("#hse_error_email").html("");
-                    $("#hse_error_saps_case_number").html("");
+                    {{--HoldOn.close();--}}
+                    {{--$("#hse_error_type").html("");--}}
+                    {{--$("#hse_error_sub_type").html("");--}}
+                    {{--$("#hse_error_client_reference_number").html("");--}}
+                    {{--$("#hse_error_cellphone").html("");--}}
+                    {{--$("#hse_error_name").html("");--}}
+                    {{--$("#hse_error_surname").html("");--}}
+                    {{--$("#hse_error_company").html("");--}}
+                    {{--$("#hse_error_description").html("");--}}
+                    {{--$("#hse_error_saps_station").html("");--}}
+                    {{--$("#hse_error_email").html("");--}}
+                    {{--$("#hse_error_saps_case_number").html("");--}}
 
-                    if (data.responseJSON.case_type)
-                    {
-                      $("#hse_error_type").html("<p class='help-block red'>*"+data.responseJSON.case_type+"</p>")
-                    }
+                    {{--if (data.responseJSON.case_type)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_type").html("<p class='help-block red'>*"+data.responseJSON.case_type+"</p>")--}}
+                    {{--}--}}
 
-                    if (data.responseJSON.saps_case_number)
-                    {
-                      $("#hse_error_saps_case_number").html("<p class='help-block red'>*"+data.responseJSON.saps_case_number+"</p>")
-                    }
+                    {{--if (data.responseJSON.saps_case_number)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_saps_case_number").html("<p class='help-block red'>*"+data.responseJSON.saps_case_number+"</p>")--}}
+                    {{--}--}}
 
-                    if (data.responseJSON.saps_station)
-                    {
-                      $("#hse_error_saps_station").html("<p class='help-block red'>*"+data.responseJSON.saps_station+"</p>")
-                    }
+                    {{--if (data.responseJSON.saps_station)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_saps_station").html("<p class='help-block red'>*"+data.responseJSON.saps_station+"</p>")--}}
+                    {{--}--}}
 
-                    if (data.responseJSON.case_sub_type)
-                    {
-                      $("#hse_error_sub_type").html("<p class='help-block red'>*"+data.responseJSON.case_sub_type+"</p>")
-                    }
-                    if(data.responseJSON.rate_value)
-                    {
-                        $("#hse_error_client_reference_number").html("<p class='help-block red'>*"+data.responseJSON.rate_value+"</p>")
-                    }
-                    if(data.responseJSON.cellphone)
-                    {
-                        $("#hse_error_cellphone").html("<p class='help-block red'>*"+data.responseJSON.cellphone+"</p>")
-                    }
+                    {{--if (data.responseJSON.case_sub_type)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_sub_type").html("<p class='help-block red'>*"+data.responseJSON.case_sub_type+"</p>")--}}
+                    {{--}--}}
+                    {{--if(data.responseJSON.rate_value)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_client_reference_number").html("<p class='help-block red'>*"+data.responseJSON.rate_value+"</p>")--}}
+                    {{--}--}}
+                    {{--if(data.responseJSON.cellphone)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_cellphone").html("<p class='help-block red'>*"+data.responseJSON.cellphone+"</p>")--}}
+                    {{--}--}}
 
-                    if(data.responseJSON.name)
-                    {
-                        $("#hse_error_name").html("<p class='help-block red'>*"+data.responseJSON.name+"</p>")
-                    }
+                    {{--if(data.responseJSON.name)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_name").html("<p class='help-block red'>*"+data.responseJSON.name+"</p>")--}}
+                    {{--}--}}
 
-                    if(data.responseJSON.surname)
-                    {
-                        $("#hse_error_surname").html("<p class='help-block red'>*"+data.responseJSON.surname+"</p>")
-                    }
+                    {{--if(data.responseJSON.surname)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_surname").html("<p class='help-block red'>*"+data.responseJSON.surname+"</p>")--}}
+                    {{--}--}}
 
-                    if(data.responseJSON.company)
-                    {
-                        $("#hse_error_company").html("<p class='help-block red'>*"+data.responseJSON.company+"</p>")
-                    }
-                    if(data.responseJSON.description)
-                    {
-                        $("#hse_error_description").html("<p class='help-block red'>*"+data.responseJSON.description+"</p>")
-                    }
+                    {{--if(data.responseJSON.company)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_company").html("<p class='help-block red'>*"+data.responseJSON.company+"</p>")--}}
+                    {{--}--}}
+                    {{--if(data.responseJSON.description)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_description").html("<p class='help-block red'>*"+data.responseJSON.description+"</p>")--}}
+                    {{--}--}}
 
-                    $('#modalCreateCaseAgent').modal('show');
+                    {{--$('#modalCreateCaseAgent').modal('show');--}}
 
-                  }
-                })
-      });
+                  {{--}--}}
+                {{--})--}}
+      {{--});--}}
 
      $("#submitEscalateCaseForm").on("click",function(){
 

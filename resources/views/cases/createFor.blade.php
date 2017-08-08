@@ -1,24 +1,26 @@
 @extends('master')
 
 @section('content')
+    <!-- Breadcrumb -->
     <ol class="breadcrumb hidden-xs">
-        <li><a href="#">Home</a></li>
-        <li class="active">Console</li>
+        <li><a href="{{ url('home') }}">Home</a></li>
+        <li class="active">Create Case</li>
     </ol>
-
-<H2>   CREATE CASE  </H2>
+    <h4 class="page-title">CREATE CASE </h4>
+    &nbsp;
 <div id="caseNotesNotification"> </div>
 
-    <div class="container-fluid" style="border-color: #0c0c0c; border:inset ;border-radius: 50%">
+    <div class="container-fluid">
     <div class="row">
         {!! Form::open(['url' => 'createCaseAgent', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CreateCaseAgentForm" ,'files' => 'true']) !!}
         {!! Form::hidden('hseHolderId',NULL,['id' => 'hseHolderId']) !!}
         {!! Form::hidden('gpsAddressLat',NULL,['id' => 'gpsAddressLat','class' => 'latitude']) !!}
         {!! Form::hidden('gpsAddressLong',NULL,['id' => 'gpsAddressLong','class' => 'longitude']) !!}
-        <div class="col-md-4" style="border-color:">
-            <h3 class="text-primary text-center">
-                Client  Details
-            </h3> <div class="form-group">
+        <div class="col-md-4">
+
+            <h4 class="page-title"><center>Client  Details</center> </h4>
+            &nbsp;
+            <div class="form-group">
                 {!! Form::label('Search Client', 'Search Client', array('class' => 'col-md-3 control-label')) !!}
                 <div class="col-md-8">
                     {!! Form::text('hsecellphone',NULL,['class' => 'form-control input-sm','id' => 'hsecellphone']) !!}
@@ -131,9 +133,8 @@
 
         </div>
         <div class="col-md-4">
-            <h3 class="text-primary text-center">
-        Client  References
-            </h3>
+            <h4 class="page-title"><center>Client  References</center></h4>
+            &nbsp;
 
             <div class="form-group">
                 {!! Form::label('Client Reference Number', 'Client Reference Number', array('class' => 'col-md-4 control-label')) !!}
@@ -214,9 +215,8 @@
 
         </div>
         <div class="col-md-4">
-            <h3 class="text-primary text-center">
-                  Description
-            </h3>
+            <h4 class="page-title"><center>Description</center></h4>
+            &nbsp;
             <div class="form-group">
                 {!! Form::label('Case Type', 'Case Type', array('class' => 'col-md-3 control-label')) !!}
                 <div class="col-md-8">
@@ -278,12 +278,13 @@
             <div class="form-group">
                 <div class="col-md-3"></div>
                 <div class="col-md-8">
-                    <a type="#" id='submitCreateCaseAgentForm' class="btn btn-sm">Create Case</a>
+                    <button type="submit" id='submitCreateCaseAgentForm' class="btn btn-sm">Create Case</button>
 
                 </div>
             </div>
 
         </div>
+        <hr class="whiter m-t-20" />
     </div>
 </div>
 
