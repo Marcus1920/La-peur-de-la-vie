@@ -8,7 +8,7 @@
         <meta charset="UTF-8">
         <meta name="description" content="Aims Safis Case Console Management">
         <meta name="keywords" content="Aims Safis Case Console System,Incidents Management System">
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/SiteBadge3.png') }}">
 
         <title> Ubulwembu  </title>
 
