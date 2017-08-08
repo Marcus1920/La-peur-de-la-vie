@@ -104,10 +104,21 @@ class MessageController extends Controller
 
     public function storeEmail(Request $request)
     {
+        $user = addressbook::find($request['Recepient']);
+
+        $user_exist = User::where('email',$user->email,'=')->first();
 
         $caseMessage           = new Message();
         $caseMessage->from     = $request['uid'];
-        $caseMessage->to       = $request['Recepient'];
+
+        if($user_exist!=NULL)
+        {
+            $caseMessage->to = $user_exist->id;
+        }
+        else
+        {
+            $caseMessage->to       = $request['Recepient'];
+        }
         $caseMessage->online   = 0;
         $caseMessage->case_id  = $request['caseID'];
         $caseMessage->message  = $request['msg'];
@@ -115,15 +126,12 @@ class MessageController extends Controller
         $caseMessage->active   = 1;
         $caseMessage->save();
 
-        $user = addressbook::find($request['Recepient']);
-
         $data = array(
             'name'        =>$user->first_name,
             'caseID'      =>$request['caseID'],
             'sender'      => \Auth::user()->name.' '.\Auth::user()->surname,
             'msg'         =>$request['msg'],
         );
-
 
         \Mail::send('emails.privateMessage',$data, function($message) use ($user)
         {

@@ -2,6 +2,14 @@
 @extends('master')
 
 @section('content')
+    <script>
+
+        $(document).ready(function() {
+            jQuery.migrateMute = true;
+            $.fn.dataTable.ext.errMode = 'none';
+        });
+    </script>
+
 
     <!-- Modal Default -->
     <style>

@@ -1,4 +1,18 @@
-<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start(); ?>
+<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
+
+if (\Auth::check())
+{
+$userId=Auth::user();
+
+$tasks  = \App\TaskOwner::with('user','task','task.status')
+    ->where('user_id',$userId->id)
+    ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
+
+    $allTasks  = \App\TaskOwner::with('user','task','task.status')
+        ->where('user_id',$userId->id)
+        ->where('task_owner_type_id',2)->orderBy('id','desc')->get();
+}
+?>
 
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -38,15 +52,28 @@
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
 
         <!-- DataTables Responsive CSS -->
-        <link href="{{ asset('/bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">
+        {{--<link href="{{ asset('/bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">--}}
         <!-- jQuery Library -->
         <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
 
+    {{--<script>--}}
+
+        {{--$(document).ready(function() {--}}
+            {{--jQuery.migrateMute = true;--}}
+        {{--});--}}
+
+
+    {{--$(document).ready(function() {--}}
+    {{--jQuery.migrateMute = true;--}}
+    {{--$.fn.dataTable.ext.errMode = 'none';--}}
+    {{--});--}}
+
+    {{--</script>--}}
 
 
 
-        <script>
+    <script>
 
 
         var placeSearch, autocomplete;
@@ -68,8 +95,14 @@
 
               background-color: #0B628D;
          }
+         .eerross {
 
+             background-image: url("{{ asset('/img/01_fix_background.png') }}");
+             width: 100%;
+             height: 100%;
+         }
         </style>
+
 
 
     </head>
@@ -97,7 +130,7 @@
 
                     <div class="pull-left tm-icon">
 
-                        <a href="" data-toggle="modal" onClick="launchAddress();" data-target=".modalAddress" >
+                        <a href="{{ url('addressbookList') }}" >
                             <i class="fa fa-book fa-2x"></i>
                             <i class="n-count animated">{{ count($addressBookNumber,0) }}</i>
                         </a>
@@ -155,6 +188,36 @@
                     <div class="s-widget m-b-25">
                         <div id="sidebar-calendar"></div>
                     </div>
+
+                    <div class="tile">
+                        <h2 class="tile-title"><i class="glyphicon glyphicon-credit-card"></i> TASKS
+                            <div class="pull-right">
+                                <a href="{{ url('tasks') }}" >
+                                    Total.....<i class="n-count animated">{{ count($allTasks,0) }}</i>
+                                </a>
+                            </div>
+                        </h2>
+
+                        <div class="listview narrow">
+
+                            @foreach($tasks as $task)
+                                <div class="media p-l-5">
+                                    <div class="pull-left">
+                                        <span class='label label-danger'>{{$task->task->status->name}}</span>
+                                    </div>
+                                    <div class="media-body">
+                                        <a class="t-overflow" href="{{ url('tasks/'.$task->task->id) }}">{{ $task->task->title }} </a><br/>
+                                        <small class="text-muted">{{ $task->created_at->diffForHumans() }} </small>
+
+                                    </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        <div class="media text-center whiter l-100">
+                            <a href="{{ url('/tasks') }}"><small>VIEW ALL</small></a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Side Menu -->
@@ -168,11 +231,34 @@
                     @endif
 
                 @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
-                    <li {{ (Request::is('home') ? "class=active" : '') }}>
-                        <a class="sa-side-folder" href="{{ url('home') }}">
-                            <span class="menu-item">My Cases</span>
-                        </a>
-                    </li>
+                    {{--<li {{ (Request::is('home') ? "class=active" : '') }}>--}}
+                        {{--<a class="sa-side-folder" href="{{ url('home') }}">--}}
+                            {{--<span class="menu-item">My Cases</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+
+
+
+                            <li class="dropdown">
+
+                                <a class="sa-side-folder" href="">
+                                    <span class="menu-item">My Cases </span>
+                                </a>
+
+                                <ul class="list-unstyled menu-item">
+
+                                    @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
+
+
+
+                                        <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
+                                        <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending /Allocation Cases</a></li>
+                                        <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>
+                                        <li><a href="{{ url('closedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Reslove Cases</a></li>
+
+                                    @endif
+                                </ul>
+                            </li>
                 @endif
 
                 @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
@@ -248,32 +334,32 @@
                                 <li><a href="{{ url('list-affiliations') }}"><span class="badge badge-r">{{ count($noAffiliations,0) }}</span>Association</a></li>
                             @endif
 
-                            @if(isset($userViewCasePriorityPermission) && $userViewCasePriorityPermission->permission_id =='2')
-                           {{-- <li><a href="{{ url('list-priorities') }}"><span class="badge badge-r">{{ count($noCasesPriorities,0) }}</span>Cases Priorities</a></li>--}}
-                            @endif
+                            {{--@if(isset($userViewCasePriorityPermission) && $userViewCasePriorityPermission->permission_id =='2')--}}
+                            {{--<li><a href="{{ url('list-priorities') }}"><span class="badge badge-r">{{ count($noCasesPriorities,0) }}</span>Cases Priorities</a></li>--}}
+                            {{--@endif--}}
 
-                            @if(isset($userViewCaseStatusPermission) && $userViewCaseStatusPermission->permission_id =='3')
+                            {{--@if(isset($userViewCaseStatusPermission) && $userViewCaseStatusPermission->permission_id =='3')--}}
 
-                         {{--   <li><a href="{{ url('list-statuses') }}"><span class="badge badge-r">{{ count($noCaseStatuses,0) }}</span>Cases Statuses</a></li>--}}
+                            {{--<li><a href="{{ url('list-statuses') }}"><span class="badge badge-r">{{ count($noCaseStatuses,0) }}</span>Cases Statuses</a></li>--}}
 
-                            @endif
-
-
-
-                            @if(isset($userViewMeetingsPermission) && $userViewMeetingsPermission->permission_id =='5')
-
-                           {{-- <li><a href="{{ url('list-meetings') }}"><span class="badge badge-r">{{ count($noMeetings,0) }}</span>Meetings</a></li>--}}
-
-                            @endif
+                            {{--@endif--}}
 
 
-                            @if(isset($userViewProvincesPermission) && $userViewProvincesPermission->permission_id =='7')
+
+                            {{--@if(isset($userViewMeetingsPermission) && $userViewMeetingsPermission->permission_id =='5')--}}
+
+                            {{--<li><a href="{{ url('list-meetings') }}"><span class="badge badge-r">{{ count($noMeetings,0) }}</span>Meetings</a></li>--}}
+
+                            {{--@endif--}}
+
+
+                            {{--@if(isset($userViewProvincesPermission) && $userViewProvincesPermission->permission_id =='7')--}}
 
                             {{--<li><a href="{{ url('list-provinces') }}"><span class="badge badge-r">{{ count($noProvinces,0) }}</span>Provinces</a></li>--}}
-                            @endif
-                            @if(isset($userViewRelationshipsPermission) && $userViewRelationshipsPermission->permission_id =='8')
+                            {{--@endif--}}
+                            {{--@if(isset($userViewRelationshipsPermission) && $userViewRelationshipsPermission->permission_id =='8')--}}
                             {{--<li><a href="{{ url('list-relationships') }}"><span class="badge badge-r">{{ count($noRelationships,0) }}</span>Relationships</a></li>--}}
-                            @endif
+                            {{--@endif--}}
 
                                 @if(isset($userViewUsersPermission) && $userViewUsersPermission->permission_id =='10')
 
@@ -285,15 +371,15 @@
                             <li><a href="{{ url('list-roles') }}"><span class="badge badge-r">{{ count($noRoles,0) }}</span>User Groups</a></li>
                             @endif
 
-                            @if(isset($userViewPOIPermission) && $userViewPOIPermission->permission_id =='11')
+                            {{--@if(isset($userViewPOIPermission) && $userViewPOIPermission->permission_id =='11')--}}
 
-                           {{-- <li><a href="{{ url('list-poi-users') }}"><span class="badge badge-r">{{ count($noPOIUsers,0) }}</span>POI</a></li>--}}
-                            @endif
+                            {{--<li><a href="{{ url('list-poi-users') }}"><span class="badge badge-r">{{ count($noPOIUsers,0) }}</span>POI</a></li>--}}
+                            {{--@endif--}}
 
 
-                            @if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')
-                    {{--          <li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li> --}}
-                             @endif
+                            {{--@if(isset($userViewPermissionsPermission) && $userViewPermissionsPermission->permission_id =='12')--}}
+                              {{--<li><a href="{{ url('list-permissions') }}"><span class="badge badge-r">{{ count($noPermissions,0) }}</span>Permissions</a></li>--}}
+                             {{--@endif--}}
 
                              {{--<li><a href="{{ url('list-forms') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms</a></li>--}}
                              {{--<li><a href="{{ url('list-formsdata') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Forms Data</a></li>--}}
@@ -340,6 +426,7 @@
             <section id="content" class="container">
                 @include('messages.list')
                 @include('messages.add')
+
                 @yield('content')
                 @include('addressbook.list')
                 @include('addressbook.global')
