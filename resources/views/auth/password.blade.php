@@ -1,5 +1,5 @@
 <!-- resources/views/auth/password.blade.php -->
-<form method="POST" action="/password/email">
+<form method="POST" action="/password/email"  style="background-color: #265a88">
     {!! csrf_field() !!}
 
     <div>

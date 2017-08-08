@@ -1,123 +1,74 @@
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <title>Email</title>
-    </head>
-
-    <body style="margin:0; margin-top:30px; margin-bottom:30px; padding:0; width:100%; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; background-color: #F4F5F7;">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
 
 
-        <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border:0; border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; background-color: #F4F5F7;">
-            <tbody>
+    <link rel="stylesheet" href="css/simple.css">
+
+
+</head>
+<body>
+<table class="body-wrap">
+    <tr>
+        <td class="container">
+
+
+            <table>
                 <tr>
-                    <td align="center" style="border-collapse: collapse;">
-
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                            <tbody>
-                                <tr>
-                                    <td width="100%" height="30"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- /Space -->
+                    <td align="center" class="masthead">
 
 
-                        <!-- ROW 2 IMGS -->
-                        <table cellpadding="0" cellspacing="0" border="0" width="560" style="border:0; border-collapse:collapse; background-color:#ffffff; border-radius:6px;">
-                            <tbody>
-                                <tr>
-                                    <td style="border-collapse:collapse; vertical-align:middle; text-align center; padding:20px;">
-
-                                        <!-- Headline Header -->
-                                        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                                            <tbody>
-                                                <tr><!-- spacing top -->
-                                                    <td width="100%" height="20"></td>
-                                                </tr>
-                                                <tr><!-- title -->
-                                                    <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px; text-align: center; color:#F07057;">
-                                                        <strong>PASSWORD</strong> RESET
-                                                    </td>
-                                                </tr>
-                                                <tr><!-- spacing bottom -->
-                                                    <td width="100%" height="30"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px; text-align: center; color:#2E363F;">
-                                                        Click here to reset your password: {{ env('LIVE_URL') }}/password/reset/{{ $token }}
-                                                    </td>
-                                                </tr>
-                                                <tr><!-- spacing bottom -->
-                                                    <td width="100%" height="30"></td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                        <!-- /Headline Header -->
-
-
-
-                                        <!-- Space -->
-                                        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                                            <tbody>
-                                                <tr>
-                                                    <td width="100%" height="20"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <!-- /Space -->
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- /ROW 2 IMGS -->
-
-                        <!-- Space -->
-                        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="left" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                            <tbody>
-                                <tr>
-                                    <td width="100%" height="30"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- /Space -->
-
-
-                        <!-- ROW FOOTER -->
-                        <table cellpadding="0" cellspacing="0" border="0" width="560" style="border:0; border-collapse:collapse; background-color:#ffffff; border-radius:6px;">
-                            <tbody>
-                                <tr>
-                                    <td style="border-collapse:collapse; vertical-align:middle; text-align center; padding:20px;">
-
-                                        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;">
-                                            <tbody>
-                                                <tr><!-- logo -->
-                                                    <td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px; text-align: center;">
-                                                        <a href="{{ URL::to('home') }}" style="text-decoration: none;">
-                                                           <img src="{{ asset('img/siyaleader_light_bg_100.png') }}" width='166px' alt="Siyaleader" />
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- /ROW FOOTER -->
-
+                        {{--<a href="http://www.google.com"><img src="SiteBadge3.png" alt="Loading..."/></a>--}}
+                        {{--<img src="<php echo $message->public_path('img/SiteBadge3.png') ?>" alt=""/>--}}
+                      <img src="{{ $message->embed(public_path('img/SiteBadge3.png')) }}" alt="loading....."/>
 
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                <tr>
+                    <td class="content">
 
-    </body>
+
+
+                        <p></p>
+
+                        <table>
+                            <tr>
+                                <td align="left">
+                                    <p>
+                                    <p>Request to reset password link </p>
+                                    <a href=" {{ env('LIVE_URL') }}/password/reset/{{ $token }}">Click here to reset your password</a>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+
+
+
+                        <p><em>Kind Regards<br>Ubulwembu</em></p>
+
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+        <td class="container">
+
+            <!-- Message start -->
+            <table>
+                <tr>
+                    <td class="content footer" align="center">
+                        <p><a href="#">Siyaleader</a>, 43 Turners Avenue, Berea,Durban, 4001</p>
+                        <p><a href="mailto:">information@siyaleader.net</a> | <a href="#">www.siyaleader.net</a></p>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+</table>
+</body>
 </html>
-
