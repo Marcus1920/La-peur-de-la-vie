@@ -10,6 +10,7 @@ use App\UserRole;
 use App\services\CalendarGroupService;
 use App\services\CalendarGroupUserService;
 use App\services\CalendarService;
+use App\services\CalendarEventTypeService;
 
 
 class RolesController extends Controller
@@ -18,12 +19,14 @@ class RolesController extends Controller
 	protected $calendarGroup;
     protected $calendarGroupUser;
     protected $calendar;
+    protected $eventType;
 
-    public function __construct(CalendarGroupService $calendarGroupService,CalendarGroupUserService $calendarGroupUserService ,CalendarService $calendarService)
+    public function __construct(CalendarGroupService $calendarGroupService,CalendarGroupUserService $calendarGroupUserService ,CalendarService $calendarService, CalendarEventTypeService $eventType)
     {
         $this->calendarGroup=$calendarGroupService;
         $this->calendarGroupUser=$calendarGroupUserService;
         $this->calendar=$calendarService;
+        $this->eventType = $eventType;
     }
     /**
      * Display a listing of the resource.
@@ -60,7 +63,7 @@ class RolesController extends Controller
     public function store(RolesRequest $request)
     {
         $role             = new UserRole();
-		$role->id         = 17;
+		$role->id         = 26;
         $role->name       = $request['name'];
         $slug             = preg_replace('/\s+/','-',$request['name']);
         $role->slug       = $slug;
@@ -70,7 +73,22 @@ class RolesController extends Controller
 		$calendarGroup=$this->calendarGroup->createCalendarGroup($request['name'],$request['name']);
         $this->calendarGroupUser->createCalendarGroupUser($calendarGroup->id,$role->id);
         $request['calendar_group_id']= $calendarGroup->id;
-        $this->calendar->storeCalendar($request);
+
+        $eventTypes = $this->eventType->getEventTypes();
+
+        foreach ($eventTypes as $eventType) {
+
+            $data = [
+                        // 'name'              => $eventType->name,
+                        'event_type_id'        => $eventType->id,
+                        'description'          => $eventType->name,
+                        'color'                => $eventType->color,
+                        'calendar_group_id'    => $calendarGroup->id,
+                    ];
+
+                    $this->calendar->storeCalendar($data);
+        }
+        
 		
         \Session::flash('success', 'well done! User Group '.$request['name'].' has been successfully added!');
         return redirect()->back();

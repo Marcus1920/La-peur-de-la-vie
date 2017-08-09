@@ -208,7 +208,7 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
 
                                     </div>
                                 </div>
-                            @endforeach
+                            @endforeach 
 
                         </div>
                         <div class="media text-center whiter l-100">
