@@ -33,6 +33,9 @@
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
         <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
+		
+		 <link href="{{ asset('/css/toggles.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/toggle-themes/toggles-all.css') }}" rel="stylesheet">
 
   <!-- DataTables CSS -->
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -257,7 +260,7 @@
 
                 @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
                     <li {{ (Request::is('calendar') ? "class=active" : '') }}>
-                        <a class="sa-side-calendar" href="{{ url('calendar') }}">
+                        <a class="sa-side-calendar" href="{{ url('calendar/events') }}">
                             <span class="menu-item">Calendar</span>
                         </a>
                     </li>
@@ -425,6 +428,8 @@
         <!-- Javascript Libraries -->
         <!-- jQuery -->
 
+		<!--Toggles-->
+        <script src="{{ asset('/js/toggles.js') }}"></script>
 
         <script src="{{ asset('/js/jquery-ui.min.js') }}"></script> <!-- jQuery UI -->
         <script src="{{ asset('/js/jquery.easing.1.3.js') }}"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
