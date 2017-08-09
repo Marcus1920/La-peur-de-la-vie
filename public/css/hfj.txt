@@ -1899,11 +1899,11 @@ a.list-group-item.active > .badge,
         background-image: url(../img/body/chrome.jpg);
     }
 
-    /*#skin-blur-ocean {
+    #skin-blur-ocean {
         background-image: url(../img/body/ocean.jpg);
-    }*/
+    }
 
-   #skin-blur-sunset {
+    #skin-blur-sunset {
         background-image: url(../img/body/sunset.jpg);
     }
 
@@ -1911,9 +1911,9 @@ a.list-group-item.active > .badge,
         background-image: url(../img/body/yellow.jpg);
     }
 
-   /* #skin-blur-kiwi {
+    #skin-blur-kiwi {
         background-image: url(../img/body/kiwi.jpg);
-    }*/
+    }
 
     #skin-blur-kiwi-login {
         background-image: url(../img/body/lomninwall.jpg);

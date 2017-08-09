@@ -139,6 +139,7 @@ return [
         Illuminate\Html\HtmlServiceProvider::class,
         yajra\Datatables\DatatablesServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -210,10 +211,12 @@ return [
         'URL'        => Illuminate\Support\Facades\URL::class,
         'Validator'  => Illuminate\Support\Facades\Validator::class,
         'View'       => Illuminate\Support\Facades\View::class,
-        'Form'       => 'Illuminate\Html\FormFacade',
-        'HTML'       => 'Illuminate\Html\HtmlFacade',
+//        'Form'       => 'Illuminate\Html\FormFacade',
+//        'HTML'       => 'Illuminate\Html\HtmlFacade',
         'Datatables' => yajra\Datatables\Datatables::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
+        'Form'=>Collective\Html\FormFacade::class,
+        'Html'=>Collective\Html\FormFacade::class,
 
        // 'Activation' => Cartalyst\Sentinel\Laravel\Facades\Activation::class,
         //'Reminder'   => Cartalyst\Sentinel\Laravel\Facades\Reminder::class,

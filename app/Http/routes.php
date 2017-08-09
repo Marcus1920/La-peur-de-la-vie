@@ -55,6 +55,11 @@ Route::group(['middleware' => 'adminmiddlewar'], function () {
 
     Route::get('home', ['uses' => 'HomeController@index']);
 	Route::get('home', ['uses' => 'HomeController@index']);
+	Route::get('generatecharts', ['uses' => 'HomeController@getcharts']);
+
+
+
+
 
 });
 
@@ -100,6 +105,12 @@ Route::group(array('prefix' => 'api/v1'), function() {
 Route::get('reports', 'MainreportController@index');
 
 
+
+Route::get('creatCase' , function () {
+
+
+    return  view ('cases.createFor');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -554,8 +565,13 @@ Route::post('updateSubSubCategory', ['middleware' => 'resetLastActive', 'uses' =
 |
 */
 Route::get('casetest/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
-Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
+
+Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@index']);
+Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
+
+//Route::get('cases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@viewcase']);
 Route::get('case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@edit']);
+
 Route::get('workflows-list-case/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@workflow']);
 Route::post('escalateCase', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@escalate']);
 Route::post('allocateCase', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@allocate']);
@@ -577,6 +593,42 @@ Route::post('captureCaseUpdateH', ['middleware' => 'resetLastActive', 'uses' => 
 Route::get('relatedCases-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'CasesController@relatedCases']);
 Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCases']);
 
+
+
+//Route::get('closedCases', ['middleware' => 'auth', 'uses' => 'CasesController@closedCases']);
+
+//Route::get('pendingCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingCases']);
+///Route::get('pendingClosureCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingClosureCases']);
+
+
+Route::get('pendingClosureCases' , function() {
+
+
+    return view('cases.pendingClosureCases');
+}) ;
+
+
+Route::get('pendingCases' , function() {
+
+
+    return view('cases.pendingCases');
+}) ;
+
+
+Route::get('closedCases' , function() {
+
+
+    return view('cases.closedCases');
+}) ;
+
+//Route::get('allocatedCases', ['middleware' => 'auth', 'uses' => 'CasesController@allocatedCases']);
+
+
+Route::get('allocatedCases' , function(){
+
+    return view('cases.allocatedCases');
+
+});
 
 /*
 |--------------------------------------------------------------------------

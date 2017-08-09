@@ -2,41 +2,6 @@
 
 @section('content')
 
-
-        <!DOCTYPE html>
-<html lang="en">
-    <head>
-
-
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
-
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-grid.min.css">
-        <link rel="stylesheet" href="css/report.css">
-        <!-- CSS -->
-        <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/animate.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/font-awesome.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/form.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/calendar.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/generics.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/token-input.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/icons.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/lightbox.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/media-player.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/file-manager.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/buttons.dataTables.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/HoldOn.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('/incl/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/Treant.css') }}" rel="stylesheet">
-        <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
-    <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
-
 <style media="screen">
 body{
 
@@ -49,7 +14,7 @@ background-color: #0B628D;
 
         <title>Siyaleader Aims</title>
 
-        {!! Charts::assets() !!}
+
 
     </head>
     {{--<header>--}}
@@ -68,7 +33,7 @@ background-color: #0B628D;
         {{--<a href="#about">About</a>--}}
     {{--</div>--}}
 
-
+    {!! Charts::assets() !!}
 
 
 
