@@ -24,7 +24,7 @@
 
     </script>
     </head>
-    <body id="skin-blur-kiwi"  style="background-color: #265a88">
+    <body id=""  style="background-color: #265a88">
 
     @if (count($errors) > 0)
     <div class="alert alert-danger">

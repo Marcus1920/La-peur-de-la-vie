@@ -22,7 +22,7 @@
 
 
 </head>
-<body id="skin-blur-ocean" style="background-color: #265a88">
+<body style="background-color: #265a88">
 
 @if (count($errors) > 0)
     <div class="alert alert-danger">
