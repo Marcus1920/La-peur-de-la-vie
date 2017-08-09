@@ -113,7 +113,7 @@ class UserController extends Controller
 
 
                            return \Datatables::of($users)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
+                            ->addColumn('actions','<a class="btn btn-xs btn-alt"   href="users/{{$id}}"  >Edit</a>
 
 
                                         '
@@ -3651,7 +3651,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-       return [$user];
+        return view('users.editusers' )->with(compact('user'));
     }
 
     /**

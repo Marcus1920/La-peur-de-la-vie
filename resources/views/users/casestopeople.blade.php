@@ -394,6 +394,4 @@ function nodeMenu(data, node) {
 </script>
 
 
-
-</script>
 @endsection
