@@ -3648,7 +3648,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-
+ //return json_encode($user);
 
 
         return view('users.editusers' )->with(compact('user'));
