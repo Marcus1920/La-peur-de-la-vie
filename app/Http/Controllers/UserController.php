@@ -1500,6 +1500,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
         $language                          = Language::where('slug','=',$request['language'])->first();
         $user->language                    = $language->id;
         $user->gender                      = $request['gender'];
+        //$user->profile_picture             = $request['profile_picture'];
         $user->name                        = $request['name'];
         $user->surname                     = $request['surname'];
         $user->cellphone                   = $request['cellphone'];
@@ -1528,17 +1529,35 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
         if (!empty($request['affiliation'])) {
 
             $user->affiliation  = $request['affiliation'];
-
         }
-         else {
+        else {
 
             $user->affiliation = 1;
+        }
 
-         }
+        $destinationFolder = 'files/user_profile_pictures/' . $request['name'].'_'.$request['surname'];
+
+        if (!File::exists($destinationFolder)) {
+            $createDir = \File::makeDirectory($destinationFolder, 0777, true);
+        }
+
+
+        $fileName          = $request->file('profilePicture')->getClientOriginalName();
+
+        $fileFullPath      = $destinationFolder.'/'.$fileName;
+
+        //if (!File::exists($fileFullPath)) {
+
+            $request->file('profilePicture')->move($destinationFolder, $fileName);
+
+
+
+            $user->profile_picture = $fileName;
+            $user->img_url = $fileFullPath;
+        //}
 
         $user->save();
-
-         \Session::flash('success', $request['name'].' '.$request['surname'].' user has been added successfully!');
+        \Session::flash('success', $request['name'].' '.$request['surname'].' user has been added successfully!');
 
         $data = array(
             'name'     =>$user->name,
@@ -1546,14 +1565,13 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             'password' =>$password,
         );
 
-
-
-        \Mail::send('emails.registrationConfirmation',$data, function($message) use ($user)
-        {
-            $message->from('info@siyaleader.net', 'Siyaleader');
-            $message->to($user->email)->subject("Siyaleader Notification - User Registration Confirmation: " .$user->name);
-
-        });
+//
+//        \Mail::send('emails.registrationConfirmation',$data, function($message) use ($user)
+//        {
+//            $message->from('info@siyaleader.net', 'Siyaleader');
+//            $message->to($user->email)->subject("Siyaleader Notification - User Registration Confirmation: " .$user->name);
+//
+//        });
 
         return redirect('list-users');
 

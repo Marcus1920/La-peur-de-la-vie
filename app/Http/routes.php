@@ -652,6 +652,9 @@ Route::get('getContacts', ['middleware' => 'resetLastActive', 'uses' => 'Address
 Route::get('getPoisContacts', ['middleware' => 'resetLastActive', 'uses' => 'UserController@searchPOI']);
 
 
+Route::get('testingview','AddressBookController@profile');
+
+
 /*
 |--------------------------------------------------------------------------
 | END ADDRESSBOOK ROUTING

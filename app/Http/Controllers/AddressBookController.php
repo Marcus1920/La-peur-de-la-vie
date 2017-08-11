@@ -19,6 +19,11 @@ class AddressBookController extends Controller
      *
      * @return Response
      */
+
+    public function profile()
+    {
+        return view('addressbook.view');
+    }
     public function AddressbookList()
     {
         return view('addressbook.index');
