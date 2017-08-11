@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\UserRole;
+use App\Position;
+use App\UserStatus;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -12,40 +15,69 @@ use App\addressbook;
 use Redirect;
 use Session;
 
+
 class AddressBookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    private $user;
+
+
+    public function __construct(User $user)
+    {
+
+        $this->user = $user;
+
+    }
+
     public function AddressbookList()
     {
-        return view('addressbook.index');
+        $userAddUserPermission   = \DB::table('group_permissions')
+            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+            ->where('group_permissions.permission_id','=',31)
+            ->where('group_permissions.group_id','=',\Auth::user()->role)
+            ->first();
+
+        return view('addressbook.index',compact('userAddUserPermission'));
     }
 
-    public function index($id)
+    public function index()
     {
-        $addresses = addressbook::select(
-                                            array(
-                                                    'id',
-                                                    'first_name',
-                                                    'surname',
-                                                    'cellphone',
-                                                    'email',
-                                                    'created_at'
-                                                ))->where('user','=',$id);
-        return \Datatables::of($addresses)
-                            ->addColumn('actions',''
-                                       )
-                            ->make(true);
+
+        $userEditUserPermission   = \DB::table('group_permissions')
+            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+            ->where('group_permissions.permission_id','=',32)
+            ->where('group_permissions.group_id','=',\Auth::user()->role)
+            ->first();
+
+
+
+        $users = \DB::table('users')
+            ->join('positions', 'users.position', '=', 'positions.id')
+            ->select(
+                \DB::raw(
+                    "
+                                         users.id,
+//                                 
+                                         users.name,
+                                         users.surname,
+                                      
+                                         users.cellphone,
+                                       
+                                        positions.name as position
+                                        "
+                )
+            );
+
+
+        return \Datatables::of($users)
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
+
+
+                                        '
+            )->make(true);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
+
     public function create()
     {
         return view('addressbook.add');
@@ -190,6 +222,46 @@ class AddressBookController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function display()
+    {
+
+
+
+        $users = \DB::table('users')
+            ->join('positions', 'users.position', '=', 'positions.id')
+            ->select(
+                \DB::raw(
+                    "
+                                         users.id,
+                            
+                                         users.name,
+                                         users.surname,
+                                      
+                                         users.cellphone,
+                                       
+                                        positions.name as position
+                                        "
+                )
+            )->first();
+
+        return $users;
+    }
+
+    public function test()
+    {
+        $users = User::all();
+        return view('addressbook.test',compact('users'));
+    }
+
+    public function getProfilePerUser($id)
+    {
+
+
+        $users = User::all();
+        $contacts  = User::where('id',$id)->first();
+        $position = Position::find($contacts->position);
+        return view('addressbook.test',compact('contacts','users','position'));
     }
 
 }

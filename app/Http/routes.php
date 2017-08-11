@@ -329,6 +329,8 @@ Route::get('getMeetingFacilitators', ['middleware' => 'resetLastActive', 'uses' 
 |
 */
 
+
+
 /*
 |--------------------------------------------------------------------------
 | STATUSES ROUTING
@@ -644,13 +646,16 @@ Route::get('allocatedCases' , function(){
 |--------------------------------------------------------------------------
 |
 */
-Route::get('addressbookList','AddressBookController@AddressbookList');
-Route::get('addressbook-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@index']);
+Route::get('addressbookList/{id}','AddressBookController@getProfilePerUser');
+//Route::get('addressbook-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@index']);
 Route::get('CreateContact','AddressBookController@Create');
 Route::post('addContact', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@store']);
 Route::get('getContacts', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@show']);
 Route::get('getPoisContacts', ['middleware' => 'resetLastActive', 'uses' => 'UserController@searchPOI']);
-
+Route::get('addressBookView', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@globalIndex']);
+//Route::get('addressbook-list', ['uses' => 'AddressBookController@index']);
+Route::get('addressbook-list', ['uses' => 'AddressBookController@test']);
+Route::get('getContactProfile/{id}', ['uses' => 'AddressBookController@getProfilePerUser']);
 
 /*
 |--------------------------------------------------------------------------

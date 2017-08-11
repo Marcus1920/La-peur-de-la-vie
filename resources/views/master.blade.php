@@ -405,6 +405,20 @@
                     @endif
 
 
+                        @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+
+                            @if (Auth::user())
+                                <li {{ (Request::is('reports') ? "class=active" : '') }}>
+                                    <a class="sa-side-agenda" href="{{ url('addressbookList/'.Auth::user()->id )}}">
+                                        <span class="menu-item">Address Book</span>
+                                    </a>
+                                </li>
+
+                            @endif
+
+                        @endif
+
+
 
                 </ul>
 
