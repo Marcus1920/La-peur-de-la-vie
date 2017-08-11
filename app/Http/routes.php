@@ -179,6 +179,17 @@ Route::get('add-user',  function () {
     return view('users.registration');
 });
 
+Route::get('user-profile',  function () {
+    return view('users.profile');
+});
+
+Route::post('editProfilePic', ['middleware' => 'resetLastActive', 'uses' => 'UserController@UpdateUserProfile']);
+
+Route::get('edit-profile',  function () {
+    return view('users.editProfile');
+});
+
+
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
