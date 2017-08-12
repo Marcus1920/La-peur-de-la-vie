@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\addressbook;
 use Redirect;
 use Session;
+use Auth;
 
 
 class AddressBookController extends Controller
@@ -55,8 +56,7 @@ class AddressBookController extends Controller
             ->select(
                 \DB::raw(
                     "
-                                         users.id,
-//                                 
+                                         users.id,                              
                                          users.name,
                                          users.surname,
                                       
@@ -83,34 +83,24 @@ class AddressBookController extends Controller
         return view('addressbook.add');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
-    public function store(AddressBookRequest $request)
+
+    public function store(Request $request)
     {
-        $addressbook = new addressbook();
-        $addressbook->first_name = $request['FirstName'];
-        $addressbook->surname = $request['Surname'];
-        $addressbook->email = $request['email'];
-        $addressbook->cellphone = $request['cellphone'];
-        $addressbook->user = $request['uid'];
-        $addressbook->relationship = $request['relationship'];
-        $addressbook->active = 1;
+        $addressbook                 = new addressbook();
+        $addressbook->user           = $request['user'];
+        $addressbook->first_name     = $request['first_name'];
+        $addressbook->Surname        = $request['Surname'];
+        $addressbook->email          = $request['email'];
+        $addressbook->cellphone      = $request['cellphone'];
+        $addressbook->created_by     = \Auth::user()->id;
+        $addressbook->relationship   = 'work mate';
+        $addressbook->active         = 1;
         $addressbook->save();
 
-        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been successfully added!');
-        return Redirect::to('addressbookList');
+        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been  added to your Private Book Address');
+        return Redirect::to('/addressbookList/'.Auth::user()->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show()
     {
 
@@ -190,35 +180,19 @@ class AddressBookController extends Controller
         return $data;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
+
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+
     public function destroy($id)
     {
         //
@@ -251,17 +225,27 @@ class AddressBookController extends Controller
     public function test()
     {
         $users = User::all();
+
         return view('addressbook.test',compact('users'));
     }
 
     public function getProfilePerUser($id)
     {
 
-
         $users = User::all();
+        $contactBook  = addressbook::where('created_by',$id)->get();
+        $privateContactProfile  = addressbook::where('created_by',$id)->first();
         $contacts  = User::where('id',$id)->first();
         $position = Position::find($contacts->position);
-        return view('addressbook.test',compact('contacts','users','position'));
+
+//   return   json_encode(  $privateContactsProfile);
+
+        return view('addressbook.test')
+            ->with(compact('contacts'))
+            ->with(compact('users'))
+            ->with(compact('position'))
+            ->with(compact('contactBook'))
+            ->with(compact('privateContactProfile'));
     }
 
 }

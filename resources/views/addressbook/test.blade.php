@@ -60,13 +60,25 @@
                                     </div>
                                 </div>
 
+
+
+
                                 <!--RIGHT SIDE DIV-->
+
 
                                 <div class="col-sm-9 col-md-6 col-lg-8" style="float:right; display:inline-block;">
                                     <div class="block-area" id="basic">
                                         <div class="tile p-15">
 
                                             <div class="row">
+                                                @if(Session::has('success'))
+                                                    <div class="alert alert-success alert-icon">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                        {{ Session::get('success') }}
+                                                        <i class="icon">&#61845;</i>
+                                                    </div>
+                                                @endif
+
                                                 <div class="col-md-6">
 
                                                     <h3 class="block-title">CONTACT PICTURE!</h3>
@@ -84,8 +96,12 @@
 
                                                 <div class="col-md-6">
 
-                                                    {!! Form::open(['url' => 'createCaseAgent', 'method' => 'get', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
-                                                    {!! Form::hidden('hseHolderId',NULL,['id' => 'hseHolderId']) !!}
+                                                    {!! Form::open(['url' => 'addContact', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
+                                                     {!! Form::hidden('created_by',Auth::user()->id) !!}                                       
+                                                    {!! Form::hidden('user',$contacts->id)!!}
+                                                    {!! Form::hidden('email',$contacts->email)!!}
+                                                
+                    
 
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
 
@@ -94,7 +110,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('name',$contacts->name,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
+                                                            {!! Form::text('first_name',$contacts->name,['class' => 'form-control input-sm','id' => 'first_name']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -106,7 +122,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('cellphone',$contacts->surname,['class' => 'form-control input-sm','id' => 'cellphone','disabled']) !!}
+                                                            {!! Form::text('Surname',$contacts->surname,['class' => 'form-control input-sm','id' => 'Surname']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -114,13 +130,27 @@
 
 
                                                     <div class="form-group">
-                                                        {!! Form::label('POSITION', 'POSITION', array('class' => 'col-md-3 control-label')) !!}
+                                                        {!! Form::label('CELLPHONE ', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('position',$position->name,['class' => 'form-control input-sm','id' => 'position','disabled']) !!}
+                                                            {!! Form::text('cellphone',$contacts->cellphone,['class' => 'form-control input-sm','id' => 'cellphone']) !!}
                                                             <div id = "hse_error_cellphone"></div>
+
                                                         </div>
                                                     </div>
+                                                    <hr class="whiter m-t-20">
 
+
+                                                    <h3 class="block-title">ADD TO PRIVATE ADDRESS BOOK</h3>
+                                                    <span class="counter pull-right"></span>
+                                                    <span class="counter pull-right"></span>
+                                                    <br/>
+
+
+                                                     <div class="form-group">
+                                                         <button type="submit" type="button" class="fa fa-star"></button>
+                                                     </div>
+
+               
                                                     <hr class="whiter m-t-20">
 
 
@@ -129,24 +159,19 @@
                                                     <span class="counter pull-right"></span>
                                                     <br/>
 
-
+                                                    
                                                     <lu>
                                                         <a href="{{ url('') }}" >
                                                             <i class="fa fa-envelope" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
-
-                                                        <a href="{{ url('') }}" >
-                                                            <i class="fa fa-star" aria-hidden="true" title="FAVOURATE" data-toggle="tooltip"></i>
-                                                        </a>
-
                                                         <a href="{{ url('') }}">
                                                             <i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
                                                         </a>
-
                                                         <a href="{{ url('') }}">
                                                             <i class="fa fa-phone" aria-hidden="true" title="CALL" data-toggle="tooltip"></i>
                                                         </a>
                                                     </lu>
+                                                
                                                     {!! Form::close()!!}
                                                 </div>
                                             </div>
@@ -187,13 +212,12 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-
-
+                                            @foreach($contactBook as $privateContact)
                                                 <tr>
-                                                    <td><a class="t-overflow" href=""></a><br/>
-                                                        <small class="text-muted"></small></td>
+                                                    <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}">{{$privateContact->first_name . " " . $privateContact->surname}}</a><br/>
+                                                        <small class="text-muted">{{$privateContact->position}}</small></td>
                                                 </tr>
-
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>
@@ -233,29 +257,25 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('name',NULL,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
+                                                            {!! Form::text('name',$privateContactProfile->first_name,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
                                                     </div>
 
-
-
-
-                                                    <div class="form-group">
+                                                        <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('cellphone',NULL,['class' => 'form-control input-sm','id' => 'cellphone','disabled']) !!}
+                                                            {!! Form::text('surname',$privateContactProfile->surname,['class' => 'form-control input-sm','id' => 'cellphone','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
-
                                                         </div>
                                                     </div>
 
 
                                                     <div class="form-group">
-                                                        {!! Form::label('POSITION', 'POSITION', array('class' => 'col-md-3 control-label')) !!}
+                                                        {!! Form::label('EMAIL', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('position',NULL,['class' => 'form-control input-sm','id' => 'position','disabled']) !!}
+                                                            {!! Form::text('email',$privateContactProfile->email,['class' => 'form-control input-sm','id' => 'email','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
@@ -287,6 +307,7 @@
                                                         </a>
                                                     </lu>
                                                     {!! Form::close()!!}
+
                                                 </div>
                                             </div>
 
