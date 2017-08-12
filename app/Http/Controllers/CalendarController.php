@@ -2,156 +2,88 @@
 
 namespace App\Http\Controllers;
 
+use App\Calendar;
+use App\services\CalendarService;
+use App\services\CalendarGroupService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\CalendarEvent;
-use App\MeetingAttendee;
-use App\CaseEscalator;
-use App\User;
+use Session;
+use Redirect;
+
+
 
 class CalendarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+    protected $calendars;
+    protected $calendarGroup;
+
+    public function __construct(CalendarService $service, CalendarGroupService $calendarGroupService)
+    {
+        $this->calendars = $service;
+        $this->calendarGroup = $calendarGroupService;
+    }
+
     public function index()
     {
-         return view('calendar.calendar');
+        $calendar= $this->calendars->getCalendars();
+        return response()->json($calendar);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function getCalendarsPerGroup($id){
+        $calendar= $this->calendars->getCalendarsPerGroup($id);
+        return response()->json($calendar);
+    }
+
+
+    public function create($id)
     {
-        //
-    }
-    
-    public function calendarList(){
-		
-       $events    = CaseEscalator::select('id','title','start','end','color')->get();
-       echo json_encode($events);
-     }
-     
-     public function calendarListPerUser($id){
-			
-	$user = User::where('name','=',$id)->first();	
-        $events    = CaseEscalator::select('id','title','start','end','color')->where('to','=',$user->id)->get();
-        echo json_encode($events);
+        $calendarGroup = $this->calendarGroup->getCalendarGroup($id);
+
+        return view('calendar.create',compact('calendarGroup'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  Request  $request
-     * @return Response
-     */
+
+//    public function create()
+//    {
+//        return view('calendar.create');
+//    }
+
+
     public function store(Request $request)
     {
-        //
+
+        $this->calendars->storeCalendar($request);
+        \Session::flash('success', 'A calendar  has been successfully added!');
+        return Redirect::to('calendar/events');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show()
+//    public function store(Request $request)
+//    {
+//            $this->calendars->storeCalendar($request);
+//    }
+
+    public function show($id)
     {
-
-
-
-
-        $myMeetings = MeetingAttendee::where('phonebook','=',0)
-                                        ->where('attendee','=',\Auth::user()->id)
-                                        ->select('meeting')
-                                        ->get();
-
-        $myMeetingIds = array();
-
-        foreach ($myMeetings as $myMeeting) {
-
-            $myMeetingIds[] = $myMeeting->meeting;
-
-        }
-
-        $calendarMeetingsEvents = \DB::table('calendar_events')
-                            ->join('calendar_events_type', 'calendar_events.event_type_id', '=', 'calendar_events_type.id')
-                            ->select(
-                                        \DB::raw("
-                                                    calendar_events.id,
-                                                    calendar_events.name,
-                                                    calendar_events.start_date,
-                                                    calendar_events.start_time,
-                                                    calendar_events.end_date,
-                                                    calendar_events.end_time,
-                                                    calendar_events_type.name as event_type
-                                                "
-
-                                                )
-                                    )
-                            ->where('calendar_events.event_type_id','=',1)
-                            ->whereIn('meeting_id',$myMeetingIds)
-                            ->groupBy('calendar_events.id')
-                            ->get();
-
-
-
-        $calendarEventArray = array();
-        $response           = array();
-
-        foreach ($calendarMeetingsEvents as $calendarMeetingEvent) {
-
-            $calendarEventArray['title'] = $calendarMeetingEvent->start_time.'-'.$calendarMeetingEvent->name;
-            $calendarEventArray['start'] = $calendarMeetingEvent->start_date.' '.$calendarMeetingEvent->start_time;
-            $calendarEventArray['end']   = $calendarMeetingEvent->end_date.' '.$calendarMeetingEvent->end_time;
-            $response[]                  = $calendarEventArray;
-
-
-        }
-
-        return \Response::json($response);
-
+        return response()->json($this->calendars->getCalendar($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
+    public function update(Request $request)
     {
-        //
+        $form       = Input::all();
+        $calendar   = $this->calendars->getCalendar($form['calendar_id']);
+        $this->calendars->updateCalendar($form);
+        return Redirect::to('calendar/'.$form['calendar_id']);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function destroy($id)
     {
-        //
+
+    }
+
+    public function getCalendars()
+    {
+        return $this->calendars->getCalendars();
     }
 }

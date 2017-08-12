@@ -20,6 +20,9 @@ use App\services\TaskOwnerService;
 use App\services\SubTaskService;
 use App\services\TaskActivityService;
 use App\services\TaskReminderService;
+use App\services\CalendarEventService;
+use App\Calendar;
+use App\CalendarEventType;
 use App\User;
 use Auth;
 use Session;
@@ -40,9 +43,10 @@ class TasksController extends Controller
     protected $current_logged_in_user;
     protected $taskOwners;
     protected $taskReminders;
+	 protected  $calenarEventService;
 
 
-    public function __construct(TaskService $taskService,TaskNoteService $taskNoteService,TaskFileService $taskFileService,SubTaskService $taskSubTaskService,TaskOwnerService $taskOwnerService,TaskActivityService $taskActivityService,TaskReminderService $taskReminderService)
+    public function __construct(TaskService $taskService,TaskNoteService $taskNoteService,TaskFileService $taskFileService,SubTaskService $taskSubTaskService,TaskOwnerService $taskOwnerService,TaskActivityService $taskActivityService,TaskReminderService $taskReminderService, CalendarEventService $calenarEventService)
     {
 
         $this->tasks                    = $taskService;
@@ -53,6 +57,7 @@ class TasksController extends Controller
         $this->taskOwners               = $taskOwnerService;
         $this->taskActivity             = $taskActivityService;
         $this->taskReminders            = $taskReminderService;
+		$this->calenarEventService      = $calenarEventService;
     }
 
     public function index()
@@ -154,6 +159,26 @@ class TasksController extends Controller
             $this->storeTaskCategoryType($task,$request['case_id']);
 
         }
+		
+		$calendarEventTypeID    = CalendarEventType::find(2);
+        $calendarID = Calendar::where('event_type_id',$calendarEventTypeID->id)->first();
+        $taskEventData =
+            [
+                'event_type_id' => $calendarEventTypeID->id,
+                'calendar_id'   => $calendarID->id,
+                'title'         => $request['title'],
+                'description'   =>$request['description'],
+                'start_date'    => $request['commencement_date'],
+                'end_date'      => $request['due_date'],
+                'progress'      => 0,
+                'color'         => $calendarID->color,
+                'note'          => '',
+                'user_id'          => '1',
+                'role'          => '1',
+                'venue'         => ''
+            ];
+
+        $this->calenarEventService->store($taskEventData);
 
         $assignee = User::find($request['task_user_id']);
 

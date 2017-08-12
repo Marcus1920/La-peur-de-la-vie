@@ -41,7 +41,9 @@ use App\InvestigationOfficer;
 use App\TaskCategory;
 use App\TaskPriority;
 use App\TaskStatus;
+
 use Auth;
+use App\CalendarEventType; 
 
 
 
@@ -69,6 +71,40 @@ class AppServiceProvider extends ServiceProvider
             }
 
              \View::share('selectPositions',$selectPositions);
+
+        }
+		
+		if (\Schema::hasTable('calendar_event_types'))
+        {
+            $calendarEventTypes          = CalendarEventType::where('name','==','case')
+                                                            ->where('name','==','task')
+                                                            ->where('name','==','reminder')
+                                                            ->orderBy('name','ASC')
+                                                            ->get();
+            $selectCalendarEventTypes    = array();
+            $selectCalendarEventTypes[0] = "Select / All";
+
+            foreach ($calendarEventTypes as $calendarEventType) {
+               $selectCalendarEventTypes[$calendarEventType->slug] = $calendarEventType->name;
+            }
+
+             \View::share('selectCalendarEventTypes',$selectCalendarEventTypes);
+
+        }
+
+
+        if (\Schema::hasTable('calendar_event_types'))
+        {
+            $calendarEventType          = CalendarEventType::orderBy('name','ASC')
+                                                            ->get();
+            $selectCalendarEventType    = array();
+            $selectCalendarEventType[0] = "Select / All";
+
+            foreach ($calendarEventType as $calendarEventType) {
+               $selectCalendarEventType[$calendarEventType->slug] = $calendarEventType->name;
+            }
+
+             \View::share('selectCalendarEventType',$selectCalendarEventType);
 
         }
 	

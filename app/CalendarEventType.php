@@ -1,14 +1,20 @@
-<?php namespace App;
+<?php
 
-use Illuminate\Database\Eloquent\Model as Eloquent;
+namespace App;
 
-class CalendarEventType extends Eloquent
+use Illuminate\Database\Eloquent\Model;
+
+class CalendarEventType extends Model
 {
+    protected $fillable = ['name', 'slug'];
 
+    public function calenderEvent()
+    {
+        return $this->belongsToMany(CalendarEvent::class);
+    }
 
-    protected $table    = 'calendar_events_type';
-    protected $fillable = ['name','created_by','updated_by','active','created_at','updated_at'];
-
-
-
+    public function calender()
+    {
+        return $this->belongsTo(Calendar::class);
+    }
 }

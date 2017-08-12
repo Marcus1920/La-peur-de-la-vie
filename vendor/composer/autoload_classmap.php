@@ -104,6 +104,7 @@ return array(
     'App\\Http\\Controllers\\ReportsController' => $baseDir . '/app/Http/Controllers/ReportsController.php',
     'App\\Http\\Controllers\\RespondersController' => $baseDir . '/app/Http/Controllers/RespondersController.php',
     'App\\Http\\Controllers\\RolesController' => $baseDir . '/app/Http/Controllers/RolesController.php',
+    'App\\Http\\Controllers\\SeniorHomeController' => $baseDir . '/app/Http/Controllers/SeniorHomeController.php',
     'App\\Http\\Controllers\\SessionController' => $baseDir . '/app/Http/Controllers/SessionController.php',
     'App\\Http\\Controllers\\SubCategoriesController' => $baseDir . '/app/Http/Controllers/SubCategoriesController.php',
     'App\\Http\\Controllers\\SubSubCategoriesController' => $baseDir . '/app/Http/Controllers/SubSubCategoriesController.php',
@@ -119,12 +120,14 @@ return array(
     'App\\Http\\Controllers\\VenuesController' => $baseDir . '/app/Http/Controllers/VenuesController.php',
     'App\\Http\\Controllers\\WardsController' => $baseDir . '/app/Http/Controllers/WardsController.php',
     'App\\Http\\Controllers\\WorkflowsController' => $baseDir . '/app/Http/Controllers/WorkflowsController.php',
-<<<<<<< HEAD
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
+    'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
+    'App\\Http\\Middleware\\AdminMildware' => $baseDir . '/app/Http/Middleware/AdminMildware.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\RedirectIfAuthenticated' => $baseDir . '/app/Http/Middleware/RedirectIfAuthenticated.php',
     'App\\Http\\Middleware\\ResetLastActive' => $baseDir . '/app/Http/Middleware/ResetLastActive.php',
+    'App\\Http\\Middleware\\UsersMilldware' => $baseDir . '/app/Http/Middleware/UsersMilldware.php',
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\AddressBookRequest' => $baseDir . '/app/Http/Requests/AddressBookRequest.php',
     'App\\Http\\Requests\\AffiliationRequest' => $baseDir . '/app/Http/Requests/AffiliationRequest.php',
@@ -218,6 +221,7 @@ return array(
     'App\\TaskActivity' => $baseDir . '/app/TaskActivity.php',
     'App\\TaskCategory' => $baseDir . '/app/TaskCategory.php',
     'App\\TaskCategoryType' => $baseDir . '/app/TaskCategoryType.php',
+    'App\\TaskDateChange' => $baseDir . '/app/TaskDateChange.php',
     'App\\TaskFile' => $baseDir . '/app/TaskFile.php',
     'App\\TaskNote' => $baseDir . '/app/TaskNote.php',
     'App\\TaskOwner' => $baseDir . '/app/TaskOwner.php',
@@ -451,8 +455,6 @@ return array(
     'ConsoleTVs\\Charts\\Builder\\Realtime' => $vendorDir . '/consoletvs/charts/src/Builder/Realtime.php',
     'ConsoleTVs\\Charts\\ChartsServiceProvider' => $vendorDir . '/consoletvs/charts/src/ChartsServiceProvider.php',
     'ConsoleTVs\\Charts\\Facades\\Charts' => $vendorDir . '/consoletvs/charts/src/Facades/Charts.php',
-=======
->>>>>>> develop
     'CreateAffiliationsPositionsTable' => $baseDir . '/database/migrations/2015_11_20_131159_create_affiliations_positions_table.php',
     'CreateAffiliationsTable' => $baseDir . '/database/migrations/2015_11_20_112445_create_affiliations_table.php',
     'CreateAssociatesPoiTables' => $baseDir . '/database/migrations/2016_04_27_121725_create_associates_poi_tables.php',
@@ -1371,7 +1373,6 @@ return array(
     'Hamcrest\\Util' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Util.php',
     'Hamcrest\\Xml\\HasXPath' => $vendorDir . '/hamcrest/hamcrest-php/hamcrest/Hamcrest/Xml/HasXPath.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
-<<<<<<< HEAD
     'Illuminate\\Auth\\Access\\Gate' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/Gate.php',
     'Illuminate\\Auth\\Access\\HandlesAuthorization' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/HandlesAuthorization.php',
     'Illuminate\\Auth\\Access\\Response' => $vendorDir . '/laravel/framework/src/Illuminate/Auth/Access/Response.php',
@@ -1962,9 +1963,7 @@ return array(
     'League\\Fractal\\Serializer\\JsonApiSerializer' => $vendorDir . '/league/fractal/src/Serializer/JsonApiSerializer.php',
     'League\\Fractal\\Serializer\\SerializerAbstract' => $vendorDir . '/league/fractal/src/Serializer/SerializerAbstract.php',
     'League\\Fractal\\TransformerAbstract' => $vendorDir . '/league/fractal/src/TransformerAbstract.php',
-=======
     'Languages' => $baseDir . '/database/seeds/Languages.php',
->>>>>>> develop
     'MigrationCartalystSentinel' => $baseDir . '/database/migrations/2014_07_02_230147_migration_cartalyst_sentinel.php',
     'Mockery' => $vendorDir . '/mockery/mockery/library/Mockery.php',
     'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => $vendorDir . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',

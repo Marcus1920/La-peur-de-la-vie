@@ -34,6 +34,9 @@
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
         <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
+		
+		 <link href="{{ asset('/css/toggles.css') }}" rel="stylesheet">
+        <link href="{{ asset('/css/toggle-themes/toggles-all.css') }}" rel="stylesheet">
 
   <!-- DataTables CSS -->
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -149,11 +152,12 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ asset('/img/SiteBadge3.png') }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ Auth::user()->profile_picture }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">
-                            <li><a href="{{ url('all-messages') }}">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                            {{--<li><a href="{{ url('all-messages') }}">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>--}}
+                             <li><a href="{{ url('user-profile') }}">Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                             <li><a href="{{ url('/auth/logout') }}">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                         </ul>
                         @if (Auth::user())
@@ -259,7 +263,7 @@
 
                 @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
                     <li {{ (Request::is('calendar') ? "class=active" : '') }}>
-                        <a class="sa-side-calendar" href="{{ url('calendar') }}">
+                        <a class="sa-side-calendar" href="{{ url('calendar/events') }}">
                             <span class="menu-item">Calendar</span>
                         </a>
                     </li>
@@ -427,6 +431,8 @@
         <!-- Javascript Libraries -->
         <!-- jQuery -->
 
+		<!--Toggles-->
+        <script src="{{ asset('/js/toggles.js') }}"></script>
 
         <script src="{{ asset('/js/jquery-ui.min.js') }}"></script> <!-- jQuery UI -->
         <script src="{{ asset('/js/jquery.easing.1.3.js') }}"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
