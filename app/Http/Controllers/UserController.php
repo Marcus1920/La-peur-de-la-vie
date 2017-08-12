@@ -3654,6 +3654,38 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
        return [$user];
     }
 
+
+    public function UpdateUserProfile(Request $request){
+
+        //tutsnare.com/upload-files-in-laravel/
+        //laravel-recipes.com/recipes/147/creating-a-directory
+        //github.com/Studio-42/elFinder/wiki/Client-configuration-options#uiOptions
+        $destinationFolder = 'files/profile_picture_'.\Auth::user()->id; 
+
+        if(!\File::exists($destinationFolder)) {
+             $createDir         = \File::makeDirectory($destinationFolder,0777,true);
+        }
+
+        $fileName          = $request->file('profile_picture')->getClientOriginalName();
+        $fileFullPath      = $destinationFolder.'/'.$fileName;
+
+        if(!\File::exists($fileFullPath)) {
+
+            $request->file('profile_picture')->move($destinationFolder,$fileName);
+
+    
+        }
+
+        $user = User::find(\Auth::user()->id);
+        $user->profile_picture = $fileFullPath;
+        $user->save();
+
+
+        \Session::flash('success', 'Case file has been successfully added!');
+        return Redirect()->back();
+
+    }
+
     /**
      * Update the specified resource in storage.
      *
