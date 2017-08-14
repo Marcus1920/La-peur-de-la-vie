@@ -7,6 +7,7 @@ use App\Http\Requests\RolesRequest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\UserRole;
+use App\CalendarGroup;
 use App\services\CalendarGroupService;
 use App\services\CalendarGroupUserService;
 use App\services\CalendarService;
@@ -62,8 +63,35 @@ class RolesController extends Controller
      */
     public function store(RolesRequest $request)
     {
+        $roles = UserRole::orderBy('name')->get();
+        $userGroups = CalendarGroup::orderBy('name')->get();
+
+        foreach ($roles as $role) {
+            foreach ($userGroups as $userGroup) {
+                if($role->name != $userGroup->name){
+                    $tempcalendarGroup = $this->calendarGroup->createCalendarGroup($role->name,$role->name);
+                    $this->calendarGroupUser->createCalendarGroupUser($tempcalendarGroup->id,$role->id);
+
+                    $eventTypes = $this->eventType->getEventTypes();
+                    
+                    foreach ($eventTypes as $eventType) {
+
+                        $data = [
+                            // 'name'              => $eventType->name,
+                            'event_type_id'        => $eventType->id,
+                            'description'          => $eventType->name,
+                            'color'                => $eventType->color,
+                            'calendar_group_id'    => $tempcalendarGroup->id,
+                        ];
+
+                        $this->calendar->storeCalendar($data);
+                    }
+                }
+            }
+             # code...
+        }
         $role             = new UserRole();
-		$role->id         = 26;
+		$role->id         = 27;
         $role->name       = $request['name'];
         $slug             = preg_replace('/\s+/','-',$request['name']);
         $role->slug       = $slug;
