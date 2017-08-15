@@ -11,11 +11,13 @@
             $.fn.dataTableExt.sErrMode = 'throw';
         })
     </script>
+
+
     <div class="tab-pane" id="closure">
         <!-- Responsive Table -->
         <div class="block-area" id="responsiveTable">
             <div class="table-responsive overflow">
-                <h3 class="block-title">Pending Closure Cases</h3>
+                <h3 class="block-title">Pending Closure  mmm Cases</h3>
 
                 <a href="{{ url('creatCase') }}" class="btn btn-info" role="button">Create Case</a>
 
@@ -26,7 +28,80 @@
                         <i class="icon">&#61845;</i>
                     </div>
                 @endif
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2">
 
+                                <div >
+
+                                    <input type="text" class="form-control input-focused" placeholder="Filter From">
+
+
+                                </div>
+
+                        </div>
+                        <div class="col-md-2">
+                            <div >
+
+                                <input type="text" class="form-control input-focused" placeholder="To">
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+
+                                <div >
+                                    <select class="form-control input-focused">
+                                        <option> Select Busines unit </option>
+                                        <option> Select Busines unit </option>
+                                        <option> Select Busines unit </option>
+                                        <option> Select Busines unit </option>
+                                    </select>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div >
+                                <select class="form-control input-focused">
+                                    <option> Select Category  </option>
+
+                                    <option> Select Busines unit </option>
+                                    <option> Select Busines unit </option>
+                                    <option> Select Busines unit </option>
+                                    <option> Select Busines unit </option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div >
+                                <select class="form-control input-focused">
+                                    <option> Select Category  </option>
+                                    <option> Select Busines unit </option>
+                                    <option> Select Busines unit </option>
+                                    <option> Select Busines unit </option>
+                                    <option> Select Busines unit </option>
+                                </select>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="">
+                                <div class="input-group">
+                                    <input type="text" class="form-control input-focused" placeholder="Search for...">
+                                    <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Search</button>
+      </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-6 -->
+                        </div>
+                    </div>
+                </div>
                 <table class="table tile table-striped" id="pendingreferralCasesTable">
                     <thead>
                     <tr>

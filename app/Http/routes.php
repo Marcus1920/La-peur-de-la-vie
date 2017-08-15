@@ -616,7 +616,7 @@ Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCa
 Route::get('pendingClosureCases' , function() {
 
 
-    return view('users.pendingClosureCases');
+    return view('cases.pendingClosureCases');
 }) ;
 
 
