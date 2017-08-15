@@ -49,7 +49,7 @@ use File;
 class UserController extends Controller
 {
 
-     private $user;
+    private $user;
 
 
     public function __construct(User $user)
@@ -59,14 +59,14 @@ class UserController extends Controller
 
     }
 
-     public function list_users()
+    public function list_users()
     {
 
         $userAddUserPermission   = \DB::table('group_permissions')
-                            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
-                            ->where('group_permissions.permission_id','=',31)
-                            ->where('group_permissions.group_id','=',\Auth::user()->role)
-                            ->first();
+            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+            ->where('group_permissions.permission_id','=',31)
+            ->where('group_permissions.group_id','=',\Auth::user()->role)
+            ->first();
 
         return view('users.list',compact('userAddUserPermission'));
 
@@ -85,20 +85,20 @@ class UserController extends Controller
     public function index()
     {
 
-       $userEditUserPermission   = \DB::table('group_permissions')
-                            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
-                            ->where('group_permissions.permission_id','=',32)
-                            ->where('group_permissions.group_id','=',\Auth::user()->role)
-                            ->first();
+        $userEditUserPermission   = \DB::table('group_permissions')
+            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+            ->where('group_permissions.permission_id','=',32)
+            ->where('group_permissions.group_id','=',\Auth::user()->role)
+            ->first();
 
 
 
         $users = \DB::table('users')
-                        ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
-                        ->join('positions', 'users.position', '=', 'positions.id')
-                        ->select(
-                                    \DB::raw(
-                                        "
+            ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
+            ->join('positions', 'users.position', '=', 'positions.id')
+            ->select(
+                \DB::raw(
+                    "
                                          users.id,
                                          users.created_at,
                                          users.name,
@@ -108,37 +108,37 @@ class UserController extends Controller
                                          users_statuses.name as active,
                                          positions.name as position
                                         "
-                                      )
-                                );
+                )
+            );
 
 
-                           return \Datatables::of($users)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt"   href="users/{{$id}}"  >Edit</a>
+        return \Datatables::of($users)
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
 
 
                                         '
-                                )->make(true);
+            )->make(true);
 
 
 
 
-     /*   return \Datatables::of($users)
-                            ->addColumn('actions',function() use ($userEditUserPermission){
-                              if(isset($userEditUserPermission) && $userEditUserPermission->permission_id =="32")
-                              {
-                                  return '
+        /*   return \Datatables::of($users)
+                               ->addColumn('actions',function() use ($userEditUserPermission){
+                                 if(isset($userEditUserPermission) && $userEditUserPermission->permission_id =="32")
+                                 {
+                                     return '
 
-                                    <a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
+                                       <a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
 
-                                        ';
-
-
-                              }
+                                           ';
 
 
-                              }
+                                 }
 
-                                )->make(true);*/
+
+                                 }
+
+                                   )->make(true);*/
     }
 
     /**
@@ -170,9 +170,9 @@ class UserController extends Controller
         if(count($contacts) > 0)
         {
 
-           foreach ($contacts as $contact) {
-            $data[]= array("name"=>"{$contact->name} {$contact->surname}<{$contact->cellphone}<'{$contact->position}'<'{$contact->department}'","id" =>"{$contact->id}");
-           }
+            foreach ($contacts as $contact) {
+                $data[]= array("name"=>"{$contact->name} {$contact->surname}<{$contact->cellphone}<'{$contact->position}'<'{$contact->department}'","id" =>"{$contact->id}");
+            }
 
 
         }
@@ -192,30 +192,30 @@ class UserController extends Controller
 
 
 
-          $objSubSubCategory     = SubSubCategory::where('slug','=',$subSubCategory)->first();
-          $objSubCategory        = SubCategory::find($objSubSubCategory->id);
-          $objCaseResponder      = CaseResponder::where('category','=',$objSubCategory->category)
-                                                  ->where('sub_category','=',$objSubSubCategory->sub_category)
-                                                  ->where('sub_sub_category','=',$objSubSubCategory->id)
-                                                  ->first();
+            $objSubSubCategory     = SubSubCategory::where('slug','=',$subSubCategory)->first();
+            $objSubCategory        = SubCategory::find($objSubSubCategory->id);
+            $objCaseResponder      = CaseResponder::where('category','=',$objSubCategory->category)
+                ->where('sub_category','=',$objSubSubCategory->sub_category)
+                ->where('sub_sub_category','=',$objSubSubCategory->id)
+                ->first();
 
 
-        if ( sizeof($objCaseResponder) > 0) {
+            if ( sizeof($objCaseResponder) > 0) {
 
 
-          $firstResponders      = explode(",",$objCaseResponder->first_responder);
-          $response             = array();
+                $firstResponders      = explode(",",$objCaseResponder->first_responder);
+                $response             = array();
 
 
-          foreach ($firstResponders as $firstResponder) {
+                foreach ($firstResponders as $firstResponder) {
 
 
-             $user = \DB::table('users')
+                    $user = \DB::table('users')
                         ->join('departments', 'users.department', '=', 'departments.id')
                         ->join('positions','users.position','=','positions.id')
                         ->where('users.id','=',$firstResponder)
                         ->select(\DB::raw(
-                                    "
+                            "
                                     `users`.`id`,
                                     `users`.`email`,
                                     (select CONCAT(`users`.`name`, ' ',`users`.`surname`) ) as names,
@@ -223,17 +223,17 @@ class UserController extends Controller
                                     `positions`.`name` as position
 
                                     "
-                                      )
-                                )->first();
+                        )
+                        )->first();
 
-            $response[] = $user;
+                    $response[] = $user;
 
-        }
+                }
 
-        return $response;
+                return $response;
 
 
-        }
+            }
 
 
         }
@@ -254,8 +254,8 @@ class UserController extends Controller
 
 
                 $objCaseResponder   = CaseResponder::where('category','=',$sub_sub_cat->category)
-                                            ->where('sub_category','=',$sub_sub_cat->id)
-                                            ->first();
+                    ->where('sub_category','=',$sub_sub_cat->id)
+                    ->first();
 
 
 
@@ -266,15 +266,15 @@ class UserController extends Controller
                     $firstResponders = explode(",",$objCaseResponder->first_responder);
 
 
-                     foreach ($firstResponders as $firstResponder) {
+                    foreach ($firstResponders as $firstResponder) {
 
 
-                       $user = \DB::table('users')
-                                  ->join('departments', 'users.department', '=', 'departments.id')
-                                  ->join('positions','users.position','=','positions.id')
-                                  ->where('users.id','=',$firstResponder)
-                                  ->select(\DB::raw(
-                                              "
+                        $user = \DB::table('users')
+                            ->join('departments', 'users.department', '=', 'departments.id')
+                            ->join('positions','users.position','=','positions.id')
+                            ->where('users.id','=',$firstResponder)
+                            ->select(\DB::raw(
+                                "
                                               `users`.`id`,
                                               `users`.`email`,
                                               (select CONCAT(`users`.`name`, ' ',`users`.`surname`) ) as names,
@@ -282,16 +282,16 @@ class UserController extends Controller
                                               `positions`.`name` as position
 
                                               "
-                                                )
-                                          )->first();
+                            )
+                            )->first();
 
-                      $response[] = $user;
+                        $response[] = $user;
 
-                      }
+                    }
 
 
 
-              }
+                }
 
 
 
@@ -309,27 +309,27 @@ class UserController extends Controller
 
     }
 
-     public function getPois(Request $request)
+    public function getPois(Request $request)
     {
 
-      $objPois      = Poi::all();
+        $objPois      = Poi::all();
 
 
         if ( sizeof($objPois) > 0) {
 
 
-        $response             = array();
+            $response             = array();
 
 
-          foreach ($objPois as $objPoi) {
+            foreach ($objPois as $objPoi) {
 
 
 
-            $response[] = $objPoi;
+                $response[] = $objPoi;
 
-        }
+            }
 
-        return $response;
+            return $response;
 
 
         }
@@ -354,11 +354,11 @@ class UserController extends Controller
 
         if($responseJson) {
 
-           return \Response::json($nodeObj);
+            return \Response::json($nodeObj);
 
         } else {
 
-           return $nodes_array;
+            return $nodes_array;
 
         }
 
@@ -383,11 +383,11 @@ class UserController extends Controller
 
         if($responseJson) {
 
-           return \Response::json($nodeObj);
+            return \Response::json($nodeObj);
 
         } else {
 
-           return $nodes_array;
+            return $nodes_array;
 
         }
 
@@ -408,15 +408,15 @@ class UserController extends Controller
 
         if(sizeof($response) > 0) {
 
-          $nodes_array["nodes"] = array_merge($responseNodes,$response["nodes"]);
-          $nodes_array["links"] = array_merge($responseNodes,$response["links"]);
+            $nodes_array["nodes"] = array_merge($responseNodes,$response["nodes"]);
+            $nodes_array["links"] = array_merge($responseNodes,$response["links"]);
 
 
         } else {
 
 
-          $nodes_array["nodes"] = $responseNodes;
-          $nodes_array["links"] = $responseNodes;
+            $nodes_array["nodes"] = $responseNodes;
+            $nodes_array["links"] = $responseNodes;
 
         }
 
@@ -428,11 +428,11 @@ class UserController extends Controller
 
         if($responseJson) {
 
-           return \Response::json($nodeObj);
+            return \Response::json($nodeObj);
 
         } else {
 
-           return $nodes_array;
+            return $nodes_array;
 
         }
 
@@ -463,15 +463,15 @@ class UserController extends Controller
 
         if(sizeof($poi) > 0) {
 
-          $userObj          = new \stdClass();
-          $userObj->id      = "m-".$poi->id;
-          $userObj->name    = $poi->name." ".$poi->surname;
-          $userObj->picture = $poipicture->poi_picture_url;
-          $userObj->type    = "MAIN";
-          $userObj->loaded  = TRUE;
-          $responseNodes[]  = $userObj;
-          $main["nodes"]    = $responseNodes;
-          $main["links"]    = $responseLinks;
+            $userObj          = new \stdClass();
+            $userObj->id      = "m-".$poi->id;
+            $userObj->name    = $poi->name." ".$poi->surname;
+            $userObj->picture = $poipicture->poi_picture_url;
+            $userObj->type    = "MAIN";
+            $userObj->loaded  = TRUE;
+            $responseNodes[]  = $userObj;
+            $main["nodes"]    = $responseNodes;
+            $main["links"]    = $responseLinks;
 
 
         }
@@ -481,11 +481,11 @@ class UserController extends Controller
 
         if(sizeof($poi_cases_associations["nodes"]) > 0) {
 
-          $associates_nodes["nodes"] = array_merge($poi_cases_associations["nodes"],$main["nodes"]);
+            $associates_nodes["nodes"] = array_merge($poi_cases_associations["nodes"],$main["nodes"]);
 
         } else {
 
-          $associates_nodes["nodes"] = array_merge($main["nodes"]);
+            $associates_nodes["nodes"] = array_merge($main["nodes"]);
 
         }
 
@@ -502,7 +502,7 @@ class UserController extends Controller
 
 
 
-         return $associates_nodes;
+        return $associates_nodes;
 
 
 
@@ -513,88 +513,88 @@ class UserController extends Controller
     public function poi_associatios_cases($poi,$case) {
 
 
-      $responseNodes        = array();
-      $responseLinks        = array();
-      $response             = array();
-      $nodes                = array();
-      $links                = array();
+        $responseNodes        = array();
+        $responseLinks        = array();
+        $response             = array();
+        $nodes                = array();
+        $links                = array();
 
-      $cases = CasePoi::where('poi_id',$poi)->where('case_id','<>',$case)->get();
+        $cases = CasePoi::where('poi_id',$poi)->where('case_id','<>',$case)->get();
 
-      if(sizeof($cases) > 0) {
-
-
-        foreach ($cases as $case) {
-
-            $result          = $this->construct_poi_case_associate_object($case);
+        if(sizeof($cases) > 0) {
 
 
-            $responseNodes[] = $result["nodeObj"];
-            $responseLinks[] = $result["linkObj"];
+            foreach ($cases as $case) {
+
+                $result          = $this->construct_poi_case_associate_object($case);
 
 
-
-
-        }
+                $responseNodes[] = $result["nodeObj"];
+                $responseLinks[] = $result["linkObj"];
 
 
 
-        $nodes[] = $responseNodes;
-        $links[] = $responseLinks;
 
-        foreach ($nodes as $node) {
-
-             foreach ($node as $value) {
-
-                 $n[] = $value;
-             }
+            }
 
 
-          }
 
-        foreach ($links as $link) {
+            $nodes[] = $responseNodes;
+            $links[] = $responseLinks;
 
-             foreach ($link as $value) {
+            foreach ($nodes as $node) {
 
-                 $l[] = $value;
-             }
+                foreach ($node as $value) {
 
-
-         }
-
-          $uniqueNodes = array();
-          foreach ($n as $object) {
-              if (isset($uniqueNodes[$object->id])) {
-                  continue;
-              }
-              $uniqueNodes[$object->id] = $object;
-          }
-
-          $nodeFinal = array();
-          foreach ($uniqueNodes as $item) {
-
-              $nodeFinal[] = $item;
-
-          }
+                    $n[] = $value;
+                }
 
 
-          $uniqueLinks = array();
-          foreach ($l as $object) {
-              if (isset($uniqueLinks[$object->id])) {
-                  continue;
-              }
-              $uniqueLinks[$object->id] = $object;
-          }
+            }
 
-          $linkFinal = array();
-          foreach ($uniqueLinks as $item) {
+            foreach ($links as $link) {
 
-              $linkFinal[] = $item;
+                foreach ($link as $value) {
 
-          }
+                    $l[] = $value;
+                }
 
-        $response["nodes"] = $nodeFinal;
-        $response["links"] = $linkFinal;
+
+            }
+
+            $uniqueNodes = array();
+            foreach ($n as $object) {
+                if (isset($uniqueNodes[$object->id])) {
+                    continue;
+                }
+                $uniqueNodes[$object->id] = $object;
+            }
+
+            $nodeFinal = array();
+            foreach ($uniqueNodes as $item) {
+
+                $nodeFinal[] = $item;
+
+            }
+
+
+            $uniqueLinks = array();
+            foreach ($l as $object) {
+                if (isset($uniqueLinks[$object->id])) {
+                    continue;
+                }
+                $uniqueLinks[$object->id] = $object;
+            }
+
+            $linkFinal = array();
+            foreach ($uniqueLinks as $item) {
+
+                $linkFinal[] = $item;
+
+            }
+
+            $response["nodes"] = $nodeFinal;
+            $response["links"] = $linkFinal;
 
 
 
@@ -620,7 +620,7 @@ class UserController extends Controller
 
 
 
-      }
+    }
 
 
 
@@ -629,44 +629,44 @@ class UserController extends Controller
 
 
 
-      $objCasePoiAssociates = CasePoi::where('poi_id',$poi_id)->get();//59,56
+        $objCasePoiAssociates = CasePoi::where('poi_id',$poi_id)->get();//59,56
 
 
 
-      $responseNodes        = array();
-      $responseLinks        = array();
-      $response             = array();
-      $nodes                = array();
-      $links                = array();
+        $responseNodes        = array();
+        $responseLinks        = array();
+        $response             = array();
+        $nodes                = array();
+        $links                = array();
 
 
-      $count = 0;
+        $count = 0;
 
 
         if(sizeof($objCasePoiAssociates) > 0) {
 
             foreach ($objCasePoiAssociates as $CasePoiAssociate) {
 
-                  $result          = $this->construct_poi_case_associate_object($CasePoiAssociate);
-                  $responseNodes[] = $result["nodeObj"];
-                  $responseLinks[] = $result["linkObj"];
-                  $poi_associates  = array();
-                  $poi_associates  = $this->getPoiCaseAssociates($CasePoiAssociate->case_id,FALSE,$poi_id);
+                $result          = $this->construct_poi_case_associate_object($CasePoiAssociate);
+                $responseNodes[] = $result["nodeObj"];
+                $responseLinks[] = $result["linkObj"];
+                $poi_associates  = array();
+                $poi_associates  = $this->getPoiCaseAssociates($CasePoiAssociate->case_id,FALSE,$poi_id);
 
 
 
-                  //get all people related to that cases
+                //get all people related to that cases
 
-                  if(sizeof($poi_associates) > 0) {
+                if(sizeof($poi_associates) > 0) {
 
                     $nodes[]  = $poi_associates['nodes'];
                     $links[]  = $poi_associates['links'];
 
-                  }
+                }
 
 
 
-                  $count++;
+                $count++;
 
 
 
@@ -688,25 +688,25 @@ class UserController extends Controller
 
 
 
-             foreach ($nodes as $node) {
+            foreach ($nodes as $node) {
 
-                 foreach ($node as $value) {
+                foreach ($node as $value) {
 
-                     $n[] = $value;
-                 }
+                    $n[] = $value;
+                }
 
 
-             }
+            }
 
             foreach ($links as $link) {
 
-                 foreach ($link as $value) {
+                foreach ($link as $value) {
 
-                     $l[] = $value;
-                 }
+                    $l[] = $value;
+                }
 
 
-             }
+            }
 
             $uniqueNodes = array();
             foreach ($n as $object) {
@@ -743,8 +743,8 @@ class UserController extends Controller
 
 
 
-              $response["nodes"] = $nodeFinal;
-              $response["links"] = $linkFinal;
+            $response["nodes"] = $nodeFinal;
+            $response["links"] = $linkFinal;
 
 
 
@@ -803,15 +803,15 @@ class UserController extends Controller
 
         if(sizeof($case) > 0) {
 
-          $userObj          = new \stdClass();
-          $userObj->id      = "c-m-".$case->id;
-          $userObj->name    = "Case Number: ".$case->id;
-          $userObj->picture = "images/poi/profile/node-icons-case.png";
-          $userObj->type    = "MAIN";
-          $userObj->loaded  = TRUE;
-          $responseNodes[]  = $userObj;
-          $main["nodes"]    = $responseNodes;
-          $main["links"]    = $responseLinks;
+            $userObj          = new \stdClass();
+            $userObj->id      = "c-m-".$case->id;
+            $userObj->name    = "Case Number: ".$case->id;
+            $userObj->picture = "images/poi/profile/node-icons-case.png";
+            $userObj->type    = "MAIN";
+            $userObj->loaded  = TRUE;
+            $responseNodes[]  = $userObj;
+            $main["nodes"]    = $responseNodes;
+            $main["links"]    = $responseLinks;
 
 
         }
@@ -824,11 +824,11 @@ class UserController extends Controller
 
         if(sizeof($case_poi_associates["nodes"]) > 0) {
 
-          $associates_nodes["nodes"] = array_merge($case_poi_associates["nodes"],$main["nodes"]);
+            $associates_nodes["nodes"] = array_merge($case_poi_associates["nodes"],$main["nodes"]);
 
         } else {
 
-          $associates_nodes["nodes"] = array_merge($main["nodes"]);
+            $associates_nodes["nodes"] = array_merge($main["nodes"]);
 
         }
 
@@ -845,7 +845,7 @@ class UserController extends Controller
 
 
 
-         return $associates_nodes;
+        return $associates_nodes;
 
     }
 
@@ -862,7 +862,7 @@ class UserController extends Controller
 
         if(sizeof($case_poi_associates["nodes"]) > 0) {
 
-          $associates_nodes["nodes"] = $case_poi_associates["nodes"];
+            $associates_nodes["nodes"] = $case_poi_associates["nodes"];
 
         }
 
@@ -874,18 +874,18 @@ class UserController extends Controller
         }
 
 
-         return $associates_nodes;
+        return $associates_nodes;
 
     }
 
     public function get_case_my_associates($case_id) {
 
-      $objCasePoiAssociates = CasePoi::where('case_id',$case_id)->get();
-      $responseNodes        = array();
-      $responseLinks        = array();
-      $response             = array();
-      $nodes                = array();
-      $links                = array();
+        $objCasePoiAssociates = CasePoi::where('case_id',$case_id)->get();
+        $responseNodes        = array();
+        $responseLinks        = array();
+        $response             = array();
+        $nodes                = array();
+        $links                = array();
         $poids              = array();
 
 
@@ -893,28 +893,28 @@ class UserController extends Controller
 
             foreach ($objCasePoiAssociates as $CasePoiAssociate) {
 
-                 $poids[]          = $CasePoiAssociate->poi_id;
-                  $result          = $this->construct_case_associate_objects($CasePoiAssociate);
-                  $responseNodes[] = $result["nodeObj"];
-                  $responseLinks[] = $result["linkObj"];
-                  $poi_associates  = $this->getPoisAssociates($CasePoiAssociate->poi_id,FALSE);
-                  $nodes[]         = array_merge($poi_associates['nodes']);
-                  $links[]         = array_merge($poi_associates['links'],$responseLinks);
+                $poids[]          = $CasePoiAssociate->poi_id;
+                $result          = $this->construct_case_associate_objects($CasePoiAssociate);
+                $responseNodes[] = $result["nodeObj"];
+                $responseLinks[] = $result["linkObj"];
+                $poi_associates  = $this->getPoisAssociates($CasePoiAssociate->poi_id,FALSE);
+                $nodes[]         = array_merge($poi_associates['nodes']);
+                $links[]         = array_merge($poi_associates['links'],$responseLinks);
 
 
             }
 
 
 
-             foreach ($nodes as $node) {
+            foreach ($nodes as $node) {
 
-                 foreach ($node as $value) {
+                foreach ($node as $value) {
 
-                     $n[] = $value;
-                 }
+                    $n[] = $value;
+                }
 
 
-             }
+            }
 
 
             $unique = array();
@@ -934,13 +934,13 @@ class UserController extends Controller
 
             foreach ($links as $link) {
 
-                 foreach ($link as $value) {
+                foreach ($link as $value) {
 
-                     $l[] = $value;
-                 }
+                    $l[] = $value;
+                }
 
 
-             }
+            }
 
             $uniqueLinks = array();
             foreach ($l as $object) {
@@ -957,8 +957,8 @@ class UserController extends Controller
 
             }
 
-              $response["nodes"] = array_merge($nodeFinal);
-              $response["links"] = array_merge($linkFinal);
+            $response["nodes"] = array_merge($nodeFinal);
+            $response["links"] = array_merge($linkFinal);
 
 
         } else {
@@ -980,25 +980,25 @@ class UserController extends Controller
 
 
 
-      $objCasePoiAssociates = CasePoi::where('case_id',$case_id)->where('poi_id','<>',$poi_id)->get();
+        $objCasePoiAssociates = CasePoi::where('case_id',$case_id)->where('poi_id','<>',$poi_id)->get();
 
 
-      $responseNodes        = array();
-      $responseLinks        = array();
-      $response             = array();
-      $nodes                = array();
-      $links                = array();
+        $responseNodes        = array();
+        $responseLinks        = array();
+        $response             = array();
+        $nodes                = array();
+        $links                = array();
 
 
         if(sizeof($objCasePoiAssociates) > 0) {
 
             foreach ($objCasePoiAssociates as $CasePoiAssociate) {
 
-                  $result          = $this->construct_case_associate_objects($CasePoiAssociate);
-                  $responseNodes[] = $result["nodeObj"];
-                  $responseLinks[] = $result["linkObj"];
-                  $poiCases        = array();
-                  $poiCases        = $this->getCasePois($CasePoiAssociate->case_id,$CasePoiAssociate->poi_id,$poi_id);
+                $result          = $this->construct_case_associate_objects($CasePoiAssociate);
+                $responseNodes[] = $result["nodeObj"];
+                $responseLinks[] = $result["linkObj"];
+                $poiCases        = array();
+                $poiCases        = $this->getCasePois($CasePoiAssociate->case_id,$CasePoiAssociate->poi_id,$poi_id);
 
 
 
@@ -1006,12 +1006,12 @@ class UserController extends Controller
 
 
 
-                  if(sizeof($poiCases) > 0) {
+                if(sizeof($poiCases) > 0) {
 
 
                     $nodes[]          = $poiCases['nodes'];
                     $links[]          = $poiCases['links'];
-                  }
+                }
 
 
 
@@ -1021,29 +1021,29 @@ class UserController extends Controller
 
 
 
-          $n = array();
-          $l = array();
+            $n = array();
+            $l = array();
 
 
-             foreach ($nodes as $node) {
+            foreach ($nodes as $node) {
 
-                 foreach ($node as $value) {
+                foreach ($node as $value) {
 
-                     $n[] = $value;
-                 }
+                    $n[] = $value;
+                }
 
 
-             }
+            }
 
             foreach ($links as $link) {
 
-                 foreach ($link as $value) {
+                foreach ($link as $value) {
 
-                     $l[] = $value;
-                 }
+                    $l[] = $value;
+                }
 
 
-             }
+            }
 
             $uniqueNodes = array();
             foreach ($n as $object) {
@@ -1105,89 +1105,89 @@ class UserController extends Controller
     public function getCasePois($case_id,$poi,$poi_id) {
 
 
-      //Get all case associates
+        //Get all case associates
 
-      $cases               = CasePoi::where("case_id",$case_id)->where("poi_id",'<>',$poi_id)->get();
-      $parentResponseNodes = array();
-      $parentResponseLinks = array();
-      $associates_nodes    = array();
-
-
-      foreach ($cases as $case) {
+        $cases               = CasePoi::where("case_id",$case_id)->where("poi_id",'<>',$poi_id)->get();
+        $parentResponseNodes = array();
+        $parentResponseLinks = array();
+        $associates_nodes    = array();
 
 
-             $response              = array();
-             $poiObj                = Poi::find($case->poi_id);
-             $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
-             $userObj               = new \stdClass();
-             $userObj->id           = "m-".$poiObj->id;
-             $userObj->name         = $poiObj->name." ".$poiObj->surname;
-             $userObj->picture      = $poipicture->poi_picture_url;
-             $userObj->type         = "Case Association";
-             $userObj->loaded       = TRUE;
-             $linkObj               = new \stdClass();
-             $linkObj->id           = $poiObj->id;
-             $linkObj->from         = "c-m-". $case_id;
-             $linkObj->to           = "m-". $poiObj->id;
-             $linkObj->type         = "Associated";
-             $parentResponseNodes[] = $userObj;
-             $parentResponseLinks[] = $linkObj;
+        foreach ($cases as $case) {
 
 
-             $childrenNodes         = $this->poi_associatios_cases($poiObj->id,$case->case_id);
-
-             if(sizeof($childrenNodes) > 0) {
-
-                  foreach ($childrenNodes['nodes'] as $assoc) {
-
-                   $parentResponseNodes[] = $assoc;
-
-                  }
-
-                  foreach ($childrenNodes['links'] as $link) {
-
-                   $parentResponseLinks[] = $link;
-
-
-                  }
-
-             }
+            $response              = array();
+            $poiObj                = Poi::find($case->poi_id);
+            $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
+            $userObj               = new \stdClass();
+            $userObj->id           = "m-".$poiObj->id;
+            $userObj->name         = $poiObj->name." ".$poiObj->surname;
+            $userObj->picture      = $poipicture->poi_picture_url;
+            $userObj->type         = "Case Association";
+            $userObj->loaded       = TRUE;
+            $linkObj               = new \stdClass();
+            $linkObj->id           = $poiObj->id;
+            $linkObj->from         = "c-m-". $case_id;
+            $linkObj->to           = "m-". $poiObj->id;
+            $linkObj->type         = "Associated";
+            $parentResponseNodes[] = $userObj;
+            $parentResponseLinks[] = $linkObj;
 
 
+            $childrenNodes         = $this->poi_associatios_cases($poiObj->id,$case->case_id);
+
+            if(sizeof($childrenNodes) > 0) {
+
+                foreach ($childrenNodes['nodes'] as $assoc) {
+
+                    $parentResponseNodes[] = $assoc;
+
+                }
+
+                foreach ($childrenNodes['links'] as $link) {
+
+                    $parentResponseLinks[] = $link;
+
+
+                }
+
+            }
 
 
 
 
-      }
+
+
+        }
 
 
 
-    if(sizeof($parentResponseNodes) > 0) {
+        if(sizeof($parentResponseNodes) > 0) {
 
-       $associates_nodes["nodes"] = $parentResponseNodes;
+            $associates_nodes["nodes"] = $parentResponseNodes;
+
+        }
+
+        if(sizeof($parentResponseLinks) > 0) {
+
+            $associates_nodes["links"] = $parentResponseLinks;
+
+        }
+
+
+
+
+
+
+        return $associates_nodes;
+
+
+
 
     }
 
-     if(sizeof($parentResponseLinks) > 0) {
 
-       $associates_nodes["links"] = $parentResponseLinks;
-
-    }
-
-
-
-
-
-
-    return $associates_nodes;
-
-
-
-
-    }
-
-
-  public function construct_case_associate_objects($CasePoiAssociate) {
+    public function construct_case_associate_objects($CasePoiAssociate) {
 
         $response            = array();
         $poiObj              = Poi::find($CasePoiAssociate->poi_id);
@@ -1224,15 +1224,15 @@ class UserController extends Controller
 
         if(sizeof($poi) > 0) {
 
-          $userObj          = new \stdClass();
-          $userObj->id      = "m-".$poi->id;
-          $userObj->name    = $poi->name." ".$poi->surname;
-          $userObj->picture = $poipicture->poi_picture_url;
-          $userObj->type    = "MAIN";
-          $userObj->loaded  = TRUE;
-          $responseNodes[]  = $userObj;
-          $main["nodes"]    = $responseNodes;
-          $main["links"]    = $responseLinks;
+            $userObj          = new \stdClass();
+            $userObj->id      = "m-".$poi->id;
+            $userObj->name    = $poi->name." ".$poi->surname;
+            $userObj->picture = $poipicture->poi_picture_url;
+            $userObj->type    = "MAIN";
+            $userObj->loaded  = TRUE;
+            $responseNodes[]  = $userObj;
+            $main["nodes"]    = $responseNodes;
+            $main["links"]    = $responseLinks;
 
 
         }
@@ -1249,35 +1249,35 @@ class UserController extends Controller
         foreach ($parentObjs as $parent) {
 
 
-             $response              = array();
-             $poiObj                = Poi::find($parent->poi_id);
-             $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
-             $userObj               = new \stdClass();
-             $userObj->id           = "m-".$poiObj->id;
-             $userObj->name         = $poiObj->name." ".$poiObj->surname;
-             $userObj->picture      = $poipicture->poi_picture_url;
-             $userObj->type         = $parent->association_type;
-             $userObj->loaded       = TRUE;
-             $linkObj               = new \stdClass();
-             $linkObj->id           = $poiObj->id;
-             $linkObj->from         = "m-". $parent->associate_id;
-             $linkObj->to           = "m-". $parent->poi_id;
-             $linkObj->type         = $parent->association_type;
-             $parentResponseNodes[] = $userObj;
-             $parentResponseLinks[] = $linkObj;
+            $response              = array();
+            $poiObj                = Poi::find($parent->poi_id);
+            $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
+            $userObj               = new \stdClass();
+            $userObj->id           = "m-".$poiObj->id;
+            $userObj->name         = $poiObj->name." ".$poiObj->surname;
+            $userObj->picture      = $poipicture->poi_picture_url;
+            $userObj->type         = $parent->association_type;
+            $userObj->loaded       = TRUE;
+            $linkObj               = new \stdClass();
+            $linkObj->id           = $poiObj->id;
+            $linkObj->from         = "m-". $parent->associate_id;
+            $linkObj->to           = "m-". $parent->poi_id;
+            $linkObj->type         = $parent->association_type;
+            $parentResponseNodes[] = $userObj;
+            $parentResponseLinks[] = $linkObj;
 
-             $parent_associates     = $this->get_my_associates($parent->poi_id,$parent->associate_id);
+            $parent_associates     = $this->get_my_associates($parent->poi_id,$parent->associate_id);
 
 
             foreach ($parent_associates['nodes'] as $assoc) {
 
-             $parentResponseNodes[] = $assoc;
+                $parentResponseNodes[] = $assoc;
 
             }
 
             foreach ($parent_associates['links'] as $link) {
 
-             $parentResponseLinks[] = $link;
+                $parentResponseLinks[] = $link;
 
 
             }
@@ -1288,13 +1288,13 @@ class UserController extends Controller
 
         if(sizeof($associates["nodes"]) > 0) {
 
-          $associates_nodes["nodes"] = array_merge($associates["nodes"],$main["nodes"]);
+            $associates_nodes["nodes"] = array_merge($associates["nodes"],$main["nodes"]);
 
-          if(sizeof($parentResponseNodes) > 0) {
+            if(sizeof($parentResponseNodes) > 0) {
 
-             $associates_nodes["nodes"] = array_merge($associates["nodes"],$main["nodes"],$parentResponseNodes);
+                $associates_nodes["nodes"] = array_merge($associates["nodes"],$main["nodes"],$parentResponseNodes);
 
-          }
+            }
 
 
         } else {
@@ -1304,7 +1304,7 @@ class UserController extends Controller
 
             if(sizeof($parentResponseNodes) > 0) {
 
-               $associates_nodes["nodes"] = array_merge($main["nodes"],$parentResponseNodes);
+                $associates_nodes["nodes"] = array_merge($main["nodes"],$parentResponseNodes);
 
 
             }
@@ -1316,13 +1316,13 @@ class UserController extends Controller
 
         if(sizeof($associates["links"]) > 0) {
 
-          $associates_nodes["links"] = array_merge($associates["links"],$main["links"]);
+            $associates_nodes["links"] = array_merge($associates["links"],$main["links"]);
 
-          if(sizeof($parentResponseLinks) > 0) {
+            if(sizeof($parentResponseLinks) > 0) {
 
-             $associates_nodes["links"] = array_merge($associates["links"],$main["links"],$parentResponseLinks);
+                $associates_nodes["links"] = array_merge($associates["links"],$main["links"],$parentResponseLinks);
 
-          }
+            }
 
 
         } else {
@@ -1332,7 +1332,7 @@ class UserController extends Controller
 
             if(sizeof($parentResponseLinks) > 0) {
 
-               $associates_nodes["links"] = array_merge($main["links"],$parentResponseLinks);
+                $associates_nodes["links"] = array_merge($main["links"],$parentResponseLinks);
 
 
             }
@@ -1349,13 +1349,13 @@ class UserController extends Controller
 
     public function get_my_associates($poId,$exception = 0) {
 
-      $objAssociates = PoiAssociate::where('poi_id',$poId)->get();
+        $objAssociates = PoiAssociate::where('poi_id',$poId)->get();
 
-       if ($exception > 0) {
+        if ($exception > 0) {
 
-          $objAssociates = PoiAssociate::where('poi_id',$poId)->where('associate_id','<>',$exception)->get();
+            $objAssociates = PoiAssociate::where('poi_id',$poId)->where('associate_id','<>',$exception)->get();
 
-       }
+        }
 
 
         $responseNodes = array();
@@ -1367,26 +1367,26 @@ class UserController extends Controller
 
             foreach ($objAssociates as $associate) {
 
-                  $result          = $this->construct_associate_objects($associate);
-                  $responseNodes[] = $result["nodeObj"];
-                  $responseLinks[] = $result["linkObj"];
-                  $associates      = $this->get_my_associates($associate->associate_id,$exception);
-                  if(sizeof($associates['nodes']) > 0){
+                $result          = $this->construct_associate_objects($associate);
+                $responseNodes[] = $result["nodeObj"];
+                $responseLinks[] = $result["linkObj"];
+                $associates      = $this->get_my_associates($associate->associate_id,$exception);
+                if(sizeof($associates['nodes']) > 0){
 
 
-                      $responseNodes = array_merge($responseNodes,$associates['nodes']);
-                      $responseLinks = array_merge($responseLinks,$associates['links']);
+                    $responseNodes = array_merge($responseNodes,$associates['nodes']);
+                    $responseLinks = array_merge($responseLinks,$associates['links']);
 
 
-                  }
+                }
 
 
             }
 
 
 
-                $response["nodes"] = array_merge($responseNodes);
-                $response["links"] = array_merge($responseLinks);
+            $response["nodes"] = array_merge($responseNodes);
+            $response["links"] = array_merge($responseLinks);
 
 
         } else {
@@ -1404,14 +1404,14 @@ class UserController extends Controller
     }
 
     public function construct_associate_objects($associate) {
-$txtDebug = __CLASS__.".".__FUNCTION__."()";
-	    $txtDebug .= PHP_EOL."  \$associate - ".print_r($associate,1);
+        $txtDebug = __CLASS__.".".__FUNCTION__."()";
+        $txtDebug .= PHP_EOL."  \$associate - ".print_r($associate,1);
         $numberAssoc = PoiAssociate::where('poi_id',$associate->associate_id)->get()->count();
 
 
         $response              = array();
         $poiObj                = Poi::find($associate->associate_id);
-$txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
+        $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 //die("<pre>{$txtDebug}</pre>");
         if ($poiObj) $poipicture            = PoiPicture::where('poi_id',$poiObj->id)->where('poi_picture_type',1)->first();
         $userObj               = new \stdClass();
@@ -1439,8 +1439,8 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
     public function deleteAssociation(Request $request) {
 
 
-      $PoiAssociateObj = PoiAssociate::where("poi_id",$request['poi_id'])->where("associate_id",$request['associate_id'])->first();
-      $PoiAssociateObj->delete();
+        $PoiAssociateObj = PoiAssociate::where("poi_id",$request['poi_id'])->where("associate_id",$request['associate_id'])->first();
+        $PoiAssociateObj->delete();
 
 
     }
@@ -1448,8 +1448,8 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
     public function deleteCaseAssociation(Request $request) {
 
 
-      $PoiCaseAssociateObj = CasePoi::where("poi_id",$request['poi_id'])->where("case_id",$request['case_id'])->first();
-      $PoiCaseAssociateObj->delete();
+        $PoiCaseAssociateObj = CasePoi::where("poi_id",$request['poi_id'])->where("case_id",$request['case_id'])->first();
+        $PoiCaseAssociateObj->delete();
 
 
     }
@@ -1457,23 +1457,23 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
 
 
-     public function searchPOI()
+    public function searchPOI()
     {
 
         $searchString = \Input::get('q');
         $contacts     = \DB::table('poi')
-                        ->whereRaw("CONCAT(`name`, ' ', `surname`, ' ', `email`) LIKE '%{$searchString}%'")
-                        ->select(\DB::raw('*'))
-                        ->get();
+            ->whereRaw("CONCAT(`name`, ' ', `surname`, ' ', `email`) LIKE '%{$searchString}%'")
+            ->select(\DB::raw('*'))
+            ->get();
 
         $data = array();
 
         if(count($contacts) > 0)
         {
 
-           foreach ($contacts as $contact) {
-           $data[]= array("name"=>"{$contact->name} {$contact->surname} <{$contact->email}","id" =>"{$contact->email}","first_name" =>"{$contact->name}","surname" =>"{$contact->surname}","cellphone" =>"{$contact->contact_number_1}","email" => "{$contact->email}");
-           }
+            foreach ($contacts as $contact) {
+                $data[]= array("name"=>"{$contact->name} {$contact->surname} <{$contact->email}","id" =>"{$contact->email}","first_name" =>"{$contact->name}","surname" =>"{$contact->surname}","cellphone" =>"{$contact->contact_number_1}","email" => "{$contact->email}");
+            }
 
 
         }
@@ -1530,15 +1530,15 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             $user->affiliation  = $request['affiliation'];
 
         }
-         else {
+        else {
 
             $user->affiliation = 1;
 
-         }
+        }
 
         $user->save();
 
-         \Session::flash('success', $request['name'].' '.$request['surname'].' user has been added successfully!');
+        \Session::flash('success', $request['name'].' '.$request['surname'].' user has been added successfully!');
 
         $data = array(
             'name'     =>$user->name,
@@ -1561,16 +1561,16 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
     public function ak_img_resize($target, $newcopy, $w, $h, $ext) {
 
-      list($w_orig, $h_orig) = getimagesize($target);
-      $scale_ratio = $w_orig / $h_orig;
-      if (($w / $h) > $scale_ratio) {
-        $w = $h * $scale_ratio;
-      } else {
-        $h = $w / $scale_ratio;
-      }
-      $img = "";
-      $ext = strtolower($ext); if ($ext == "gif"){ $img = imagecreatefromgif($target); } else if($ext =="png"){ $img = imagecreatefrompng($target); } else { $img = imagecreatefromjpeg($target); } $tci = imagecreatetruecolor($w, $h); // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
-      imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig); imagejpeg($tci, $newcopy, 80); }
+        list($w_orig, $h_orig) = getimagesize($target);
+        $scale_ratio = $w_orig / $h_orig;
+        if (($w / $h) > $scale_ratio) {
+            $w = $h * $scale_ratio;
+        } else {
+            $h = $w / $scale_ratio;
+        }
+        $img = "";
+        $ext = strtolower($ext); if ($ext == "gif"){ $img = imagecreatefromgif($target); } else if($ext =="png"){ $img = imagecreatefrompng($target); } else { $img = imagecreatefromjpeg($target); } $tci = imagecreatetruecolor($w, $h); // imagecopyresampled(dst_img, src_img, dst_x, dst_y, src_x, src_y, dst_w, dst_h, src_w, src_h)
+        imagecopyresampled($tci, $img, 0, 0, 0, 0, $w, $h, $w_orig, $h_orig); imagejpeg($tci, $newcopy, 80); }
 
 
 
@@ -1597,51 +1597,51 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
         $poi->position        = (sizeof($position) > 0)?$position->id:0;
 
         if($request['language'] == '0') {
-          $request['language'] = "EN";
+            $request['language'] = "EN";
         }
         $language             = Language::where('slug','=',$request['language'])->first();
         $poi->language        = $language->id;
 
         switch ($request['document_type']) {
-          case '1':
-            $poi->id_number       = $request['id_number'];
-            $poi->doc_expiry_date = $request['doc_expiry_date'];
+            case '1':
+                $poi->id_number       = $request['id_number'];
+                $poi->doc_expiry_date = $request['doc_expiry_date'];
 
-            break;
+                break;
 
-          case '2':
+            case '2':
 
-            $poi->passport_number          = $request['passport_number'];
-            $poi->doc_expiry_date          = $request['doc_expiry_date'];
-            $poi->work_permit              = $request['work_permit'];
-            $poi->work_permit_expiry_date  = $request['work_permit_expiry_date'];
-            $poi->yellow_fever             = $request['yellow_fever'];
-            $poi->yellow_fever_expiry_date = $request['yellow_fever_expiry_date'];
+                $poi->passport_number          = $request['passport_number'];
+                $poi->doc_expiry_date          = $request['doc_expiry_date'];
+                $poi->work_permit              = $request['work_permit'];
+                $poi->work_permit_expiry_date  = $request['work_permit_expiry_date'];
+                $poi->yellow_fever             = $request['yellow_fever'];
+                $poi->yellow_fever_expiry_date = $request['yellow_fever_expiry_date'];
 
-            break;
+                break;
 
 
         }
 
-      $poi->has_driver_licence = $request['has_driver_licence'];
+        $poi->has_driver_licence = $request['has_driver_licence'];
 
-      if ($request['has_driver_licence'] == 2) {
+        if ($request['has_driver_licence'] == 2) {
 
-        $PoiDriverLicence = new PoiDriverLicence();
-
-
-      }
+            $PoiDriverLicence = new PoiDriverLicence();
 
 
+        }
 
-     if ($request['email']==null)
-     {
 
-       $email  = $request['surname'].'@aimsfis.com';
-     }
-     else {
-       $email =    $request['email'];
-     }
+
+        if ($request['email']==null)
+        {
+
+            $email  = $request['surname'].'@aimsfis.com';
+        }
+        else {
+            $email =    $request['email'];
+        }
 
 
         $poi->nationality = $request['nationality'];
@@ -1652,13 +1652,13 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
         if (is_null($request['poi_profile_file'])) {
 
-             $img_url                      = "images/poi/profile/no_photo.png";
-             $poipicture                   = new PoiPicture();
-             $poipicture->poi_id           = $poi->id;
-             $poipicture->poi_picture_type = 1;
-             $poipicture->poi_picture_url  = $img_url;
-             $poipicture->created_by       = \Auth::user()->id;
-             $poipicture->save();
+            $img_url                      = "images/poi/profile/no_photo.png";
+            $poipicture                   = new PoiPicture();
+            $poipicture->poi_id           = $poi->id;
+            $poipicture->poi_picture_type = 1;
+            $poipicture->poi_picture_url  = $img_url;
+            $poipicture->created_by       = \Auth::user()->id;
+            $poipicture->save();
 
 
         } else {
@@ -1676,78 +1676,6 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 400;
-               $hmax         = 400;
-               $kaboom       = explode(".", $file_name);
-               $fileExt      = end($kaboom);
-
-               if(move_uploaded_file($_FILES["poi_profile_file"]["tmp_name"],$img_url)) {
-
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-               }
-
-            }
-
-
-              $poipicture                   = new PoiPicture();
-              $poipicture->poi_id           = $poi->id;
-              $poipicture->poi_picture_type = 1;
-              $poipicture->poi_picture_url  = $img_url;
-              $poipicture->notes            = $request["profile_pic_note"];
-              $poipicture->created_by       = \Auth::user()->id;
-              $poipicture->save();
-
-
-
-        }
-
-
-
-       if($request['training_type']) {
-
-          //Get Array Size
-          $array_size = sizeof($request['training_type']);
-
-          for ($i=0; $i < $array_size ; $i++) {
-
-
-            $training_type                = new PoiTraining();
-            $training_type->poi_id        = $poi->id;
-            $training_type->training_type = $request['training_type'][$i];
-            $training_type->years         = $request['training_years'][$i];
-            $training_type->location      = $request['training_location'][$i];
-            $training_type->created_by    = \Auth::user()->id;
-            $training_type->save();
-
-          }
-
-        }
-
-        //POI SCARS PICTURES
-        if($request['scar_file']) {
-
-          //Get Array Size
-          $scar_array_size = sizeof($request['scar_file']);
-
-          for ($i=0; $i < $scar_array_size ; $i++) {
-
-            $file_name             = $_FILES['scar_file']['name'][$i];
-            $img_url               = "images/poi/scars/$poi->id/".$file_name;
-            $target_file_directory = "images/poi/scars/$poi->id/";
-
-            if(!is_dir($target_file_directory)) {
-
-                File::makeDirectory($target_file_directory, 0777, true,true);
-
-            }
-
-
-            if(is_dir($target_file_directory)) {
-
-
                 $target_file  = $target_file_directory.$file_name;
                 $resized_file = $target_file_directory.$file_name;
                 $wmax         = 400;
@@ -1755,88 +1683,160 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                 $kaboom       = explode(".", $file_name);
                 $fileExt      = end($kaboom);
 
-               if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
+                if(move_uploaded_file($_FILES["poi_profile_file"]["tmp_name"],$img_url)) {
 
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+                    $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
-               }
-
-
-                $poipicture                   = new PoiPicture();
-                $poipicture->poi_id           = $poi->id;
-                $poipicture->poi_picture_type = 2;
-                $poipicture->poi_picture_url  = $img_url;
-                $poipicture->notes            = $request['scar_pic_note'][$i];
-                $poipicture->created_by       = \Auth::user()->id;
-                $poipicture->save();
-
-
-
-
+                }
 
             }
 
-          }
+
+            $poipicture                   = new PoiPicture();
+            $poipicture->poi_id           = $poi->id;
+            $poipicture->poi_picture_type = 1;
+            $poipicture->poi_picture_url  = $img_url;
+            $poipicture->notes            = $request["profile_pic_note"];
+            $poipicture->created_by       = \Auth::user()->id;
+            $poipicture->save();
+
+
+
+        }
+
+
+
+        if($request['training_type']) {
+
+            //Get Array Size
+            $array_size = sizeof($request['training_type']);
+
+            for ($i=0; $i < $array_size ; $i++) {
+
+
+                $training_type                = new PoiTraining();
+                $training_type->poi_id        = $poi->id;
+                $training_type->training_type = $request['training_type'][$i];
+                $training_type->years         = $request['training_years'][$i];
+                $training_type->location      = $request['training_location'][$i];
+                $training_type->created_by    = \Auth::user()->id;
+                $training_type->save();
+
+            }
+
+        }
+
+        //POI SCARS PICTURES
+        if($request['scar_file']) {
+
+            //Get Array Size
+            $scar_array_size = sizeof($request['scar_file']);
+
+            for ($i=0; $i < $scar_array_size ; $i++) {
+
+                $file_name             = $_FILES['scar_file']['name'][$i];
+                $img_url               = "images/poi/scars/$poi->id/".$file_name;
+                $target_file_directory = "images/poi/scars/$poi->id/";
+
+                if(!is_dir($target_file_directory)) {
+
+                    File::makeDirectory($target_file_directory, 0777, true,true);
+
+                }
+
+
+                if(is_dir($target_file_directory)) {
+
+
+                    $target_file  = $target_file_directory.$file_name;
+                    $resized_file = $target_file_directory.$file_name;
+                    $wmax         = 400;
+                    $hmax         = 400;
+                    $kaboom       = explode(".", $file_name);
+                    $fileExt      = end($kaboom);
+
+                    if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
+
+                        $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+                    }
+
+
+                    $poipicture                   = new PoiPicture();
+                    $poipicture->poi_id           = $poi->id;
+                    $poipicture->poi_picture_type = 2;
+                    $poipicture->poi_picture_url  = $img_url;
+                    $poipicture->notes            = $request['scar_pic_note'][$i];
+                    $poipicture->created_by       = \Auth::user()->id;
+                    $poipicture->save();
+
+
+
+
+
+                }
+
+            }
 
         }
 
 
         if($request['tatoo_file']) {
 
-          //Get Array Size
-          $scar_array_size = sizeof($request['tatoo_file']);
+            //Get Array Size
+            $scar_array_size = sizeof($request['tatoo_file']);
 
-          for ($i=0; $i < $scar_array_size ; $i++) {
+            for ($i=0; $i < $scar_array_size ; $i++) {
 
-            $file_name             = $_FILES['tatoo_file']['name'][$i];
-            $img_url               = "images/poi/tatoos/$poi->id/".$file_name;
-            $target_file_directory = "images/poi/tatoos/$poi->id/";
+                $file_name             = $_FILES['tatoo_file']['name'][$i];
+                $img_url               = "images/poi/tatoos/$poi->id/".$file_name;
+                $target_file_directory = "images/poi/tatoos/$poi->id/";
 
-            if(!is_dir($target_file_directory)) {
+                if(!is_dir($target_file_directory)) {
 
-                File::makeDirectory($target_file_directory, 0777, true,true);
+                    File::makeDirectory($target_file_directory, 0777, true,true);
+
+                }
+
+
+                if(is_dir($target_file_directory)) {
+
+
+                    $target_file  = $target_file_directory.$file_name;
+                    $resized_file = $target_file_directory.$file_name;
+                    $wmax         = 600;
+                    $hmax         = 480;
+                    $kaboom       = explode(".", $file_name);
+                    $fileExt      = end($kaboom);
+
+                    if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
+
+                        $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+                    }
+
+
+                    $poipicture                   = new PoiPicture();
+                    $poipicture->poi_id           = $poi->id;
+                    $poipicture->poi_picture_type = 3;
+                    $poipicture->poi_picture_url  = $img_url;
+                    $poipicture->notes            = $request['tatoo_pic_note'][$i];
+                    $poipicture->created_by       = \Auth::user()->id;
+                    $poipicture->save();
+
+
+
+
+
+                }
 
             }
-
-
-            if(is_dir($target_file_directory)) {
-
-
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
-                $kaboom       = explode(".", $file_name);
-                $fileExt      = end($kaboom);
-
-               if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
-
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-               }
-
-
-                $poipicture                   = new PoiPicture();
-                $poipicture->poi_id           = $poi->id;
-                $poipicture->poi_picture_type = 3;
-                $poipicture->poi_picture_url  = $img_url;
-                $poipicture->notes            = $request['tatoo_pic_note'][$i];
-                $poipicture->created_by       = \Auth::user()->id;
-                $poipicture->save();
-
-
-
-
-
-            }
-
-          }
 
         }
 
 
 
-         if (is_null($request['poi_doc_file'])) {
+        if (is_null($request['poi_doc_file'])) {
 
             $img_url = "default";
 
@@ -1848,38 +1848,38 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             $target_file_directory = "images/poi/ID/$poi->id/";
 
 
-             if (!file_exists($target_file_directory)) {
+            if (!file_exists($target_file_directory)) {
 
-                 File::makeDirectory($target_file_directory, 0777, true,true);
+                File::makeDirectory($target_file_directory, 0777, true,true);
 
-             }
+            }
 
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
+                $target_file  = $target_file_directory.$file_name;
+                $resized_file = $target_file_directory.$file_name;
+                $wmax         = 600;
+                $hmax         = 480;
                 $kaboom       = explode(".", $file_name);
                 $fileExt      = end($kaboom);
 
-               if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
+                if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
 
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+                    $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
-               }
+                }
 
             }
 
 
-              $poipicture                   = new PoiPicture();
-              $poipicture->poi_id           = $poi->id;
-              $poipicture->poi_picture_type = 4;
-              $poipicture->poi_picture_url  = $img_url;
-              $poipicture->notes            = $request["id_pic_note"];
-              $poipicture->created_by       = \Auth::user()->id;
-              $poipicture->save();
+            $poipicture                   = new PoiPicture();
+            $poipicture->poi_id           = $poi->id;
+            $poipicture->poi_picture_type = 4;
+            $poipicture->poi_picture_url  = $img_url;
+            $poipicture->notes            = $request["id_pic_note"];
+            $poipicture->created_by       = \Auth::user()->id;
+            $poipicture->save();
 
 
 
@@ -1906,29 +1906,29 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
+                $target_file  = $target_file_directory.$file_name;
+                $resized_file = $target_file_directory.$file_name;
+                $wmax         = 600;
+                $hmax         = 480;
                 $kaboom       = explode(".", $file_name);
                 $fileExt      = end($kaboom);
 
-               if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"],$img_url)) {
+                if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"],$img_url)) {
 
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+                    $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
-               }
+                }
 
             }
 
 
-              $poipicture                   = new PoiPicture();
-              $poipicture->poi_id           = $poi->id;
-              $poipicture->poi_picture_type = 5;
-              $poipicture->poi_picture_url  = $img_url;
-              $poipicture->notes            = "";
-              $poipicture->created_by       = \Auth::user()->id;
-              $poipicture->save();
+            $poipicture                   = new PoiPicture();
+            $poipicture->poi_id           = $poi->id;
+            $poipicture->poi_picture_type = 5;
+            $poipicture->poi_picture_url  = $img_url;
+            $poipicture->notes            = "";
+            $poipicture->created_by       = \Auth::user()->id;
+            $poipicture->save();
 
 
 
@@ -1937,15 +1937,15 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
         if(!is_null($request['drivers_licence'])) {
 
-                    for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) {
+            for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) {
 
-                  $PoiDriverLicence                              = new PoiDriverLicence();
-                  $PoiDriverLicence->poi_id                      = $poi->id;
-                  $PoiDriverLicence->driver_licence_code         = $request['drivers_licence'][$i];
-                  $PoiDriverLicence->drivers_licence_date_issued = $request['drivers_licence_date_issued'][$i];
-                  $PoiDriverLicence->drivers_licence_expiry_date = $request['drivers_licence_expiry_date'][$i];
-                  $PoiDriverLicence->created_by                  = \Auth::user()->id;
-                  $PoiDriverLicence->save();
+                $PoiDriverLicence                              = new PoiDriverLicence();
+                $PoiDriverLicence->poi_id                      = $poi->id;
+                $PoiDriverLicence->driver_licence_code         = $request['drivers_licence'][$i];
+                $PoiDriverLicence->drivers_licence_date_issued = $request['drivers_licence_date_issued'][$i];
+                $PoiDriverLicence->drivers_licence_expiry_date = $request['drivers_licence_expiry_date'][$i];
+                $PoiDriverLicence->created_by                  = \Auth::user()->id;
+                $PoiDriverLicence->save();
 
             }
 
@@ -1958,11 +1958,11 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             for ($i=0; $i < sizeof($request['landline']) ; $i++) {
 
-                  $PoiContactNumber                 = new PoiContactNumber();
-                  $PoiContactNumber->poi_id         = $poi->id;
-                  $PoiContactNumber->contact_number = $request['landline'][$i];
-                  $PoiContactNumber->type           = 1;
-                  $PoiContactNumber->save();
+                $PoiContactNumber                 = new PoiContactNumber();
+                $PoiContactNumber->poi_id         = $poi->id;
+                $PoiContactNumber->contact_number = $request['landline'][$i];
+                $PoiContactNumber->type           = 1;
+                $PoiContactNumber->save();
 
             }
 
@@ -1974,13 +1974,13 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             for ($i=0; $i < sizeof($request['mobile']) ; $i++) {
 
-                  $PoiContactNumber                 = new PoiContactNumber();
-                  $PoiContactNumber->poi_id         = $poi->id;
-                  $PoiContactNumber->contact_number = $request['mobile'][$i];
-                  $PoiContactNumber->imei_number    = $request['imei_number'][$i];
-                  $PoiContactNumber->phone_type     = $request['phone_type'][$i];
-                  $PoiContactNumber->type           = 2;
-                  $PoiContactNumber->save();
+                $PoiContactNumber                 = new PoiContactNumber();
+                $PoiContactNumber->poi_id         = $poi->id;
+                $PoiContactNumber->contact_number = $request['mobile'][$i];
+                $PoiContactNumber->imei_number    = $request['imei_number'][$i];
+                $PoiContactNumber->phone_type     = $request['phone_type'][$i];
+                $PoiContactNumber->type           = 2;
+                $PoiContactNumber->save();
 
             }
 
@@ -1989,40 +1989,40 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
 
         //Residential Address
-       if(!is_null($request['resindential_line_1'])) {
+        if(!is_null($request['resindential_line_1'])) {
 
 
-          for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) {
+            for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) {
 
-            $res_address          = new PoiAddress();
-            $res_address->line_1  = $request['resindential_line_1'][$i];
-            $res_address->gps_lng = $request['reslong'][$i];
-            $res_address->gps_lat = $request['reslat'][$i];
-            $res_address->poi_id  = $poi->id;
-            $res_address->type    = 1;
-            $res_address->save();
+                $res_address          = new PoiAddress();
+                $res_address->line_1  = $request['resindential_line_1'][$i];
+                $res_address->gps_lng = $request['reslong'][$i];
+                $res_address->gps_lat = $request['reslat'][$i];
+                $res_address->poi_id  = $poi->id;
+                $res_address->type    = 1;
+                $res_address->save();
+
+            }
+
+
 
         }
 
 
-
-       }
-
-
-      if(!is_null($request['workaddress_line_1'])) {
+        if(!is_null($request['workaddress_line_1'])) {
 
 
             for ($i=0; $i < sizeof($request['workaddress_line_1']) ; $i++) {
 
-                    $res_address          = new PoiAddress();
-                    $res_address->company = $request['company'][$i];
-                    $res_address->period  = $request['period'][$i];
-                    $res_address->line_1  = $request['workaddress_line_1'][$i];
-                    $res_address->gps_lng = $request['worklong'][$i];
-                    $res_address->gps_lat = $request['worklat'][$i];
-                    $res_address->poi_id  = $poi->id;
-                    $res_address->type    = 2;
-                    $res_address->save();
+                $res_address          = new PoiAddress();
+                $res_address->company = $request['company'][$i];
+                $res_address->period  = $request['period'][$i];
+                $res_address->line_1  = $request['workaddress_line_1'][$i];
+                $res_address->gps_lng = $request['worklong'][$i];
+                $res_address->gps_lat = $request['worklat'][$i];
+                $res_address->poi_id  = $poi->id;
+                $res_address->type    = 2;
+                $res_address->save();
 
             }
 
@@ -2033,14 +2033,14 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
             for ($i=0; $i < sizeof($request['travel_movement']) ; $i++) {
 
-                  $PoiTravelMovement             = new PoiTravelMovement();
-                  $PoiTravelMovement->poi_id     = $poi->id;
-                  $PoiTravelMovement->name       = $request['travel_movement'][$i];
-                  $PoiTravelMovement->gps_lng    = $request['long'][$i];
-                  $PoiTravelMovement->gps_lat    = $request['lat'][$i];
-                  $PoiTravelMovement->date_seen  = $request['date_seen'][$i];
-                  $PoiTravelMovement->created_by = \Auth::user()->id;
-                  $PoiTravelMovement->save();
+                $PoiTravelMovement             = new PoiTravelMovement();
+                $PoiTravelMovement->poi_id     = $poi->id;
+                $PoiTravelMovement->name       = $request['travel_movement'][$i];
+                $PoiTravelMovement->gps_lng    = $request['long'][$i];
+                $PoiTravelMovement->gps_lat    = $request['lat'][$i];
+                $PoiTravelMovement->date_seen  = $request['date_seen'][$i];
+                $PoiTravelMovement->created_by = \Auth::user()->id;
+                $PoiTravelMovement->save();
 
 
             }
@@ -2048,9 +2048,9 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
         }
 
-         if(!is_null($request['account_number'])) {
+        if(!is_null($request['account_number'])) {
 
-          for ($i=0; $i < sizeof($request['account_number']) ; $i++) {
+            for ($i=0; $i < sizeof($request['account_number']) ; $i++) {
 
                 $PoiBankDetail                 = new PoiBankDetail();
                 $PoiBankDetail->poi_id         = $poi->id;
@@ -2060,14 +2060,14 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                 $PoiBankDetail->created_by     = \Auth::user()->id;
                 $PoiBankDetail->save();
 
-          }
+            }
         }
 
 
 
         if(!is_null($request['crime_description'])) {
 
-          for ($i=0; $i < sizeof($request['crime_description']) ; $i++) {
+            for ($i=0; $i < sizeof($request['crime_description']) ; $i++) {
 
                 $PoiCriminalRecord                                      = new PoiCriminalRecord();
                 $PoiCriminalRecord->poi_id                              = $poi->id;
@@ -2080,23 +2080,23 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                 $PoiCriminalRecord->created_by      = \Auth::user()->id;
                 $PoiCriminalRecord->save();
 
-          }
+            }
         }
 
 
 
         if(!is_null($request['vehicle_make'])) {
 
-              for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) {
+            for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) {
 
-                  $PoiVehicle                = new PoiVehicle();
-                  $PoiVehicle->poi_id        = $poi->id;
-                  $PoiVehicle->vehicle_make  = $request['vehicle_make'][$i];
-                  $PoiVehicle->vehicle_color = $request['vehicle_color'][$i];
-                  $PoiVehicle->vehicle_vin   = $request['vehicle_vin'][$i];
-                  $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];
-                  $PoiVehicle->created_by    = \Auth::user()->id;
-                  $PoiVehicle->save();
+                $PoiVehicle                = new PoiVehicle();
+                $PoiVehicle->poi_id        = $poi->id;
+                $PoiVehicle->vehicle_make  = $request['vehicle_make'][$i];
+                $PoiVehicle->vehicle_color = $request['vehicle_color'][$i];
+                $PoiVehicle->vehicle_vin   = $request['vehicle_vin'][$i];
+                $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];
+                $PoiVehicle->created_by    = \Auth::user()->id;
+                $PoiVehicle->save();
 
             }
 
@@ -2112,10 +2112,10 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
     public function list_poi()
     {
-      $pois = \DB::table('poi')
-                        ->select(
-                                    \DB::raw(
-                                        "
+        $pois = \DB::table('poi')
+            ->select(
+                \DB::raw(
+                    "
                                          poi.id,
                                          poi.name,
                                          poi.surname,
@@ -2125,17 +2125,17 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
                                          poi.gender
 
                                         "
-                                      )
-                                );
+                )
+            );
 
         return \Datatables::of($pois)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt" href="edit-poi-user/{{$id}}" >View / Edit</a>
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" href="edit-poi-user/{{$id}}" >View / Edit</a>
                                                    <a class="btn btn-xs btn-alt" href="view-poi-associates/{{$id}}" >View / Add Associates</a>
                                                    <a class="btn btn-xs btn-alt" href="view-poi-cases-associates/{{$id}}" >View  Cases Association</a>
 
 
                                         '
-                                )->make(true);
+            )->make(true);
 
 
     }
@@ -2143,12 +2143,12 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
     public function edit_poi($id) {
 
-    $poi = \DB::table('poi')
-                        ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
-                        ->where('poi.id',$id)
-                        ->select(
-                                    \DB::raw(
-                                        "
+        $poi = \DB::table('poi')
+            ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
+            ->where('poi.id',$id)
+            ->select(
+                \DB::raw(
+                    "
                                          poi.id,
                                          poi.name,
                                          poi.surname,
@@ -2180,119 +2180,119 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
 
                                         "
-                                      )
-                            )->first();
+                )
+            )->first();
 
 
 
 
-      //Determine if POI has Scar
-      $poiscar = PoiPicture::where('poi_id',$id)
-                              ->where('poi_picture_type',3)->count();
+        //Determine if POI has Scar
+        $poiscar = PoiPicture::where('poi_id',$id)
+            ->where('poi_picture_type',3)->count();
 
-      if($poiscar > 0) {
+        if($poiscar > 0) {
 
-          $poiscarpics = PoiPicture::where('poi_id',$id)
-                                        ->where('poi_picture_type',3)->get();
-
-
-          $poi->scars = $poiscarpics;
-
-      }
-
-      $poi_id_query = PoiPicture::where('poi_id',$id)
-                              ->where('poi_picture_type',1)->count();
+            $poiscarpics = PoiPicture::where('poi_id',$id)
+                ->where('poi_picture_type',3)->get();
 
 
+            $poi->scars = $poiscarpics;
 
+        }
 
-      if($poi_id_query > 0) {
-
-          $poi_query = PoiPicture::where('poi_id',$id)
-                                        ->where('poi_picture_type',1)->first();
-
-          $poi->poidocid = $poi_query;
-
-      }
+        $poi_id_query = PoiPicture::where('poi_id',$id)
+            ->where('poi_picture_type',1)->count();
 
 
 
-      $poi_vehicle = PoiPicture::where('poi_id',$id)
-                              ->where('poi_picture_type',5)->count();
+
+        if($poi_id_query > 0) {
+
+            $poi_query = PoiPicture::where('poi_id',$id)
+                ->where('poi_picture_type',1)->first();
+
+            $poi->poidocid = $poi_query;
+
+        }
 
 
+
+        $poi_vehicle = PoiPicture::where('poi_id',$id)
+            ->where('poi_picture_type',5)->count();
 
 
 
 
 
 
-      //Determine if POI has tatoos
-      $poitatoo = PoiPicture::where('poi_id',$id)
-                              ->where('poi_picture_type',2)->count();
-
-      if($poitatoo > 0) {
 
 
-          $poitatoopics = PoiPicture::where('poi_id',$id)
-                                        ->where('poi_picture_type',2)->get();
+        //Determine if POI has tatoos
+        $poitatoo = PoiPicture::where('poi_id',$id)
+            ->where('poi_picture_type',2)->count();
 
-          $poi->tatoos = $poitatoopics;
-
-
-       }
-
-      //Determine if POI has tatoos
-       $poidriver = PoiDriverLicence::where('poi_id',$id)->count();
-
-       if($poidriver > 0) {
-
-          $poidrivers          = PoiDriverLicence::where('poi_id',$id)->get();
-          $poi->driverslicence = $poidrivers;
+        if($poitatoo > 0) {
 
 
-       }
+            $poitatoopics = PoiPicture::where('poi_id',$id)
+                ->where('poi_picture_type',2)->get();
+
+            $poi->tatoos = $poitatoopics;
 
 
-      //Determine if POI has tatoos
-      $poiidprofile = PoiPicture::where('poi_id',$id)
-                              ->where('poi_picture_type',4)->count();
+        }
+
+        //Determine if POI has tatoos
+        $poidriver = PoiDriverLicence::where('poi_id',$id)->count();
+
+        if($poidriver > 0) {
+
+            $poidrivers          = PoiDriverLicence::where('poi_id',$id)->get();
+            $poi->driverslicence = $poidrivers;
 
 
-      if($poiidprofile > 0) {
-
-          $poidprofileD = PoiPicture::where('poi_id',$id)
-                                        ->where('poi_picture_type',4)->first();
-          $poi->idpic = $poidprofileD;
+        }
 
 
-       }
+        //Determine if POI has tatoos
+        $poiidprofile = PoiPicture::where('poi_id',$id)
+            ->where('poi_picture_type',4)->count();
+
+
+        if($poiidprofile > 0) {
+
+            $poidprofileD = PoiPicture::where('poi_id',$id)
+                ->where('poi_picture_type',4)->first();
+            $poi->idpic = $poidprofileD;
+
+
+        }
 
 
         //Determine if POI has landline
-       $poicontactlandline = PoiContactNumber::where('poi_id',$id)->where('type',1)->count();
+        $poicontactlandline = PoiContactNumber::where('poi_id',$id)->where('type',1)->count();
 
-       if($poicontactlandline > 0) {
+        if($poicontactlandline > 0) {
 
-          $poilandines   = PoiContactNumber::where('poi_id',$id)->where('type',1)->get();
-          $poi->landline = $poilandines;
+            $poilandines   = PoiContactNumber::where('poi_id',$id)->where('type',1)->get();
+            $poi->landline = $poilandines;
 
 
-       }
+        }
 
-      //Determine if POI has vehicles
-       $poiVehicles = PoiVehicle::where('poi_id',$id)->count();
+        //Determine if POI has vehicles
+        $poiVehicles = PoiVehicle::where('poi_id',$id)->count();
 
-       if($poiVehicles > 0) {
+        if($poiVehicles > 0) {
 
-          $poiVehicles   = poiVehicle::where('poi_id',$id)->get();
+            $poiVehicles   = poiVehicle::where('poi_id',$id)->get();
 
-           $poiVehicles = \DB::table('poi_pictures')
-                        ->join('poi_vehicles', 'poi_vehicles.poi_id', '=', 'poi_pictures.poi_id')
-                        ->where('poi_pictures.poi_picture_type','=',5)
-                        ->select(
-                                    \DB::raw(
-                                        "
+            $poiVehicles = \DB::table('poi_pictures')
+                ->join('poi_vehicles', 'poi_vehicles.poi_id', '=', 'poi_pictures.poi_id')
+                ->where('poi_pictures.poi_picture_type','=',5)
+                ->select(
+                    \DB::raw(
+                        "
                                          poi_vehicles.id,
                                          poi_vehicles.poi_id,
                                          poi_vehicles.vehicle_make,
@@ -2306,74 +2306,74 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
 
                                         "
-                                      )
-                            )->get();
+                    )
+                )->get();
 
 
 
-          $poi->vehicles = $poiVehicles;
+            $poi->vehicles = $poiVehicles;
 
 
-       }
+        }
 
-      //Determine if POI has mobile
-       $poicontactmobile = PoiContactNumber::where('poi_id',$id)->where('type',2)->count();
+        //Determine if POI has mobile
+        $poicontactmobile = PoiContactNumber::where('poi_id',$id)->where('type',2)->count();
 
-       if($poicontactmobile > 0) {
+        if($poicontactmobile > 0) {
 
-          $poicontactmobiles = PoiContactNumber::where('poi_id',$id)->where('type',2)->get();
-          $poi->mobilenumber = $poicontactmobiles;
-
-
-       }
-
-      //Determine if POI has residential address
-       $poiresidendialaddress = PoiAddress::where('poi_id',$id)->where('type',1)->count();
-
-       if($poiresidendialaddress > 0) {
-
-          $residendialaddress = PoiAddress::where('poi_id',$id)->where('type',1)->get();
-          $poi->residential   = $residendialaddress;
+            $poicontactmobiles = PoiContactNumber::where('poi_id',$id)->where('type',2)->get();
+            $poi->mobilenumber = $poicontactmobiles;
 
 
-       }
+        }
 
-       //Determine if POI has work address
-       $poiworkaddress = PoiAddress::where('poi_id',$id)->where('type',2)->count();
-       if($poiworkaddress > 0) {
+        //Determine if POI has residential address
+        $poiresidendialaddress = PoiAddress::where('poi_id',$id)->where('type',1)->count();
 
-          $workaddress = PoiAddress::where('poi_id',$id)->where('type',2)->get();
-          $poi->work   = $workaddress;
+        if($poiresidendialaddress > 0) {
 
-       }
+            $residendialaddress = PoiAddress::where('poi_id',$id)->where('type',1)->get();
+            $poi->residential   = $residendialaddress;
 
-      //Determine if POI has travel movement
-       $poitravelmovement = PoiTravelMovement::where('poi_id',$id)->count();
-       if($poitravelmovement > 0) {
 
-          $travel = PoiTravelMovement::where('poi_id',$id)->get();
-          $poi->travelmovement   = $travel;
+        }
 
-       }
+        //Determine if POI has work address
+        $poiworkaddress = PoiAddress::where('poi_id',$id)->where('type',2)->count();
+        if($poiworkaddress > 0) {
 
-       //Determine if POI has travel movement
-       $PoiCriminalRecord = PoiCriminalRecord::where('poi_id',$id)->count();
-       if($PoiCriminalRecord > 0) {
+            $workaddress = PoiAddress::where('poi_id',$id)->where('type',2)->get();
+            $poi->work   = $workaddress;
 
-          $criminal = PoiCriminalRecord::where('poi_id',$id)->get();
-          $poi->criminal_records   = $criminal;
+        }
 
-       }
+        //Determine if POI has travel movement
+        $poitravelmovement = PoiTravelMovement::where('poi_id',$id)->count();
+        if($poitravelmovement > 0) {
+
+            $travel = PoiTravelMovement::where('poi_id',$id)->get();
+            $poi->travelmovement   = $travel;
+
+        }
+
+        //Determine if POI has travel movement
+        $PoiCriminalRecord = PoiCriminalRecord::where('poi_id',$id)->count();
+        if($PoiCriminalRecord > 0) {
+
+            $criminal = PoiCriminalRecord::where('poi_id',$id)->get();
+            $poi->criminal_records   = $criminal;
+
+        }
 
 
         //Determine if POI has training
-       $PoiTraining = PoiTraining::where('poi_id',$id)->count();
-       if($PoiTraining > 0) {
+        $PoiTraining = PoiTraining::where('poi_id',$id)->count();
+        if($PoiTraining > 0) {
 
-          $training       = PoiTraining::where('poi_id',$id)->get();
-          $poi->trainings = $training;
+            $training       = PoiTraining::where('poi_id',$id)->get();
+            $poi->trainings = $training;
 
-       }
+        }
 
 
         //Determine if POI has banking details
@@ -2392,13 +2392,13 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
 
     public function view_poi_associates($id) {
 
-$txtDebug = __CLASS__.".".__FUNCTION__."(\$id) \$id - {$id}";
-    $poi = \DB::table('poi')
-                        ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
-                        ->where('poi.id','=',$id)
-                        ->select(
-                                    \DB::raw(
-                                        "
+        $txtDebug = __CLASS__.".".__FUNCTION__."(\$id) \$id - {$id}";
+        $poi = \DB::table('poi')
+            ->join('poi_pictures', 'poi.id', '=', 'poi_pictures.poi_id')
+            ->where('poi.id','=',$id)
+            ->select(
+                \DB::raw(
+                    "
                                          poi.id,
                                          poi.name,
                                          poi.surname,
@@ -2420,77 +2420,77 @@ $txtDebug = __CLASS__.".".__FUNCTION__."(\$id) \$id - {$id}";
 
 
                                         "
-                                      )
-                            )->first();
+                )
+            )->first();
 
-      $poi_id_query = PoiPicture::where('poi_id',$id)
-                              ->where('poi_picture_type',1)->count();
-
-
+        $poi_id_query = PoiPicture::where('poi_id',$id)
+            ->where('poi_picture_type',1)->count();
 
 
-      if($poi_id_query > 0) {
-
-          $poi_query = PoiPicture::where('poi_id',$id)
-                                        ->where('poi_picture_type',1)->first();
-
-          $poi->poidocid = $poi_query;
-
-      }
 
 
-      //Determine if POI has associates
+        if($poi_id_query > 0) {
 
-       $poi__associate_query = PoiAssociate::where('poi_id',$id)->count();
-       $results = array();
+            $poi_query = PoiPicture::where('poi_id',$id)
+                ->where('poi_picture_type',1)->first();
 
-	    $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
-	    //die("<pre>{$txtDebug}</pre>");
-      if($poi__associate_query > 0) {
+            $poi->poidocid = $poi_query;
 
-
-          $associates = PoiAssociate::where('poi_id',$id)->get();
-
-          foreach ($associates as $associate) {
-
-               $assoc_pic_object                  = PoiPicture::where('poi_id',$associate->associate_id)->first();
-               $assoc_poi_object                  = Poi::find($associate->associate_id);
-	          $txtDebug .= PHP_EOL."  \$assoc_pic_object - ".print_r($assoc_pic_object,1);
-	          $txtDebug .= PHP_EOL."  \$assoc_poi_object - ".print_r($assoc_poi_object,1);
-	          //die("<pre>{$txtDebug}</pre>");
-               if ($assoc_poi_object) $assoc_poi_object->poi_picture_url = $assoc_pic_object->poi_picture_url;
-
-               $sub_results = array();
-
-               //Sub - Associates
-               $sub_associates_no                 = PoiAssociate::where('poi_id',$associate->associate_id)->count();
-               if($sub_associates_no > 0) {
-
-                  $sub_associates = PoiAssociate::where('poi_id',$associate->associate_id)->get();
-
-                  foreach ($sub_associates as $sub_associate) {
-
-                     $sub_assoc_pic_object                  = PoiPicture::where('poi_id',$sub_associate->associate_id)->first();
-                     $sub_assoc_poi_object                  = Poi::find($sub_associate->associate_id);
-                     if ($sub_assoc_poi_object) $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
-                      $sub_results[]                        = $sub_assoc_poi_object;
+        }
 
 
-                  }
+        //Determine if POI has associates
 
-               }
+        $poi__associate_query = PoiAssociate::where('poi_id',$id)->count();
+        $results = array();
 
-	          if ($assoc_poi_object) $assoc_poi_object->sub_associate   = $sub_results;
-               $results[]                         = $assoc_poi_object;
+        $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
+        //die("<pre>{$txtDebug}</pre>");
+        if($poi__associate_query > 0) {
 
 
-          }
+            $associates = PoiAssociate::where('poi_id',$id)->get();
 
-          $poi->assoc = $results;
+            foreach ($associates as $associate) {
 
-      }
-$txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
-	    //die("<pre>{$txtDebug}</pre>");
+                $assoc_pic_object                  = PoiPicture::where('poi_id',$associate->associate_id)->first();
+                $assoc_poi_object                  = Poi::find($associate->associate_id);
+                $txtDebug .= PHP_EOL."  \$assoc_pic_object - ".print_r($assoc_pic_object,1);
+                $txtDebug .= PHP_EOL."  \$assoc_poi_object - ".print_r($assoc_poi_object,1);
+                //die("<pre>{$txtDebug}</pre>");
+                if ($assoc_poi_object) $assoc_poi_object->poi_picture_url = $assoc_pic_object->poi_picture_url;
+
+                $sub_results = array();
+
+                //Sub - Associates
+                $sub_associates_no                 = PoiAssociate::where('poi_id',$associate->associate_id)->count();
+                if($sub_associates_no > 0) {
+
+                    $sub_associates = PoiAssociate::where('poi_id',$associate->associate_id)->get();
+
+                    foreach ($sub_associates as $sub_associate) {
+
+                        $sub_assoc_pic_object                  = PoiPicture::where('poi_id',$sub_associate->associate_id)->first();
+                        $sub_assoc_poi_object                  = Poi::find($sub_associate->associate_id);
+                        if ($sub_assoc_poi_object) $sub_assoc_poi_object->poi_picture_url = $sub_assoc_pic_object->poi_picture_url;
+                        $sub_results[]                        = $sub_assoc_poi_object;
+
+
+                    }
+
+                }
+
+                if ($assoc_poi_object) $assoc_poi_object->sub_associate   = $sub_results;
+                $results[]                         = $assoc_poi_object;
+
+
+            }
+
+            $poi->assoc = $results;
+
+        }
+        $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
+        //die("<pre>{$txtDebug}</pre>");
         return view('users.poiassociates')->with('poi',$poi);
 
 
@@ -2559,23 +2559,23 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
         if($request['poiProfileID'] <>"" && $request['profile_pic_note'] ) {
 
-          $poipicture = PoiPicture::find($request['poiProfileID']);
-          $poipicture->notes          = $request['profile_pic_note'];
-          $poipicture->save();
+            $poipicture = PoiPicture::find($request['poiProfileID']);
+            $poipicture->notes          = $request['profile_pic_note'];
+            $poipicture->save();
         }
 
         if($request['poiID'] <>"" && $request['id_pic_note'] ) {
 
-          $poipicture = PoiPicture::where("poi_id",$request['poiID'])->where("poi_picture_type",4)->first();
-          $poipicture->notes          = $request['id_pic_note'];
-          $poipicture->save();
+            $poipicture = PoiPicture::where("poi_id",$request['poiID'])->where("poi_picture_type",4)->first();
+            $poipicture->notes          = $request['id_pic_note'];
+            $poipicture->save();
         }
 
 
 
         if($request['language'] == '0') {
 
-          $request['language'] = "EN";
+            $request['language'] = "EN";
         }
         $language             = Language::where('slug','=',$request['language'])->first();
         $poi->language        = $language->id;
@@ -2605,18 +2605,18 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
-               $kaboom       = explode(".", $file_name);
-               $fileExt      = end($kaboom);
+                $target_file  = $target_file_directory.$file_name;
+                $resized_file = $target_file_directory.$file_name;
+                $wmax         = 600;
+                $hmax         = 480;
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
-               if(move_uploaded_file($_FILES["poi_profile_file"]["tmp_name"],$img_url)) {
+                if(move_uploaded_file($_FILES["poi_profile_file"]["tmp_name"],$img_url)) {
 
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+                    $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
-               }
+                }
 
             }
 
@@ -2624,17 +2624,17 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             if($request['poiProfileID'] == "") {
 
 
-                  $exist_profile_pic = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',1)->first();
-                  $exist_profile_pic->delete();
+                $exist_profile_pic = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',1)->first();
+                $exist_profile_pic->delete();
 
 
-                  $poipicture                   = new PoiPicture();
-                  $poipicture->poi_id           = $poi->id;
-                  $poipicture->poi_picture_type = 1;
-                  $poipicture->poi_picture_url  = $img_url;
-                  $poipicture->notes            = $request['profile_pic_note'];
-                  $poipicture->created_by       = \Auth::user()->id;
-                  $poipicture->save();
+                $poipicture                   = new PoiPicture();
+                $poipicture->poi_id           = $poi->id;
+                $poipicture->poi_picture_type = 1;
+                $poipicture->poi_picture_url  = $img_url;
+                $poipicture->notes            = $request['profile_pic_note'];
+                $poipicture->created_by       = \Auth::user()->id;
+                $poipicture->save();
 
 
             } else {
@@ -2655,153 +2655,153 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         }
 
 
-          //POI SCARS PICTURES
+        //POI SCARS PICTURES
         if($request['scar_file']) {
 
-          //Get Array Size
-          $scar_array_size = sizeof($request['scar_file']);
+            //Get Array Size
+            $scar_array_size = sizeof($request['scar_file']);
 
-          //Check Scars in DB
-          $scars_key   = array();
-          $scars_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',3)->get();
-
-
-
-          if(sizeof($scars_in_db) > 0) {
-
-
-          }
-
-          foreach ($scars_in_db as $scar_in_db) {
-
-              $scars_key[] = $scar_in_db->id;
-
-          }
+            //Check Scars in DB
+            $scars_key   = array();
+            $scars_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',3)->get();
 
 
 
-          for ($i=0; $i < $scar_array_size ; $i++) {
+            if(sizeof($scars_in_db) > 0) {
 
 
-                      $file_name             = $_FILES['scar_file']['name'][$i];
+            }
 
-                        if(is_array($file_name)) {
+            foreach ($scars_in_db as $scar_in_db) {
 
-                        $key                   = key($file_name);
+                $scars_key[] = $scar_in_db->id;
 
-                        if(($a = array_search($key, $scars_key)) !== false) {
-                          unset($scars_key[$a]);
+            }
+
+
+
+            for ($i=0; $i < $scar_array_size ; $i++) {
+
+
+                $file_name             = $_FILES['scar_file']['name'][$i];
+
+                if(is_array($file_name)) {
+
+                    $key                   = key($file_name);
+
+                    if(($a = array_search($key, $scars_key)) !== false) {
+                        unset($scars_key[$a]);
+                    }
+
+                    $file_name_scar        = $file_name[$key];
+                    $img_url               = "images/poi/scars/$key/".$file_name_scar;
+                    $target_file_directory = "images/poi/scars/$key/";
+
+                    $poipicture = PoiPicture::find($key);
+                    $poipicture->notes = $request['scar_pic_note'][$i];
+                    $poipicture->save();
+
+
+                    if($file_name_scar <> "") {
+
+                        if(!is_dir($target_file_directory)) {
+
+
+                            File::makeDirectory($target_file_directory, 0777, true,true);
+
                         }
 
-                        $file_name_scar        = $file_name[$key];
-                        $img_url               = "images/poi/scars/$key/".$file_name_scar;
-                        $target_file_directory = "images/poi/scars/$key/";
+                        if(is_dir($target_file_directory)) {
 
-                        $poipicture = PoiPicture::find($key);
-                        $poipicture->notes = $request['scar_pic_note'][$i];
+                            $target_file  = $target_file_directory.$file_name_scar;
+                            $resized_file = $target_file_directory.$file_name_scar;
+                            $wmax         = 600;
+                            $hmax         = 480;
+                            $kaboom       = explode(".", $file_name);
+                            $fileExt      = end($kaboom);
+
+
+                            if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i][$key],$img_url)) {
+
+                                $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+                            }
+
+                            $poipicture = PoiPicture::find($key);
+                            $poipicture->poi_picture_url = $img_url;
+                            $poipicture->save();
+                        }
+
+
+
+
+                    }
+
+
+                } else {
+
+
+                    $file_name             = $_FILES['scar_file']['name'][$i];
+                    $img_url               = "images/poi/scars/$poi->id/".$file_name;
+                    $target_file_directory = "images/poi/scars/$poi->id/";
+
+                    if(!is_dir($target_file_directory)) {
+
+                        File::makeDirectory($target_file_directory, 0777, true,true);
+
+                    }
+
+
+                    if(is_dir($target_file_directory)) {
+
+
+                        $target_file  = $target_file_directory.$file_name;
+                        $resized_file = $target_file_directory.$file_name;
+                        $wmax         = 600;
+                        $hmax         = 480;
+                        $kaboom       = explode(".", $file_name);
+                        $fileExt      = end($kaboom);
+
+                        if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
+
+                            $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+                        }
+
+
+
+                        $poipicture                   = new PoiPicture();
+                        $poipicture->poi_id           = $poi->id;
+                        $poipicture->poi_picture_type = 3;
+                        $poipicture->poi_picture_url  = $img_url;
+                        $poipicture->notes            = $request['scar_pic_note'][$i];
+                        $poipicture->created_by       = \Auth::user()->id;
                         $poipicture->save();
 
 
-                          if($file_name_scar <> "") {
-
-                              if(!is_dir($target_file_directory)) {
-
-
-                                  File::makeDirectory($target_file_directory, 0777, true,true);
-
-                              }
-
-                              if(is_dir($target_file_directory)) {
-
-                                 $target_file  = $target_file_directory.$file_name_scar;
-                                 $resized_file = $target_file_directory.$file_name_scar;
-                                 $wmax         = 600;
-                                 $hmax         = 480;
-                                 $kaboom       = explode(".", $file_name);
-                                 $fileExt      = end($kaboom);
-
-
-                                 if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i][$key],$img_url)) {
-
-                                   $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-                                 }
-
-                                 $poipicture = PoiPicture::find($key);
-                                 $poipicture->poi_picture_url = $img_url;
-                                 $poipicture->save();
-                              }
-
-
-
-
-                          }
-
-
-                        } else {
-
-
-                            $file_name             = $_FILES['scar_file']['name'][$i];
-                            $img_url               = "images/poi/scars/$poi->id/".$file_name;
-                            $target_file_directory = "images/poi/scars/$poi->id/";
-
-                            if(!is_dir($target_file_directory)) {
-
-                                File::makeDirectory($target_file_directory, 0777, true,true);
-
-                            }
-
-
-                            if(is_dir($target_file_directory)) {
-
-
-                               $target_file  = $target_file_directory.$file_name;
-                               $resized_file = $target_file_directory.$file_name;
-                               $wmax         = 600;
-                               $hmax         = 480;
-                               $kaboom       = explode(".", $file_name);
-                               $fileExt      = end($kaboom);
-
-                               if(move_uploaded_file($_FILES["scar_file"]["tmp_name"][$i],$img_url)) {
-
-                                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-                               }
-
-
-
-                                $poipicture                   = new PoiPicture();
-                                $poipicture->poi_id           = $poi->id;
-                                $poipicture->poi_picture_type = 3;
-                                $poipicture->poi_picture_url  = $img_url;
-                                $poipicture->notes            = $request['scar_pic_note'][$i];
-                                $poipicture->created_by       = \Auth::user()->id;
-                                $poipicture->save();
 
 
 
 
 
+                    }
 
 
-                            }
+                }
 
 
-                        }
+            }
 
 
-          }
+            if($scars_key) {
 
 
-          if($scars_key) {
+                foreach ($scars_key as $value) {
 
-
-              foreach ($scars_key as $value) {
-
-                  $picture = PoiPicture::find($value);
-                  $picture->delete();
-              }
-          }
+                    $picture = PoiPicture::find($value);
+                    $picture->delete();
+                }
+            }
 
 
 
@@ -2812,136 +2812,136 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         //POI TATOOS PICTURES
         if($request['tatoo_file']) {
 
-          //Get Array Size
-          $tatoo_array_size = sizeof($request['tatoo_file']);
+            //Get Array Size
+            $tatoo_array_size = sizeof($request['tatoo_file']);
 
-          //Check Scars in DB
-          $tatoos_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',2)->get();
-          $tatoos_key   = array();
+            //Check Scars in DB
+            $tatoos_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',2)->get();
+            $tatoos_key   = array();
 
-          foreach ($tatoos_in_db as $tatoo_in_db) {
+            foreach ($tatoos_in_db as $tatoo_in_db) {
 
-              $tatoos_key[] = $tatoo_in_db->id;
+                $tatoos_key[] = $tatoo_in_db->id;
 
-          }
+            }
 
-          for ($i=0; $i < $tatoo_array_size ; $i++) {
+            for ($i=0; $i < $tatoo_array_size ; $i++) {
 
-                      $file_name             = $_FILES['tatoo_file']['name'][$i];
+                $file_name             = $_FILES['tatoo_file']['name'][$i];
 
-                        if(is_array($file_name)) {
+                if(is_array($file_name)) {
 
-                        $key                   = key($file_name);
+                    $key                   = key($file_name);
 
-                        if(($a = array_search($key, $tatoos_key)) !== false) {
-                          unset($tatoos_key[$a]);
+                    if(($a = array_search($key, $tatoos_key)) !== false) {
+                        unset($tatoos_key[$a]);
+                    }
+
+                    $file_name_tatoo        = $file_name[$key];
+                    $img_url               = "images/poi/tatoos/$key/".$file_name_tatoo;
+                    $target_file_directory = "images/poi/tatoos/$key/";
+
+                    $poipicture = PoiPicture::find($key);
+                    $poipicture->notes = $request['tatoo_pic_note'][$i];
+                    $poipicture->save();
+
+
+                    if($file_name_tatoo <> "") {
+
+
+
+                        if(!is_dir($target_file_directory)) {
+
+                            File::makeDirectory($target_file_directory, 0777, true,true);
+
                         }
 
-                        $file_name_tatoo        = $file_name[$key];
-                        $img_url               = "images/poi/tatoos/$key/".$file_name_tatoo;
-                        $target_file_directory = "images/poi/tatoos/$key/";
+                        if(is_dir($target_file_directory)) {
 
-                        $poipicture = PoiPicture::find($key);
-                        $poipicture->notes = $request['tatoo_pic_note'][$i];
+
+                            $target_file  = $target_file_directory.$file_name_tatoo;
+                            $resized_file = $target_file_directory.$file_name_tatoo;
+                            $wmax         = 600;
+                            $hmax         = 480;
+                            $kaboom       = explode(".", $file_name);
+                            $fileExt      = end($kaboom);
+
+                            if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i][$key],$img_url)) {
+
+                                $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+                            }
+
+                            $poipicture = PoiPicture::find($key);
+                            $poipicture->poi_picture_url = $img_url;
+                            $poipicture->save();
+                        }
+
+
+
+
+                    }
+
+
+                } else {
+
+
+
+                    $file_name             = $_FILES['tatoo_file']['name'][$i];
+                    $img_url               = "images/poi/scars/$poi->id/".$file_name;
+                    $target_file_directory = "images/poi/scars/$poi->id/";
+
+                    if(!is_dir($target_file_directory)) {
+
+                        File::makeDirectory($target_file_directory, 0777, true,true);
+
+                    }
+
+
+                    if(is_dir($target_file_directory)) {
+
+
+                        $target_file  = $target_file_directory.$file_name;
+                        $resized_file = $target_file_directory.$file_name;
+                        $wmax         = 600;
+                        $hmax         = 480;
+                        $kaboom       = explode(".", $file_name);
+                        $fileExt      = end($kaboom);
+
+                        if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
+
+                            $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+
+                        }
+
+
+                        $poipicture                   = new PoiPicture();
+                        $poipicture->poi_id           = $poi->id;
+                        $poipicture->poi_picture_type = 2;
+                        $poipicture->poi_picture_url  = $img_url;
+                        $poipicture->notes            = $request['tatoo_pic_note'][$i];
+                        $poipicture->created_by       = \Auth::user()->id;
                         $poipicture->save();
 
 
-                          if($file_name_tatoo <> "") {
+                    }
 
 
-
-                              if(!is_dir($target_file_directory)) {
-
-                                  File::makeDirectory($target_file_directory, 0777, true,true);
-
-                              }
-
-                              if(is_dir($target_file_directory)) {
+                }
 
 
-                                 $target_file  = $target_file_directory.$file_name_tatoo;
-                                 $resized_file = $target_file_directory.$file_name_tatoo;
-                                 $wmax         = 600;
-                                 $hmax         = 480;
-                                  $kaboom       = explode(".", $file_name);
-                                  $fileExt      = end($kaboom);
-
-                                 if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i][$key],$img_url)) {
-
-                                   $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-                                 }
-
-                                 $poipicture = PoiPicture::find($key);
-                                 $poipicture->poi_picture_url = $img_url;
-                                 $poipicture->save();
-                              }
+            }
 
 
+            if($tatoos_key) {
 
 
-                          }
+                foreach ($tatoos_key as $value) {
 
-
-                        } else {
-
-
-
-                            $file_name             = $_FILES['tatoo_file']['name'][$i];
-                            $img_url               = "images/poi/scars/$poi->id/".$file_name;
-                            $target_file_directory = "images/poi/scars/$poi->id/";
-
-                            if(!is_dir($target_file_directory)) {
-
-                                File::makeDirectory($target_file_directory, 0777, true,true);
-
-                            }
-
-
-                            if(is_dir($target_file_directory)) {
-
-
-                               $target_file  = $target_file_directory.$file_name;
-                               $resized_file = $target_file_directory.$file_name;
-                               $wmax         = 600;
-                               $hmax         = 480;
-                                $kaboom       = explode(".", $file_name);
-                                $fileExt      = end($kaboom);
-
-                               if(move_uploaded_file($_FILES["tatoo_file"]["tmp_name"][$i],$img_url)) {
-
-                                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-                               }
-
-
-                                $poipicture                   = new PoiPicture();
-                                $poipicture->poi_id           = $poi->id;
-                                $poipicture->poi_picture_type = 2;
-                                $poipicture->poi_picture_url  = $img_url;
-                                $poipicture->notes            = $request['tatoo_pic_note'][$i];
-                                $poipicture->created_by       = \Auth::user()->id;
-                                $poipicture->save();
-
-
-                            }
-
-
-                        }
-
-
-          }
-
-
-          if($tatoos_key) {
-
-
-              foreach ($tatoos_key as $value) {
-
-                  $picture = PoiPicture::find($value);
-                  $picture->delete();
-              }
-          }
+                    $picture = PoiPicture::find($value);
+                    $picture->delete();
+                }
+            }
 
 
 
@@ -2952,133 +2952,133 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         //POI TATOOS PICTURES
         if($request['poi_vehicle_file']) {
 
-          //Get Array Size
-          $vehicles_array_size = sizeof($request['poi_vehicle_file']);
+            //Get Array Size
+            $vehicles_array_size = sizeof($request['poi_vehicle_file']);
 
-          //Check Scars in DB
-          $vehicles_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',5)->get();
-          $vehicles_key   = array();
+            //Check Scars in DB
+            $vehicles_in_db = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',5)->get();
+            $vehicles_key   = array();
 
-          foreach ($vehicles_in_db as $vehicle_in_db) {
+            foreach ($vehicles_in_db as $vehicle_in_db) {
 
-              $vehicles_key[] = $vehicle_in_db->id;
+                $vehicles_key[] = $vehicle_in_db->id;
 
-          }
+            }
 
-          for ($i=0; $i < $vehicles_array_size ; $i++) {
+            for ($i=0; $i < $vehicles_array_size ; $i++) {
 
-                      $file_name             = $_FILES['poi_vehicle_file']['name'][$i];
+                $file_name             = $_FILES['poi_vehicle_file']['name'][$i];
 
-                        if(is_array($file_name)) {
+                if(is_array($file_name)) {
 
-                        $key                   = key($file_name);
+                    $key                   = key($file_name);
 
-                        if(($a = array_search($key, $tatoos_key)) !== false) {
-                          unset($tatoos_key[$a]);
+                    if(($a = array_search($key, $tatoos_key)) !== false) {
+                        unset($tatoos_key[$a]);
+                    }
+
+                    $file_name_tatoo        = $file_name[$key];
+                    $img_url               = "images/poi/VEHICLES/$key/".$file_name_tatoo;
+                    $target_file_directory = "images/poi/VEHICLES/$key/";
+
+
+
+                    if($file_name_tatoo <> "") {
+
+
+
+                        if(!is_dir($target_file_directory)) {
+
+                            File::makeDirectory($target_file_directory, 0777, true,true);
+
                         }
 
-                        $file_name_tatoo        = $file_name[$key];
-                        $img_url               = "images/poi/VEHICLES/$key/".$file_name_tatoo;
-                        $target_file_directory = "images/poi/VEHICLES/$key/";
+                        if(is_dir($target_file_directory)) {
 
 
+                            $target_file  = $target_file_directory.$file_name_tatoo;
+                            $resized_file = $target_file_directory.$file_name_tatoo;
+                            $wmax         = 600;
+                            $hmax         = 480;
+                            $kaboom       = explode(".", $file_name);
+                            $fileExt      = end($kaboom);
 
-                          if($file_name_tatoo <> "") {
+                            if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i][$key],$img_url)) {
 
-
-
-                              if(!is_dir($target_file_directory)) {
-
-                                  File::makeDirectory($target_file_directory, 0777, true,true);
-
-                              }
-
-                              if(is_dir($target_file_directory)) {
-
-
-                                 $target_file  = $target_file_directory.$file_name_tatoo;
-                                 $resized_file = $target_file_directory.$file_name_tatoo;
-                                 $wmax         = 600;
-                                 $hmax         = 480;
-                                  $kaboom       = explode(".", $file_name);
-                                  $fileExt      = end($kaboom);
-
-                                 if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i][$key],$img_url)) {
-
-                                   $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-                                 }
-
-                                 $poipicture = PoiPicture::find($key);
-                                 $poipicture->poi_picture_url = $img_url;
-                                 $poipicture->save();
-                              }
-
-
-
-
-                          }
-
-
-                        } else {
-
-
-
-                            $file_name             = $_FILES['poi_vehicle_file']['name'][$i];
-                            $img_url               = "images/poi/VEHICLES/$poi->id/".$file_name;
-                            $target_file_directory = "images/poi/VEHICLES/$poi->id/";
-
-                            if(!is_dir($target_file_directory)) {
-
-                                File::makeDirectory($target_file_directory, 0777, true,true);
+                                $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
                             }
 
-
-                            if(is_dir($target_file_directory)) {
-
-
-                               $target_file  = $target_file_directory.$file_name;
-                               $resized_file = $target_file_directory.$file_name;
-                               $wmax         = 600;
-                               $hmax         = 480;
-                                $kaboom       = explode(".", $file_name);
-                                $fileExt      = end($kaboom);
-
-                               if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i],$img_url)) {
-
-                                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
-
-                               }
+                            $poipicture = PoiPicture::find($key);
+                            $poipicture->poi_picture_url = $img_url;
+                            $poipicture->save();
+                        }
 
 
-                                $poipicture                   = new PoiPicture();
-                                $poipicture->poi_id           = $poi->id;
-                                $poipicture->poi_picture_type = 5;
-                                $poipicture->poi_picture_url  = $img_url;
-                                $poipicture->notes            = "";
-                                $poipicture->created_by       = \Auth::user()->id;
-                                $poipicture->save();
 
 
-                            }
+                    }
 
+
+                } else {
+
+
+
+                    $file_name             = $_FILES['poi_vehicle_file']['name'][$i];
+                    $img_url               = "images/poi/VEHICLES/$poi->id/".$file_name;
+                    $target_file_directory = "images/poi/VEHICLES/$poi->id/";
+
+                    if(!is_dir($target_file_directory)) {
+
+                        File::makeDirectory($target_file_directory, 0777, true,true);
+
+                    }
+
+
+                    if(is_dir($target_file_directory)) {
+
+
+                        $target_file  = $target_file_directory.$file_name;
+                        $resized_file = $target_file_directory.$file_name;
+                        $wmax         = 600;
+                        $hmax         = 480;
+                        $kaboom       = explode(".", $file_name);
+                        $fileExt      = end($kaboom);
+
+                        if(move_uploaded_file($_FILES["poi_vehicle_file"]["tmp_name"][$i],$img_url)) {
+
+                            $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
                         }
 
 
-          }
+                        $poipicture                   = new PoiPicture();
+                        $poipicture->poi_id           = $poi->id;
+                        $poipicture->poi_picture_type = 5;
+                        $poipicture->poi_picture_url  = $img_url;
+                        $poipicture->notes            = "";
+                        $poipicture->created_by       = \Auth::user()->id;
+                        $poipicture->save();
 
 
-          if($vehicles_key) {
+                    }
 
 
-              foreach ($vehicles_key as $value) {
+                }
 
-                  $picture = PoiPicture::find($value);
-                  $picture->delete();
-              }
-          }
+
+            }
+
+
+            if($vehicles_key) {
+
+
+                foreach ($vehicles_key as $value) {
+
+                    $picture = PoiPicture::find($value);
+                    $picture->delete();
+                }
+            }
 
 
 
@@ -3086,7 +3086,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         }//END POI TATOOS PICTURES
 
 
-      if (!is_null($request['poi_doc_file'])) {
+        if (!is_null($request['poi_doc_file'])) {
 
             $file_name             = $_FILES['poi_doc_file']['name'];
             $img_url               = "images/poi/ID/$poi->id/".$file_name;
@@ -3102,18 +3102,18 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             if(is_dir($target_file_directory)) {
 
 
-               $target_file  = $target_file_directory.$file_name;
-               $resized_file = $target_file_directory.$file_name;
-               $wmax         = 600;
-               $hmax         = 480;
-               $kaboom       = explode(".", $file_name);
-               $fileExt      = end($kaboom);
+                $target_file  = $target_file_directory.$file_name;
+                $resized_file = $target_file_directory.$file_name;
+                $wmax         = 600;
+                $hmax         = 480;
+                $kaboom       = explode(".", $file_name);
+                $fileExt      = end($kaboom);
 
-               if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
+                if(move_uploaded_file($_FILES["poi_doc_file"]["tmp_name"],$img_url)) {
 
-                 $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
+                    $this->ak_img_resize($target_file, $resized_file, $wmax, $hmax, $fileExt);
 
-               }
+                }
 
             }
 
@@ -3123,22 +3123,22 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             if($request['poiPicID'] == "") {
 
 
-                  $exist_id_pic = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',4)->first();
-                  if($exist_id_pic) {
+                $exist_id_pic = PoiPicture::where('poi_id',$poi->id)->where('poi_picture_type',4)->first();
+                if($exist_id_pic) {
 
                     $exist_id_pic->delete();
 
-                  }
+                }
 
 
 
-                  $poipicture                   = new PoiPicture();
-                  $poipicture->poi_id           = $poi->id;
-                  $poipicture->poi_picture_type = 4;
-                  $poipicture->poi_picture_url  = $img_url;
-                  $poipicture->notes            = $request['id_pic_note'];
-                  $poipicture->created_by       = \Auth::user()->id;
-                  $poipicture->save();
+                $poipicture                   = new PoiPicture();
+                $poipicture->poi_id           = $poi->id;
+                $poipicture->poi_picture_type = 4;
+                $poipicture->poi_picture_url  = $img_url;
+                $poipicture->notes            = $request['id_pic_note'];
+                $poipicture->created_by       = \Auth::user()->id;
+                $poipicture->save();
 
 
             } else {
@@ -3154,32 +3154,32 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         }
 
 
-       if(!is_null($request['drivers_licence'])) {
+        if(!is_null($request['drivers_licence'])) {
 
-          //Find existing driving licence info
-          $existing_drivers = PoiDriverLicence::where('poi_id',$poi->id)->get();
+            //Find existing driving licence info
+            $existing_drivers = PoiDriverLicence::where('poi_id',$poi->id)->get();
 
-          if (sizeof($existing_drivers) > 0) {
+            if (sizeof($existing_drivers) > 0) {
 
-              foreach ($existing_drivers as $existing_driver) {
+                foreach ($existing_drivers as $existing_driver) {
 
-                  $driver_object = PoiDriverLicence::find($existing_driver->id);
-                  $driver_object->delete();
-              }
+                    $driver_object = PoiDriverLicence::find($existing_driver->id);
+                    $driver_object->delete();
+                }
 
-          }
+            }
 
 
 
             for ($i=0; $i < sizeof($request['drivers_licence']) ; $i++) {
 
-                  $PoiDriverLicence                              = new PoiDriverLicence();
-                  $PoiDriverLicence->poi_id                      = $poi->id;
-                  $PoiDriverLicence->driver_licence_code         = $request['drivers_licence'][$i];
-                  $PoiDriverLicence->drivers_licence_date_issued = $request['drivers_licence_date_issued'][$i];
-                  $PoiDriverLicence->drivers_licence_expiry_date = $request['drivers_licence_expiry_date'][$i];
-                  $PoiDriverLicence->created_by                  = \Auth::user()->id;
-                  $PoiDriverLicence->save();
+                $PoiDriverLicence                              = new PoiDriverLicence();
+                $PoiDriverLicence->poi_id                      = $poi->id;
+                $PoiDriverLicence->driver_licence_code         = $request['drivers_licence'][$i];
+                $PoiDriverLicence->drivers_licence_date_issued = $request['drivers_licence_date_issued'][$i];
+                $PoiDriverLicence->drivers_licence_expiry_date = $request['drivers_licence_expiry_date'][$i];
+                $PoiDriverLicence->created_by                  = \Auth::user()->id;
+                $PoiDriverLicence->save();
 
             }
 
@@ -3188,30 +3188,30 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
         if(!is_null($request['vehicle_make'])) {
 
-          $existing_vehicles = PoiVehicle::where('poi_id',$poi->id)->get();
+            $existing_vehicles = PoiVehicle::where('poi_id',$poi->id)->get();
 
-          if (sizeof($existing_vehicles) > 0) {
+            if (sizeof($existing_vehicles) > 0) {
 
-              foreach ($existing_vehicles as $existing_vehicle) {
+                foreach ($existing_vehicles as $existing_vehicle) {
 
-                  $vehicle_object = PoiVehicle::find($existing_vehicle->id);
-                  $vehicle_object->delete();
-              }
+                    $vehicle_object = PoiVehicle::find($existing_vehicle->id);
+                    $vehicle_object->delete();
+                }
 
-          }
+            }
 
 
 
             for ($i=0; $i < sizeof($request['vehicle_make']) ; $i++) {
 
-                  $PoiVehicle                = new PoiVehicle();
-                  $PoiVehicle->poi_id        = $poi->id;
-                  $PoiVehicle->vehicle_make  = $request['vehicle_make'][$i];
-                  $PoiVehicle->vehicle_color = $request['vehicle_color'][$i];
-                  $PoiVehicle->vehicle_vin   = $request['vehicle_vin'][$i];
-                  $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];
-                  $PoiVehicle->created_by    = \Auth::user()->id;
-                  $PoiVehicle->save();
+                $PoiVehicle                = new PoiVehicle();
+                $PoiVehicle->poi_id        = $poi->id;
+                $PoiVehicle->vehicle_make  = $request['vehicle_make'][$i];
+                $PoiVehicle->vehicle_color = $request['vehicle_color'][$i];
+                $PoiVehicle->vehicle_vin   = $request['vehicle_vin'][$i];
+                $PoiVehicle->vehicle_plate = $request['vehicle_plate'][$i];
+                $PoiVehicle->created_by    = \Auth::user()->id;
+                $PoiVehicle->save();
 
             }
 
@@ -3220,17 +3220,17 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
         if(!is_null($request['training_type'])) {
 
-          $existing_trainings = PoiTraining::where('poi_id',$poi->id)->get();
+            $existing_trainings = PoiTraining::where('poi_id',$poi->id)->get();
 
-          if (sizeof($existing_trainings) > 0) {
+            if (sizeof($existing_trainings) > 0) {
 
-              foreach ($existing_trainings as $existing_training) {
+                foreach ($existing_trainings as $existing_training) {
 
-                  $training_object = PoiTraining::find($existing_training->id);
-                  $training_object->delete();
-              }
+                    $training_object = PoiTraining::find($existing_training->id);
+                    $training_object->delete();
+                }
 
-          }
+            }
 
 
 
@@ -3251,60 +3251,60 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-      if(!is_null($request['landline'])) {
+        if(!is_null($request['landline'])) {
 
-          //Find existing driving licence info
-          $existing_landlines = PoiContactNumber::where('poi_id',$poi->id)->where('type',1)->get();
+            //Find existing driving licence info
+            $existing_landlines = PoiContactNumber::where('poi_id',$poi->id)->where('type',1)->get();
 
-          if (sizeof($existing_landlines) > 0) {
+            if (sizeof($existing_landlines) > 0) {
 
-              foreach ($existing_landlines as $existing_landline) {
+                foreach ($existing_landlines as $existing_landline) {
 
-                  $driver_object = PoiContactNumber::find($existing_landline->id);
-                  $driver_object->delete();
-              }
+                    $driver_object = PoiContactNumber::find($existing_landline->id);
+                    $driver_object->delete();
+                }
 
-          }
+            }
 
 
 
             for ($i=0; $i < sizeof($request['landline']) ; $i++) {
 
-                  $PoiContactNumber                 = new PoiContactNumber();
-                  $PoiContactNumber->poi_id         = $poi->id;
-                  $PoiContactNumber->contact_number = $request['landline'][$i];
-                  $PoiContactNumber->type           = 1;
-                  $PoiContactNumber->save();
+                $PoiContactNumber                 = new PoiContactNumber();
+                $PoiContactNumber->poi_id         = $poi->id;
+                $PoiContactNumber->contact_number = $request['landline'][$i];
+                $PoiContactNumber->type           = 1;
+                $PoiContactNumber->save();
 
             }
 
 
         }
 
-      if(!is_null($request['mobile'])) {
+        if(!is_null($request['mobile'])) {
 
-          //Find existing driving licence info
-          $existing_landlines = PoiContactNumber::where('poi_id',$poi->id)->where('type',2)->get();
+            //Find existing driving licence info
+            $existing_landlines = PoiContactNumber::where('poi_id',$poi->id)->where('type',2)->get();
 
-          if (sizeof($existing_landlines) > 0) {
+            if (sizeof($existing_landlines) > 0) {
 
-              foreach ($existing_landlines as $existing_landline) {
+                foreach ($existing_landlines as $existing_landline) {
 
-                  $driver_object = PoiContactNumber::find($existing_landline->id);
-                  $driver_object->delete();
-              }
+                    $driver_object = PoiContactNumber::find($existing_landline->id);
+                    $driver_object->delete();
+                }
 
-          }
+            }
 
             for ($i=0; $i < sizeof($request['mobile']) ; $i++) {
 
-                  $PoiContactNumber                 = new PoiContactNumber();
-                  $PoiContactNumber->poi_id         = $poi->id;
-                  $PoiContactNumber->contact_number = $request['mobile'][$i];
-                  $PoiContactNumber->imei_number    = $request['imei_number'][$i];
-                  $PoiContactNumber->phone_type     = $request['phone_type'][$i];
-                  $PoiContactNumber->type           = 2;
-                  $PoiContactNumber->save();
+                $PoiContactNumber                 = new PoiContactNumber();
+                $PoiContactNumber->poi_id         = $poi->id;
+                $PoiContactNumber->contact_number = $request['mobile'][$i];
+                $PoiContactNumber->imei_number    = $request['imei_number'][$i];
+                $PoiContactNumber->phone_type     = $request['phone_type'][$i];
+                $PoiContactNumber->type           = 2;
+                $PoiContactNumber->save();
 
             }
 
@@ -3313,32 +3313,32 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-         if(!is_null($request['company'])) {
+        if(!is_null($request['company'])) {
 
-          //Find existing driving licence info
-          $existing_company = PoiAddress::where('poi_id',$poi->id)->where('type',2)->get();
+            //Find existing driving licence info
+            $existing_company = PoiAddress::where('poi_id',$poi->id)->where('type',2)->get();
 
-          if (sizeof($existing_company) > 0) {
+            if (sizeof($existing_company) > 0) {
 
-              foreach ($existing_company as $company) {
+                foreach ($existing_company as $company) {
 
-                  $object = PoiAddress::find($company->id);
-                  $object->delete();
-              }
+                    $object = PoiAddress::find($company->id);
+                    $object->delete();
+                }
 
-          }
+            }
 
             for ($i=0; $i < sizeof($request['company']) ; $i++) {
 
-                    $res_address          = new PoiAddress();
-                    $res_address->company = $request['company'][$i];
-                    $res_address->period  = $request['period'][$i];
-                    $res_address->line_1  = $request['workaddress_line_1'][$i];
-                    $res_address->gps_lng = $request['worklong'][$i];
-                    $res_address->gps_lat = $request['worklat'][$i];
-                    $res_address->poi_id  = $poi->id;
-                    $res_address->type    = 2;
-                    $res_address->save();
+                $res_address          = new PoiAddress();
+                $res_address->company = $request['company'][$i];
+                $res_address->period  = $request['period'][$i];
+                $res_address->line_1  = $request['workaddress_line_1'][$i];
+                $res_address->gps_lng = $request['worklong'][$i];
+                $res_address->gps_lat = $request['worklat'][$i];
+                $res_address->poi_id  = $poi->id;
+                $res_address->type    = 2;
+                $res_address->save();
 
 
             }
@@ -3350,60 +3350,60 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
         if($request['resindential_line_1'] <> "") {
 
-          //Find existing work address
-          $existing_residential_address = PoiAddress::where('poi_id',$poi->id)->where('type',1)->get();
+            //Find existing work address
+            $existing_residential_address = PoiAddress::where('poi_id',$poi->id)->where('type',1)->get();
 
-          if (sizeof($existing_residential_address) > 0) {
+            if (sizeof($existing_residential_address) > 0) {
 
-              foreach ($existing_residential_address as $residential_address) {
+                foreach ($existing_residential_address as $residential_address) {
 
-                  $object = PoiAddress::find($residential_address->id);
-                  $object->delete();
-              }
+                    $object = PoiAddress::find($residential_address->id);
+                    $object->delete();
+                }
 
-          }
+            }
 
 
-          for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) {
+            for ($i=0; $i < sizeof($request['resindential_line_1']) ; $i++) {
 
-              $res_address          = new PoiAddress();
-              $res_address->line_1  = $request['resindential_line_1'][$i];
-              $res_address->gps_lng = $request['reslong'][$i];
-              $res_address->gps_lat = $request['reslat'][$i];
-              $res_address->poi_id  = $poi->id;
-              $res_address->type    = 1;
-              $res_address->save();
+                $res_address          = new PoiAddress();
+                $res_address->line_1  = $request['resindential_line_1'][$i];
+                $res_address->gps_lng = $request['reslong'][$i];
+                $res_address->gps_lat = $request['reslat'][$i];
+                $res_address->poi_id  = $poi->id;
+                $res_address->type    = 1;
+                $res_address->save();
 
-          }
+            }
 
 
 
         }
 
-      if(!is_null($request['travel_movement'])) {
+        if(!is_null($request['travel_movement'])) {
 
-          $existing_travel_movement = PoiTravelMovement::where('poi_id',$poi->id)->get();
+            $existing_travel_movement = PoiTravelMovement::where('poi_id',$poi->id)->get();
 
-          if (sizeof($existing_travel_movement) > 0) {
+            if (sizeof($existing_travel_movement) > 0) {
 
-              foreach ($existing_travel_movement as $travel_movement) {
+                foreach ($existing_travel_movement as $travel_movement) {
 
-                  $object = PoiTravelMovement::find($travel_movement->id);
-                  $object->delete();
-              }
+                    $object = PoiTravelMovement::find($travel_movement->id);
+                    $object->delete();
+                }
 
-          }
+            }
 
             for ($i=0; $i < sizeof($request['travel_movement']) ; $i++) {
 
-                  $PoiTravelMovement                  = new PoiTravelMovement();
-                  $PoiTravelMovement->poi_id          = $poi->id;
-                  $PoiTravelMovement->name            = $request['travel_movement'][$i];
-                  $PoiTravelMovement->gps_lat         = $request['lat'][$i];
-                  $PoiTravelMovement->gps_lng         = $request['long'][$i];
-                  $PoiTravelMovement->date_seen       = $request['date_seen'][$i];
-                  $PoiTravelMovement->created_by      = \Auth::user()->id;
-                  $PoiTravelMovement->save();
+                $PoiTravelMovement                  = new PoiTravelMovement();
+                $PoiTravelMovement->poi_id          = $poi->id;
+                $PoiTravelMovement->name            = $request['travel_movement'][$i];
+                $PoiTravelMovement->gps_lat         = $request['lat'][$i];
+                $PoiTravelMovement->gps_lng         = $request['long'][$i];
+                $PoiTravelMovement->date_seen       = $request['date_seen'][$i];
+                $PoiTravelMovement->created_by      = \Auth::user()->id;
+                $PoiTravelMovement->save();
 
             }
 
@@ -3415,19 +3415,19 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
         if(!is_null($request['crime_description'])) {
 
-          $existing_criminal_records = PoiCriminalRecord::where('poi_id',$poi->id)->get();
+            $existing_criminal_records = PoiCriminalRecord::where('poi_id',$poi->id)->get();
 
-          if (sizeof($existing_criminal_records) > 0) {
+            if (sizeof($existing_criminal_records) > 0) {
 
-              foreach ($existing_criminal_records as $criminal_record) {
+                foreach ($existing_criminal_records as $criminal_record) {
 
-                  $object = PoiCriminalRecord::find($criminal_record->id);
-                  $object->delete();
-              }
+                    $object = PoiCriminalRecord::find($criminal_record->id);
+                    $object->delete();
+                }
 
-          }
+            }
 
-          for ($i=0; $i < sizeof($request['crime_description']) ; $i++) {
+            for ($i=0; $i < sizeof($request['crime_description']) ; $i++) {
 
                 $PoiCriminalRecord                                      = new PoiCriminalRecord();
                 $PoiCriminalRecord->poi_id                              = $poi->id;
@@ -3440,7 +3440,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                 $PoiCriminalRecord->created_by      = \Auth::user()->id;
                 $PoiCriminalRecord->save();
 
-          }
+            }
         }
 
 
@@ -3556,14 +3556,14 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
     {
 
 
-      $userObj = User::find($id);
+        $userObj = User::find($id);
 
-      $user = \DB::table('users')
+        $user = \DB::table('users')
 
 
-                                      ->where('users.id','=',$id)
-                                      ->select(
-                                                \DB::raw("
+            ->where('users.id','=',$id)
+            ->select(
+                \DB::raw("
                                                             users.id,
                                                             users.name,
                                                             users.active,
@@ -3584,74 +3584,74 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                                             users.alt_email,
                                                             users.alt_cellphone
                                                           "
-                                                ))
-                                      ->first();
+                ))
+            ->first();
 
 
-          if ($userObj->role > 0) {
+        if ($userObj->role > 0) {
 
 
-             $role = UserRole::find($userObj->role);
-             $user->role = $role->slug;
+            $role = UserRole::find($userObj->role);
+            $user->role = $role->slug;
 
 
-          }
-          if ($userObj->role > 0) {
+        }
+        if ($userObj->role > 0) {
 
 
-             $role = UserRole::find($userObj->role);
-             $user->role = $role->slug;
+            $role = UserRole::find($userObj->role);
+            $user->role = $role->slug;
 
 
-          }
-          if ($userObj->language > 0) {
+        }
+        if ($userObj->language > 0) {
 
 
-             $language = Language::find($userObj->language);
-             $user->language = $language->slug;
+            $language = Language::find($userObj->language);
+            $user->language = $language->slug;
 
 
-          }
+        }
 
-          if ($userObj->affiliation > 0) {
-
-
-             $affiliation = Affiliation::find($userObj->affiliation);
-             $user->affiliation = $affiliation->name;
+        if ($userObj->affiliation > 0) {
 
 
-          }
-
-          if ($userObj->department > 0) {
-
-             $department = Department::find($userObj->department);
-             $user->department = $department->slug;
-
-          }
+            $affiliation = Affiliation::find($userObj->affiliation);
+            $user->affiliation = $affiliation->name;
 
 
-          if ($userObj->position > 0) {
+        }
 
-             $position = Position::find($userObj->position);
-             $user->position = $position->slug;
+        if ($userObj->department > 0) {
 
+            $department = Department::find($userObj->department);
+            $user->department = $department->slug;
 
-          }
-
-           if ($userObj->title > 0) {
-
-             $title = Title::find($userObj->title);
-             $user->title = $title->slug;
+        }
 
 
-          }
+        if ($userObj->position > 0) {
+
+            $position = Position::find($userObj->position);
+            $user->position = $position->slug;
+
+
+        }
+
+        if ($userObj->title > 0) {
+
+            $title = Title::find($userObj->title);
+            $user->title = $title->slug;
+
+
+        }
 
 
 
- //return json_encode($user);
 
 
-        return view('users.editusers' )->with(compact('user'));
+
+        return [$user];
     }
 
 
@@ -3660,10 +3660,10 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         //tutsnare.com/upload-files-in-laravel/
         //laravel-recipes.com/recipes/147/creating-a-directory
         //github.com/Studio-42/elFinder/wiki/Client-configuration-options#uiOptions
-        $destinationFolder = 'files/profile_picture_'.\Auth::user()->id; 
+        $destinationFolder = 'files/profile_picture_'.\Auth::user()->id;
 
         if(!\File::exists($destinationFolder)) {
-             $createDir         = \File::makeDirectory($destinationFolder,0777,true);
+            $createDir         = \File::makeDirectory($destinationFolder,0777,true);
         }
 
         $fileName          = $request->file('profile_picture')->getClientOriginalName();
@@ -3673,7 +3673,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
             $request->file('profile_picture')->move($destinationFolder,$fileName);
 
-    
+
         }
 
         $user = User::find(\Auth::user()->id);
@@ -3696,7 +3696,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
     public function update(UpdateUserRequest $request)
     {
 
-       $users_if  = null ;
+        $users_if  = null ;
 
 
 
@@ -3750,7 +3750,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
         $user->updated_by    = \Auth::user()->id;
         $user->updated_at    =  \Carbon\Carbon::now('Africa/Johannesburg')->toDateTimeString();
         $userStatusObj       = UserStatus::where('name','=','active')->first();
-    //    $user->active        = $userStatusObj->id;
+        //    $user->active        = $userStatusObj->id;
 
         $user->save();
 
@@ -3771,38 +3771,38 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
             ->join('users_roles','users.role','=','users_roles.id')
             ->whereRaw(
-                            "CONCAT(`users`.`name`, ' ', `users`.`surname`, ' ', `users`.`cellphone`) LIKE '%{$searchString}%'")
+                "CONCAT(`users`.`name`, ' ', `users`.`surname`, ' ', `users`.`cellphone`) LIKE '%{$searchString}%'")
             ->select(
-                        array
+                array
 
-                            (
-                                'users.id as id',
-                                'users.name as name',
-                                'users_roles.name as role',
-                                'users.surname as surname',
-                                'users.username as username',
-                                'users.cellphone as cellphone',
-                                'users.area as area',
-                                'users.company as company'
+                (
+                    'users.id as id',
+                    'users.name as name',
+                    'users_roles.name as role',
+                    'users.surname as surname',
+                    'users.username as username',
+                    'users.cellphone as cellphone',
+                    'users.area as area',
+                    'users.company as company'
 
 
 
-                            )
-                    )
+                )
+            )
 
             ->get();
 
         $data = array();
 
-       foreach ($users as $user) {
+        foreach ($users as $user) {
 
             $data[] = array(
-                                "name"              => "{$user->name} > {$user->surname} > {$user->cellphone}",
-                                "id"                => "{$user->id}",
-                                "hseName"           => "{$user->name}",
-                                "hseSurname"        => "{$user->surname}",
-                                "hseCellphone"      => "{$user->cellphone}",
-                                "hseCompany"        => "{$user->company}",
+                "name"              => "{$user->name} > {$user->surname} > {$user->cellphone}",
+                "id"                => "{$user->id}",
+                "hseName"           => "{$user->name}",
+                "hseSurname"        => "{$user->surname}",
+                "hseCellphone"      => "{$user->cellphone}",
+                "hseCompany"        => "{$user->company}",
 
 
 
@@ -3810,79 +3810,79 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
 
-                            );
-       }
+            );
+        }
 
         return $data;
     }
 
-     public function getPoi()
+    public function getPoi()
     {
         $searchString   = \Input::get('q');
         $pois           = \DB::table('poi')
 
             ->whereRaw(
-                            "CONCAT(`poi`.`name`,' ', `poi`.`surname`) LIKE '%{$searchString}%'")
+                "CONCAT(`poi`.`name`,' ', `poi`.`surname`) LIKE '%{$searchString}%'")
             ->select(
-                        array(
-                                'poi.id as id',
-                                'poi.name as name',
-                                'poi.surname as surname'
+                array(
+                    'poi.id as id',
+                    'poi.name as name',
+                    'poi.surname as surname'
 
 
-                            )
-                    )
+                )
+            )
 
             ->get();
 
         $data = array();
 
-       foreach ($pois as $poi) {
+        foreach ($pois as $poi) {
 
             $data[] = array(
-                                "name"              => "{$poi->name} > {$poi->surname}",
-                                "id"                => "{$poi->id}"
+                "name"              => "{$poi->name} > {$poi->surname}",
+                "id"                => "{$poi->id}"
 
 
 
-                            );
-       }
+            );
+        }
 
         return $data;
     }
 
 
-       public function getCaseSearch()
+    public function getCaseSearch()
     {
         $searchString = \Input::get('q');
         $cases        = \DB::table('cases')
 
             ->whereRaw(
-                            "CONCAT(`cases`.`description`,' ', `cases`.`id`) LIKE '%{$searchString}%'")
+                "CONCAT(`cases`.`description`,' ', `cases`.`id`) LIKE '%{$searchString}%'")
             ->select(
-                        array(
-                                'cases.id as id',
-                                'cases.description as name',
+                array(
+                    'cases.id as id',
+                    'cases.description as name',
 
 
 
-                            )
-                    )
+                )
+            )
 
             ->get();
 
         $data = array();
 
-       foreach ($cases as $case) {
+        foreach ($cases as $case) {
 
             $data[] = array(
-                                "name"              => "Case Number: {$case->id} > Description : {$case->name}",
-                                "id"                => "{$case->id}"
+                "name"              => "Case Number: {$case->id} > Description : {$case->name}",
+                "id"                => "{$case->id}"
 
 
 
-                            );
-       }
+            );
+        }
 
         return $data;
     }
@@ -3904,56 +3904,56 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             ->join('users_roles','users.role','=','users_roles.id')
             ->where('users_roles.name','=',"Field Worker")
             ->whereRaw(
-                            "CONCAT(`users`.`name`, ' ', `users`.`surname`, ' ', `users`.`cellphone`) LIKE '%{$searchString}%'")
+                "CONCAT(`users`.`name`, ' ', `users`.`surname`, ' ', `users`.`cellphone`) LIKE '%{$searchString}%'")
             ->select(
-                        array
+                array
 
-                            (
-                                'users.id as id',
-                                'users.id_number as id_number',
-                                'users.name as name',
-                                'users_roles.name as role',
-                                'users.surname as surname',
-                                'users.username as username',
-                                'users.cellphone as cellphone',
-                                'languages.slug as language',
-                                'provinces.slug as province',
-                                'districts.slug as district',
-                                'municipalities.slug as municipality',
-                                'wards.slug as ward',
-                                'titles.slug as title',
-                                'users.area',
-                                'users.house_number',
-                                'users.gender',
-                                'users.dob'
-                            )
-                    )
+                (
+                    'users.id as id',
+                    'users.id_number as id_number',
+                    'users.name as name',
+                    'users_roles.name as role',
+                    'users.surname as surname',
+                    'users.username as username',
+                    'users.cellphone as cellphone',
+                    'languages.slug as language',
+                    'provinces.slug as province',
+                    'districts.slug as district',
+                    'municipalities.slug as municipality',
+                    'wards.slug as ward',
+                    'titles.slug as title',
+                    'users.area',
+                    'users.house_number',
+                    'users.gender',
+                    'users.dob'
+                )
+            )
 
             ->get();
 
         $data = array();
 
-       foreach ($users as $user) {
+        foreach ($users as $user) {
 
             $data[] = array(
-                                "name"              => "{$user->name} > {$user->surname} > {$user->cellphone}",
-                                "id"                => "{$user->id}",
-                                "fldName"           => "{$user->name}",
-                                "fldSurname"        => "{$user->surname}",
-                                "fldIdNumber"       => "{$user->id_number}",
-                                "fldCellphone"      => "{$user->cellphone}",
-                                "fldLanguage"       => "{$user->language}",
-                                "fldProvince"       => "{$user->province}",
-                                "fldDistrict"       => "{$user->district}",
-                                "fldMunicipality"   => "{$user->municipality}",
-                                "fldWard"           => "{$user->ward}",
-                                "fldArea"           => "{$user->area}",
-                                "fldNumber"         => "{$user->house_number}",
-                                "fldTitle"          => "{$user->title}",
-                                "fldGender"         => "{$user->gender}",
-                                "fldDob"            => "{$user->dob}"
-                            );
-       }
+                "name"              => "{$user->name} > {$user->surname} > {$user->cellphone}",
+                "id"                => "{$user->id}",
+                "fldName"           => "{$user->name}",
+                "fldSurname"        => "{$user->surname}",
+                "fldIdNumber"       => "{$user->id_number}",
+                "fldCellphone"      => "{$user->cellphone}",
+                "fldLanguage"       => "{$user->language}",
+                "fldProvince"       => "{$user->province}",
+                "fldDistrict"       => "{$user->district}",
+                "fldMunicipality"   => "{$user->municipality}",
+                "fldWard"           => "{$user->ward}",
+                "fldArea"           => "{$user->area}",
+                "fldNumber"         => "{$user->house_number}",
+                "fldTitle"          => "{$user->title}",
+                "fldGender"         => "{$user->gender}",
+                "fldDob"            => "{$user->dob}"
+            );
+        }
 
         return $data;
     }
@@ -4024,8 +4024,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
             ->join('users_roles', 'users.role', '=', 'users_roles.id')
             ->select(
-                        \DB::raw(
-                                    "
+                \DB::raw(
+                    "
                                         users.id,
                                         users.name,
                                         users.created_at,
@@ -4035,8 +4035,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
                                         users_statuses.name as active
 
                                     "
-                                )
-                        )
+                )
+            )
             ->whereBetween('users.created_at', array($fromDate,$toDate))
             ->where('provinces.slug','LIKE',$province)
             ->where('districts.slug','LIKE',$district)
@@ -4047,8 +4047,8 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
             ->groupBy('users.id');
 
         return \Datatables::of($users)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser">Edit</a>')
-                            ->make(true);
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser">Edit</a>')
+            ->make(true);
 
 
 
@@ -4057,9 +4057,9 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
     public function poimap($poi_id) {
 
-      $movements      = array();
-      $poi_travements = PoiTravelMovement::where('poi_id',$poi_id)->get();
+        $movements      = array();
+        $poi_travements = PoiTravelMovement::where('poi_id',$poi_id)->get();
 
-      return view('users.poimap',compact('poi_travements'));
+        return view('users.poimap',compact('poi_travements'));
     }
 }
