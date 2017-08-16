@@ -5,14 +5,14 @@
     <div id="tabs">
         <ul class="nav nav-pills navbar-right" role="tablist">
             <li class="active"><a href="#global"  data-toggle="tab">Global Address Book</a></li>
-               <li><a href="#private"  data-toggle="tab">Private Address Book</a></li>
+            <li><a href="#private"  data-toggle="tab">Private Address Book</a></li>
 
-                            </ul>
-                            <h4 class="page-title">ADDRESS BOOK</h4>
+        </ul>
+        <h4 class="page-title">ADDRESS BOOK</h4>
 
-                            <div class="block-area" id="alternative-buttons">
-                                <h3 class="block-title">Look for People to Add to Your Private Address Book</h3>
-                            </div>
+        <div class="block-area" id="alternative-buttons">
+            <h3 class="block-title">Look for People to Add to Your Private Address Book</h3>
+        </div>
 
         <!--GLOBAL TAB CONTENT-->
         <div class="tab-content">
@@ -25,73 +25,37 @@
                         <div class="row">
                             <div style="width:100%;">
                                 <!--LEFT SIDE DIV-->
-
-
                                 <div class="col-sm-3 col-md-6 col-lg-4" div style="float:left; display:inline-block;">
                                     <div class="listview narrow">
+                                        <div class="form-group pull-right">
 
+                                            <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
+                                        </div>
                                         <span class="counter pull-right"></span>
                                         <INPUT type="button" value="Add to Private" id="add_button"/>
                                         <INPUT type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
 
-
-
-                                        <div class="form-group pull-right">
-
-                                                <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
-                                            </div>
-                                            <table class="table table-hover table-bordered" id="myGlobalTable">
-                                                <thead>
-                                                <tr>
-                                                    <th width="10%">Select</th>
-                                                    <th class="col-md-5 col-xs-5">User Full Name</th>
-
-
-                                       
                                         <table class="table table-hover table-bordered results" id="myGlobalTable">
                                             <thead>
                                             <tr>
                                                 <th width="10%">Select</th>
-                                              <th class="col-md-5 col-xs-5">User Full Name</th>
+                                                <th class="col-md-5 col-xs-5">User Full Name</th>
 
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($users as $user)
                                                 <tr class="clickable-row">
-                                                  <td>
-                                                   <input type="checkbox" name="row" value="{{$user->id}}"  onclick="" class="get_value" ></td>
+                                                    <td>
+                                                        <input type="checkbox" name="row" value="{{$user->id}}"  onclick="" class="get_value" ></td>
                                                     <td><a class="t-overflow" onclick="profileGlobal({{$user->id}});">{{$user->name . " " . $user->surname}}</a><br/>
                                                         <small class="text-muted">{{$user->email}}</small></td>
+                                                </tr>
+                                            @endforeach
 
 
-                                        <div class="form-group pull-right">
-
-                                                <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
-                                            </div>
-                                            <table class="table table-hover table-bordered" id="myGlobalTable">
-                                                <thead>
-                                                <tr>
-                                                    <th width="10%">Select</th>
-                                                    <th class="col-md-5 col-xs-5">User Full Name</th>
-                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($users as $user)
-                                                    <tr class="clickable-row">
-                                                        <td>
-                                                            <input type="checkbox" name="row" value="{{$user->id}}" id="chck" class="get_value" ></td>
-                                                        <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}">{{$user->name . " " . $user->surname}}</a><br/>
-                                                            <small class="text-muted">{{$user->email}}</small></td>
-                                                    </tr>
-                                                @endforeach
-
-
-                                                </tbody>
-                                            </table>
-
-
-
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <!--RIGHT SIDE DIV-->
@@ -127,7 +91,7 @@
                                                 <div class="col-md-6">
 
                                                     {!! Form::open(['url' => 'addContact', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
-                                                     {!! Form::hidden('created_by',Auth::user()->id) !!}
+                                                    {!! Form::hidden('created_by',Auth::user()->id) !!}
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
 
                                                     <span class="counter pull-right"></span>
@@ -191,11 +155,11 @@
 
 
                                                     </button>
-                                                     <div class="form-group">
+                                                    <div class="form-group">
 
-                                                     </div>
+                                                    </div>
 
-               
+
                                                     <hr class="whiter m-t-20">
 
 
@@ -204,7 +168,7 @@
                                                     <span class="counter pull-right"></span>
                                                     <br/>
 
-                                                    
+
                                                     <lu>
                                                         <a href="{{ url('') }}" ><i class="fa fa-envelope-o fa-2x" aria-hidden="true" title="EMAIL"></i>
                                                         </a>
@@ -215,7 +179,7 @@
                                                             <i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
                                                         </a>
                                                     </lu>
-                                                
+
                                                     {!! Form::close()!!}
                                                 </div>
                                             </div>
@@ -261,7 +225,7 @@
                                                         <small class="text-muted">{{$privateContact->position}}</small></td>
                                                 </tr>
                                             @endforeach
-                                          
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -307,7 +271,7 @@
                                                         </div>
                                                     </div>
 
-                                                        <div class="form-group">
+                                                    <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
                                                             {!! Form::text('surname',null,['class' => 'form-control input-sm','id' => 'surname','disabled']) !!}
@@ -386,41 +350,7 @@
     </div>
 @endsection
 @section('footer')
-
-<script>
-
-$("#add_button").click(function(event){
-    event.preventDefault();
-    var searchIDs = $("#myGlobalTable input:checkbox:checked").map(function()
-    {
-
-    $.ajax({
-    type: 'POST',
-    url: '/addToPrivate/',
-    data: {searchIDs},
-
-    success: function(data) {
-       console.log(data);
-    }
-});
-$('#add_button').click(function() {
-    var checkedValues = $("input:checkbox:checked", "#myGlobalTable").map(function() {
-        return $(this).val();
-    }).get();
-    var requestData = JSON.stringify(checkedValues);
-//     alert(requestData);
-     var request =$.ajax({
-         url:"/addToPrivate/",
-         method:'post',
-         dataType:"json",
-         data:{data: requestData}
-
-});
-});
-</script>
-
     <script>
-
 
         function profileGlobal(id) {
             $.ajax({
@@ -457,7 +387,7 @@ $('#add_button').click(function() {
                     $('#profileForm #surname').val(data.surname);
                     $('#profileForm #email_address').val(data.email);
                     $('#profileForm #user_id').val(data.user);
-                    
+
                 },
                 error: function (xhr, status) {
                     alert("Sorry, there was a problem!");
@@ -468,7 +398,7 @@ $('#add_button').click(function() {
 
         }
     </script>
-<!--Star js-->
+    <!--Star js-->
     <script>
         $('.star').click(function(){
             $(this).toggleClass('clicked');
@@ -476,20 +406,20 @@ $('#add_button').click(function() {
     </script>
 
     <!--Show active tr-->
-{{--<script>--}}
-{{--$(document).ready( function(){--}}
-    {{--$("#myGlobalTable").on('click','.clickable-row',function(event){--}}
-        {{--if($(this).hasClass('active'))--}}
-        {{--{--}}
-            {{--$(this).removeClass('active');--}}
+    <script>
+        $(document).ready( function(){
+            $("#myGlobalTable").on('click','.clickable-row',function(event){
+                if($(this).hasClass('active'))
+                {
+                    $(this).removeClass('active');
 
-        {{--} else{--}}
-            {{--$(this).addClass('active').siblings().removeClass('active');--}}
-        {{--}--}}
-           {{--});--}}
-{{--});--}}
+                } else{
+                    $(this).addClass('active').siblings().removeClass('active');
+                }
+            });
+        });
 
-{{--</script>--}}
+    </script>
 
     <!-- TABS SCRIPT-->
     <script>
@@ -522,28 +452,27 @@ $('#add_button').click(function() {
     </script>
 
     <!--PRIVATE SEARCH JS-->
-        <script>
-            function myFunction() {
-                var input, filter, table, tr, td, i;
-                input = document.getElementById("myPrivateInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myPrivateTable");
-                tr = table.getElementsByTagName("tr");
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myPrivateInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myPrivateTable");
+            tr = table.getElementsByTagName("tr");
 
-                // Loop through all table rows, and hide those who don't match the search query
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
                 }
             }
-        </script>
+        }
+    </script>
 
 @endsection
-
 

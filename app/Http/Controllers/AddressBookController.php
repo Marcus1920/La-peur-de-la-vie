@@ -31,23 +31,24 @@ class AddressBookController extends Controller
 
     public function AddressbookList()
     {
-        $userAddUserPermission = \DB::table('group_permissions')
-            ->join('users_roles', 'group_permissions.group_id', '=', 'users_roles.id')
-            ->where('group_permissions.permission_id', '=', 31)
-            ->where('group_permissions.group_id', '=', \Auth::user()->role)
+        $userAddUserPermission   = \DB::table('group_permissions')
+            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+            ->where('group_permissions.permission_id','=',31)
+            ->where('group_permissions.group_id','=',\Auth::user()->role)
             ->first();
 
-        return view('addressbook.index', compact('userAddUserPermission'));
+        return view('addressbook.index',compact('userAddUserPermission'));
     }
 
     public function index()
     {
 
-        $userEditUserPermission = \DB::table('group_permissions')
-            ->join('users_roles', 'group_permissions.group_id', '=', 'users_roles.id')
-            ->where('group_permissions.permission_id', '=', 32)
-            ->where('group_permissions.group_id', '=', \Auth::user()->role)
+        $userEditUserPermission   = \DB::table('group_permissions')
+            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+            ->where('group_permissions.permission_id','=',32)
+            ->where('group_permissions.group_id','=',\Auth::user()->role)
             ->first();
+
 
 
         $users = \DB::table('users')
@@ -68,7 +69,7 @@ class AddressBookController extends Controller
 
 
         return \Datatables::of($users)
-            ->addColumn('actions', '<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
 
 
                                         '
@@ -85,53 +86,57 @@ class AddressBookController extends Controller
 
     public function store(Request $request)
     {
-        $addressbook = new addressbook();
-        $addressbook->user = $request['user'];
-        $addressbook->first_name = $request['first_name'];
-        $addressbook->Surname = $request['Surname'];
-        $addressbook->email = $request['email'];
-        $addressbook->cellphone = $request['cellphone'];
-        $addressbook->created_by = \Auth::user()->id;
-        $addressbook->relationship = '';
-        $addressbook->active = 1;
+        $addressbook                 = new addressbook();
+        $addressbook->user           = $request['user'];
+        $addressbook->first_name     = $request['first_name'];
+        $addressbook->Surname        = $request['Surname'];
+        $addressbook->email          = $request['email'];
+        $addressbook->cellphone      = $request['cellphone'];
+        $addressbook->created_by     = \Auth::user()->id;
+        $addressbook->relationship   = '';
+        $addressbook->active         = 1;
         $addressbook->save();
 
-        \Session::flash('success', $addressbook->first_name . ' ' . $addressbook->surname . ' has been  added to your Private Book Address');
-        return Redirect::to('/addressbookList/' . Auth::user()->id);
+        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been  added to your Private Book Address');
+        return Redirect::to('/addressbookList/'.Auth::user()->id);
     }
 
     public function show()
     {
 
         $searchString = \Input::get('q');
-        $addressbookContacts = \DB::table('addressbook')
-            ->where('user', '=', \Auth::user()->id)
+        $addressbookContacts     = \DB::table('addressbook')
+            ->where('user','=',\Auth::user()->id)
             ->whereRaw("CONCAT(`first_name`, ' ', `surname`, ' ', `email`) LIKE '%{$searchString}%'")
             ->select(\DB::raw('*'))
             ->get();
 
         $data = array();
 
-        if (count($addressbookContacts) > 0) {
+        if(count($addressbookContacts) > 0)
+        {
 
             foreach ($addressbookContacts as $addressbookContact) {
-                $data[] = array("name" => "{$addressbookContact->first_name} {$addressbookContact->surname} <{$addressbookContact->email}", "id" => "{$addressbookContact->email}", "first_name" => "{$addressbookContact->first_name}", "surname" => "{$addressbookContact->surname}", "cellphone" => "{$addressbookContact->cellphone}", "email" => "{$addressbookContact->email}", "userId" => "{$addressbookContact->id}", "addressbook" => "1");
+                $data[]= array("name"=>"{$addressbookContact->first_name} {$addressbookContact->surname} <{$addressbookContact->email}","id" =>"{$addressbookContact->email}","first_name" =>"{$addressbookContact->first_name}","surname" =>"{$addressbookContact->surname}","cellphone" =>"{$addressbookContact->cellphone}","email" => "{$addressbookContact->email}","userId" => "{$addressbookContact->id}","addressbook" => "1");
             }
 
 
         }
 
-        $usersContacts = \DB::table('users')
-            ->join('positions', 'users.position', '=', 'positions.id')
+        $usersContacts   = \DB::table('users')
+            ->join('positions','users.position','=','positions.id')
             ->whereRaw("CONCAT(`users`.`name`, ' ', `users`.`surname`, ' ', `users`.`email`,`positions`.`name`) LIKE '%{$searchString}%'")
-            ->select(array('users.id', 'users.name as name', 'users.surname as surname', 'users.email as username', 'users.cellphone as cellphone', 'positions.name as position'))
+            ->select(array('users.id','users.name as name','users.surname as surname','users.email as username','users.cellphone as cellphone','positions.name as position'))
             ->get();
 
 
-        if (count($usersContacts) > 0) {
+
+        if(count($usersContacts) > 0)
+
+        {
 
             foreach ($usersContacts as $usersContact) {
-                $data[] = array("name" => "{$usersContact->name} {$usersContact->surname} << {$usersContact->position}", "id" => "{$usersContact->username}", "first_name" => "{$usersContact->name}", "surname" => "{$usersContact->surname}", "cellphone" => "{$usersContact->cellphone}", "email" => "{$usersContact->username}", "userId" => "{$usersContact->id}", "addressbook" => "0");
+                $data[] = array("name"=>"{$usersContact->name} {$usersContact->surname} << {$usersContact->position}","id" =>"{$usersContact->username}","first_name" => "{$usersContact->name}","surname" => "{$usersContact->surname}","cellphone" => "{$usersContact->cellphone}","email" => "{$usersContact->username}","userId" => "{$usersContact->id}","addressbook" => "0");
             }
 
         }
@@ -142,8 +147,9 @@ class AddressBookController extends Controller
 
     public function getAddressBookUsers()
     {
-        $searchString = \Input::get('q');
-        $users = \DB::table('addressbook')
+        $searchString   = \Input::get('q');
+        $users          = \DB::table('addressbook')
+
             ->where('addressbook.user', '=', \Auth::user()->id)
             ->whereRaw(
                 "CONCAT(`addressbook`.`first_name`, ' ', `addressbook`.`surname`) LIKE '%{$searchString}%'")
@@ -157,6 +163,7 @@ class AddressBookController extends Controller
                     'addressbook.email as email',
                 )
             )
+
             ->get();
 
         $data = array();
@@ -165,8 +172,8 @@ class AddressBookController extends Controller
 
             $data[] = array(
 
-                "name" => "{$user->first_name} > {$user->surname}",
-                "id" => "{$user->id}",
+                "name"              => "{$user->first_name} > {$user->surname}",
+                "id"                => "{$user->id}",
             );
         }
 
@@ -190,9 +197,11 @@ class AddressBookController extends Controller
     {
         //
     }
-
     public function display()
     {
+
+
+
         $users = \DB::table('users')
             ->join('positions', 'users.position', '=', 'positions.id')
             ->select(
@@ -206,7 +215,8 @@ class AddressBookController extends Controller
                                          users.cellphone,
                                        
                                         positions.name as position
-                                        ")
+                                        "
+                )
             )->first();
 
         return $users;
@@ -216,43 +226,37 @@ class AddressBookController extends Controller
     {
 
         $users = User::all();
-        $contactBook = addressbook::where('created_by', $id)->get();
+        $contactBook  = addressbook::where('created_by',$id)->get();
         return view('addressbook.test')
             ->with(compact('contactBook'))
             ->with(compact('users'));
 
     }
 
-
     public function userprofileGlobal($id)
     {
-        $user = User::select('name', 'surname', 'email', 'cellphone', 'id')->where('id', $id)->first();
+        $user  = User::select('name','surname','email','cellphone','id')->where('id',$id)->first();
         return response()->json($user);
 
     }
-        public function addToPrivate()
-        {
-            return "oky";
-        }
 
-        public function userprofilePrivate($id)
-        {
+    public function userprofilePrivate($id)
+    {
 
-            $contactBook = addressbook::select('first_name', 'surname', 'email', 'cellphone', 'user')->where('user', $id)->first();
-            return response()->json($contactBook);
+        $contactBook  = addressbook::select('first_name','surname','email','cellphone','user')->where('user',$id)->first();
+        return response()->json($contactBook);
 
-        }
+    }
 
 
-        public function deleteuser($id)
-        {
-            $created_by = Auth::user()->id;
-            $contactBook = addressbook::where('created_by', $created_by)
-                ->where('user', $id);
+    public function deleteuser($id)
+    {
+        $created_by= Auth::user()->id;
+        $contactBook  = addressbook::where('created_by',$created_by)
+            ->where('user',$id);
 
-            $contactBook->delete();
-            return Redirect::to('/addressbookList/' . Auth::user()->id);
+        $contactBook->delete();
+        return Redirect::to('/addressbookList/'.Auth::user()->id);
 
-        }
-
+    }
 }
