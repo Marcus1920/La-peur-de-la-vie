@@ -57,9 +57,13 @@ class CalendarService
         return $calendar;
     }
 
+
+
     public function deleteCalendar($id)
     {
         $calendar = User::find($id);
         $calendar->delete();
     }
+
+
 }
