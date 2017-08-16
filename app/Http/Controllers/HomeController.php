@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\CaseReport;
 use App\CaseOwner;
+use Charts;
+use  App\User;
+
+use App\CaseActivity;
+
+use function MongoDB\BSON\toJSON;
 
 class HomeController extends Controller
 {
@@ -547,8 +554,216 @@ class HomeController extends Controller
                             ->first();
 
 
-            return view('home.home',compact('userAddPoiPermission','userRequestCaseClosurePermission','userCloseCasePermission','userViewWorkFlowPermission','userAddCasesNotesPermission','userAddCasesFilesPermission','userReferCasesPermission','userAcceptCasesPermission','userAllocateCasesPermission','userCreateCasesPermission','userViewAllocatateReferredCasesPermission','userViewPendingAllocationCasesPermission','userViewPendingClosureCasesPermission','userViewResolvedCasesPermission','numberReferredCases','numberPendingClosureCases','numberResolvedCases','numberPendingCases'));
 
+//            $respomse   = array() ;
+//
+//            $cases_db =\DB::table('cases')
+//                ->join('cases_statuses','cases_statuses.id','=','cases.status')
+//                ->join('departments','departments.id','=','cases.department')
+//                ->join('landingpagecharts','departments.id','=','landingpagecharts.department_id')
+//                //->where('departments.id','=', 1)
+//                // ->where('departments.name','=','Investigations')
+//                ->select(
+//                    \DB::raw("
+//                                            landingpagecharts.strokeColor as strokeColor,
+//                                            landingpagecharts.pointColor as pointColor,
+//                                            landingpagecharts.pointStrokeColor as pointStrokeColor ,
+//                                            landingpagecharts.pointHighlightFill as pointHighlightFill,
+//                                            landingpagecharts.pointHighlightStroke as pointHighlightStroke,
+//                                             landingpagecharts.data as data,
+//                                            cases.id case_id,
+//                                            cases_statuses.name as CaseStatus,
+//                                            departments.name as label
+//                                           "
+//                    )
+//                )
+//                ->orderBy('label','ASC')
+//                ->get(['name']);
+
+//            foreach ($cases_db as $datavale) {
+//
+//                $label=$datavale->label;
+//                $label_id = $datavale->case_id;
+//
+//
+//                for($i=1; $i < 12 ; $i++) {
+//                    $Investigations[]= \DB::table('cases')->whereMonth('created_at', '=', $i)
+//                        ->where('department', '=', 1)->count();
+//                   }
+//                    $datavale->data=$Investigations;
+//
+//
+//
+//            }
+
+
+
+//            $dip=\DB::table('departments')->first();
+//            $name=$dip->name;
+//
+//            foreach ($cases_db as $datavale) {
+//
+//                $label=$datavale->label;
+//                $label_id = $datavale->case_id;
+//
+//
+//                for($i=1; $i < 12 ; $i++) {
+//                    $Investigations[]= \DB::table('cases')->whereMonth('created_at', '=', $i)
+//                        ->where('department', '=', 1)->count();
+//                }
+//                $datavale->data=$Investigations;
+//
+//
+//            }
+
+//                $chartssz=Charts::multi('areaspline', 'highcharts')
+//                    ->elementLabel("total")
+//                    ->Title( "Pending /Allocated Casses")
+//                    ->colors(['#ff0000', '#3fff7f'])
+//                    ->labels(['January', 'February', 'March', 'April', 'May','June', 'July','August','September','October','November','December'])
+//
+////                   ->dataset( $label,$Investigations)
+//                    ->dataset('invest',[53,51,68,59,2,06,40,7,87,9,6,94])
+//
+//
+//                   ->responsive(false)
+//                ;
+
+
+
+
+
+            $chartssz =   Charts::multi('areaspline', 'highcharts')
+
+                ->title('My nice chart')
+                ->colors(['#ff0000', '#ffffff'])
+                ->labels(['January', 'February', 'March', 'April', 'May','June', 'July','August','September','October','November','December'])
+                ->dataset('John', [3, 4, 3, 5, 4, 10, 12])
+
+                ->dataset('Jane',  [1, 3, 4, 3, 3, 5, 4]);
+
+            $chartss= Charts::create('geo', 'highcharts')
+                ->title('Port Geo Cha')
+                ->elementLabel('My nice label')
+                ->labels(['AF', 'CONGO', 'RU'])
+                ->colors(['#C5CAE9', '#283593'])
+
+                ->values([5,10,20])
+                ->dimensions(1000,500)
+                ->responsive(true);
+            //    $chart =   Charts::database(User::all(), 'bar', 'highcharts')
+
+            $chartssz =   Charts::multi('line', 'highcharts')
+                ->credits(false)
+                //  $chart = Charts::multi('bar', 'highcharts')
+                // Setup the chart settings
+                ->title("Pending Closure")
+
+                ->colors(['#ff0000', '#ffffff'])
+
+                // A dimension of 0 means it will take 100% of the space
+                ->dimensions(0, 400) // Width x Height
+                // This defines a preset of colors already done:)
+
+                ->colors(['#ff0000', '#00ff00', '#0000ff'])
+                ->labels(['January', 'February', 'March', 'April', 'May','June', 'July','August','September','October','November','December'])
+                ->dataset('Investigation', [15,24,36,44,34,78,23])
+                ->dataset('Property', [10,16,24,33,24,26,57])
+                ->dataset('logistic', [15,6,64,44,65,32,43])
+
+//
+//                ->elementLabel("Total")
+//                ->dimensions(1000, 500)
+                ->responsive(true);
+
+
+//            $chartss= Charts::database(CaseOwner::all(), 'line', 'highcharts')->dateColumn('created_at')
+//                ->title('Resolve Cases')
+//                ->elementLabel('Total')
+          //      ->labels(['First', 'Second', 'Third'])
+//           ->values([5,10,20])
+
+            $chartss= Charts::database(CaseReport::all(), 'line', 'highcharts')->dateColumn('created_at')
+                ->credits(false)
+                ->title('Resolved Cases')
+                ->elementLabel('Total')
+               ->labels(['January', 'February', 'March', 'April', 'May','June', 'July','August','September','October','November','December'])
+
+                ->values([5,10,20,56,23,65])
+
+                ->dimensions(1000,500)
+                ->responsive(true);
+//                ->groupBy('name');
+
+
+
+            //    $chart =   Charts::database(User::all(), 'bar', 'highcharts')
+
+//         $caseStatus=\DB::table('cases')
+//             ->join('cases_statuses','cases.status','=','cases_statuses.id')
+//             ->select(\DB::raw("
+//             cases_statuses.name as status,
+
+//             cases.id ,
+//              cases.priority,
+//              cases.department
+
+//             "))->get();
+//
+//         dd($caseStatus);
+
+            $chart = Charts::database(CaseReport::all(), 'bar', 'highcharts')->dateColumn('created_at')
+                ->credits(false)
+                //  $chart = Charts::multi('bar', 'highcharts')
+                // Setup the chart settings
+
+                ->title("Pending /Allocation Cases")
+
+                ->title("Allocated /Refered Cases")
+
+                // A dimension of 0 means it will take 100% of the space
+                // This defines a preset of colors already done:)
+                ->labels(['January', 'February', 'March', 'April', 'May','June', 'July','August','September','October','November','December'])
+
+                ->elementLabel("Total")
+                ->dimensions(1000, 500)
+                ->responsive(true)
+
+
+
+
+                ->groupBy('status',null,[0 => 'reffered', 7 =>'allocated'])
+
+                ->groupBy('status',null,[0 => 'logistic',1 => 'Property', 2 => '', 3 => 'investigation', 4 => 'Logistic', 5 => 'Preliminary' , 6 => 'Confirmed', 7 =>'allocated']);
+
+
+
+            $charts = Charts::database(CaseReport::all(), 'donut', 'highcharts')->dateColumn('created_at')
+                //  $chart = Charts::multi('bar', 'highcharts')
+                // Setup the chart settings
+
+                ->title("Pending /Allocation Cases")
+
+                ->credits(false)
+                ->title("Pending /Allocated Cases ")
+
+                // A dimension of 0 means it will take 100% of the space
+                ->dimensions(0, 400) // Width x Height
+                // This defines a preset of colors already done:)
+                ->labels(['January', 'February', 'March', 'April', 'May','June', 'July','August','September','October','November','December'])
+
+                ->elementLabel("Total")
+                ->dimensions(1000, 500)
+                ->responsive(true)
+
+                    ->groupBy('priority',null,[0 => 'Investigation', 1 => 'Property', 2 => 'Critical',3 => 'Agriculture']);
+
+
+            return view('home.home',compact('userAddPoiPermission','chart ',  'chartss','chart'  , 'chartssz' , 'charts', 'userRequestCaseClosurePermission','userCloseCasePermission','userViewWorkFlowPermission','userAddCasesNotesPermission','userAddCasesFilesPermission','userReferCasesPermission','userAcceptCasesPermission','userAllocateCasesPermission','userCreateCasesPermission','userViewAllocatateReferredCasesPermission','userViewPendingAllocationCasesPermission','userViewPendingClosureCasesPermission','userViewResolvedCasesPermission','numberReferredCases','numberPendingClosureCases','numberResolvedCases','numberPendingCases'));
+
+
+
+           /// ['chart' => $chart  ,'chartss' => $chartss  ,'chartssz' => $chartssz], ['charts' => $charts]
         }
         else {
 
@@ -562,6 +777,68 @@ class HomeController extends Controller
      *
      * @return Response
      */
+
+    public function getcharts()
+    {
+$respomse   = array() ;
+            $cases_db =\DB::table('cases')
+                            ->join('cases_statuses','cases_statuses.id','=','cases.status')
+                            ->join('departments','departments.id','=','cases.department')
+                            ->join('landingpagecharts','departments.id','=','landingpagecharts.department_id')
+                           //->where('departments.id','=', 1)
+                           // ->where('departments.name','=','Investigations')
+                            ->select(
+                                        \DB::raw("
+                                            landingpagecharts.strokeColor as strokeColor,
+                                            landingpagecharts.pointColor as pointColor,
+                                            landingpagecharts.pointStrokeColor as pointStrokeColor ,
+                                            landingpagecharts.pointHighlightFill as pointHighlightFill,
+                                            landingpagecharts.pointHighlightStroke as pointHighlightStroke,
+                                             landingpagecharts.data as data,
+                                            cases.id case_id,
+                                            cases_statuses.name as CaseStatus,
+                                            departments.name as label
+                                           "
+                                        )
+                                    )
+                            ->orderBy('label','ASC')
+                             ->get(['name']);
+
+//            foreach ($cases_db as $datavale) {
+//
+//
+//                $label_id = $datavale->case_id;
+//
+//                if($datavale->label == "Investigations") {
+//                    $datavale->data=[6,54,30,54,90,1,9,0,32,6,82,60];
+////                for($i=1; $i < 12 ; $i++) {
+////                    $Investigations[]= \DB::table('cases')->whereMonth('created_at', '=', $i)
+////                        ->where('department', '=', 1)->count();
+////                   }
+////                    $datavale->data=$Investigations;
+//                }else{
+//                    $datavale->data=[2,5,43,65,78,21,9,32,53,7,8,76];
+//                }
+//
+//
+//
+//            }
+//
+//
+//  return $cases_db;
+////            $respomse['data'] =   $cases_db;
+////            $respomse['erro'] =  true ;
+
+
+
+
+
+
+    }
+
+
+
+
     public function create()
     {
         //

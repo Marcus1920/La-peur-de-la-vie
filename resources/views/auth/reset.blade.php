@@ -18,8 +18,13 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('css/generics.css') }}" rel="stylesheet">
+    <script>
+
+
+
+    </script>
     </head>
-    <body id="skin-blur-kiwi">
+    <body id="skin-blur-kiwi"  style="background-color: #265a88">
 
     @if (count($errors) > 0)
     <div class="alert alert-danger">

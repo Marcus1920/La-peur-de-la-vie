@@ -1,6 +1,60 @@
 
   <script type="application/javascript">
+
+      {{--function InitOverviewDataTable()--}}
+      {{--{--}}
+          {{--oOverviewTable =$('#pendingreferralCasesTable').dataTable(--}}
+              {{--{--}}
+                  {{--"bPaginate": true,--}}
+                  {{--"bJQueryUI": true,  // ThemeRoller-stöd--}}
+                  {{--"bLengthChange": false,--}}
+                  {{--"bFilter": false,--}}
+                  {{--"bSort": false,--}}
+                  {{--"bInfo": true,--}}
+                  {{--"bAutoWidth": true,--}}
+                  {{--"bProcessing": true,--}}
+
+                  {{--"sAjaxSource": "{!! url('/pending-referral-cases-list/')!!}"--}}
+              {{--});--}}
+      {{--}--}}
+
+      {{--function RefreshTable(tableId, urlData)--}}
+      {{--{--}}
+          {{--$.getJSON(urlData, null, function( json )--}}
+          {{--{--}}
+              {{--table = $(tableId).dataTable();--}}
+              {{--oSettings = table.fnSettings();--}}
+
+              {{--table.fnClearTable(this);--}}
+
+              {{--for (var i=0; i<json.aaData.length; i++)--}}
+              {{--{--}}
+                  {{--table.oApi._fnAddData(oSettings, json.aaData[i]);--}}
+              {{--}--}}
+
+              {{--oSettings.aiDisplay = oSettings.aiDisplayMaster.slice();--}}
+              {{--table.fnDraw();--}}
+          {{--});--}}
+      {{--}--}}
+
+      {{--function AutoReload()--}}
+      {{--{--}}
+          {{--RefreshTable('#pendingreferralCasesTable', "{!! url('/pending-referral-cases-list/')!!}");--}}
+
+          {{--setTimeout(function(){AutoReload();}, 00000);--}}
+      {{--}--}}
+
+
+
+
+
+
   $(document).ready(function() {
+
+
+//      InitOverviewDataTable();
+//      setTimeout(function(){AutoReload();}, 30000);
+
 
       $("#add_officer").click(function(){
 	      $("#CreateCaseAgentForm #investigation_cell").val("");
@@ -465,11 +519,9 @@
                     $("#caseReportCaseForm #gender,#CreateCaseAgentForm #gender").val(results.hseGender);
                     $("#caseReportCaseForm #dob,#CreateCaseAgentForm #dob").val(results.hseDob);
                     $("#caseReportCaseForm #description").val($("#caseProfileForm #description").val());
-
-
-
                 }
-                else {
+                else
+                    {
 
                   $("#caseReportCaseForm #cellphone,#CreateCaseAgentForm #cellphone").val('');
                   $("#caseReportCaseForm #name,#CreateCaseAgentForm #name").val('');
@@ -1033,7 +1085,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
   });
 
 
-
+// new  dataTable
 
 
 
@@ -1091,21 +1143,13 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
                 "autoWidth": false,
                 "processing": true,
                 "serverSide": true,
+      "serverSide": true,
+      "processing": true,
                 "dom": 'T<"clear">lfrtip',
                 "order" :[[0,"desc"]],
                 "sAjaxSource": "{!! url('/cases-list/" + user +"')!!}",
-                 "fnServerData": function ( sSource, aoData, fnCallback, oSettings ) {
-                  oSettings.jqXHR = $.ajax( {
-                    "dataType": 'json',
-                    "type": "GET",
-                    "url": sSource,
-                    "data": aoData,
-                    "timeout": 0000,
-                    "error": handleAjaxError,
-                    "success": fnCallback
-                  } );
-                },
-
+                "serverSide": true,
+                 "processing": true,
                  "columns": [
                 {data: 'id', name: 'cases.id'},
                 {data: 'created_at', name: 'cases.created_at'},
@@ -1206,9 +1250,15 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
    var pendingreferralCasesTable     = $('#pendingreferralCasesTable').DataTable({
         "autoWidth": false,
 
-       "processing": true,
-       speed: 500,
+
+
+       "bProcessing": true,
+       "bServerSide": true,
+       "iDisplayLength": 10,
+       "bLengthChange": false,
+       "bDestroy": true,
        "dom": 'T<"clear">lfrtip',
+       "aLengthMenu": [[5, 10, 15, -1], [5, 10, 50, "All"]],
        "order" :[[0,"desc"]],
        "ajax": "{!! url('/pending-referral-cases-list/')!!}","processing": true,
        "serverSide": true,
@@ -1462,6 +1512,7 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
       $("#submitAddMeetingMinutesFileForm").on("click",function(){
 
         var myForm   = $("#addMeetingMinutesFileForm")[0];
+
         var formData = new FormData(myForm);
         var token    = $('input[name="_token"]').val();
 
@@ -2238,176 +2289,119 @@ $("#submitAssociatePoiForm").on("click",function(){
 
     });
 
+      {{--$("#submitCreateCaseAgentForm").on("click",function()--}}
+      {{--{--}}
 
-  $("#submitCreateCaseAgentForm").on("click",function(){
+                {{--var myForm   = $("#CreateCaseAgentForm")[0];--}}
 
+                {{--var formData = new FormData(myForm);--}}
+                {{--var token    = $('input[name="_token"]').val();--}}
+               {{--$('#modalCreateCaseAgent').modal('toggle');--}}
 
+                {{--$.ajax({--}}
+                    {{--type    :"POST",--}}
+                    {{--data    : formData,--}}
+                    {{--contentType: false,--}}
+                    {{--dataType:'json',--}}
+                    {{--processData: false,--}}
+                    {{--headers : { 'X-CSRF-Token': token },--}}
+                    {{--url     :"{!! url('/createCaseAgent')!!}",--}}
+                    {{--beforeSend : function() {--}}
+                        {{--HoldOn.open({--}}
+                            {{--theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect--}}
+                            {{--message: "<h4>  Case  Creating  please wait ! </h4>",--}}
+                            {{--content:"Your HTML Content", // If theme is set to "custom", this property is available--}}
+                                                         {{--// this will replace the theme by something customized.--}}
+                            {{--backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript--}}
+                            {{--// Keep in mind is necessary the .css file too.--}}
+                            {{--textColor:"white" // Change the font color of the message--}}
+                        {{--});--}}
 
-        var house_holder_id             = $("#CreateCaseAgentForm #hseHolderId").val();
-        var cellphone                   = $("#CreateCaseAgentForm #cellphone").val();
-        var name                        = $("#CreateCaseAgentForm #name").val();
-        var surname                     = $("#CreateCaseAgentForm #surname").val();
-        var client_reference_number     = $("#CreateCaseAgentForm #client_reference_number").val();
-        var saps_case_number            = $("#CreateCaseAgentForm #saps_case_number").val();
-        var saps_station                = $("#CreateCaseAgentForm #saps_station").val();
-	      var officers			              = $("#CreateCaseAgentForm #officers").val();
-        var  rate_value                 = $("#CreateCaseAgentForm  #rate_value").val() ;
-        var investigation_officer       = $("#CreateCaseAgentForm #investigation_officer").val();
-        var investigation_cell          = $("#CreateCaseAgentForm #investigation_cell").val();
-        var investigation_email         = $("#CreateCaseAgentForm #investigation_email").val();
-        var investigation_note          = $("#CreateCaseAgentForm #investigation_note").val();
-        var country                     = $("#CreateCaseAgentForm #country").val();
-        var case_type                   = $("#CreateCaseAgentForm #case_type").val();
-        var case_sub_type               = $("#CreateCaseAgentForm #case_sub_type").val();
-        var description                 = $("#CreateCaseAgentForm #description").val();
-        var street_number               = $("#CreateCaseAgentForm #route").val();
-        var route                       = $("#CreateCaseAgentForm #locality").val();
-        var locality                    = $("#CreateCaseAgentForm #municipality").val();
-        var administrative_area_level_1 = $("#CreateCaseAgentForm #administrative_area_level_1").val();
-        var postal_code                 = $("#CreateCaseAgentForm #postal_code").val();
-        var company                     = $("#CreateCaseAgentForm #company").val();
-        var gpsAddressLat               = $("#CreateCaseAgentForm #gpsAddressLat").val();
-        var gpsAddressLong              = $("#CreateCaseAgentForm #gpsAddressLong").val();
-        var token                       = $('input[name="_token"]').val();
+                    {{--},--}}
 
-        var formData         = {
+                    {{--success : function(response){--}}
 
+          {{--if (response.error == false) {--}}
+            {{--$('#CreateCaseAgentForm')[0].reset();--}}
+            {{--$("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! Case has been successfully created <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');--}}
+{{--//--}}
+{{--//     launchCaseModal(response.caseID);--}}
 
-                                  street_number:street_number,
-                                  route:route,
-                                  locality:locality,
-                                  administrative_area_level_1:administrative_area_level_1,
-                                  postal_code:postal_code,
-                                  country:country,
-                                  house_holder_id:house_holder_id,
-                                  description:description,
-                                  cellphone:cellphone,
-                                  name:name,
-                                  surname:surname,
-                                  client_reference_number:client_reference_number,
-                                  saps_case_number:saps_case_number,
-                                  saps_station:saps_station,
-                                  investigation_officer:investigation_officer,
-                                  investigation_cell:investigation_cell,
-                                  investigation_email:investigation_email,
-                                  investigation_note:investigation_note,
-                                  case_type:case_type,
-                                  case_sub_type:case_sub_type,
-                                  company:company,
-                                  rate_value:rate_value,
-                                  gpsAddressLat:gpsAddressLat,
-                                  gpsAddressLong:gpsAddressLong,
-				                          officers:officers
+{{--//            $('#modalCase').modal('toggle');--}}
+            {{--HoldOn.close();--}}
 
-                                };
+          {{--}--}}
+
+        {{--},--}}
+
+        {{--error: function(data) {--}}
 
 
+                    {{--HoldOn.close();--}}
+                    {{--$("#hse_error_type").html("");--}}
+                    {{--$("#hse_error_sub_type").html("");--}}
+                    {{--$("#hse_error_client_reference_number").html("");--}}
+                    {{--$("#hse_error_cellphone").html("");--}}
+                    {{--$("#hse_error_name").html("");--}}
+                    {{--$("#hse_error_surname").html("");--}}
+                    {{--$("#hse_error_company").html("");--}}
+                    {{--$("#hse_error_description").html("");--}}
+                    {{--$("#hse_error_saps_station").html("");--}}
+                    {{--$("#hse_error_email").html("");--}}
+                    {{--$("#hse_error_saps_case_number").html("");--}}
 
-        $('#modalCreateCaseAgent').modal('toggle');
+                    {{--if (data.responseJSON.case_type)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_type").html("<p class='help-block red'>*"+data.responseJSON.case_type+"</p>")--}}
+                    {{--}--}}
 
-        $.ajax({
-        type    :"POST",
-        data    : formData,
-        headers : { 'X-CSRF-Token': token },
-        url     :"{!! url('/createCaseAgent')!!}",
-        beforeSend : function() {
-          HoldOn.open({
-          theme:"sk-rect",//If not given or inexistent theme throws default theme sk-rect
-          message: "<h4> loading please wait... ! </h4>",
-          content:"Your HTML Content", // If theme is set to "custom", this property is available
-                                       // this will replace the theme by something customized.
-          backgroundColor:"none repeat scroll 0 0 rgba(0, 0, 0, 0.8)",//Change the background color of holdon with javascript
-                     // Keep in mind is necessary the .css file too.
-          textColor:"white" // Change the font color of the message
-            });
-        },
-        success : function(response){
+                    {{--if (data.responseJSON.saps_case_number)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_saps_case_number").html("<p class='help-block red'>*"+data.responseJSON.saps_case_number+"</p>")--}}
+                    {{--}--}}
 
-          //if (response.error == false) {
-            $('#CreateCaseAgentForm')[0].reset();
-            $("#caseNotesNotification").html('<div class="alert alert-success alert-icon">Well done! Case has been successfully created <i class="icon">&#61845;</i><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button></div>');
-//            launchCaseModal(response.caseID);
-//            $('#modalCase').modal('toggle');
-            HoldOn.close();
+                    {{--if (data.responseJSON.saps_station)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_saps_station").html("<p class='help-block red'>*"+data.responseJSON.saps_station+"</p>")--}}
+                    {{--}--}}
 
-          //}
+                    {{--if (data.responseJSON.case_sub_type)--}}
+                    {{--{--}}
+                      {{--$("#hse_error_sub_type").html("<p class='help-block red'>*"+data.responseJSON.case_sub_type+"</p>")--}}
+                    {{--}--}}
+                    {{--if(data.responseJSON.rate_value)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_client_reference_number").html("<p class='help-block red'>*"+data.responseJSON.rate_value+"</p>")--}}
+                    {{--}--}}
+                    {{--if(data.responseJSON.cellphone)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_cellphone").html("<p class='help-block red'>*"+data.responseJSON.cellphone+"</p>")--}}
+                    {{--}--}}
 
-        },
+                    {{--if(data.responseJSON.name)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_name").html("<p class='help-block red'>*"+data.responseJSON.name+"</p>")--}}
+                    {{--}--}}
 
-        error: function(data) {
+                    {{--if(data.responseJSON.surname)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_surname").html("<p class='help-block red'>*"+data.responseJSON.surname+"</p>")--}}
+                    {{--}--}}
 
+                    {{--if(data.responseJSON.company)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_company").html("<p class='help-block red'>*"+data.responseJSON.company+"</p>")--}}
+                    {{--}--}}
+                    {{--if(data.responseJSON.description)--}}
+                    {{--{--}}
+                        {{--$("#hse_error_description").html("<p class='help-block red'>*"+data.responseJSON.description+"</p>")--}}
+                    {{--}--}}
 
-                    HoldOn.close();
-                    $("#hse_error_type").html("");
-                    $("#hse_error_sub_type").html("");
-                    $("#hse_error_client_reference_number").html("");
-                    $("#hse_error_cellphone").html("");
-                    $("#hse_error_name").html("");
-                    $("#hse_error_surname").html("");
-                    $("#hse_error_company").html("");
-                    $("#hse_error_description").html("");
-                    $("#hse_error_saps_station").html("");
-                    $("#hse_error_email").html("");
-                    $("#hse_error_saps_case_number").html("");
+                    {{--$('#modalCreateCaseAgent').modal('show');--}}
 
-
-
-                    if (data.responseJSON.case_type)
-                    {
-                      $("#hse_error_type").html("<p class='help-block red'>*"+data.responseJSON.case_type+"</p>")
-                    }
-
-                    if (data.responseJSON.saps_case_number)
-                    {
-                      $("#hse_error_saps_case_number").html("<p class='help-block red'>*"+data.responseJSON.saps_case_number+"</p>")
-                    }
-
-                    if (data.responseJSON.saps_station)
-                    {
-                      $("#hse_error_saps_station").html("<p class='help-block red'>*"+data.responseJSON.saps_station+"</p>")
-                    }
-
-                    if (data.responseJSON.case_sub_type)
-                    {
-                      $("#hse_error_sub_type").html("<p class='help-block red'>*"+data.responseJSON.case_sub_type+"</p>")
-                    }
-                    if(data.responseJSON.rate_value)
-                    {
-                        $("#hse_error_client_reference_number").html("<p class='help-block red'>*"+data.responseJSON.rate_value+"</p>")
-                    }
-                    if(data.responseJSON.cellphone)
-                    {
-                        $("#hse_error_cellphone").html("<p class='help-block red'>*"+data.responseJSON.cellphone+"</p>")
-                    }
-
-                    if(data.responseJSON.name)
-                    {
-                        $("#hse_error_name").html("<p class='help-block red'>*"+data.responseJSON.name+"</p>")
-                    }
-
-                    if(data.responseJSON.surname)
-                    {
-                        $("#hse_error_surname").html("<p class='help-block red'>*"+data.responseJSON.surname+"</p>")
-                    }
-
-                    if(data.responseJSON.company)
-                    {
-                        $("#hse_error_company").html("<p class='help-block red'>*"+data.responseJSON.company+"</p>")
-                    }
-                    if(data.responseJSON.description)
-                    {
-                        $("#hse_error_description").html("<p class='help-block red'>*"+data.responseJSON.description+"</p>")
-                    }
-
-                    $('#modalCreateCaseAgent').modal('show');
-
-                  }
-
-
-    })
-
-    });
-
+                  {{--}--}}
+                {{--})--}}
+      {{--});--}}
 
      $("#submitEscalateCaseForm").on("click",function(){
 
@@ -3174,10 +3168,15 @@ console.log("CreateCase error, data - ",data);
                         "processing": true,
                         "serverSide": true,
                           "autoWidth": false,
+
+              "aLengthMenu": [[5, 10, 15, -1], [5, 10, 50, "All"]],
+              "bDestroy": true,
                         "pageLength": 5,
                         "bLengthChange": false,
                         "order" :[[0,"desc"]],
                         "ajax": "{!! url('/relatedCases-list/" + id +"')!!}",
+              "serverSide": true,
+              "processing": true,
                          "columns": [
                         {data: function(d){
 

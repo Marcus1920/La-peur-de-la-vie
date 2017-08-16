@@ -123,12 +123,8 @@ class MeetingsController extends Controller {
 			->make(true);
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function uploadMeetingMinutes(Request $request) {
+    public function uploadMeetingMinutes(Request $request)
+    {
 		$destinationFolder = 'minutes/meeting_' . $request['meetingID'];
 		if (!\File::exists($destinationFolder)) {
 			$createDir = \File::makeDirectory($destinationFolder, 0777, true);
@@ -183,14 +179,7 @@ class MeetingsController extends Controller {
 		return "ok";
 	}
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(MeetingRequest $request) {
+    public function store(MeetingRequest $request) {
 		$response             = array();
 		$meeting              = new Meeting();
 		$meeting->venue       = $request['venue'];
@@ -322,24 +311,11 @@ class MeetingsController extends Controller {
 		return \Response::json($response, 201);
 	}
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int $id
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function show($id) {
 		//
 	}
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int $id
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
 	public function removeAttendee(Request $request) {
 		$response = array();
 		foreach ($request['arr'] as $value) {
@@ -353,14 +329,7 @@ class MeetingsController extends Controller {
 		return \Response::json($response, 201);
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \Illuminate\Http\Request $request
-	 * @param  int                      $id
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function inviteAttendee(Request $request) {
 		$txtDebug = __CLASS__."::".__FUNCTION__."(\$request)";
 		$txtDebug .= PHP_EOL."  \$request - ".print_r($request->all(),1);
@@ -410,13 +379,7 @@ class MeetingsController extends Controller {
 		return \Response::json($response, 201);
 	}
 
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int $id
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
+
 	public function markAttendee(Request $request) {
 		$response = array();
 		foreach ($request['arr'] as $value) {

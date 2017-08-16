@@ -13,7 +13,7 @@
 
             </div>
             <div class="modal-body">
-                {!! Form::open(['url' => 'createCaseAgent', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CreateCaseAgentForm" ]) !!}
+                {!! Form::open(['url' => 'createCaseAgent', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"CreateCaseAgentForm" ,'files' => 'true']) !!}
                 {!! Form::hidden('hseHolderId',NULL,['id' => 'hseHolderId']) !!}
                 {!! Form::hidden('gpsAddressLat',NULL,['id' => 'gpsAddressLat','class' => 'latitude']) !!}
                 {!! Form::hidden('gpsAddressLong',NULL,['id' => 'gpsAddressLong','class' => 'longitude']) !!}
@@ -251,6 +251,27 @@
 
                 </div>
 
+                <div class="form-group">
+                    {!! Form::label('Attach File', 'Attach File', array('class' => 'col-md-3 control-label')) !!}
+                    <div class="fileupload fileupload-new row" data-provides="fileupload">
+                        <div class="input-group col-md-6">
+                            <div class="uneditable-input form-control">
+                                <i class="fa fa-file m-r-5 fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <div class="input-group-btn">
+                    <span class="btn btn-file btn-alt btn-sm">
+                    <span class="fileupload-new">Select file</span>
+                    <span class="fileupload-exists">Change</span>
+                        {!!  Form::file('caseFile' , null , ['id' => 'caseFile']) !!}
+                </span>
+                            </div>
+
+                            <a href="#" class="btn btn-sm btn-gr-gray fileupload-exists" data-dismiss="fileupload">Remove</a>
+                        </div>
+                    </div>
+                </div>
+
                 <hr class="whiter m-t-20">
                 <hr class="whiter m-b-20">
 
@@ -271,8 +292,6 @@
                 {!! Form::close() !!}
 
             </div>
-
-
 
         </div>
     </div>

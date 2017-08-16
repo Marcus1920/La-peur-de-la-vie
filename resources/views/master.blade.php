@@ -1,18 +1,4 @@
-<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start();
-
-if (\Auth::check())
-{
-$userId=Auth::user();
-
-$tasks  = \App\TaskOwner::with('user','task','task.status')
-    ->where('user_id',$userId->id)
-    ->where('task_owner_type_id',2)->orderBy('id','desc')->take(3)->get();
-
-    $allTasks  = \App\TaskOwner::with('user','task','task.status')
-        ->where('user_id',$userId->id)
-        ->where('task_owner_type_id',2)->orderBy('id','desc')->get();
-}
-?>
+<?php if (substr_count($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) ob_start("ob_gzhandler"); else ob_start(); ?>
 
 <!DOCTYPE html>
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
@@ -22,7 +8,7 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
         <meta charset="UTF-8">
         <meta name="description" content="Aims Safis Case Console Management">
         <meta name="keywords" content="Aims Safis Case Console System,Incidents Management System">
-        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
+        <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/SiteBadge3.png') }}">
 
         <title> Ubulwembu  </title>
 
@@ -55,18 +41,24 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
         <link href="{{ asset('/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css') }}" rel="stylesheet">
 
         <!-- DataTables Responsive CSS -->
-        <link href="{{ asset('/bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">
+        {{--<link href="{{ asset('/bower_components/datatables-responsive/css/responsive.dataTables.scss') }}" rel="stylesheet">--}}
         <!-- jQuery Library -->
         <script src="{{ asset('/js/jquery.min.js') }}"></script>
 
 
-   <script>
+    {{--<script>--}}
 
-    $(document).ready(function() {
-    jQuery.migrateMute = true;
-    $.fn.dataTable.ext.errMode = 'none';
-    });
-    </script>
+        {{--$(document).ready(function() {--}}
+            {{--jQuery.migrateMute = true;--}}
+        {{--});--}}
+
+
+    {{--$(document).ready(function() {--}}
+    {{--jQuery.migrateMute = true;--}}
+    {{--$.fn.dataTable.ext.errMode = 'none';--}}
+    {{--});--}}
+
+    {{--</script>--}}
 
 
 
@@ -159,11 +151,12 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ asset('/img/SiteBadge3.png') }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ Auth::user()->profile_picture }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">
-                            <li><a href="{{ url('all-messages') }}">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                            {{--<li><a href="{{ url('all-messages') }}">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>--}}
+                             <li><a href="{{ url('user-profile') }}">Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                             <li><a href="{{ url('/auth/logout') }}">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                         </ul>
                         @if (Auth::user())
@@ -228,11 +221,34 @@ $tasks  = \App\TaskOwner::with('user','task','task.status')
                     @endif
 
                 @if(isset($userViewCasesPermission) && $userViewCasesPermission->permission_id =='15')
-                    <li {{ (Request::is('home') ? "class=active" : '') }}>
-                        <a class="sa-side-folder" href="{{ url('home') }}">
-                            <span class="menu-item">My Cases</span>
-                        </a>
-                    </li>
+                    {{--<li {{ (Request::is('home') ? "class=active" : '') }}>--}}
+                        {{--<a class="sa-side-folder" href="{{ url('home') }}">--}}
+                            {{--<span class="menu-item">My Cases</span>--}}
+                        {{--</a>--}}
+                    {{--</li>--}}
+
+
+
+                            <li class="dropdown">
+
+                                <a class="sa-side-folder" href="">
+                                    <span class="menu-item">My Cases </span>
+                                </a>
+
+                                <ul class="list-unstyled menu-item">
+
+                                    @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
+
+
+
+                                        <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
+                                        <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noOfPendingAllocationCases,0) }}</span>Pending /Allocation Cases</a></li>
+                                        <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>
+                                        <li><a href="{{ url('closedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Reslove Cases</a></li>
+
+                                    @endif
+                                </ul>
+                            </li>
                 @endif
 
                 @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
