@@ -229,9 +229,10 @@ class AddressBookController extends Controller
         return $data;
     }
 
-     public function addToPrivate()
+     public function addToPrivate(Request $request
+     )
     {
-       return "oky";
+        Log::info($request);
     }
 
     public function getProfilePerUser($id)

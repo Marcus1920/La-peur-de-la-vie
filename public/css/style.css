@@ -167,6 +167,11 @@ blockquote small {
     color: #eee;
 }
 
+.scrollable{
+    height:400px;
+    overflow:scroll;
+}
+
 /* --------------------------------------------------------
     Unordered Lists
 -----------------------------------------------------------*/

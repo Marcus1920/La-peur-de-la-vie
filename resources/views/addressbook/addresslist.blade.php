@@ -5,14 +5,35 @@
     <div id="tabs">
         <ul class="nav nav-pills navbar-right" role="tablist">
             <li class="active"><a href="#global"  data-toggle="tab">Global Address Book</a></li>
-               <li><a href="#private"  data-toggle="tab">Private Address Book</a></li>
+            <li><a href="#private"  data-toggle="tab">Private Address Book</a></li>
 
-                            </ul>
-                            <h4 class="page-title">ADDRESS BOOK</h4>
+        </ul>
+        <h4 class="page-title">ADDRESS BOOK</h4>
 
-                            <div class="block-area" id="alternative-buttons">
-                                <h3 class="block-title">Look for People to Add to Your Private Address Book</h3>
+        <div class="block-area" id="alternative-buttons">
+            <h3 class="block-title">Look for People to Add to Your Private Address Book</h3>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane" id="global">
+                <!-- Responsive Table -->
+                <div class="block-area" id="responsiveTable">
+                    <div id="MeetingNotification"></div>
+                    <div class="table-responsive overflow">
+
+                        <div class="container">
+                            <div class="row">
+                                <div class ="col-md-8">
+                                    <div class="scrollabe">
+
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--GLOBAL TAB CONTENT-->
         <div class="tab-content">
@@ -25,43 +46,37 @@
                         <div class="row">
                             <div style="width:100%;">
                                 <!--LEFT SIDE DIV-->
-
-
                                 <div class="col-sm-3 col-md-6 col-lg-4" div style="float:left; display:inline-block;">
                                     <div class="listview narrow">
+                                        <div class="form-group pull-right">
 
+                                            <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
+                                        </div>
                                         <span class="counter pull-right"></span>
                                         <INPUT type="button" value="Add to Private" id="add_button"/>
                                         <INPUT type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
 
-                                        <div class="form-group pull-right">
+                                        <table class="table table-hover table-bordered results" id="myGlobalTable">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%">Select</th>
+                                                <th class="col-md-5 col-xs-5">User Full Name</th>
 
-                                                <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
-                                            </div>
-                                            <table class="table table-hover table-bordered" id="myGlobalTable">
-                                                <thead>
-                                                <tr>
-                                                    <th width="10%">Select</th>
-                                                    <th class="col-md-5 col-xs-5">User Full Name</th>
-
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($users as $user)
+                                                <tr class="clickable-row">
+                                                    <td>
+                                                        <input type="checkbox" name="row" value="{{$user->id}}" id="chck" class="get_value" ></td>
+                                                    <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}">{{$user->name . " " . $user->surname}}</a><br/>
+                                                        <small class="text-muted">{{$user->email}}</small></td>
                                                 </tr>
-                                                </thead>
-                                                <tbody>
-                                                @foreach($users as $user)
-                                                    <tr class="clickable-row">
-                                                        <td>
-                                                            <input type="checkbox" name="row" value="{{$user->id}}" id="chck" class="get_value" ></td>
-                                                        <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}">{{$user->name . " " . $user->surname}}</a><br/>
-                                                            <small class="text-muted">{{$user->email}}</small></td>
-                                                    </tr>
-                                                @endforeach
+                                            @endforeach
 
 
-                                                </tbody>
-                                            </table>
-
-
-
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                                 <!--RIGHT SIDE DIV-->
@@ -97,10 +112,10 @@
                                                 <div class="col-md-6">
 
                                                     {!! Form::open(['url' => 'addContact', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
-                                                     {!! Form::hidden('created_by',Auth::user()->id) !!}                                       
+                                                    {!! Form::hidden('created_by',Auth::user()->id) !!}
                                                     {!! Form::hidden('user',$contacts->id)!!}
                                                     {!! Form::hidden('email',$contacts->email)!!}
-                                                
+
 
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
 
@@ -141,11 +156,11 @@
                                                     <br/>
 
 
-                                                     <div class="form-group">
+                                                    <div class="form-group">
 
-                                                     </div>
+                                                    </div>
 
-               
+
                                                     <hr class="whiter m-t-20">
 
 
@@ -154,7 +169,7 @@
                                                     <span class="counter pull-right"></span>
                                                     <br/>
 
-                                                    
+
                                                     <lu>
                                                         <a href="{{ url('') }}" ><i class="fa fa-envelope-o fa-2x" aria-hidden="true" title="EMAIL"></i>
                                                         </a>
@@ -165,7 +180,7 @@
                                                             <i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
                                                         </a>
                                                     </lu>
-                                                
+
                                                     {!! Form::close()!!}
                                                 </div>
                                             </div>
@@ -205,11 +220,11 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}"></a><br/>
-                                                        <small class="text-muted"></small></td>
-                                                </tr>
-                                          
+                                            <tr>
+                                                <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}"></a><br/>
+                                                    <small class="text-muted"></small></td>
+                                            </tr>
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -255,7 +270,7 @@
                                                         </div>
                                                     </div>
 
-                                                        <div class="form-group">
+                                                    <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
                                                             {!! Form::text('surname',null,['class' => 'form-control input-sm','id' => 'cellphone','disabled']) !!}
@@ -315,26 +330,45 @@
     </div>
 @endsection
 @section('footer')
-<script>
+    <script>
+        $("").click(function(event){
+            event.preventDefault();
+            var searchIDs = $("#myGlobalTable input:checkbox:checked").map(function() {
+                return $(this).val();
+            }).get();
+            console.log(searchIDs);
+        });
 
-$('#add_button').click(function() {
-    var checkedValues = $("input:checkbox:checked", "#myGlobalTable").map(function() {
-        return $(this).val();
-    }).get();
-    var requestData = JSON.stringify(checkedValues);
-//     alert(requestData);
-     var request =$.ajax({
-         url:"/addToPrivate/",
-         method:'post',
-         dataType:"json",
-         data:{data: requestData}
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#add_button").click(function() {
+                getValuetoAdd();
+            });
 
-});
-});
+            $("#buttonParent").click(function() {
+                getValueforEmails();
+            });
+        });
+        function getValuetoAdd() {
+            var chkArray = [];
+            $(".get_value:checked").each(function () {
+                chkArray.map(function()
+                    { return $(this).val()}
+                );
+            });
 
+            var selected;
+            selected = chkArray.join(',') + ",";
+            if (selected.length > 1) {
+                console.log(selected);
+            } else {
+                alert("Please at least one of the checkbox");
+            }
+        }
 
-</script>
-<!--Star js-->
+    </script>
+    <!--Star js-->
     <script>
         $('.star').click(function(){
             $(this).toggleClass('clicked');
@@ -342,20 +376,20 @@ $('#add_button').click(function() {
     </script>
 
     <!--Show active tr-->
-{{--<script>--}}
-{{--$(document).ready( function(){--}}
-    {{--$("#myGlobalTable").on('click','.clickable-row',function(event){--}}
-        {{--if($(this).hasClass('active'))--}}
-        {{--{--}}
-            {{--$(this).removeClass('active');--}}
+    <script>
+        $(document).ready( function(){
+            $("#myGlobalTable").on('click','.clickable-row',function(event){
+                if($(this).hasClass('active'))
+                {
+                    $(this).removeClass('active');
 
-        {{--} else{--}}
-            {{--$(this).addClass('active').siblings().removeClass('active');--}}
-        {{--}--}}
-           {{--});--}}
-{{--});--}}
+                } else{
+                    $(this).addClass('active').siblings().removeClass('active');
+                }
+            });
+        });
 
-{{--</script>--}}
+    </script>
 
     <!-- TABS SCRIPT-->
     <script>
@@ -388,27 +422,27 @@ $('#add_button').click(function() {
     </script>
 
     <!--PRIVATE SEARCH JS-->
-        <script>
-            function myFunction() {
-                var input, filter, table, tr, td, i;
-                input = document.getElementById("myPrivateInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myPrivateTable");
-                tr = table.getElementsByTagName("tr");
+    <script>
+        function myFunction() {
+            var input, filter, table, tr, td, i;
+            input = document.getElementById("myPrivateInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myPrivateTable");
+            tr = table.getElementsByTagName("tr");
 
-                // Loop through all table rows, and hide those who don't match the search query
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[0];
-                    if (td) {
-                        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
+            // Loop through all table rows, and hide those who don't match the search query
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
                     }
                 }
             }
-        </script>
+        }
+    </script>
 
 @endsection
 
