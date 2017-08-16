@@ -224,28 +224,32 @@ class AddressBookController extends Controller
 
     public function test()
     {
-        $users = User::all();
+        $data = User::all();
 
-        return view('addressbook.test',compact('users'));
+        return $data;
+    }
+
+     public function addToPrivate()
+    {
+       return "oky";
     }
 
     public function getProfilePerUser($id)
     {
 
         $users = User::all();
-        $contactBook  = addressbook::where('created_by',$id)->get();
-        $privateContactProfile  = addressbook::where('created_by',$id)->first();
         $contacts  = User::where('id',$id)->first();
         $position = Position::find($contacts->position);
 
+        $contactBook  = addressbook::where('created_by',$id)->get();
+        
 //   return   json_encode(  $privateContactsProfile);
 
         return view('addressbook.test')
             ->with(compact('contacts'))
             ->with(compact('users'))
             ->with(compact('position'))
-            ->with(compact('contactBook'))
-            ->with(compact('privateContactProfile'));
+            ->with(compact('contactBook'));
     }
 
 }

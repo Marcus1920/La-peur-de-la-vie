@@ -659,6 +659,8 @@ Route::get('addressBookView', ['middleware' => 'resetLastActive', 'uses' => 'Add
 
 Route::get('addressbook-list', ['uses' => 'AddressBookController@test']);
 Route::get('getContactProfile/{id}', ['uses' => 'AddressBookController@getProfilePerUser']);
+Route::get('global-list', ['uses' => 'AddressBookController@test']);
+Route::get('addToPrivate', ['uses' => 'AddressBookController@addToPrivate']);
 
 
 

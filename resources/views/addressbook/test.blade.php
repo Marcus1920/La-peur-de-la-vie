@@ -2,13 +2,6 @@
 
 @section('content')
     <!--Nav Tabs-->
-    <style type="text/css">
-        i {
-  display: inline-block;
-  margin-right: 1em;
-}
-</style>
-
     <div id="tabs">
         <ul class="nav nav-pills navbar-right" role="tablist">
             <li class="active"><a href="#global"  data-toggle="tab">Global Address Book</a></li>
@@ -18,10 +11,7 @@
                             <h4 class="page-title">ADDRESS BOOK</h4>
 
                             <div class="block-area" id="alternative-buttons">
-                                <h3 class="block-title">Add your Favorate Contacts from here!</h3>
-                                <a href="#" class="btn btn-sm">
-                                    <i class="fa fa-plus" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
-                                </a>
+                                <h3 class="block-title">Look for People to Add to Your Private Address Book</h3>
                             </div>
 
         <!--GLOBAL TAB CONTENT-->
@@ -38,34 +28,37 @@
                                 <div class="col-sm-3 col-md-6 col-lg-4" div style="float:left; display:inline-block;">
                                     <div class="listview narrow">
                                         <div class="form-group pull-right">
-                                            <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
+                                        
+                                        <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
                                         </div>
                                         <span class="counter pull-right"></span>
+                                        <INPUT type="button" value="Add to Private" id="add_button"/>
+                                        <INPUT type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
+                                       
                                         <table class="table table-hover table-bordered results" id="myGlobalTable">
                                             <thead>
                                             <tr>
-                                                <th class="col-md-5 col-xs-5">User Full Name</th>
+                                                <th width="10%">Select</th>
+                                              <th class="col-md-5 col-xs-5">User Full Name</th>
 
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($users as $user)
-                                                <tr>
+                                                <tr class="clickable-row">
+                                                  <td>
+                                                   <input type="checkbox" name="row" value="{{$user->id}}"  onclick="" class="get_value" ></td>
                                                     <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}">{{$user->name . " " . $user->surname}}</a><br/>
                                                         <small class="text-muted">{{$user->email}}</small></td>
                                                 </tr>
                                             @endforeach
+
+
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-
-
-
-
                                 <!--RIGHT SIDE DIV-->
-
-
                                 <div class="col-sm-9 col-md-6 col-lg-8" style="float:right; display:inline-block;">
                                     <div class="block-area" id="basic">
                                         <div class="tile p-15">
@@ -85,11 +78,12 @@
 
                                                     <span class="counter pull-right"></span>
 
-                                                    <div class="card" style="width: 60rem;">
-                                                        <img class="card-img-top" src="{{asset('images/trolltunga.jpg')}}" alt="Card image cap">
+                                                    <div class="card" style="width: 30rem;">
+                                                        <img class="img-circle"  src="{{asset('images/trolltunga.jpg')}}"  width="300" height="200"  alt="Card image cap">
                                                         <div class="card-block">
-                                                            <h4 class="card-title">Card title</h4>
-                                                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                                            <hr class="whiter m-t-20">
+                                                            <h1 class="card-title">Card title</h1>
+                                                            <p class="card-text"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -101,7 +95,6 @@
                                                     {!! Form::hidden('user',$contacts->id)!!}
                                                     {!! Form::hidden('email',$contacts->email)!!}
                                                 
-                    
 
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
 
@@ -116,9 +109,6 @@
                                                         </div>
                                                     </div>
 
-
-
-
                                                     <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
@@ -127,7 +117,6 @@
 
                                                         </div>
                                                     </div>
-
 
                                                     <div class="form-group">
                                                         {!! Form::label('CELLPHONE ', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}
@@ -147,7 +136,7 @@
 
 
                                                      <div class="form-group">
-                                                         <button type="submit" type="button" class="fa fa-star"></button>
+
                                                      </div>
 
                
@@ -161,14 +150,13 @@
 
                                                     
                                                     <lu>
-                                                        <a href="{{ url('') }}" >
-                                                            <i class="fa fa-envelope" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
+                                                        <a href="{{ url('') }}" ><i class="fa fa-envelope-o fa-2x" aria-hidden="true" title="EMAIL"></i>
+                                                        </a>
+                                                        <a href="#" >
+                                                            <i class="fa fa-star fa-2x" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
                                                         <a href="{{ url('') }}">
                                                             <i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
-                                                        </a>
-                                                        <a href="{{ url('') }}">
-                                                            <i class="fa fa-phone" aria-hidden="true" title="CALL" data-toggle="tooltip"></i>
                                                         </a>
                                                     </lu>
                                                 
@@ -185,7 +173,6 @@
                 </div>
             </div>
         </div>
-
 
         <!--PRIVATE TAB CONTENT-->
         <div class="tab-content">
@@ -212,12 +199,11 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($contactBook as $privateContact)
                                                 <tr>
-                                                    <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}">{{$privateContact->first_name . " " . $privateContact->surname}}</a><br/>
-                                                        <small class="text-muted">{{$privateContact->position}}</small></td>
+                                                    <td><a class="t-overflow" href="{{url('getContactProfile/'.$user->id)}}"></a><br/>
+                                                        <small class="text-muted"></small></td>
                                                 </tr>
-                                            @endforeach
+                                          
                                             </tbody>
                                         </table>
                                     </div>
@@ -237,7 +223,7 @@
                                                     <span class="counter pull-right"></span>
 
                                                     <div class="card" style="width: 60rem;">
-                                                        <img class="card-img-top" src="{{asset('images/trolltunga.jpg')}}" alt="Card image cap">
+                                                        <img class="img-circle"  src="{{asset('images/trolltunga.jpg')}}"  width="300" height="200"  alt="Card image cap">
                                                         <div class="card-block">
                                                             <h4 class="card-title">Card title</h4>
                                                             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
@@ -257,7 +243,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('name',$privateContactProfile->first_name,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
+                                                            {!! Form::text('name',null,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -266,7 +252,7 @@
                                                         <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('surname',$privateContactProfile->surname,['class' => 'form-control input-sm','id' => 'cellphone','disabled']) !!}
+                                                            {!! Form::text('surname',null,['class' => 'form-control input-sm','id' => 'cellphone','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
@@ -275,7 +261,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('EMAIL', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('email',$privateContactProfile->email,['class' => 'form-control input-sm','id' => 'email','disabled']) !!}
+                                                            {!! Form::text('email',null,['class' => 'form-control input-sm','id' => 'email','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
@@ -310,7 +296,6 @@
 
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -324,6 +309,51 @@
     </div>
 @endsection
 @section('footer')
+<script>
+$("#add_button").click(function(event){
+    event.preventDefault();
+    var searchIDs = $("#myGlobalTable input:checkbox:checked").map(function()
+    {
+
+    $.ajax({
+    type: 'POST',
+    url: '/addToPrivate/',
+    data: {searchIDs},
+
+    success: function(data) {
+       console.log(data);
+    }
+});
+     
+    })
+  
+   });
+
+
+</script>
+<!--Star js-->
+    <script>
+        $('.star').click(function(){
+            $(this).toggleClass('clicked');
+        });
+    </script>
+
+    <!--Show active tr-->
+<script>
+$(document).ready( function(){
+    $("#myGlobalTable").on('click','.clickable-row',function(event){
+        if($(this).hasClass('active'))
+        {
+            $(this).removeClass('active');
+
+        } else{
+            $(this).addClass('active').siblings().removeClass('active');
+        }
+           });
+});
+
+</script>
+
     <!-- TABS SCRIPT-->
     <script>
         $( function() {
