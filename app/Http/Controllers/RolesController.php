@@ -66,9 +66,15 @@ class RolesController extends Controller
         $roles = UserRole::orderBy('name')->get();
         $userGroups = CalendarGroup::orderBy('name')->get();
 
+        
+
         foreach ($roles as $role) {
-            foreach ($userGroups as $userGroup) {
+            foreach ($userGroups as &$userGroup) {
                 if($role->name != $userGroup->name){
+                    //$next = current($roles);
+                   // echo $role->name ." " . $userGroup->name ."<br/>";
+
+                   // $names[] = $role->name;
                     $tempcalendarGroup = $this->calendarGroup->createCalendarGroup($role->name,$role->name);
                     $this->calendarGroupUser->createCalendarGroupUser($tempcalendarGroup->id,$role->id);
 
@@ -87,11 +93,15 @@ class RolesController extends Controller
                         $this->calendar->storeCalendar($data);
                     }
                 }
+                break;
             }
+            
              # code...
         }
+
+        //dd($names);
         $role             = new UserRole();
-		$role->id         = 27;
+		//$role->id         = 27;
         $role->name       = $request['name'];
         $slug             = preg_replace('/\s+/','-',$request['name']);
         $role->slug       = $slug;
