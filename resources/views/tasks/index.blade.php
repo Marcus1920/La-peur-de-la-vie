@@ -6,11 +6,11 @@
 
 
     <div id="tabs">
-    <ul class="nav nav-pills navbar-right" role="tablist">
+       <ul class="nav nav-pills navbar-right" role="tablist">
         <li class="active"><a href="#all"  data-toggle="tab">My Tasks</a></li>
         <li><a href="#assigned"  data-toggle="tab">Assigned by Me</a></li>
 
-    </ul>
+       </ul>
 
         <h4 class="page-title">TASKS</h4>
     <!-- Alternative -->

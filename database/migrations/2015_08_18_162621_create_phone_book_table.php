@@ -14,13 +14,15 @@ class CreatePhoneBookTable extends Migration
     {
         Schema::create('addressbook',function($table){
             $table->increments('id');
-            $table->integer('user');
-            $table->integer('relationship');
-            $table->string('email')->unique();
-            $table->string('cellphone')->unique();
             $table->string('first_name');
             $table->string('surname');
+            $table->string('cellphone');
+            $table->string('email');
+            $table->integer('user');
+            $table->string('relationship')->nullable();
             $table->boolean('active')->default(1);
+            $table->integer('created_by');
+            $table->foreign('user')->references('id')->on('users');
             $table->timestamps();
         });
     }

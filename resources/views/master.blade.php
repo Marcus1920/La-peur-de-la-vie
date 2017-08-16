@@ -406,6 +406,15 @@
                     @endif
 
 
+                        @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
+                            <li {{ (Request::is('map') ? "class=active" : '') }}>
+                                <a class="sa-side-agenda" href="{{ url('addressbookList/'. Auth::user()->id) }}">
+                                    <span class="menu-item">address Book</span>
+                                </a>
+                            </li>
+                        @endif
+
+
 
                 </ul>
 
