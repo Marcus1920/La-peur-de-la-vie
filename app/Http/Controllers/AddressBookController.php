@@ -93,7 +93,7 @@ class AddressBookController extends Controller
         $addressbook->email          = $request['email'];
         $addressbook->cellphone      = $request['cellphone'];
         $addressbook->created_by     = \Auth::user()->id;
-        $addressbook->relationship   = 'work mate';
+        $addressbook->relationship   = '';
         $addressbook->active         = 1;
         $addressbook->save();
 
@@ -222,34 +222,41 @@ class AddressBookController extends Controller
         return $users;
     }
 
-    public function test()
-    {
-        $data = User::all();
-
-        return $data;
-    }
-
-     public function addToPrivate()
-    {
-       return "oky";
-    }
-
     public function getProfilePerUser($id)
     {
 
         $users = User::all();
-        $contacts  = User::where('id',$id)->first();
-        $position = Position::find($contacts->position);
-
         $contactBook  = addressbook::where('created_by',$id)->get();
-        
-//   return   json_encode(  $privateContactsProfile);
-
         return view('addressbook.test')
-            ->with(compact('contacts'))
-            ->with(compact('users'))
-            ->with(compact('position'))
-            ->with(compact('contactBook'));
+            ->with(compact('contactBook'))
+            ->with(compact('users'));
+
     }
 
+    public function userprofileGlobal($id)
+    {
+        $user  = User::select('name','surname','email','cellphone','id')->where('id',$id)->first();
+        return response()->json($user);
+
+    }
+
+    public function userprofilePrivate($id)
+    {
+
+        $contactBook  = addressbook::select('first_name','surname','email','cellphone','user')->where('user',$id)->first();
+        return response()->json($contactBook);
+
+    }
+
+
+    public function deleteuser($id)
+    {
+        $created_by= Auth::user()->id;
+        $contactBook  = addressbook::where('created_by',$created_by)
+                                    ->where('user',$id);
+
+        $contactBook->delete();
+        return Redirect::to('/addressbookList/'.Auth::user()->id);
+
+    }
 }
