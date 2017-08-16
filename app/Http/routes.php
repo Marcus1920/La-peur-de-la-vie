@@ -662,6 +662,12 @@ Route::get('getContactProfile/{id}', ['uses' => 'AddressBookController@getProfil
 Route::get('global-list', ['uses' => 'AddressBookController@test']);
 Route::get('addToPrivate', ['uses' => 'AddressBookController@addToPrivate']);
 
+Route::get('userprofileGlobal/{id}', 'AddressBookController@userprofileGlobal');
+
+Route::get('userprofilePrivate/{id}', 'AddressBookController@userprofilePrivate');
+
+
+Route::get('deleteuserprofilePrivate/{id}', 'AddressBookController@deleteuser');
 
 
 /*
