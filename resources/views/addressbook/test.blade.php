@@ -35,6 +35,7 @@
                                         <INPUT type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
 
 
+
                                         <div class="form-group pull-right">
 
                                                 <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
@@ -46,6 +47,13 @@
                                                     <th class="col-md-5 col-xs-5">User Full Name</th>
 
 
+                                       
+                                        <table class="table table-hover table-bordered results" id="myGlobalTable">
+                                            <thead>
+                                            <tr>
+                                                <th width="10%">Select</th>
+                                              <th class="col-md-5 col-xs-5">User Full Name</th>
+
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -56,7 +64,17 @@
                                                     <td><a class="t-overflow" onclick="profileGlobal({{$user->id}});">{{$user->name . " " . $user->surname}}</a><br/>
                                                         <small class="text-muted">{{$user->email}}</small></td>
 
-                                                </tr>
+
+                                        <div class="form-group pull-right">
+
+                                                <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
+                                            </div>
+                                            <table class="table table-hover table-bordered" id="myGlobalTable">
+                                                <thead>
+                                                <tr>
+                                                    <th width="10%">Select</th>
+                                                    <th class="col-md-5 col-xs-5">User Full Name</th>
+                    </tr>
                                                 </thead>
                                                 <tbody>
                                                 @foreach($users as $user)
@@ -371,6 +389,20 @@
 
 <script>
 
+$("#add_button").click(function(event){
+    event.preventDefault();
+    var searchIDs = $("#myGlobalTable input:checkbox:checked").map(function()
+    {
+
+    $.ajax({
+    type: 'POST',
+    url: '/addToPrivate/',
+    data: {searchIDs},
+
+    success: function(data) {
+       console.log(data);
+    }
+});
 $('#add_button').click(function() {
     var checkedValues = $("input:checkbox:checked", "#myGlobalTable").map(function() {
         return $(this).val();
