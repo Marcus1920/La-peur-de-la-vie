@@ -32,7 +32,9 @@
         <link href="{{ asset('/css/Treant.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
-        <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
+          <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
+          <link href="{{ asset('/css/awesome.css') }}" rel="stylesheet">
+          <link href="{{ asset('/css/table.css') }}" rel="stylesheet">
 		
 		 <link href="{{ asset('/css/toggles.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/toggle-themes/toggles-all.css') }}" rel="stylesheet">
@@ -59,6 +61,9 @@
     {{--});--}}
 
     {{--</script>--}}
+
+
+
 
 
 
@@ -119,7 +124,7 @@
 
                     <div class="pull-left tm-icon">
 
-                        <a href="{{ url('addressbookList') }}" >
+                        <a href="{{ url('addressbookList/'. Auth::user()->id) }}" >
                             <i class="fa fa-book fa-2x"></i>
                             <i class="n-count animated">{{ count($addressBookNumber,0) }}</i>
                         </a>
@@ -404,6 +409,20 @@
 
 
                     @endif
+
+
+                        @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+
+                            @if (Auth::user())
+                                <li {{ (Request::is('reports') ? "class=active" : '') }}>
+                                    <a class="sa-side-agenda" href="{{ url('addressbookList/'.Auth::user()->id )}}">
+                                        <span class="menu-item">Address Book</span>
+                                    </a>
+                                </li>
+
+                            @endif
+
+                        @endif
 
 
 
