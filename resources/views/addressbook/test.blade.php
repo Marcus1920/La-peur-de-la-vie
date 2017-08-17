@@ -32,17 +32,27 @@
                                             <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
                                         </div>
                                         <span class="counter pull-right"></span>
-                                        <INPUT type="button" value="Add to Private" id="add_button"/>
-                                        <INPUT type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
+                                        <input type="button" value="Add to Private" id="add_button"/>
+                                        <input type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
 
-                                        <table class="table table-hover table-bordered results" id="myGlobalTable">
-                                            <thead>
-                                            <tr>
-                                                <th width="10%">Select</th>
-                                                <th class="col-md-5 col-xs-5">User Full Name</th>
 
-                                            </tr>
-                                            </thead>
+
+
+                <table class="table table-hover table-bordered results" style="width: 300px">
+
+                    <thead>
+                    <tr>
+                        <th width="10%">Select</th>
+                        <th class="col-md-5 col-xs-5">User Full Name</th>
+
+                    </tr>
+                    </thead>
+
+
+                </table>
+                                        <div style="height:350px;overflow:auto; width: 300px">
+                                        <table class="table table-hover table-bordered results" id="myGlobalTable" >
+
 
                                             <tbody>
 
@@ -59,6 +69,7 @@
                                             </tbody>
 
                                         </table>
+                                    </div>
                                     </div>
                                 </div>
                                 <!--RIGHT SIDE DIV-->
@@ -102,7 +113,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('first_name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'first_name']) !!}
+                                                            {!! Form::text('first_name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'first_name','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -112,7 +123,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('Surname',null,['class' => 'form-control input-sm','id' => 'Surname']) !!}
+                                                            {!! Form::text('Surname',Auth::user()->surname,['class' => 'form-control input-sm','id' => 'Surname','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -122,29 +133,29 @@
                                                     <div class="form-group">
                                                         {!! Form::label('EMAIl', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('email',null,['class' => 'form-control input-sm','id' => 'email']) !!}
+                                                            {!! Form::text('email',Auth::user()->email,['class' => 'form-control input-sm','id' => 'email','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
                                                     </div>
 
-                                                    <div class="form-group">
-                                                        {!! Form::label('USER ID ', 'USER ID', array('class' => 'col-md-3 control-label')) !!}
-                                                        <div class="col-md-8">
-                                                            {!! Form::text('user',null,['class' => 'form-control input-sm','id' => 'user']) !!}
-                                                            <div id = "hse_error_cellphone"></div>
-
-                                                        </div>
-                                                    </div>
 
                                                     <div class="form-group">
                                                         {!! Form::label('CELLPHONE ', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('cellphone',null,['class' => 'form-control input-sm','id' => 'cellphone']) !!}
+                                                            {!! Form::text('cellphone',Auth::user()->cellphone,['class' => 'form-control input-sm','id' => 'cellphone','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        <div class="col-md-8">
+                                                            {!! Form::hidden('user',null,['class' => 'form-control input-sm','id' => 'user']) !!}
+                                                            <div id = "hse_error_cellphone"></div>
+
+                                                        </div>
+                                                    </div>
+
                                                     <hr class="whiter m-t-20">
 
 
@@ -272,7 +283,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('name',null,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
+                                                            {!! Form::text('name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -281,7 +292,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('surname',null,['class' => 'form-control input-sm','id' => 'surname','disabled']) !!}
+                                                            {!! Form::text('surname',Auth::user()->surname,['class' => 'form-control input-sm','id' => 'surname','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
@@ -290,15 +301,14 @@
                                                     <div class="form-group">
                                                         {!! Form::label('EMAIL', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('email_address',null,['class' => 'form-control input-sm','id' => 'email_address','disabled']) !!}
+                                                            {!! Form::text('email_address',Auth::user()->email,['class' => 'form-control input-sm','id' => 'email_address','disabled']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        {!! Form::label('ID', 'ID', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('user_id',null,['class' => 'form-control input-sm','id' => 'user_id','disabled']) !!}
+                                                            {!! Form::hidden('user_id',null,['class' => 'form-control input-sm','id' => 'id_user']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
@@ -359,6 +369,12 @@
 @section('footer')
     <script>
 
+        $(document).ready(function () {
+
+
+
+        });
+
         function profileGlobal(id) {
             $.ajax({
                 url:"{!! url('/userprofileGlobal/"+ id + "')!!}",
@@ -391,7 +407,7 @@
                     $('#profileForm #name').val(data.first_name);
                     $('#profileForm #surname').val(data.surname);
                     $('#profileForm #email_address').val(data.email);
-                    $('#profileForm #user_id').val(data.user);
+                    $('#profileForm #id_user').val(data.user);
 
                 },
                 error: function (xhr, status) {
@@ -402,22 +418,20 @@
             });
         }
 
-        var deleteUserId = $("#user_id").val();
-        function deleteuser(deleteUserId) {
-            console.log(deleteUserId);
+
+
+
+        function deleteuser() {
+
+            var deleteUserId = document.getElementById("id_user").value;
+
             $.ajax({
-                url: "{!! url('/deleteuserprofilePrivate/"+ deleteUserId + "')!!}",
+                url: "{!! url('/deleteuserprofilePrivate/"+deleteUserId+"')!!}",
                 type: "GET",
                 dataType: "json",
-                data : {id:deleteUserId},
-                success: function () {
+                success: function (data) {
 
-
-
-//                    $('#profileForm #name').val(data.first_name);
-//                    $('#profileForm #surname').val(data.surname);
-//                    $('#profileForm #email_address').val(data.email);
-//                    $('#profileForm #user_id').val(data.user);
+              location.reload();
 
                 },
                 error: function (xhr, status) {

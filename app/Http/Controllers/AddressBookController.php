@@ -252,10 +252,11 @@ class AddressBookController extends Controller
     public function deleteuser($id)
     {
         $created_by= Auth::user()->id;
-        $contactBook  = addressbook::where('user',$created_by)
-            ->where('created_by',$id);
+        $contactBook  = addressbook::where('created_by',$created_by)
+            ->where('user',$id);
         $contactBook->delete();
-        return Redirect::to('/addressbookList/'.Auth::user()->id);
+        return Auth::user()->id;
+
 
     }
 }
