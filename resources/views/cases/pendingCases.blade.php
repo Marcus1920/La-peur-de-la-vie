@@ -33,17 +33,25 @@
                         <div class="col-md-2">
 
                                 <div >
-
-                                    <input type="text" class="form-control input-focused" placeholder="Filter From">
-
-
+                                    <div class="input-icon datetime-pick date-only">
+                                        <input data-format="yyyy-MM-dd" type="text" id='commencement_date' placeholder="Filter From" name ='commencement_date' class="form-control input-focused"  style="color:#FFFFFF"/>
+                                        <span class="add-on">
+                      <i class="sa-plus"></i>
+                            </span>
+                                    </div>
                                 </div>
 
                         </div>
                         <div class="col-md-2">
                             <div >
 
-                                <input type="text" class="form-control input-focused" placeholder="To">
+                                <div class="input-icon datetime-pick date-only">
+                                    <input data-format="yyyy-MM-dd" type="text" id='commencement_date' placeholder="To" name ='commencement_date' class="form-control input-focused"  style="color:#FFFFFF"/>
+                                    <span class="add-on">
+                      <i class="sa-plus"></i>
+                            </span>
+                                </div>
+
 
 
                             </div>
@@ -54,9 +62,10 @@
                                 <div >
                                     <select class="form-control input-focused">
                                         <option> Select Busines unit </option>
-                                        <option> Select Busines unit </option>
-                                        <option> Select Busines unit </option>
-                                        <option> Select Busines unit </option>
+                                        <option> Marine Craft  </option>
+                                        <option> Port Volumes </option>
+                                        <option> Port Facilities </option>
+                                        <option> Passenger Termina </option>
                                     </select>
 
 
@@ -68,10 +77,10 @@
                                 <select class="form-control input-focused">
                                     <option> Select Category  </option>
 
-                                    <option> Select Busines unit </option>
-                                    <option> Select Busines unit </option>
-                                    <option> Select Busines unit </option>
-                                    <option> Select Busines unit </option>
+                                    <option>  Speed   </option>
+                                    <option>  Overstay </option>
+                                    <option> Overstay   </option>
+
                                 </select>
 
 
@@ -80,11 +89,18 @@
                         <div class="col-md-2">
                             <div >
                                 <select class="form-control input-focused">
-                                    <option> Select Category  </option>
-                                    <option> Select Busines unit </option>
-                                    <option> Select Busines unit </option>
-                                    <option> Select Busines unit </option>
-                                    <option> Select Busines unit </option>
+                                    <option> Select Ports  </option>
+                                    <option>  Durban  </option>
+                                    <option> Richards Bay </option>
+                                    <option> Cape Town </option>
+                                    <option> Port Elizabeth </option>
+                                    <option> East London </option>
+                                    <option> Port Elizabeth </option>
+                                    <option> East London </option>
+                                    <option> Mossel Bay</option>
+                                    <option> Saldanha Bay</option>
+                                    <option> Port Nolloth </option>
+                                    <option> Coega </option>
                                 </select>
 
 
