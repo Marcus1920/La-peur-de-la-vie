@@ -43,18 +43,21 @@
 
                                             </tr>
                                             </thead>
+
                                             <tbody>
+
                                             @foreach($users as $user)
                                                 <tr class="clickable-row">
                                                     <td>
                                                         <input type="checkbox" name="row" value="{{$user->id}}"  onclick="" class="get_value" ></td>
                                                     <td><a class="t-overflow" onclick="profileGlobal({{$user->id}});">{{$user->name . " " . $user->surname}}</a><br/>
-                                                        <small class="text-muted">{{$user->email}}</small></td>
+
                                                 </tr>
                                             @endforeach
 
 
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -172,12 +175,12 @@
                                                     <lu>
                                                         <a href="{{ url('') }}" ><i class="fa fa-envelope-o fa-2x" aria-hidden="true" title="EMAIL"></i>
                                                         </a>
-                                                        <a href="#" >
+                                                        <a  class="on change" >
                                                             <i class="fa fa-star fa-2x" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
-                                                        <a href="{{ url('') }}">
-                                                            <i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
-                                                        </a>
+                                                        {{--<a href="{{ url('') }}">--}}
+                                                            {{--<i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>--}}
+                                                        {{--</a>--}}
                                                     </lu>
 
                                                     {!! Form::close()!!}
@@ -218,6 +221,8 @@
 
                                             </tr>
                                             </thead>
+                                            <div id="table-wrapper">
+                                                <div id="table-scroll">
                                             <tbody>
                                             @foreach($contactBook as $privateContact)
                                                 <tr>
@@ -227,6 +232,8 @@
                                             @endforeach
 
                                             </tbody>
+                                                </div>
+                                            </div>
                                         </table>
                                     </div>
                                 </div>
