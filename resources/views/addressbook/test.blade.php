@@ -262,7 +262,7 @@
 
                                                 <div class="col-md-6">
 
-                                                    {!! Form::open(['url' => 'deleteuserprofilePrivate/', 'method' => 'get', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
+                                                    {!! Form::open(['url' => 'deleteuserprofilePrivate/+deleteUserId', 'method' => 'get', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
                                                     {{--{!! Form::hidden('user',['id'=>'user'] )!!}--}}
 
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
@@ -311,7 +311,7 @@
                                                     <span class="counter pull-right"></span>
 
                                                     <br/>
-                                                    <input type="submit" value="Add to Private" id="delete"/>
+                                                    <input type="button" value="Delete" id="delete" onclick="deleteuser()"/>
                                                     <br>
                                                     <hr class="whiter m-t-20">
 
@@ -366,8 +366,6 @@
                 dataType: "json",
                 success: function(data) {
 
-                    console.log(data);
-
                     $('#first_name').val(data.name);
                     $('#user').val(data.id);
                     $('#email').val(data.email);
@@ -402,7 +400,32 @@
                 complete: function (xhr, status) {
                 }
             });
+        }
 
+        var deleteUserId = $("#user_id").val();
+        function deleteuser(deleteUserId) {
+            console.log(deleteUserId);
+            $.ajax({
+                url: "{!! url('/deleteuserprofilePrivate/"+ deleteUserId + "')!!}",
+                type: "GET",
+                dataType: "json",
+                data : {id:deleteUserId},
+                success: function () {
+
+
+
+//                    $('#profileForm #name').val(data.first_name);
+//                    $('#profileForm #surname').val(data.surname);
+//                    $('#profileForm #email_address').val(data.email);
+//                    $('#profileForm #user_id').val(data.user);
+
+                },
+                error: function (xhr, status) {
+                    alert("Sorry, there was a problem!");
+                },
+                complete: function (xhr, status) {
+                }
+            });
         }
     </script>
     <!--Star js-->
