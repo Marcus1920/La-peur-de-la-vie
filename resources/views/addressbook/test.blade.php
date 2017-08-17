@@ -32,30 +32,19 @@
                                             <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
                                         </div>
                                         <span class="counter pull-right"></span>
-                                        <input type="button" value="Add to Private" id="add_button"/>
-                                        <input type="button" value="Send Emails" onclick="deleteRow('dataTable')" />
-
-
-
-
-                <table class="table table-hover table-bordered results" style="width: 300px">
-
+                                        <input type="button" value="Add to Private" id="add_button" class="btn btn-sm counter"/>
+                                        <input type="button" value="Send Emails" onclick="deleteRow('dataTable')" class="btn btn-sm counter" />
+                <table class="table table-hover table-bordered results" style="width: 430px">
                     <thead>
                     <tr>
-                        <th width="10%">Select</th>
-                        <th class="col-md-5 col-xs-5">User Full Name</th>
-
+                        <th width="6%">Select</th>
+                        <th class="col-md- col-xs-5" width="100%">Full Name </th>
                     </tr>
                     </thead>
-
-
                 </table>
-                                        <div style="height:350px;overflow:auto; width: 300px">
+                                        <div style="height:300px;overflow:auto; width: 430px">
                                         <table class="table table-hover table-bordered results" id="myGlobalTable" >
-
-
                                             <tbody>
-
                                             @foreach($users as $user)
                                                 <tr class="clickable-row">
                                                     <td>
@@ -64,10 +53,7 @@
 
                                                 </tr>
                                             @endforeach
-
-
                                             </tbody>
-
                                         </table>
                                     </div>
                                     </div>
@@ -156,18 +142,17 @@
                                                         </div>
                                                     </div>
 
+                                                    {{--<hr class="whiter m-t-20">--}}
+
+                                                    <span class="counter pull-right"></span>
+                                                    <span class="counter pull-right"></span>
                                                     <hr class="whiter m-t-20">
-
-
-                                                    <h3 class="block-title">ADD TO PRIVATE ADDRESS BOOK</h3>
-                                                    <span class="counter pull-right"></span>
-                                                    <span class="counter pull-right"></span>
                                                     <br/>
 
-                                                    <button id="">
 
 
-
+                                                    <button id="" class="btn btn-sm counter pull-left">
+                                                        ADD TO PRIVATE
                                                     </button>
                                                     <div class="form-group">
 
@@ -222,51 +207,63 @@
                                 <div class="col-sm-3 col-md-6 col-lg-4" div style="float:left; display:inline-block;">
                                     <div class="listview narrow">
                                         <div class="form-group pull-right">
-                                            <input type="text" id="myPrivateInput" class="search form-control" onkeyup="myFunction()" placeholder="Search for names..">
+
+                                            <input type="text" id="myGlobalInput" class="search form-control" onkeyup="globalFunction()" placeholder="Search for names..">
                                         </div>
                                         <span class="counter pull-right"></span>
-                                        <table class="table table-hover table-bordered results" id="myPrivateTable">
+                                        <input type="button" value="Add to Private" id="add_button" class="btn btn-sm counter"/>
+                                        <input type="button" value="Send Emails" onclick="deleteRow('dataTable')" class="btn btn-sm counter" />
+                                        <table class="table table-hover table-bordered results" style="width: 430px">
                                             <thead>
                                             <tr>
-                                                <th class="col-md-5 col-xs-5">User Full Name</th>
-
+                                                <th width="6%">Select</th>
+                                                <th class="col-md- col-xs-5" width="100%">Full Name </th>
                                             </tr>
                                             </thead>
-                                            <div id="table-wrapper">
-                                                <div id="table-scroll">
-                                            <tbody>
-                                            @foreach($contactBook as $privateContact)
-                                                <tr>
-                                                    <td><a class="t-overflow" onclick="profilePrivate({{$privateContact->user}});">{{$privateContact->first_name . " " . $privateContact->surname}}</a><br/>
-                                                        <small class="text-muted">{{$privateContact->position}}</small></td>
-                                                </tr>
-                                            @endforeach
-
-                                            </tbody>
-                                                </div>
-                                            </div>
                                         </table>
+                                        <div style="height:300px;overflow:auto; width: 430px">
+                                            <table class="table table-hover table-bordered results" id="myGlobalTable" >
+                                                <tbody>
+                                                @foreach($contactBook as $privateContact)
+                                                    <tr>
+                                                        <td>
+                                                            <input type="checkbox" name="row" value="{{$privateContact->id}}"  onclick="" class="get_value" ></td>
+                                                        <td>
+                                                            <a class="t-overflow" onclick="profilePrivate({{$privateContact->user}});">{{$privateContact->first_name . " " . $privateContact->surname}}</a><br/>
+                                                            <small class="text-muted">{{$privateContact->position}}</small></td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-
                                 <!--RIGHT SIDE DIV-->
-
                                 <div class="col-sm-9 col-md-6 col-lg-8" style="float:right; display:inline-block;">
                                     <div class="block-area" id="basic">
                                         <div class="tile p-15">
 
                                             <div class="row">
+                                                @if(Session::has('success'))
+                                                    <div class="alert alert-success alert-icon">
+                                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                                        {{ Session::get('success') }}
+                                                        <i class="icon">&#61845;</i>
+                                                    </div>
+                                                @endif
+
                                                 <div class="col-md-6">
 
                                                     <h3 class="block-title">CONTACT PICTURE!</h3>
 
                                                     <span class="counter pull-right"></span>
 
-                                                    <div class="card" style="width: 60rem;">
+                                                    <div class="card" style="width: 30rem;">
                                                         <img class="img-circle"  src="{{asset('images/trolltunga.jpg')}}"  width="300" height="200"  alt="Card image cap">
                                                         <div class="card-block">
-                                                            <h4 class="card-title">Card title</h4>
-                                                            {{--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>--}}
+                                                            <hr class="whiter m-t-20">
+                                                            <h1 class="card-title">Card title</h1>
+                                                            <p class="card-text"></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -275,7 +272,6 @@
 
                                                     {!! Form::open(['url' => 'deleteuserprofilePrivate/+deleteUserId', 'method' => 'get', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
                                                     {{--{!! Form::hidden('user',['id'=>'user'] )!!}--}}
-
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
 
                                                     <span class="counter pull-right"></span>
@@ -283,29 +279,41 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'name','disabled']) !!}
+                                                            {!! Form::text('first_name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'name','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
-                                                        <div class="col-md-8">
-                                                            {!! Form::text('surname',Auth::user()->surname,['class' => 'form-control input-sm','id' => 'surname','disabled']) !!}
-                                                            <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
 
 
                                                     <div class="form-group">
-                                                        {!! Form::label('EMAIL', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
+                                                        {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('email_address',Auth::user()->email,['class' => 'form-control input-sm','id' => 'email_address','disabled']) !!}
+                                                            {!! Form::text('Surname',Auth::user()->surname,['class' => 'form-control input-sm','id' => 'surname','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
+
                                                         </div>
                                                     </div>
 
+
+                                                    <div class="form-group">
+                                                        {!! Form::label('EMAIl', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
+                                                        <div class="col-md-8">
+                                                            {!! Form::text('email',Auth::user()->email,['class' => 'form-control input-sm','id' => 'email_address','readonly']) !!}
+                                                            <div id = "hse_error_cellphone"></div>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    {{--<div class="form-group">--}}
+                                                        {{--{!! Form::label('CELLPHONE ', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}--}}
+                                                        {{--<div class="col-md-8">--}}
+                                                            {{--{!! Form::text('cellphone',Auth::user()->cellphone,['class' => 'form-control input-sm','id' => 'cellphone','readonly']) !!}--}}
+                                                            {{--<div id = "hse_error_cellphone"></div>--}}
+
+                                                        {{--</div>--}}
+                                                    {{--</div>--}}
                                                     <div class="form-group">
                                                         <div class="col-md-8">
                                                             {!! Form::hidden('user_id',null,['class' => 'form-control input-sm','id' => 'id_user']) !!}
@@ -313,47 +321,45 @@
                                                         </div>
                                                     </div>
 
+                                                    {{--<hr class="whiter m-t-20">--}}
+
+                                                    <span class="counter pull-right"></span>
+                                                    <span class="counter pull-right"></span>
                                                     <hr class="whiter m-t-20">
-
-
-                                                    <h3 class="block-title">Remove from Private</h3>
-                                                    <span class="counter pull-right"></span>
-                                                    <span class="counter pull-right"></span>
-
                                                     <br/>
-                                                    <input type="button" value="Delete" id="delete" onclick="deleteuser()"/>
-                                                    <br>
+
+
+
+                                                    <input type="button" value="Delete" id="delete" onclick="deleteuser()" class="btn btn-sm counter pull-left"/>
+                                                    <div class="form-group">
+
+                                                    </div>
+
+
                                                     <hr class="whiter m-t-20">
 
 
                                                     <h3 class="block-title">COMMUNICATION</h3>
                                                     <span class="counter pull-right"></span>
                                                     <span class="counter pull-right"></span>
-
                                                     <br/>
 
 
                                                     <lu>
-                                                        <a href="{{ url('') }}" >
-                                                            <i class="fa fa-envelope" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
+                                                        <a href="{{ url('') }}" ><i class="fa fa-envelope-o fa-2x" aria-hidden="true" title="EMAIL"></i>
                                                         </a>
-
-                                                        <a href="{{ url('') }}" >
-                                                            <i class="fa fa-star" aria-hidden="true" title="FAVOURATE" data-toggle="tooltip"></i>
+                                                        <a  class="on change" >
+                                                            <i class="fa fa-star fa-2x" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
-
-                                                        <a href="{{ url('') }}">
-                                                            <i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>
-                                                        </a>
-
-                                                        <a href="{{ url('') }}">
-                                                            <i class="fa fa-phone" aria-hidden="true" title="CALL" data-toggle="tooltip"></i>
-                                                        </a>
+                                                        {{--<a href="{{ url('') }}">--}}
+                                                        {{--<i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>--}}
+                                                        {{--</a>--}}
                                                     </lu>
-                                                    {!! Form::close()!!}
 
+                                                    {!! Form::close()!!}
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
