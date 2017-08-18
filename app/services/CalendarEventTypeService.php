@@ -14,6 +14,10 @@ class CalendarEventTypeService
 	public function getEventTypes(){
 		return CalendarEventType::all();
 	}
+
+        public function getEventType($slug){
+                return CalendarEventType::where('slug',$slug)->first();
+        }
 	
 	public function store(Array $formData){
                 $this->eventType->name 	= $formData['name'];

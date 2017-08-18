@@ -32,7 +32,9 @@
         <link href="{{ asset('/css/Treant.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/collapsable.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('/css/perfect-scrollbar.css') }}" rel="stylesheet"> -->
-        <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
+          <link href="{{ asset('/css/form-builder.css') }}" rel="stylesheet">
+          <link href="{{ asset('/css/awesome.css') }}" rel="stylesheet">
+          <link href="{{ asset('/css/table.css') }}" rel="stylesheet">
 		
 		 <link href="{{ asset('/css/toggles.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/toggle-themes/toggles-all.css') }}" rel="stylesheet">
@@ -59,6 +61,9 @@
     {{--});--}}
 
     {{--</script>--}}
+
+
+
 
 
 
@@ -119,7 +124,7 @@
 
                     <div class="pull-left tm-icon">
 
-                        <a href="{{ url('addressbookList') }}" >
+                        <a href="{{ url('addressbookList/'. Auth::user()->id) }}" >
                             <i class="fa fa-book fa-2x"></i>
                             <i class="n-count animated">{{ count($addressBookNumber,0) }}</i>
                         </a>
@@ -151,11 +156,12 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ asset('/img/SiteBadge3.png') }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ Auth::user()->profile_picture }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">
-                            <li><a href="{{ url('all-messages') }}">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
+                            {{--<li><a href="{{ url('all-messages') }}">Messages</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>--}}
+                             <li><a href="{{ url('user-profile') }}">Profile</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                             <li><a href="{{ url('/auth/logout') }}">Sign Out</a> <i class="icon left">&#61903;</i><i class="icon right">&#61815;</i></li>
                         </ul>
                         @if (Auth::user())
@@ -200,7 +206,7 @@
 
                                     </div>
                                 </div>
-                            @endforeach
+                            @endforeach 
 
                         </div>
                         <div class="media text-center whiter l-100">
@@ -239,7 +245,7 @@
                                     @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
 
 
-
+                                        <li><a href="{{ url('creatCase') }}"><span class="badge badge-r">{{ count(0,0) }}</span>Create  Case</a></li>
                                         <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
                                         <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noOfPendingAllocationCases,0) }}</span>Pending /Allocation Cases</a></li>
                                         <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>
@@ -403,6 +409,20 @@
 
 
                     @endif
+
+
+                        @if(isset($userViewReportsPermission) && $userViewReportsPermission->permission_id =='16')
+
+                            @if (Auth::user())
+                                <li {{ (Request::is('reports') ? "class=active" : '') }}>
+                                    <a class="sa-side-agenda" href="{{ url('addressbookList/'.Auth::user()->id )}}">
+                                        <span class="menu-item">Address Book</span>
+                                    </a>
+                                </li>
+
+                            @endif
+
+                        @endif
 
 
 

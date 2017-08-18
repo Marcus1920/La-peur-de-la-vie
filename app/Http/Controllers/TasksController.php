@@ -21,6 +21,8 @@ use App\services\SubTaskService;
 use App\services\TaskActivityService;
 use App\services\TaskReminderService;
 use App\services\CalendarEventService;
+use App\services\CalendarService;
+use App\services\CalendarEventTypeService;
 use App\Calendar;
 use App\CalendarEventType;
 use App\User;
@@ -43,10 +45,13 @@ class TasksController extends Controller
     protected $current_logged_in_user;
     protected $taskOwners;
     protected $taskReminders;
-	 protected  $calenarEventService;
+	protected $calenarEventService;
+    protected $calendar;
+    protected $eventType;
 
 
-    public function __construct(TaskService $taskService,TaskNoteService $taskNoteService,TaskFileService $taskFileService,SubTaskService $taskSubTaskService,TaskOwnerService $taskOwnerService,TaskActivityService $taskActivityService,TaskReminderService $taskReminderService, CalendarEventService $calenarEventService)
+
+    public function __construct(TaskService $taskService,TaskNoteService $taskNoteService,TaskFileService $taskFileService,SubTaskService $taskSubTaskService,TaskOwnerService $taskOwnerService,TaskActivityService $taskActivityService,TaskReminderService $taskReminderService, CalendarEventService $calenarEventService, CalendarService $calendar,CalendarEventTypeService $eventType)
     {
 
         $this->tasks                    = $taskService;
@@ -58,6 +63,8 @@ class TasksController extends Controller
         $this->taskActivity             = $taskActivityService;
         $this->taskReminders            = $taskReminderService;
 		$this->calenarEventService      = $calenarEventService;
+        $this->calendar                 = $calendar;
+        $this->eventType                = $eventType;
     }
 
     public function index()
@@ -160,18 +167,18 @@ class TasksController extends Controller
 
         }
 		
-		$calendarEventTypeID    = CalendarEventType::find(2);
-        $calendarID = Calendar::where('event_type_id',$calendarEventTypeID->id)->first();
+		$eventType = $this->eventType->getEventType('Task');
+        $calendar  = $this->calendar->getCalendarPerGroup($eventType->id,6);
         $taskEventData =
             [
-                'event_type_id' => $calendarEventTypeID->id,
-                'calendar_id'   => $calendarID->id,
+                'event_type_id' => $eventType->id,
+                'calendar_id'   => $calendar->id,
                 'title'         => $request['title'],
                 'description'   =>$request['description'],
                 'start_date'    => $request['commencement_date'],
                 'end_date'      => $request['due_date'],
                 'progress'      => 0,
-                'color'         => $calendarID->color,
+                'color'         => $calendar->color,
                 'note'          => '',
                 'user_id'          => '1',
                 'role'          => '1',

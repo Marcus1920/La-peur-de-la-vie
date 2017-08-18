@@ -86,19 +86,19 @@ class UserController extends Controller
     {
 
        $userEditUserPermission   = \DB::table('group_permissions')
-                            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
-                            ->where('group_permissions.permission_id','=',32)
-                            ->where('group_permissions.group_id','=',\Auth::user()->role)
-                            ->first();
+        ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+        ->where('group_permissions.permission_id','=',32)
+        ->where('group_permissions.group_id','=',\Auth::user()->role)
+        ->first();
 
 
 
         $users = \DB::table('users')
-                        ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
-                        ->join('positions', 'users.position', '=', 'positions.id')
-                        ->select(
-                                    \DB::raw(
-                                        "
+            ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
+            ->join('positions', 'users.position', '=', 'positions.id')
+            ->select(
+                \DB::raw(
+                    "
                                          users.id,
                                          users.created_at,
                                          users.name,
@@ -108,16 +108,16 @@ class UserController extends Controller
                                          users_statuses.name as active,
                                          positions.name as position
                                         "
-                                      )
-                                );
+                )
+            );
 
 
-                           return \Datatables::of($users)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
+        return \Datatables::of($users)
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
 
 
                                         '
-                                )->make(true);
+            )->make(true);
 
 
 
@@ -3670,6 +3670,38 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
 
 
        return [$user];
+    }
+
+
+    public function UpdateUserProfile(Request $request){
+
+        //tutsnare.com/upload-files-in-laravel/
+        //laravel-recipes.com/recipes/147/creating-a-directory
+        //github.com/Studio-42/elFinder/wiki/Client-configuration-options#uiOptions
+        $destinationFolder = 'files/profile_picture_'.\Auth::user()->id; 
+
+        if(!\File::exists($destinationFolder)) {
+             $createDir         = \File::makeDirectory($destinationFolder,0777,true);
+        }
+
+        $fileName          = $request->file('profile_picture')->getClientOriginalName();
+        $fileFullPath      = $destinationFolder.'/'.$fileName;
+
+        if(!\File::exists($fileFullPath)) {
+
+            $request->file('profile_picture')->move($destinationFolder,$fileName);
+
+    
+        }
+
+        $user = User::find(\Auth::user()->id);
+        $user->profile_picture = $fileFullPath;
+        $user->save();
+
+
+        \Session::flash('success', 'Case file has been successfully added!');
+        return Redirect()->back();
+
     }
 
     /**
