@@ -225,11 +225,15 @@ class AddressBookController extends Controller
     public function getProfilePerUser($id)
     {
 
-        $users = User::all();
-        $contactBook  = addressbook::where('created_by',$id)->get();
+        $users = User::orderBy('name')->get();
+        $contactBook  = addressbook::orderBy('first_name')->where('created_by',$id)->get();
+        $userOrder = User::orderBy('name')->first();
+        $contactBookOrder = addressbook::orderBy('first_name')->first();
         return view('addressbook.test')
             ->with(compact('contactBook'))
-            ->with(compact('users'));
+            ->with(compact('users'))
+            ->with(compact('userOrder'))
+            ->with(compact('contactBookOrder'));
 
     }
 

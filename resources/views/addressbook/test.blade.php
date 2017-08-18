@@ -99,7 +99,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('first_name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'first_name','readonly']) !!}
+                                                            {!! Form::text('first_name',$userOrder->name,['class' => 'form-control input-sm','id' => 'first_name','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -109,7 +109,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('Surname',Auth::user()->surname,['class' => 'form-control input-sm','id' => 'Surname','readonly']) !!}
+                                                            {!! Form::text('Surname',$userOrder->surname,['class' => 'form-control input-sm','id' => 'Surname','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -119,7 +119,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('EMAIl', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('email',Auth::user()->email,['class' => 'form-control input-sm','id' => 'email','readonly']) !!}
+                                                            {!! Form::text('email',$userOrder->email,['class' => 'form-control input-sm','id' => 'email','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -129,14 +129,14 @@
                                                     <div class="form-group">
                                                         {!! Form::label('CELLPHONE ', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('cellphone',Auth::user()->cellphone,['class' => 'form-control input-sm','id' => 'cellphone','readonly']) !!}
+                                                            {!! Form::text('cellphone',$userOrder->cellphone,['class' => 'form-control input-sm','id' => 'cellphone','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="col-md-8">
-                                                            {!! Form::hidden('user',null,['class' => 'form-control input-sm','id' => 'user']) !!}
+                                                            {!! Form::hidden('user',$userOrder->id,['class' => 'form-control input-sm','id' => 'user']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -222,10 +222,10 @@
                                             </thead>
                                         </table>
                                         <div style="height:300px;overflow:auto; width: 430px">
-                                            <table class="table table-hover table-bordered results" id="myGlobalTable" >
+                                            <table class="table table-hover table-bordered results" id="myPrivateTable" >
                                                 <tbody>
                                                 @foreach($contactBook as $privateContact)
-                                                    <tr>
+                                                    <tr class="clickable-private">
                                                         <td>
                                                             <input type="checkbox" name="row" value="{{$privateContact->id}}"  onclick="" class="get_value" ></td>
                                                         <td>
@@ -279,7 +279,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('NAME', 'NAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('first_name',Auth::user()->name,['class' => 'form-control input-sm','id' => 'name','readonly']) !!}
+                                                            {!! Form::text('first_name',$contactBookOrder->first_name,['class' => 'form-control input-sm','id' => 'name','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -289,7 +289,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('SURNAME', 'SURNAME', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('Surname',Auth::user()->surname,['class' => 'form-control input-sm','id' => 'surname','readonly']) !!}
+                                                            {!! Form::text('Surname',$contactBookOrder->surname,['class' => 'form-control input-sm','id' => 'surname','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -299,7 +299,7 @@
                                                     <div class="form-group">
                                                         {!! Form::label('EMAIl', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
-                                                            {!! Form::text('email',Auth::user()->email,['class' => 'form-control input-sm','id' => 'email_address','readonly']) !!}
+                                                            {!! Form::text('email',$contactBookOrder->email,['class' => 'form-control input-sm','id' => 'email_address','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -316,7 +316,7 @@
                                                     {{--</div>--}}
                                                     <div class="form-group">
                                                         <div class="col-md-8">
-                                                            {!! Form::hidden('user_id',null,['class' => 'form-control input-sm','id' => 'id_user']) !!}
+                                                            {!! Form::hidden('user_id',$contactBookOrder->id,['class' => 'form-control input-sm','id' => 'id_user']) !!}
                                                             <div id = "hse_error_cellphone"></div>
                                                         </div>
                                                     </div>
@@ -376,6 +376,7 @@
     <script>
 
         $(document).ready(function () {
+
 
 
 
@@ -455,10 +456,25 @@
         });
     </script>
 
-    <!--Show active tr-->
+    <!--Show active global-->
     <script>
-        $(document).ready( function(){
+        $(document).ready(function(){
             $("#myGlobalTable").on('click','.clickable-row',function(event){
+                if($(this).hasClass('active'))
+                {
+                    $(this).removeClass('active');
+
+                } else{
+                    $(this).addClass('active').siblings().removeClass('active');
+                }
+            });
+        });
+
+    </script>
+    <!--Show active private-->
+    <script>
+        $(document).ready(function(){
+            $("#myPrivateTable").on('click','.clickable-private',function(event){
                 if($(this).hasClass('active'))
                 {
                     $(this).removeClass('active');
