@@ -1500,7 +1500,7 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
         $language                          = Language::where('slug','=',$request['language'])->first();
         $user->language                    = $language->id;
         $user->gender                      = $request['gender'];
-        //$user->profile_picture             = $request['profile_picture'];
+        $user->profile_picture             = $request['profile_picture'];
         $user->name                        = $request['name'];
         $user->surname                     = $request['surname'];
         $user->cellphone                   = $request['cellphone'];
@@ -1565,13 +1565,13 @@ $txtDebug .= PHP_EOL."  \$poiObj - ".print_r($poiObj,1);
             'password' =>$password,
         );
 
-//
-//        \Mail::send('emails.registrationConfirmation',$data, function($message) use ($user)
-//        {
-//            $message->from('info@siyaleader.net', 'Siyaleader');
-//            $message->to($user->email)->subject("Siyaleader Notification - User Registration Confirmation: " .$user->name);
-//
-//        });
+
+        \Mail::send('emails.registrationConfirmation',$data, function($message) use ($user)
+        {
+            $message->from('info@siyaleader.net', 'Siyaleader');
+            $message->to($user->email)->subject("Siyaleader Notification - User Registration Confirmation: " .$user->name);
+
+        });
 
         return redirect('list-users');
 
