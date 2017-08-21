@@ -4,9 +4,7 @@
     <!--Nav Tabs-->
     <div id="tabs">
         <ul class="nav nav-pills navbar-right" role="tablist">
-            {{--<li class="active"><a href="#global"  data-toggle="tab">Global Address Book</a></li>--}}
-            {{--<li><a href="#private"  data-toggle="tab">Private Address Book</a></li>--}}
-
+          
 
             <li class="active"><a href="#private"  data-toggle="tab">Private Address Book</a></li>
             <li><a href="#global"  data-toggle="tab">Global Address Book</a></li>
