@@ -435,6 +435,7 @@
   {
       tokenLimit: 1,
       animateDropdown: false,
+
       onResult: function (results) {
 
               if (results.length == 0)
