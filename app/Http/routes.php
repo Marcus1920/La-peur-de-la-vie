@@ -657,10 +657,6 @@ Route::get('allocatedCases' , function(){
 |--------------------------------------------------------------------------
 |
 */
-
-//Route::get('addressbook-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@index']);
-//Route::get('addressbook-list', ['uses' => 'AddressBookController@index']);
-
 Route::get('addressbookList/{id}','AddressBookController@getProfilePerUser');
 Route::get('CreateContact','AddressBookController@Create');
 Route::post('addContact', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@store']);
