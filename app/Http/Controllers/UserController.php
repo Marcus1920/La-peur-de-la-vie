@@ -86,19 +86,19 @@ class UserController extends Controller
     {
 
        $userEditUserPermission   = \DB::table('group_permissions')
-                            ->join('users_roles','group_permissions.group_id','=','users_roles.id')
-                            ->where('group_permissions.permission_id','=',32)
-                            ->where('group_permissions.group_id','=',\Auth::user()->role)
-                            ->first();
+        ->join('users_roles','group_permissions.group_id','=','users_roles.id')
+        ->where('group_permissions.permission_id','=',32)
+        ->where('group_permissions.group_id','=',\Auth::user()->role)
+        ->first();
 
 
 
         $users = \DB::table('users')
-                        ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
-                        ->join('positions', 'users.position', '=', 'positions.id')
-                        ->select(
-                                    \DB::raw(
-                                        "
+            ->join('users_statuses', 'users.active', '=', 'users_statuses.id')
+            ->join('positions', 'users.position', '=', 'positions.id')
+            ->select(
+                \DB::raw(
+                    "
                                          users.id,
                                          users.created_at,
                                          users.name,
@@ -108,16 +108,16 @@ class UserController extends Controller
                                          users_statuses.name as active,
                                          positions.name as position
                                         "
-                                      )
-                                );
+                )
+            );
 
 
-                           return \Datatables::of($users)
-                            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
+        return \Datatables::of($users)
+            ->addColumn('actions','<a class="btn btn-xs btn-alt" data-toggle="modal" onClick="launchUpdateUserModal({{$id}});" data-target=".modalEditUser" >Edit</a>
 
 
                                         '
-                                )->make(true);
+            )->make(true);
 
 
 

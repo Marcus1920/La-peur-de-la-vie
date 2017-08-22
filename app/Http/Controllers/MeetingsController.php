@@ -16,16 +16,22 @@ use App\User;
 use App\addressbook;
 use App\CalendarEvent;
 use App\services\CalendarEventService;
+use App\services\CalendarService;
+use App\services\CalendarEventTypeService;
 use App\CalendarEventType;
 use App\Calendar;
 
 class MeetingsController extends Controller {
 	
 	protected $calendar_events;
+	protected $calendar;
+	protected $eventType;
 
-    public function __construct(CalendarEventService $calendar_event_service)
+    public function __construct(CalendarEventService $calendar_event_service, CalendarService $calendar, CalendarEventTypeService $eventType)
     {
         $this->calendar_events   = $calendar_event_service;
+        $this->calendar          = $calendar;
+        $this->eventType         = $eventType;
 
     }
 	/**
@@ -186,19 +192,21 @@ class MeetingsController extends Controller {
 		$meeting->save();
 		
 		
-		$calendarEventTypeID    = CalendarEventType::find(1);
-        $calendarID = Calendar::where('event_type_id',$calendarEventTypeID->id)->first();
+		
+
+        $eventType = $this->eventType->getEventType('Meeting');
+        $calendar  = $this->calendar->getCalendarPerGroup($eventType->id,6);
 
         $meetingEventData =
             [
-                'event_type_id' => $calendarEventTypeID->id,
-                'calendar_id'   => $calendarID->id,
+                'event_type_id' => $eventType->id,
+                'calendar_id'   => $calendar->id,
                 'title'         => $request['title'],
                 'description'   =>$request['description'],
                 'start_date'    => $request['date'],
                 'end_date'      => $request['date'],
                 'progress'      => 0,
-                'color'         =>$calendarID->color,
+                'color'         =>$calendar->color,
                 'note'          => '',
                 //'user_id'       => '1',
                 //'role'          => '1',

@@ -1,5 +1,6 @@
 /* Font Icons */
-.icon {
+
+icon {
     display: inline-block;
     font-family: 'ios7-icon';
     -webkit-text-rendering: geometricPrecision;
@@ -41,6 +42,8 @@
 .sa-side-chart { background-image: url(../img/icon/chart.png); }
 .sa-side-photos { background-image: url(../img/icon/photos.png); }
 .sa-side-list { background-image: url(../img/icon/list.png); }
+.sa-side-agenda { background-image: url(../img/icon/agenda.png); }
+
 
 
 /* Top Menu */

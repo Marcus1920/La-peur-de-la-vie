@@ -58,4 +58,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany(TaskActivity::class);
 
     }
+
+         public function addressBook()
+    {
+        return $this->hasMany(addressbook::class,'id','user_id');
+    }
 }
