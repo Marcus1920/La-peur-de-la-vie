@@ -285,7 +285,7 @@
 
                 @if(isset($userViewCalendarPermission) && $userViewCalendarPermission->permission_id =='13')
                     <li {{ (Request::is('map') ? "class=active" : '') }}>
-                        <a class="sa-side-home" href="{{ url('map') }}">
+                        <a class="sa-side-home" href="{{ url('maps') }}">
                             <span class="menu-item">map</span>
                         </a>
                     </li>
@@ -531,7 +531,7 @@
     -->
 
 
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwXS96_uM6y-6ZJZhSJGE87pO-qxpDp-Q&libraries=places"></script>
+        {{--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwXS96_uM6y-6ZJZhSJGE87pO-qxpDp-Q&libraries=places"></script>--}}
 
         <script type="text/javascript">
             var ZoomChartsLicense = "ZCS-bc96u7g34: ZoomCharts 30 day free trial development licence eli..@..l.com (valid for evaluation only); upgrades until: 2016-11-18";

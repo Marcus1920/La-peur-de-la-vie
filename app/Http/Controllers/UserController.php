@@ -3797,7 +3797,7 @@ $txtDebug .= PHP_EOL."  \$poi - ".print_r($poi,1);
        foreach ($users as $user) {
 
             $data[] = array(
-                                "name"              => "{$user->name} > {$user->surname} > {$user->cellphone}",
+                                "name"              => "{$user->name}  {$user->surname}",
                                 "id"                => "{$user->id}",
                                 "hseName"           => "{$user->name}",
                                 "hseSurname"        => "{$user->surname}",
