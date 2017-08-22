@@ -10,6 +10,6 @@ class MyAddressBook extends Model
 
     public  function user(){
 
-        return $this->belongsTo(User::class,'addressbook_owner','id');
+        return $this->belongsTo(User::class);
     }
 }
