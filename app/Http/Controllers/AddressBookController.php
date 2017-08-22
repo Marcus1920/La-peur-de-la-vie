@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyAddressBook;
 use App\User;
 use App\UserRole;
 use App\Position;
@@ -86,15 +87,10 @@ class AddressBookController extends Controller
 
     public function store(Request $request)
     {
-        $addressbook                 = new addressbook();
-        $addressbook->user           = $request['user'];
-        $addressbook->first_name     = $request['first_name'];
-        $addressbook->Surname        = $request['Surname'];
-        $addressbook->email          = $request['email'];
-        $addressbook->cellphone      = $request['cellphone'];
-        $addressbook->created_by     = \Auth::user()->id;
-        $addressbook->relationship   = '';
-        $addressbook->active         = 1;
+        $addressbook                         = new MyAddressBook();
+        $addressbook->addressbook_owner      =   \Auth::user()->id;
+        $addressbook->user_id                = $request['user'];
+        $addressbook->isfavourite            = 1;
         $addressbook->save();
 
         \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been  added to your Private Book Address');
@@ -239,7 +235,7 @@ class AddressBookController extends Controller
 
     public function userprofileGlobal($id)
     {
-        $user  = User::select('name','surname','email','cellphone','id')->where('id',$id)->first();
+        $user  = User::select('name','surname','email','cellphone','id','profile_picture')->where('id',$id)->first();
         return response()->json($user);
 
     }

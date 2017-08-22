@@ -172,6 +172,7 @@ Route::get('getPoiCasesAssociates/{id}', ['middleware' => 'resetLastActive', 'us
 Route::get('getCaseSearch', ['middleware' => 'resetLastActive', 'uses' => 'UserController@getCaseSearch']);
 
 Route::get('getUsers', ['middleware' => 'auth', 'uses' => 'UserController@getUsers']);
+
 Route::get('getAddressBookUsers', ['middleware' => 'auth', 'uses' => 'AddressBookController@getAddressBookUsers']);
 
 
@@ -676,7 +677,7 @@ Route::get('userprofilePrivate/{id}', 'AddressBookController@userprofilePrivate'
 
 Route::get('deleteuserprofilePrivate/{id}', 'AddressBookController@deleteuser');
 
-
+Route::get('getUsers', ['middleware' => 'auth', 'uses' => 'UserController@getUsers']);
 /*
 |--------------------------------------------------------------------------
 | END ADDRESSBOOK ROUTING

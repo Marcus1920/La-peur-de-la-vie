@@ -81,10 +81,10 @@
                                                     <span class="counter pull-right"></span>
 
                                                     <div class="card" style="width: 30rem;">
-                                                        <img class="img-circle"  src="{{asset('images/trolltunga.jpg')}}"  width="300" height="200"  alt="Card image cap">
+                                                        <img class="img-circle" id="user_picture" src="{{ $user->profile_picture  }}"  width="300" height="200"  alt="Card image cap">
                                                         <div class="card-block">
                                                             <hr class="whiter m-t-20">
-                                                            <h1 class="card-title">Card title</h1>
+                                                            <h1 class="card-title">{{$userOrder->position}}</h1>
                                                             <p class="card-text"></p>
                                                         </div>
                                                     </div>
@@ -92,7 +92,7 @@
 
                                                 <div class="col-md-6">
 
-                                                    {!! Form::open(['url' => 'addContact', 'method' => 'post', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
+                                                    {!! Form::open(['url' => 'addContact', 'method' => 'post', 'class' => 'form-horizontal']) !!}
                                                     {!! Form::hidden('created_by',Auth::user()->id) !!}
                                                     <h3 class="block-title">PERSONAL DETAILS!</h3>
 
@@ -152,8 +152,7 @@
                                                     <br/>
 
 
-
-                                                    <button id="" class="btn btn-sm counter pull-left">
+                                                    <button type="submit" id="" class="btn btn-sm counter pull-left">
                                                         ADD TO PRIVATE
                                                     </button>
                                                     <div class="form-group">
@@ -396,6 +395,7 @@
                     $('#email').val(data.email);
                     $('#Surname').val(data.surname);
                     $('#cellphone').val(data.cellphone);
+                    $('#user_picture').val(data.profile_picture);
                 },
                 error: function (xhr, status) {
                     alert("Sorry, there was a problem!");
