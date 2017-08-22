@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class MyAddressBook extends Model
 {
-    protected $table    = 'my_address_books';
+    protected $table    = 'my_addressbook';
 
     public  function user(){
 

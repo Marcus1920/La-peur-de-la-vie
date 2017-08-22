@@ -12,7 +12,7 @@ class CreateMyAddressBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('my_address_books', function (Blueprint $table) {
+        Schema::create('my_addressbook', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('addressbook_owner');
             $table->integer('user_id');
@@ -30,6 +30,6 @@ class CreateMyAddressBooksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('my_address_books');
+        Schema::drop('my_addressbook');
     }
 }

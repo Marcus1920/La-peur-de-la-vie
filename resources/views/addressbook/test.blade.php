@@ -128,7 +128,6 @@
                                                     </div>
 
 
-                                                    <div class="form-group">
                                                         {!! Form::label('CELLPHONE ', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
                                                             {!! Form::text('cellphone',$userOrder->cellphone,['class' => 'form-control input-sm','id' => 'cellphone','readonly']) !!}

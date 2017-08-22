@@ -87,6 +87,7 @@ class AddressBookController extends Controller
 
     public function store(Request $request)
     {
+
         $addressbook                         = new MyAddressBook();
         $addressbook->addressbook_owner      =   \Auth::user()->id;
         $addressbook->user_id                = $request['user'];
@@ -222,9 +223,11 @@ class AddressBookController extends Controller
     {
 
         $users = User::orderBy('name')->get();
-        $contactBook  = addressbook::orderBy('first_name')->where('created_by',$id)->get();
+      $contactBook  = MyAddressBook::where('addressbook_owner',$id)->get();
+
         $userOrder = User::orderBy('name')->first();
-        $contactBookOrder = addressbook::orderBy('first_name')->first();
+        $contactBookOrder = MyAddressBook::with('user')->where('addressbook_owner', $id)->get();
+       // var_dump($contactBookOrder);
         return view('addressbook.test')
             ->with(compact('contactBook'))
             ->with(compact('users'))
