@@ -45,7 +45,7 @@
     </header>
 
     <div class="row">
-        <div class="col-lg-4">
+        <div class="col-md-6">
 
             <form class="box tile animated active" id="box-login" role="form" method="POST" action="{{ url('/auth/login') }}">
                 <h2 class="m-t-0 m-b-15">Login</h2>
@@ -78,7 +78,13 @@
             </form>
         </div>
 
-        <div id="login_img"></div>
+
+        <div class="col-md-6"  >
+            <img class="" src="{{ asset('/img/ubulewembo.png') }}" width="75%" alt="">
+        </div>
+    </div>
+
+
     </div>
 
     <div class="clearfix"></div>
