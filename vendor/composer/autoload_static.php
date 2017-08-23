@@ -478,6 +478,7 @@ class ComposerStaticInit1c721112013bbf52b0a2636c6824a7ee
         'App\\Http\\Controllers\\InvestigationOfficerController' => __DIR__ . '/../..' . '/app/Http/Controllers/InvestigationOfficerController.php',
         'App\\Http\\Controllers\\MainreportController' => __DIR__ . '/../..' . '/app/Http/Controllers/MainreportController.php',
         'App\\Http\\Controllers\\MapController' => __DIR__ . '/../..' . '/app/Http/Controllers/MapController.php',
+        'App\\Http\\Controllers\\MapsController' => __DIR__ . '/../..' . '/app/Http/Controllers/MapsController.php',
         'App\\Http\\Controllers\\MeetingFacilitatorsController' => __DIR__ . '/../..' . '/app/Http/Controllers/MeetingFacilitatorsController.php',
         'App\\Http\\Controllers\\MeetingsController' => __DIR__ . '/../..' . '/app/Http/Controllers/MeetingsController.php',
         'App\\Http\\Controllers\\MessageController' => __DIR__ . '/../..' . '/app/Http/Controllers/MessageController.php',
