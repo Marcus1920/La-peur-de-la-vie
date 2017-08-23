@@ -8,6 +8,7 @@ use App\User;
 use App\UserRole;
 use App\Position;
 use App\UserStatus;
+use Illuminate\Support\Facades\Input;
 use Redirect;
 use Session;
 use Auth;
@@ -53,14 +54,27 @@ class MyAddressBookController extends Controller
     public function store(Request $request)
     {
 
-        $addressbook                         = new MyAddressBook();
-        $addressbook->addressbook_owner      =   \Auth::user()->id;
-        $addressbook->user_id                = $request['user'];
-        $addressbook->isfavourite            = 1;
-        $addressbook->save();
+        if (MyAddressBook::where('user_id', '=', Input::get('user'))->count()>0)
+        {
 
-        \Session::flash('success', $this->user->name.' '.$this->user->surname.' has been  added to your Private Book Address');
-        return Redirect::to('/addressbookList/'.Auth::user()->id);
+            $addressbook_owner          = Auth::user()->id;
+            $contactBook                = MyAddressBook::where('user_id', Input::get('user'))->where('addressbook_owner',$addressbook_owner);
+            $contactBook                                ->update(['isfavourite'=>1]);
+            \Session::flash('success', $this->user->name.' '.$this->user->surname.' has been  added to your Private Book Address');
+            return Redirect::to('/addressbookList/'.Auth::user()->id);
+        }
+        else
+            {
+
+                $addressbook = new MyAddressBook();
+                $addressbook->addressbook_owner = \Auth::user()->id;
+                $addressbook->user_id = $request['user'];
+                $addressbook->isfavourite = 1;
+                $addressbook->save();
+                \Session::flash('success', $this->user->name.' '.$this->user->surname.' has been  added to your Private Book Address');
+                return Redirect::to('/addressbookList/'.Auth::user()->id);
+            }
+
     }
     public function getProfilePerUser($id)
     {
@@ -100,7 +114,7 @@ class MyAddressBookController extends Controller
         $contactBook                = MyAddressBook::where('user_id',$id)->where('addressbook_owner',$addressbook_owner);
         $contactBook                                ->update(['isfavourite'=>0]);
 
-//        return view('addressbook.test');
+        \Session::flash('success', $this->user->name.' '.$this->user->surname.' has been  removed from your Private Book Address');
         return Auth::user()->id;
 
 

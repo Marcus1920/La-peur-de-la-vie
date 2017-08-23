@@ -183,6 +183,8 @@
                                                         <a  class=""  input type="submit" id="">
                                                             <i class="fa fa-star fa-2x" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
+                                                        <button type="" value="Add To Private" class="btn btn-sm counter">Add To Private</button>
+                                                        {{--<button type=""></button>--}}
                                                         {{--<a href="{{ url('') }}">--}}
                                                         {{--<i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>--}}
                                                         {{--</a>--}}
