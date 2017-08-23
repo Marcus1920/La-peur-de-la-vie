@@ -246,12 +246,11 @@
                                     @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
 
 
-<<<<<<< HEAD
-                                        <li><a href="{{ url('creatCase') }}"><span class="badge badge-r">{{ count(0,0) }}</span>Create  Case</a></li>
-=======
+
+                                       
 
                                         <li><a href="{{ url('creatCase') }}"><span class="badge badge-r">{{ count(0,0) }}</span>Creat Case</a></li>
->>>>>>> master
+
                                         <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
                                         <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noOfPendingAllocationCases,0) }}</span>Pending /Allocation Cases</a></li>
                                         <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>
