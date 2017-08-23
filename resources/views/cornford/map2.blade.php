@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtqWsq5Ai3GYv6dSa6311tZiYKlbYT4mw&libraries=geometry,places"></script>
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     {{--<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" type="text/css">--}}
-    <title>Document</title>
+    <title> Ubulwembu </title>
 
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">

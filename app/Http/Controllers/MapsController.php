@@ -80,54 +80,52 @@ class MapsController extends Controller
             }
             else if($case->case_type==7)
             {
-                $images='markers_2/pin7.png';
+                $images='markers_2/marker7.png';
             }
             else if($case->case_type==8)
             {
-                $images='markers_2/pin8.png';
+                $images='markers_2/marker8.png';
             }
             else if($case->case_type==9)
             {
-                $images='markers_2/pin9.png';
+                $images='markers_2/marker9.png';
             }
             else if($case->case_type==10)
             {
-                $images='markers_2/pin10.png';
+                $images='markers_2/marker10.png';
             }
             else if($case->case_type==11)
             {
-                $images='markers_2/pin11.png';
-            }
-            else
-            {
-                $images='markers_2/pin12.png';
+                $images='markers_2/marker11.png';
             }
 
             $address->informationWindow($case->gps_lat, $case->gps_lng, $content, ['marker' => true,'animation' => 'DROP','label'=>$case->id,'draggable'=>true,'icon' =>$images]);
             //http://www.iconsdb.com/icons/preview/soylent-red/map-marker-2-xl.png
         }
 
-        return   view  ('cornford.map',compact('latitude','longitude','address'));
+        return   view  ('cornford.map1',compact('latitude','longitude','address'));
     }
 
 
     public function search(Request $request)
     {
         $destination= $request['search'];
-        $places=Mapper::location($destination);
 
-        $latitude=$places->latitude;
-        $longitude=$places->longitude;
-        //$address=$places->address;
+        if($request['search']!=NULL) {
+            $places = Mapper::location($destination);
 
-        $address= Mapper::map($latitude,$longitude,['zoom'=>19,'center' => true,'type' => 'HYBRID','animation' => 'DROP','draggable' => true,['draggable' => true], 'clusters' => ['size' => 2, 'center' => true, 'zoom' => 20],'markers' => ['title' => $destination, 'animation' => 'BOUNCE']])
-            ->circle([['latitude' => $latitude, 'longitude' => $longitude]], ['strokeColor' => '#fefefe', 'strokeOpacity' => 2, 'strokeWeight' => 2, 'fillColor' => '#FFFFFF', 'radius' => 60]);
+            $latitude = $places->latitude;
+            $longitude = $places->longitude;
+            //$address=$places->address;
 
-        $cases=CaseReport::all();
+            $address = Mapper::map($latitude, $longitude, ['zoom' => 19, 'center' => true, 'type' => 'HYBRID', 'animation' => 'DROP', 'draggable' => true, ['draggable' => true], 'clusters' => ['size' => 2, 'center' => true, 'zoom' => 20], 'markers' => ['title' => $destination, 'animation' => 'BOUNCE']])
+                ->circle([['latitude' => $latitude, 'longitude' => $longitude]], ['strokeColor' => '#fefefe', 'strokeOpacity' => 2, 'strokeWeight' => 2, 'fillColor' => '#FFFFFF', 'radius' => 60]);
 
-        foreach ($cases as $case) {
+            $cases = CaseReport::all();
 
-            $content="<div style='color:black'>
+            foreach ($cases as $case) {
+
+                $content = "<div style='color:black'>
                       <tr>
                       <td><b>Case ID</b>&nbsp; : </td><td>$case->id</td>
                       </tr>
@@ -137,10 +135,125 @@ class MapsController extends Controller
                       </tr>
                       </div>";
 
-            $address->informationWindow($case->gps_lat, $case->gps_lng,$content, ['animation' => 'DROP','label'=>$case->id,'draggable'=>'true']);
+                if($case->case_type==1)
+                {
+                    $images='markers_2/marker1.png';
+                }
+                else if($case->case_type==2)
+                {
+                    $images='markers_2/marker2.png';
+                }
+                else if($case->case_type==3)
+                {
+                    $images='markers_2/marker3.png';
+                }
+                else if($case->case_type==4)
+                {
+                    $images='markers_2/marker4.png';
+                }
+                else if($case->case_type==5)
+                {
+                    $images='markers_2/marker5.png';
+                }
+                else if($case->case_type==6)
+                {
+                    $images='markers_2/marker6.png';
+                }
+                else if($case->case_type==7)
+                {
+                    $images='markers_2/marker7.png';
+                }
+                else if($case->case_type==8)
+                {
+                    $images='markers_2/marker8.png';
+                }
+                else if($case->case_type==9)
+                {
+                    $images='markers_2/marker9.png';
+                }
+                else if($case->case_type==10)
+                {
+                    $images='markers_2/marker10.png';
+                }
+                else if($case->case_type==11)
+                {
+                    $images='markers_2/marker11.png';
+                }
+
+                $address->informationWindow($case->gps_lat, $case->gps_lng, $content, ['animation' => 'DROP', 'label' => $case->id, 'draggable' => 'true', 'icon' => $images]);
+            }
+        }
+        else
+        {
+            $latitude=-29;
+            $longitude=24;
+            $address=Mapper::map($latitude, $longitude,['zoom'=>18,'locate'=>true,'marker' => false,'draggable' => true,]);
+
+            $cases = CaseReport::all();
+
+            foreach ($cases as $case) {
+
+                $content = "<div style='color:black'>
+                      <tr>
+                      <td><b>Case ID</b>&nbsp; : </td><td>$case->id</td>
+                      </tr>
+                      <br/>
+                      <tr>
+                      <td><b>Case Description : </b></td><td>$case->description</td>
+                      </tr>
+                      </div>";
+
+                if($case->case_type==1)
+                {
+                    $images='markers_2/marker1.png';
+                }
+                else if($case->case_type==2)
+                {
+                    $images='markers_2/marker2.png';
+                }
+                else if($case->case_type==3)
+                {
+                    $images='markers_2/marker3.png';
+                }
+                else if($case->case_type==4)
+                {
+                    $images='markers_2/marker4.png';
+                }
+                else if($case->case_type==5)
+                {
+                    $images='markers_2/marker5.png';
+                }
+                else if($case->case_type==6)
+                {
+                    $images='markers_2/marker6.png';
+                }
+                else if($case->case_type==7)
+                {
+                    $images='markers_2/marker7.png';
+                }
+                else if($case->case_type==8)
+                {
+                    $images='markers_2/marker8.png';
+                }
+                else if($case->case_type==9)
+                {
+                    $images='markers_2/marker9.png';
+                }
+                else if($case->case_type==10)
+                {
+                    $images='markers_2/marker10.png';
+                }
+                else if($case->case_type==11)
+                {
+                    $images='markers_2/marker11.png';
+                }
+
+                $address->informationWindow($case->gps_lat, $case->gps_lng, $content, ['animation' => 'DROP', 'label' => $case->id, 'draggable' => 'true', 'icon' => $images]);
+            }
+
         }
 
-        return   view  ('cornford.map',compact('places','latitude','longitude','address'));
+        return   view  ('cornford.map1',compact('places','latitude','longitude','address'));
 //      dd($places->address);
 
     }
@@ -151,7 +264,8 @@ class MapsController extends Controller
 
         $case = CaseReport::find($request['caseID']);
 
-        $content="<div style='color:black'>
+        if($request['caseID']!=NULL) {
+            $content = "<div style='color:black'>
                       <tr>
                       <td><b>Case ID</b>&nbsp; : </td><td>$case->id</td>
                       </tr>
@@ -161,14 +275,110 @@ class MapsController extends Controller
                       </tr>
                       </div>";
 
-        Mapper::map($case->gps_lat,$case->gps_lng,['zoom'=>19,'center' => true,'type' => 'HYBRID','marker' => false,'draggable' => true, 'clusters' => ['size' => 20, 'center' => true, 'zoom' => 20]])
-            ->informationWindow($case->gps_lat,$case->gps_lng,$content,['title' => $case->id,'animation' => 'DROP']);
+            if ($case->case_type == 1) {
+                $images = 'markers_2/marker1.png';
+            } else if ($case->case_type == 2) {
+                $images = 'markers_2/marker2.png';
+            } else if ($case->case_type == 3) {
+                $images = 'markers_2/marker3.png';
+            } else if ($case->case_type == 4) {
+                $images = 'markers_2/marker4.png';
+            } else if ($case->case_type == 5) {
+                $images = 'markers_2/marker5.png';
+            } else if ($case->case_type == 6) {
+                $images = 'markers_2/marker6.png';
+            } else if ($case->case_type == 7) {
+                $images = 'markers_2/pin7.png';
+            } else if ($case->case_type == 8) {
+                $images = 'markers_2/pin8.png';
+            } else if ($case->case_type == 9) {
+                $images = 'markers_2/pin9.png';
+            } else if ($case->case_type == 10) {
+                $images = 'markers_2/pin10.png';
+            } else if ($case->case_type == 11) {
+                $images = 'markers_2/pin11.png';
+            } else {
+                $images = 'markers_2/pin12.png';
+            }
 
-        $latitude=$case->gps_lat;
-        $longitude=$case->gps_lng;
-        $address=$case->description;
+            Mapper::map($case->gps_lat, $case->gps_lng, ['zoom' => 19, 'center' => true, 'type' => 'HYBRID', 'marker' => false, 'draggable' => true, 'clusters' => ['size' => 20, 'center' => true, 'zoom' => 20]])
+                ->informationWindow($case->gps_lat, $case->gps_lng, $content, ['title' => $case->id, 'animation' => 'DROP', 'icon' => $images, 'label' => $case->id]);
+        }
+        else
+        {
+            $latitude=-29;
+            $longitude=24;
+            $address=Mapper::map($latitude, $longitude,['zoom'=>18,'locate'=>true,'marker' => false,'draggable' => true,]);
 
-        return   view  ('cornford.map',compact('places','latitude','longitude','address'));
+            $cases = CaseReport::all();
+
+            foreach ($cases as $case) {
+
+                $content = "<div style='color:black'>
+                      <tr>
+                      <td><b>Case ID</b>&nbsp; : </td><td>$case->id</td>
+                      </tr>
+                      <br/>
+                      <tr>
+                      <td><b>Case Description : </b></td><td>$case->description</td>
+                      </tr>
+                      </div>";
+
+                if($case->case_type==1)
+                {
+                    $images='markers_2/marker1.png';
+                }
+                else if($case->case_type==2)
+                {
+                    $images='markers_2/marker2.png';
+                }
+                else if($case->case_type==3)
+                {
+                    $images='markers_2/marker3.png';
+                }
+                else if($case->case_type==4)
+                {
+                    $images='markers_2/marker4.png';
+                }
+                else if($case->case_type==5)
+                {
+                    $images='markers_2/marker5.png';
+                }
+                else if($case->case_type==6)
+                {
+                    $images='markers_2/marker6.png';
+                }
+                else if($case->case_type==7)
+                {
+                    $images='markers_2/marker7.png';
+                }
+                else if($case->case_type==8)
+                {
+                    $images='markers_2/marker8.png';
+                }
+                else if($case->case_type==9)
+                {
+                    $images='markers_2/marker9.png';
+                }
+                else if($case->case_type==10)
+                {
+                    $images='markers_2/marker10.png';
+                }
+                else if($case->case_type==11)
+                {
+                    $images='markers_2/marker11.png';
+                }
+
+                $address->informationWindow($case->gps_lat, $case->gps_lng, $content, ['animation' => 'DROP', 'label' => $case->id, 'draggable' => 'true', 'icon' => $images]);
+            }
+
+        }
+
+//        $latitude=$case->gps_lat;
+//        $longitude=$case->gps_lng;
+//        $address=$case->description;
+
+        return   view  ('cornford.map1',compact('places','latitude','longitude','address'));
     }
 
        public function storeCase(Request $request)
@@ -376,27 +586,23 @@ class MapsController extends Controller
            }
            else if($newCase->case_type==7)
            {
-               $images='markers_2/pin7.png';
+               $images='markers_2/marker7.png';
            }
            else if($newCase->case_type==8)
            {
-               $images='markers_2/pin8.png';
+               $images='markers_2/marker8.png';
            }
            else if($newCase->case_type==9)
            {
-               $images='markers_2/pin9.png';
+               $images='markers_2/marker9.png';
            }
            else if($newCase->case_type==10)
            {
-               $images='markers_2/pin10.png';
+               $images='markers_2/marker10.png';
            }
            else if($newCase->case_type==11)
            {
-               $images='markers_2/pin11.png';
-           }
-           else
-           {
-               $images='markers_2/pin12.png';
+               $images='markers_2/marker11.png';
            }
 
            Mapper::map($newCase->gps_lat,$newCase->gps_lng,['zoom'=>19,'center' => true,'marker' => false,'draggable' => true, 'clusters' => ['size' => 20, 'center' => true, 'zoom' => 20]])
@@ -407,7 +613,7 @@ class MapsController extends Controller
         $address=$newCase->description;
 
         \Session::flash('success', 'Well done! Case '.$newCase->id.' has been successfully added!');
-        return   view  ('cornford.map',compact('places','latitude','longitude','address'));
+        return   view  ('cornford.map1',compact('places','latitude','longitude','address'));
        }
 
 }
