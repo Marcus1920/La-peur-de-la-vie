@@ -77,7 +77,7 @@
 
                                                 <div class="col-md-6">
 
-                                                    <h3 class="block-title">CONTACT PICTURE!</h3>
+
 
                                                     <span class="counter pull-right"></span>
 
@@ -117,7 +117,16 @@
 
                                                         </div>
                                                     </div>
+                                                    <div class="form-group">
+                                                        {!! Form::label('dob', 'BIRTHDAY', array('class' => 'col-md-3 control-label')) !!}
+                                                        <div class="col-md-8">
+                                                            {!! Form::text('dob',Null,['class' => 'form-control input-sm','id' => 'dob_global','readonly']) !!}
+                                                            <div id = "hse_error_cellphone"></div>
 
+                                                        </div>
+                                                    </div>
+                                                    <hr class="whiter m-t-20">
+                                                    <h3 class="block-title">CONTACT DETAILS</h3>
 
                                                     <div class="form-group">
                                                         {!! Form::label('EMAIl', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
@@ -145,7 +154,7 @@
                                                         </div>
                                                     </div>
 
-                                                    {{--<hr class="whiter m-t-20">--}}
+
 
                                                     <span class="counter pull-right"></span>
                                                     <span class="counter pull-right"></span>
@@ -154,18 +163,15 @@
 
 
 
-                                                    <button id="" class="btn btn-sm counter pull-left">
-                                                        ADD TO PRIVATE
-                                                    </button>
+
                                                     <div class="form-group">
 
                                                     </div>
 
 
-                                                    <hr class="whiter m-t-20">
 
 
-                                                    <h3 class="block-title">COMMUNICATION</h3>
+                                                    <h3 class="block-title">ACTIONS</h3>
                                                     <span class="counter pull-right"></span>
                                                     <span class="counter pull-right"></span>
                                                     <br/>
@@ -174,7 +180,7 @@
                                                     <lu>
                                                         <a href="{{ url('') }}" ><i class="fa fa-envelope-o fa-2x" aria-hidden="true" title="EMAIL"></i>
                                                         </a>
-                                                        <a  class="on change" >
+                                                        <a  class=""  input type="submit" id="">
                                                             <i class="fa fa-star fa-2x" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
                                                         {{--<a href="{{ url('') }}">--}}
@@ -233,7 +239,7 @@
                                                             <input type="checkbox" name="row" value="{{$privateContact->id}}"  onclick="" class="get_value" ></td>
                                                         <td>
                                                             <a class="t-overflow" onclick="profilePrivate({{$privateContact->user_id}});">{{$privateContact->user->name . " " . $privateContact->user->surname}}</a><br/>
-                                                            <small class="text-muted">{{$privateContact->position}}</small></td>
+                                                            {{--<small class="text-muted">{{$privateContact->position}}</small></td>--}}
                                                     </tr>
                                                 @endforeach
                                                 </tbody>
@@ -257,7 +263,7 @@
 
                                                 <div class="col-md-6">
 
-                                                    <h3 class="block-title">CONTACT PICTURE!</h3>
+                                                    {{--<h3 class="block-title">CONTACT PICTURE!</h3>--}}
 
                                                     <span class="counter pull-right"></span>
 
@@ -266,6 +272,8 @@
                                                         <div class="card-block">
                                                             <hr class="whiter m-t-20">
                                                             <h1 class="card-title">Card title</h1>
+
+
                                                             <p class="card-text"></p>
                                                         </div>
                                                     </div>
@@ -275,7 +283,7 @@
 
                                                     {!! Form::open(['url' => 'deleteuserprofilePrivate/+deleteUserId', 'method' => 'get', 'class' => 'form-horizontal', 'id'=>"profileForm" ,'files' => 'true']) !!}
                                                     {{--{!! Form::hidden('user',['id'=>'user'] )!!}--}}
-                                                    <h3 class="block-title">PERSONAL DETAILS!</h3>
+                                                    <h3 class="block-title">PERSONAL DETAILS</h3>
 
                                                     <span class="counter pull-right"></span>
 
@@ -300,9 +308,28 @@
 
 
                                                     <div class="form-group">
+                                                        {!! Form::label('dob', 'BIRTHDAY', array('class' => 'col-md-3 control-label')) !!}
+                                                        <div class="col-md-8">
+                                                            {!! Form::text('dob',Null,['class' => 'form-control input-sm','id' => 'dob_private','readonly']) !!}
+                                                            <div id = "hse_error_cellphone"></div>
+
+                                                        </div>
+                                                    </div>
+                                                    <hr class="whiter m-t-20">
+                                                    <h3 class="block-title">CONTACT DETAILS</h3>
+                                                    <div class="form-group">
                                                         {!! Form::label('EMAIl', 'EMAIL', array('class' => 'col-md-3 control-label')) !!}
                                                         <div class="col-md-8">
                                                             {!! Form::text('email',Null,['class' => 'form-control input-sm','id' => 'email_address','readonly']) !!}
+                                                            <div id = "hse_error_cellphone"></div>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        {!! Form::label('cellphone', 'CELLPHONE', array('class' => 'col-md-3 control-label')) !!}
+                                                        <div class="col-md-8">
+                                                            {!! Form::text('email',Null,['class' => 'form-control input-sm','id' => 'cellphone','readonly']) !!}
                                                             <div id = "hse_error_cellphone"></div>
 
                                                         </div>
@@ -333,16 +360,17 @@
 
 
 
-                                                    <input type="button" value="Delete" id="delete" onclick="deleteuser()" class="btn btn-sm counter pull-left"/>
+
                                                     <div class="form-group">
 
                                                     </div>
 
 
-                                                    <hr class="whiter m-t-20">
 
 
-                                                    <h3 class="block-title">COMMUNICATION</h3>
+
+                                                    <h3 class="block-title">ACTIONS</h3>
+
                                                     <span class="counter pull-right"></span>
                                                     <span class="counter pull-right"></span>
                                                     <br/>
@@ -354,9 +382,7 @@
                                                         <a  class="on change" >
                                                             <i class="fa fa-star fa-2x" aria-hidden="true" title="EMAIL" data-toggle="tooltip"></i>
                                                         </a>
-                                                        {{--<a href="{{ url('') }}">--}}
-                                                        {{--<i class="fa fa-message" aria-hidden="true" title="Add Your New Task Here" data-toggle="tooltip"></i>--}}
-                                                        {{--</a>--}}
+                                                        <input type="button" value="Delete" id="delete" onclick="deleteuser()" class="btn btn-sm counter"/>
                                                     </lu>
 
                                                     {!! Form::close()!!}
@@ -417,6 +443,7 @@
                     $('#profileForm #surname').val(data.user.surname);
                     $('#profileForm #email_address').val(data.user.email);
                     $('#profileForm #user_id').val(data.user_id);
+                    $('#profileForm #cellphone').val(data.user.cellphone);
 
                 },
                 error: function (xhr, status) {

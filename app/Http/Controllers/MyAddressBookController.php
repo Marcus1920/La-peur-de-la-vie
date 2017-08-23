@@ -59,7 +59,7 @@ class MyAddressBookController extends Controller
         $addressbook->isfavourite            = 1;
         $addressbook->save();
 
-        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been  added to your Private Book Address');
+        \Session::flash('success', $this->user->name.' '.$this->user->surname.' has been  added to your Private Book Address');
         return Redirect::to('/addressbookList/'.Auth::user()->id);
     }
     public function getProfilePerUser($id)
@@ -69,8 +69,6 @@ class MyAddressBookController extends Controller
         $contactBook  = MyAddressBook::with('user')->select('user_id')->where('addressbook_owner',$id)->where('isfavourite',1)->orderBy('user_id')->get();
 //
         $userOrder = User::orderBy('name')->first();
-//     $contactBookOrder = MyAddressBook::with('user')->orderBy('name');
-//        // var_dump($contactBookOrder);
         return view('addressbook.test')
             ->with(compact('contactBook'))
             ->with(compact('users'))
