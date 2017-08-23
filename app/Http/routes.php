@@ -1464,7 +1464,7 @@ Route::any("logPIR", function() {
     if ($idPIR == -1) return Response::json( array( 'status'=>0, 'message'=>"Event ID not specified" ) );
     $msg = array_key_exists("msg", $_REQUEST) ? $_REQUEST['msg'] : "";
     $msg = "PIR: Event ID - {$idPIR}\n{$msg}";
-    $attr = array( 'user'=>0, 'status'=>1, 'source'=>5, 'description'=>$msg );
+    $attr = array( 'user'=>0, 'status'=>1, 'source'=>5, 'description'=>$msg , 'gps_lat'=>0 , 'gps_lng'=>0);
     //$attr['id'] = 63807;
     //$case = CaseReport::where("id",54);
     $exists = CaseReport::where("description","like", "%PIR: Event ID - {$idPIR}%")->count() == 0 ? false : true;
