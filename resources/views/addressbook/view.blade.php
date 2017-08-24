@@ -155,6 +155,7 @@
                     $('#email').val(data.email);
                     $('#Surname').val(data.surname);
                     $('#cellphone').val(data.cellphone);
+                    $('#global_picture').val(data.profile_picture);
                 },
                 error: function (xhr, status) {
                     alert("Sorry, there was a problem!");
@@ -271,30 +272,30 @@
         });
     </script>
     <!--Show active global-->
-    <script>
-        $(document).ready(function(){
-            $("#myGlobalTable").on('click','.clickable-row',function(event){
-                if($(this).hasClass('active'))
-                {
-                    $(this).removeClass('active');
+    {{--<script>--}}
+        {{--$(document).ready(function(){--}}
+            {{--$("#myGlobalTable").on('click','.clickable-row',function(event){--}}
+                {{--if($(this).hasClass('active'))--}}
+                {{--{--}}
+                    {{--$(this).removeClass('active');--}}
 
-                } else{
-                    $(this).addClass('active').siblings().removeClass('active');
-                }
-            });
+                {{--} else{--}}
+                    {{--$(this).addClass('active').siblings().removeClass('active');--}}
+                {{--}--}}
+            {{--});--}}
 
-            $("#myPrivateTable").on('click','.clickable-private',function(event){
-                if($(this).hasClass('active'))
-                {
-                    $(this).removeClass('active');
+            {{--$("#myPrivateTable").on('click','.clickable-private',function(event){--}}
+                {{--if($(this).hasClass('active'))--}}
+                {{--{--}}
+                    {{--$(this).removeClass('active');--}}
 
-                } else{
-                    $(this).addClass('active').siblings().removeClass('active');
-                }
-            });
-        });
+                {{--} else{--}}
+                    {{--$(this).addClass('active').siblings().removeClass('active');--}}
+                {{--}--}}
+            {{--});--}}
+        {{--});--}}
 
-    </script>
+    {{--</script>--}}
 
     <script>
         function globalFunction() {

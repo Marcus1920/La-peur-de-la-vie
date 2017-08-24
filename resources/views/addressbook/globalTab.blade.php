@@ -75,11 +75,11 @@
 
                     <div class="col-md-4" style="">
 
-                        <img alt="Bootstrap Image Preview" src="{{asset('/img/siyaleader_light_bg.png')}}" class="img-thumbnail" style="align-content: center">
+                        <img alt="Bootstrap Image Preview"  src="{{asset('/img/default-user-image.png')}}" class="img-thumbnail" style="align-content: center" id="global_picture">
 
                         <div class="col-md-1">
                             <label for="inputEmail3" class="col-sm-2 control-label" style="align-content: center">
-                                global
+                                    {{$userOrder->position->}}
                             </label>
                         </div>
                     </div>
