@@ -26,9 +26,9 @@
 <body>
 
 <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-        <div class="col-md-12">
+        <div class="col-lg-12">
             <div class="col-md-3">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="{{url('maps')}}">All Cases</a></li>
@@ -36,7 +36,8 @@
                 </ul>
             </div>
             <div class="col-md-4">
-                <form  method="post" action="search"  class="navbar-form navbar-left">
+                <form  method="post" action="search" class="navbar-form navbar-left">
+
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="input-group">
 
@@ -53,12 +54,12 @@
 
                 </form>
             </div>
-            <div class="col-md-4">
-                <form   method="post" action="searchCase"  class="navbar-form navbar-left">
+            <div class="col-md-3">
+                <form   method="post" action="searchCase"  class="navbar-form ">
                     <input type="hidden" name="_token" value="{!! csrf_token() !!}">
                     <div class="input-group">
 
-                        <input type="text" class="form-control" placeholder="Search Case Number" name="caseID">
+                        <input type="text" class="form-control" id="caseID" placeholder="Search Case Number" name="caseID">
                         <div class="input-group-btn">
 
                             <button class="btn btn-default" type="submit">
@@ -70,12 +71,33 @@
 
                 </form>
             </div>
+            <div class="col-md-2">
+                {{--<label class="label-infor">Cases Displayed</label> &nbsp;&nbsp;<span class="n-count animated">{{count($numberOfCases,0) }}</span>--}}
+
+                <ul class="nav navbar-nav ">
+                {{--<li><button type="button" class="btn btn-primary">Cases Displayed <span class="badge">{{count($numberOfCases,0) }}</span></button></li>--}}
+                    <li class="active">
+
+                        <a href="#" style="font-size: 15px;" class="glyphicon glyphicon-folder-open">  {{count($numberOfCases,0)}}</a>
+
+                    </li>
+                </ul>
+
+            </div>
         </div>
         </div>
+
+    </div>
+</nav>
+
+
+
+<div class="container" style="margin-top:-18px;">
+
         <div class="row">
-            <div class="col-md-12">
+                <div class="col-md-12">
                 <div class="col-md-10">
-                    <div style="width: 100% ; height:600px ;">
+                    <div style=" height:600px ;">
                         @if(Session::has('success'))
                             <div class="alert alert-success alert-icon">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -92,103 +114,37 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <div class="row">
-                        <b>Marker Labels:</b>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                        <img src="markers_2/marker_1.png" alt="">&nbsp;&nbsp;&nbsp;
-                        {{--<i class="n-count animated" id='countPrivateMessages'>{{ 5 }}</i>&nbsp;&nbsp;--}}
-                            Crime
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                        <img src="markers_2/marker_2.png" alt="">&nbsp;&nbsp;&nbsp;
-                        {{--<i class="n-count animated" id='countPrivateMessages'>{{ count(0) }}</i>&nbsp;&nbsp;--}}
-                            Dairy
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                        <img src="markers_2/marker_3.png" alt="">&nbsp;&nbsp;&nbsp;
-                        {{--<i class="n-count animated" id='countPrivateMessages'>{{ 12 }}</i>&nbsp;&nbsp;--}}
-                            Commercial
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                        <img src="markers_2/marker_4.png" alt="">&nbsp;&nbsp;&nbsp;
-                        {{--<i class="n-count animated" id='countPrivateMessages'>{{ 23 }}</i>&nbsp;&nbsp;--}}
-                            Residential
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                        <img src="markers_2/marker_5.png" alt="">&nbsp;&nbsp;&nbsp;
-                        {{--<i class="n-count animated" id='countPrivateMessages'>{{ 16 }}</i>&nbsp;&nbsp;--}}
-                            Trucks
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                        <img src="markers_2/marker_6.png" alt="">&nbsp;&nbsp;&nbsp;
-                        {{--<i class="n-count animated" id='countPrivateMessages'>{{ 8 }}</i>&nbsp;&nbsp;--}}
-                            Yellow Equipment
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                            <img src="markers_2/marker_7.png" alt="">&nbsp;&nbsp;&nbsp;
-                            {{--<i class="n-count animated" id='countPrivateMessages'>{{ 8 }}</i>&nbsp;&nbsp;--}}
-                            Environmental
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                            <img src="markers_2/marker_8.png" alt="">&nbsp;&nbsp;&nbsp;
-                            {{--<i class="n-count animated" id='countPrivateMessages'>{{ 8 }}</i>&nbsp;&nbsp;--}}
-                            Test Category
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                            <img src="markers_2/marker_9.png" alt="">&nbsp;&nbsp;&nbsp;
-                            {{--<i class="n-count animated" id='countPrivateMessages'>{{ 8 }}</i>&nbsp;&nbsp;--}}
-                            Theft
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                            <img src="markers_2/marker_10.png" alt="">&nbsp;&nbsp;&nbsp;
-                            {{--<i class="n-count animated" id='countPrivateMessages'>{{ 8 }}</i>&nbsp;&nbsp;--}}
-                            Chemicaly
-                        </a>
-                    </div>
-                    &nbsp;
-                    <div class="row">
-                        <a href="maps">
-                            <img src="markers_2/marker_11.png" alt="">&nbsp;&nbsp;&nbsp;
-                            {{--<i class="n-count animated" id='countPrivateMessages'>{{ 8 }}</i>&nbsp;&nbsp;--}}
-                            test
-                        </a>
-                    </div>
+
+                        <h2 class="tile-title"><i class="glyphicon glyphicon-map-marker"></i> Marker Labels
+                            <div class="pull-right">
+                                <a href="{{ url('tasks') }}" >
+                                    {{--Total.....<i class="n-count animated">{{ count($allTasks,0) }}</i>--}}
+                                </a>
+                            </div>
+                        </h2>
+                       <br/>
+                       <br/>
+
+                            @foreach($case_types as $case_type)
+                            <div class="row">
+                                <form  class="form-horizontal"  method="post" action="searchByCaseType">
+
+                                    <input type="hidden" name="_token" value="{!! csrf_token() !!}">
+                                    <input type="hidden" name="caseTypeId" value="{{$case_type->id}}">
+
+                                <div class="col-sm-4"><button type="submit" title="Search for {{$case_type->name}} cases" class="btn"><img src="{{$case_type->marker_url}}" alt=""></button></div>
+
+                                <div class="col-sm-8">{{$case_type->name}}</div>
+                                </form>
+                            </div>
+                                &nbsp;
+                            @endforeach
+
+
                 </div>
             </div>
-
         </div>
-    </div>
-</nav>
+</div>
 
 
 @endsection
@@ -196,13 +152,7 @@
 <script src="{{ asset('bower_components/jquery/dist/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('bower_components/bootstrap/dist/js/bootstrap.js')}}" type="text/javascript" ></script>
 
-<script src="bower_components/jquery/dist/js/jquery.min.js"></script>
-
-
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwXS96_uM6y-6ZJZhSJGE87pO-qxpDp-Q&libraries=places"></script>
-
-
-
 
 
 <script  language="javascript">

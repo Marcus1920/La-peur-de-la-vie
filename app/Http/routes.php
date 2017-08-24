@@ -1449,6 +1449,7 @@ Route::post('search'  ,'MapsController@search');
 Route::post('searchCase'  ,'MapsController@searchCase');
 Route::post('createMapCase'  ,'MapsController@storeCase');
 Route::post('createMapCase'  ,'MapsController@storeCase');
+Route::post('searchByCaseType','MapsController@searchCaseType');
 /*
 |--------------------------------------------------------------------------
 | END MAP ROUTING

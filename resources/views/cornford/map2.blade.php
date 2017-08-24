@@ -216,74 +216,6 @@
             </div>
 
 
-
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Enter Address', 'Enter Address', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('autocomplete',NULL,['class' => 'form-control input-sm','id' => 'autocomplete', "onfocus"=>"geolocate()"]) !!}--}}
-                        {{--<div id="hse_error_email"></div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Street Number', 'Street Number', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('street_number',NULL,['class' => 'street_number form-control input-sm','id' => 'street_number']) !!}--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Route', 'Route', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('route',NULL,['class' => 'route form-control input-sm','id' => 'route']) !!}--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Locality', 'Locality', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('locality',NULL,['class' => 'locality form-control input-sm','id' => 'locality']) !!}--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Area', 'Area', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('administrative_area_level_1',NULL,['class' => 'administrative_area_level_1 form-control input-sm','id' => 'administrative_area_level_1']) !!}--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Postal Code', 'Postal Code', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('postal_code',NULL,['class' => 'postal_code form-control input-sm','id' => 'postal_code']) !!}--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('Country', 'Country', array('class' => 'col-md-3 control-label')) !!}--}}
-                    {{--<div class="col-md-8">--}}
-                        {{--{!! Form::text('country',NULL,['class' => 'country form-control input-sm','id' => 'country']) !!}--}}
-
-                    {{--</div>--}}
-                {{--</div>--}}
-
-
-
         </div>
 
 
@@ -412,6 +344,8 @@
 </div>
 {{--@endsection--}}
 
+@include('functions.caseModal')
+
 <script src="bower_components/jquery/dist/js/jquery.min.js"></script>
 
 <!--Toggles-->
@@ -531,7 +465,9 @@
 
 @include('functions.caseModal')
 
+
 <script async defer language="javascript">
+
     if(navigator.onLine)
     {
 
