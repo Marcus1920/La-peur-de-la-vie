@@ -84,11 +84,11 @@
 
                         <img alt="Bootstrap Image Preview" src="{{asset('/img/default-user-image.png')}}" class="img-thumbnail" style="align-content: center">
 
-                        <div class="col-md-1">
-                            <label for="inputEmail3" class="col-sm-2 control-label" style="align-content: center">
-                                POSITION
-                            </label>
-                        </div>
+                        {{--<div class="col-md-1">--}}
+                            {{--<label for="inputEmail3" class="col-sm-2 control-label" style="align-content: center">--}}
+                                {{--POSITION--}}
+                            {{--</label>--}}
+                        {{--</div>--}}
                     </div>
                     {{--<div class="col-md-2">--}}
                     {{--</div>--}}
