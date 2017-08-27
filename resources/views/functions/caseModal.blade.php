@@ -1288,7 +1288,10 @@ $("#add_case_search").tokenInput("{!! url('/getCaseSearch')!!}", {
 
   });
 
-
+          window.setInterval(function() {
+              //console.log("pendingreferralCasesTable - ",pendingreferralCasesTable);
+              pendingreferralCasesTable.ajax.reload();
+          }, 5000);
 
   var oTableCaseNotes,oTablePoi,oTableCaseResponders,oTableAddressBook,oTableCaseActivities,oTableAddress,oTableRelatedCases;
 

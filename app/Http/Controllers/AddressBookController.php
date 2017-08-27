@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MyAddressBook;
 use App\User;
 use App\UserRole;
 use App\Position;
@@ -84,22 +85,18 @@ class AddressBookController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        $addressbook                 = new addressbook();
-        $addressbook->user           = $request['user'];
-        $addressbook->first_name     = $request['first_name'];
-        $addressbook->Surname        = $request['Surname'];
-        $addressbook->email          = $request['email'];
-        $addressbook->cellphone      = $request['cellphone'];
-        $addressbook->created_by     = \Auth::user()->id;
-        $addressbook->relationship   = '';
-        $addressbook->active         = 1;
-        $addressbook->save();
-
-        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been  added to your Private Book Address');
-        return Redirect::to('/addressbookList/'.Auth::user()->id);
-    }
+//    public function store(Request $request)
+//    {
+//
+//        $addressbook                         = new MyAddressBook();
+//        $addressbook->addressbook_owner      =   \Auth::user()->id;
+//        $addressbook->user_id                = $request['user'];
+//        $addressbook->isfavourite            = 1;
+//        $addressbook->save();
+//
+//        \Session::flash('success', $addressbook->first_name.' '.$addressbook->surname.' has been  added to your Private Book Address');
+//        return Redirect::to('/addressbookList/'.Auth::user()->id);
+//    }
 
     public function show()
     {
@@ -222,41 +219,46 @@ class AddressBookController extends Controller
         return $users;
     }
 
-    public function getProfilePerUser($id)
-    {
-
-        $users = User::all();
-        $contactBook  = addressbook::where('created_by',$id)->get();
-        return view('addressbook.test')
-            ->with(compact('contactBook'))
-            ->with(compact('users'));
-
-    }
-
-    public function userprofileGlobal($id)
-    {
-        $user  = User::select('name','surname','email','cellphone','id')->where('id',$id)->first();
-        return response()->json($user);
-
-    }
-
-    public function userprofilePrivate($id)
-    {
-
-        $contactBook  = addressbook::select('first_name','surname','email','cellphone','user')->where('user',$id)->first();
-        return response()->json($contactBook);
-
-    }
-
-
-    public function deleteuser($id)
-    {
-        $created_by= Auth::user()->id;
-        $contactBook  = addressbook::where('created_by',$created_by)
-            ->where('user',$id);
-        $contactBook->delete();
-        return Auth::user()->id;
-
-
-    }
+//    public function getProfilePerUser($id)
+//    {
+//
+//        $users = User::orderBy('name')->get();
+//      $contactBook  = MyAddressBook::where('addressbook_owner',$id)->get();
+//
+//        $userOrder = User::orderBy('name')->first();
+//        $contactBookOrder = MyAddressBook::with('user')->where('addressbook_owner', $id)->get();
+//       // var_dump($contactBookOrder);
+//        return view('addressbook.test')
+//            ->with(compact('contactBook'))
+//            ->with(compact('users'))
+//            ->with(compact('userOrder'));
+//
+//    }
+//
+//    public function userprofileGlobal($id)
+//    {
+//        $user  = User::select('name','surname','email','cellphone','id','profile_picture')->where('id',$id)->first();
+//        return response()->json($user);
+//
+//    }
+//
+//    public function userprofilePrivate($id)
+//    {
+//
+//        $contactBook  = addressbook::select('first_name','surname','email','cellphone','user')->where('user',$id)->first();
+//        return response()->json($contactBook);
+//
+//    }
+//
+//
+//    public function deleteuser($id)
+//    {
+//        $created_by= Auth::user()->id;
+//        $contactBook  = addressbook::where('created_by',$created_by)
+//            ->where('user',$id);
+//        $contactBook->delete();
+//        return Auth::user()->id;
+//
+//
+//    }
 }

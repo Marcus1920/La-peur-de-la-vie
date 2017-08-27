@@ -157,7 +157,7 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ Auth::user()->profile_picture }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ asset('/img/SiteBadge3.png') }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">

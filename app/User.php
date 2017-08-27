@@ -61,6 +61,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 
          public function addressBook()
     {
-        return $this->hasMany(addressbook::class,'id','user_id');
+        return $this->hasMany(MyAddressBook::class,'id','user_id');
     }
 }

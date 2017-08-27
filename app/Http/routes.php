@@ -43,19 +43,19 @@ use App\Position;
 Route::group(['middleware' => 'adminmiddlewar'], function () {
 
     Route::get('admin',  'SeniorHomeController@index');
-   // Route::get('admin', 'SeniorHomeController@index');
+    // Route::get('admin', 'SeniorHomeController@index');
 
 });
 
 Route::group(['middleware' => 'adminmiddlewar'], function () {
-	Route::get('/', function () {
-		if (!\Auth::check()) return view('auth.login');
-		else return redirect("/home");
-	});
+    Route::get('/', function () {
+        if (!\Auth::check()) return view('auth.login');
+        else return redirect("/home");
+    });
 
     Route::get('home', ['uses' => 'HomeController@index']);
-	Route::get('home', ['uses' => 'HomeController@index']);
-	Route::get('generatecharts', ['uses' => 'HomeController@getcharts']);
+    Route::get('home', ['uses' => 'HomeController@index']);
+    Route::get('generatecharts', ['uses' => 'HomeController@getcharts']);
 
 
 
@@ -69,36 +69,36 @@ $this->post('dosignup', 'Auth\LoginController@dosignup');
 
 Route::group(array('prefix' => 'api/v1'), function() {
 
-  Route::post('logi', 'UserController@login');
-  Route::post('pedingcases', 'ReportController@Pendingcases');
-  Route::post('allocatecase','ReportController@Allocatercase');
-  Route::post('referecases', 'ReportController@Referecases');
-  Route::get('getallusers', 'ReportController@Getallusers');
-  Route::post('acceptedcases','ReportController@Acceptedcases');
-  Route::post('declinsecase','ReportController@Declinsecase');
-  Route::get('categoriess', 'DepartController@index');
-  Route::get('myreport', 'ReportCController@myReport');
-  Route::post('report', 'ReportController@store');
-  Route::get('messagenofication','CaseNotesController@messagenofication');
-  Route::post('mobilecaeCreate','MobliCasesController@mobilecaeCreate');
-  Route::post('newmessagenofication','CaseNotesController@newmessagenofication');
-  Route::get('showcontactmobile','AddressBookController@showcontactmobile');
-  Route::post('requestcloser','ReportCController@requestcloser');
-  Route::post('updatecasemobile','ReportCController@updatecasemobile');
-  Route::get('statuss', 'ReportCController@statuss');
-  Route::post('mobilerallocate', 'MobliCasesController@store');
-  Route::post('actionteken', 'DepartController@action');
-  Route::post('Casetype', 'DepartController@castype');
-  Route::get('mobiledepartement', 'DepartController@mobiledepartement');
-  Route::get('subcategories', 'DepartController@mobilesubcategories');
-  Route::get('subsubcategories', 'DepartController@mobilesusubbcategories');
-  Route::get('categories', 'DepartController@index');
-  Route::get('mobilecalendarListPerUser', 'CasesController@mobilecalendarListPerUser');
-  Route::post('reportImage','ReportCController@saveReportImage');
-  Route::post('createincident','ReportCController@creatReport');
-  Route::post('closeIncidentmobile', 'ReportCController@closeIncidentmobile');
-  Route::post('login', 'UserCController@login');
-  Route::post('forgot', 'UserCController@forgot');
+    Route::post('logi', 'UserController@login');
+    Route::post('pedingcases', 'ReportController@Pendingcases');
+    Route::post('allocatecase','ReportController@Allocatercase');
+    Route::post('referecases', 'ReportController@Referecases');
+    Route::get('getallusers', 'ReportController@Getallusers');
+    Route::post('acceptedcases','ReportController@Acceptedcases');
+    Route::post('declinsecase','ReportController@Declinsecase');
+    Route::get('categoriess', 'DepartController@index');
+    Route::get('myreport', 'ReportCController@myReport');
+    Route::post('report', 'ReportController@store');
+    Route::get('messagenofication','CaseNotesController@messagenofication');
+    Route::post('mobilecaeCreate','MobliCasesController@mobilecaeCreate');
+    Route::post('newmessagenofication','CaseNotesController@newmessagenofication');
+    Route::get('showcontactmobile','AddressBookController@showcontactmobile');
+    Route::post('requestcloser','ReportCController@requestcloser');
+    Route::post('updatecasemobile','ReportCController@updatecasemobile');
+    Route::get('statuss', 'ReportCController@statuss');
+    Route::post('mobilerallocate', 'MobliCasesController@store');
+    Route::post('actionteken', 'DepartController@action');
+    Route::post('Casetype', 'DepartController@castype');
+    Route::get('mobiledepartement', 'DepartController@mobiledepartement');
+    Route::get('subcategories', 'DepartController@mobilesubcategories');
+    Route::get('subsubcategories', 'DepartController@mobilesusubbcategories');
+    Route::get('categories', 'DepartController@index');
+    Route::get('mobilecalendarListPerUser', 'CasesController@mobilecalendarListPerUser');
+    Route::post('reportImage','ReportCController@saveReportImage');
+    Route::post('createincident','ReportCController@creatReport');
+    Route::post('closeIncidentmobile', 'ReportCController@closeIncidentmobile');
+    Route::post('login', 'UserCController@login');
+    Route::post('forgot', 'UserCController@forgot');
 
 });
 
@@ -172,6 +172,7 @@ Route::get('getPoiCasesAssociates/{id}', ['middleware' => 'resetLastActive', 'us
 Route::get('getCaseSearch', ['middleware' => 'resetLastActive', 'uses' => 'UserController@getCaseSearch']);
 
 Route::get('getUsers', ['middleware' => 'auth', 'uses' => 'UserController@getUsers']);
+
 Route::get('getAddressBookUsers', ['middleware' => 'auth', 'uses' => 'AddressBookController@getAddressBookUsers']);
 
 
@@ -667,29 +668,41 @@ Route::get('allocatedCases' , function(){
 |
 */
 
-//Route::get('addressbook-list/{id}', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@index']);
-//Route::get('addressbook-list', ['uses' => 'AddressBookController@index']);
 
-Route::get('addressbookList/{id}','AddressBookController@getProfilePerUser');
-Route::get('CreateContact','AddressBookController@Create');
-Route::post('addContact', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@store']);
-Route::get('getContacts', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@show']);
+
 Route::get('getPoisContacts', ['middleware' => 'resetLastActive', 'uses' => 'UserController@searchPOI']);
 Route::get('addressBookView', ['middleware' => 'resetLastActive', 'uses' => 'AddressBookController@globalIndex']);
-
 Route::get('addressbook-list', ['uses' => 'AddressBookController@test']);
 Route::get('getContactProfile/{id}', ['uses' => 'AddressBookController@getProfilePerUser']);
 Route::get('global-list', ['uses' => 'AddressBookController@test']);
-Route::get('addToPrivate', ['uses' => 'AddressBookController@addToPrivate']);
-
 Route::get('userprofileGlobal/{id}', 'AddressBookController@userprofileGlobal');
-
 Route::get('userprofilePrivate/{id}', 'AddressBookController@userprofilePrivate');
-
-
 Route::get('deleteuserprofilePrivate/{id}', 'AddressBookController@deleteuser');
 
 
+/* MY ADDRESSBOOK CONTROLLER*/
+
+Route::get('sendEmail/{email}', 'MyAddressBookController@emails');
+Route::get('sendMultipleEmail/{email}', 'MyAddressBookController@multipleEmailsFromPrivate');
+Route::get('getEmail/{id}', 'MyAddressBookController@getEmail');
+Route::post('sendMultipleMessages', 'MyAddressBookController@sendMultipleMessages');
+Route::get('CreateContact','MyAddressBookController@Create');
+Route::post('sendAddressBookMessage', 'MyAddressBookController@sendAddressBookMessage');
+//Route::post('addContact', 'MyAddressBookController@store');
+Route::post('addContact', 'MyAddressBookController@store');
+Route::get('getContacts', ['middleware' => 'resetLastActive', 'uses' => 'MyAddressBookController@show']);
+Route::get('addressbookList/{id}','MyAddressBookController@getProfilePerUser');
+Route::get('addressBookView', ['middleware' => 'resetLastActive', 'uses' => 'MyAddressBookController@globalIndex']);
+Route::get('addressbook-list', ['uses' => 'MyAddressBookController@test']);
+Route::get('getContactProfile/{id}', ['uses' => 'MyAddressBookController@getProfilePerUser']);
+Route::get('global-list', ['uses' => 'MyAddressBookController@test']);
+Route::get('addToPrivate', ['uses' => 'MyAddressBookController@addToPrivate']);
+Route::get('userprofileGlobal/{id}', 'MyAddressBookController@userprofileGlobal');
+Route::get('userprofilePrivate/{id}', 'MyAddressBookController@userprofilePrivate');
+Route::get('deleteuserprofilePrivate/{id}', 'MyAddressBookController@deleteuser');
+Route::get('removeFromPrivate', 'MyAddressBookController@removeFromPrivate');
+Route::get('emailsFromPrivate', ['middleware' => 'auth', 'uses' => 'MyAddressBookController@emailsFromPrivate']);
+Route::get('getEmailsFromPrivate', ['middleware' => 'auth', 'uses' => 'MyAddressBookController@getEmailsFromPrivate']);
 /*
 |--------------------------------------------------------------------------
 | END ADDRESSBOOK ROUTING
@@ -1465,7 +1478,7 @@ Route::any("logPIR", function() {
     if ($idPIR == -1) return Response::json( array( 'status'=>0, 'message'=>"Event ID not specified" ) );
     $msg = array_key_exists("msg", $_REQUEST) ? $_REQUEST['msg'] : "";
     $msg = "PIR: Event ID - {$idPIR}\n{$msg}";
-    $attr = array( 'user'=>0, 'status'=>1, 'source'=>5, 'description'=>$msg );
+    $attr = array( 'user'=>0, 'status'=>1, 'source'=>5, 'description'=>$msg , 'gps_lat'=>0 , 'gps_lng'=>0);
     //$attr['id'] = 63807;
     //$case = CaseReport::where("id",54);
     $exists = CaseReport::where("description","like", "%PIR: Event ID - {$idPIR}%")->count() == 0 ? false : true;
