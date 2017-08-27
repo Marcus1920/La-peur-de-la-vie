@@ -12,6 +12,7 @@
 
         <title> Ubulwembu  </title>
 
+
         <!-- CSS -->
         <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('/css/animate.min.css') }}" rel="stylesheet">
@@ -156,7 +157,7 @@
                     <!-- Profile Menu -->
                     <div class="text-center s-widget m-b-25 dropdown" id="profile-menu">
                         <a href="#" data-toggle="dropdown">
-                            <img class="profile-pic animated" src="{{ Auth::user()->profile_picture }}" alt="lomnin">
+                            <img class="profile-pic animated" src="{{ asset('/img/SiteBadge3.png') }}" alt="lomnin">
                         </a>
 
                         <ul class="dropdown-menu profile-menu">
@@ -245,7 +246,11 @@
                                     @if(isset($userViewDepartmentsPermission) && $userViewDepartmentsPermission->permission_id =='4')
 
 
-                                        <li><a href="{{ url('creatCase') }}"><span class="badge badge-r">{{ count(0,0) }}</span>Create  Case</a></li>
+
+                                       
+
+                                        <li><a href="{{ url('creatCase') }}"><span class="badge badge-r">{{ count(0,0) }}</span>Creat Case</a></li>
+
                                         <li><a href="{{ url('allocatedCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Allocated/Referred Cases</a></li>
                                         <li><a href="{{ url('pendingCases') }}"><span class="badge badge-r">{{ count($noOfPendingAllocationCases,0) }}</span>Pending /Allocation Cases</a></li>
                                         <li><a href="{{ url('pendingClosureCases') }}"><span class="badge badge-r">{{ count($noForms,0) }}</span>Pending Closure</a></li>

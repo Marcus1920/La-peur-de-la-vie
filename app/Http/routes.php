@@ -609,6 +609,7 @@ Route::get('getCases', ['middleware' => 'auth', 'uses' => 'CasesController@getCa
 
 
 
+
 //Route::get('closedCases', ['middleware' => 'auth', 'uses' => 'CasesController@closedCases']);
 
 //Route::get('pendingCases', ['middleware' => 'auth', 'uses' => 'CasesController@pendingCases']);
@@ -620,6 +621,14 @@ Route::get('pendingClosureCases' , function() {
 
     return view('cases.pendingClosureCases');
 }) ;
+
+
+Route::get('users' , function() {
+
+
+    return view('users.editusers');
+}) ;
+
 
 
 Route::get('pendingCases' , function() {
@@ -1434,6 +1443,7 @@ Route::post('task-reminders','TaskRemindersController@store');
 |
 */
 
+
 /*
 |--------------------------------------------------------------------------
 | MAP ROUTING
@@ -1451,9 +1461,50 @@ Route::post('search'  ,'MapsController@search');
 
 Route::post('searchCase'  ,'MapsController@searchCase');
 Route::post('createMapCase'  ,'MapsController@storeCase');
+Route::post('createMapCase'  ,'MapsController@storeCase');
 /*
 |--------------------------------------------------------------------------
 | END MAP ROUTING
 |--------------------------------------------------------------------------
 |
 */
+
+Route::any("logPIR", function() {
+    $txtDebug = "logPIR";
+    $idPIR = (array_key_exists("id", $_REQUEST) && $_REQUEST['id']) ? $_REQUEST['id'] : -1;
+    //$idPIR = rand(63800, 63810);
+    //$idPIR = 63808;
+    if ($idPIR == -1) return Response::json( array( 'status'=>0, 'message'=>"Event ID not specified" ) );
+    $msg = array_key_exists("msg", $_REQUEST) ? $_REQUEST['msg'] : "";
+    $msg = "PIR: Event ID - {$idPIR}\n{$msg}";
+    $attr = array( 'user'=>0, 'status'=>1, 'source'=>5, 'description'=>$msg , 'gps_lat'=>0 , 'gps_lng'=>0);
+    //$attr['id'] = 63807;
+    //$case = CaseReport::where("id",54);
+    $exists = CaseReport::where("description","like", "%PIR: Event ID - {$idPIR}%")->count() == 0 ? false : true;
+    $txtDebug .= "\n  exists - {$exists}";//.print_r($case->toArray(),1);
+
+    $resp = array( 'status'=>0, 'message'=>"Trying to create case for PIR" );
+    if ($exists) {
+        $resp = array( 'status'=>0, 'message'=>"Exists" );
+    } else {
+        $newCase = New CaseReport($attr);
+        //$newCase->setAttribute("id", 51);
+        $txtDebug .= "\n  newCase - ".print_r($newCase->toArray(),1);
+        try {
+            $newCase->save( );
+            $txtDebug .= "\n  Success saving";
+            $resp = array( 'status'=>1, 'message'=>"Created case for PIR" );
+        } catch(Exception $ex) {
+            $txtDebug .= "\n  Error saving";
+            $txtDebug .= "\n  ".$ex->getMessage();
+            $resp = array( 'status'=>0, 'message'=>$ex->getMessage() );
+        }
+    }
+
+
+    //$txtDebug .= "\n  case - {$case->count()}";//.print_r($case->toArray(),1);
+
+    return Response::json( $resp );
+    die("<pre>{$txtDebug}</pre>");
+});
+
