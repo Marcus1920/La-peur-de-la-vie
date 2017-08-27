@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="incl/siyaleader_ports.css">
     <link rel="stylesheet" type="text/css" href="incl/siyaleader_ports.css">
     <link rel="stylesheet" href="incl/font-awesome.min.css">
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwXS96_uM6y-6ZJZhSJGE87pO-qxpDp-Q&libraries=geometry,places"></script>
+<!--    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwXS96_uM6y-6ZJZhSJGE87pO-qxpDp-Q&libraries=geometry,places"></script>-->
     <script type="text/javascript" src="incl/oms.min.js"></script>
     <script type="text/javascript" src="incl/jquery.min.js"></script>
     <script type="text/javascript" src="js/jquery.tokeninput.js"></script>

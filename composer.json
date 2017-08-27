@@ -16,7 +16,10 @@
 
         "consoletvs/charts": "3.*",
 
-        "arcanedev/log-viewer": "^4.3"
+        "arcanedev/log-viewer": "^4.3",
+
+        "cornford/googlmapper": "2.*"
+
 
     },
     "require-dev": {

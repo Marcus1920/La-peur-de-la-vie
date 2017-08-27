@@ -59,6 +59,7 @@ return array(
     'App\\Http\\Controllers\\InvestigationOfficerController' => $baseDir . '/app/Http/Controllers/InvestigationOfficerController.php',
     'App\\Http\\Controllers\\MainreportController' => $baseDir . '/app/Http/Controllers/MainreportController.php',
     'App\\Http\\Controllers\\MapController' => $baseDir . '/app/Http/Controllers/MapController.php',
+    'App\\Http\\Controllers\\MapsController' => $baseDir . '/app/Http/Controllers/MapsController.php',
     'App\\Http\\Controllers\\MeetingFacilitatorsController' => $baseDir . '/app/Http/Controllers/MeetingFacilitatorsController.php',
     'App\\Http\\Controllers\\MeetingsController' => $baseDir . '/app/Http/Controllers/MeetingsController.php',
     'App\\Http\\Controllers\\MessageController' => $baseDir . '/app/Http/Controllers/MessageController.php',

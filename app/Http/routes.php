@@ -1434,3 +1434,26 @@ Route::post('task-reminders','TaskRemindersController@store');
 |
 */
 
+/*
+|--------------------------------------------------------------------------
+| MAP ROUTING
+|--------------------------------------------------------------------------
+|
+*/
+Route::get('maps'  , 'MapsController@Getmaps') ;
+
+Route::get('map2'  ,function (){
+
+    return view('cornford.map2');
+});
+
+Route::post('search'  ,'MapsController@search');
+
+Route::post('searchCase'  ,'MapsController@searchCase');
+Route::post('createMapCase'  ,'MapsController@storeCase');
+/*
+|--------------------------------------------------------------------------
+| END MAP ROUTING
+|--------------------------------------------------------------------------
+|
+*/
