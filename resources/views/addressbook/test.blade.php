@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                                 <!--RIGHT SIDE DIV-->
-                                <div class="col-sm-9 col-md-6 col-lg-8" style="float:right; display:inline-block;">
+                                <div class="col-md-7" style="float:none; margin-left:50px ;  display:inline-block;">
                                     <div class="block-area" id="basic">
                                         <div class="tile p-15">
 
