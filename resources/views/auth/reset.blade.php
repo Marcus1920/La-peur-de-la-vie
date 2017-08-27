@@ -10,7 +10,7 @@
         <meta name="keywords" content="Siyaleader, Ports, Trasnet,">
         <link rel="icon" type="image/x-icon" sizes="16x16" href="{{ asset('/img/favicon.ico?v1') }}">
 
-        <title>Siyaleader Ethekwin</title>
+        <title> Ubulwembu</title>
 
         <!-- CSS -->
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -18,6 +18,19 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
         <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
         <link href="{{ asset('css/generics.css') }}" rel="stylesheet">
+    <style>
+
+        body {
+
+            background-color: #0B628D;
+        }
+        .eerross {
+
+            background-image: url("{{ asset('/img/01_fix_background.png') }}");
+            width: 100%;
+            height: 100%;
+        }
+    </style>
     <script>
 
 

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtqWsq5Ai3GYv6dSa6311tZiYKlbYT4mw&libraries=geometry,places"></script>
     <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
     {{--<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" type="text/css">--}}
-    <title>Document</title>
+    <title> Ubulwembu </title>
 
 
     <link href="{{ asset('/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -87,7 +87,7 @@
                     <div class="input-group-btn">
 
                         <button class="btn btn-default" onclick="geolocation()">
-                            <i class="glyphicon glyphicon-map-marker"></i>
+                            <i class="glyphicon glyphicon-map-marker" title="Use my current location"></i>
                         </button>
                     </div>
                 </div>
@@ -554,9 +554,10 @@
             }, map: map,
             draggable: true,
             visible:false,
-            icon:"http://www.iconsdb.com/icons/preview/soylent-red/map-marker-2-xl.png"
+            icon:"markers/newCaseMarker.png"
 
 //            icon:'https://d30y9cdsu7xlg0.cloudfront.net/png/2955-200.png'
+            //http://www.iconsdb.com/icons/preview/soylent-red/map-marker-2-xl.png
         });
 
         var marker2=[];
@@ -591,7 +592,8 @@
 
                         }, map: map,
                         draggable: true,
-                        zoom:10
+                        zoom:10.,
+                        icon:"markers/newCaseMarker.png"
                         //            icon:'https://d30y9cdsu7xlg0.cloudfront.net/png/2955-200.png'
                     });
 
@@ -742,7 +744,7 @@
     {
 //        alert("you are offline");
 
-        (document.getElementById("map")).innerHTML="<a href='{{url('map2')}}'> <img src='NoNetwork.png' style='width: 100%; height: 500px; border-radius: 10px' ></a>";
+        (document.getElementById("map")).innerHTML="<a href='{{url('map2')}}'> <img src='img/NoNetwork.png' alt='Network connection failed,Please refresh'></a>";
     }
 
 </script>
